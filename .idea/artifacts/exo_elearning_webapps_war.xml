@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="exo-elearning-webapps:war">
+    <output-path>$PROJECT_DIR$/e-learning-webapps/target</output-path>
+    <root id="archive" name="exo-elearning.war">
+      <element id="artifact" artifact-name="exo-elearning-webapps:war exploded" />
+    </root>
+  </artifact>
+</component>

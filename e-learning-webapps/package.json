@@ -1,0 +1,62 @@
+{
+  "name": "exo-perk-store",
+  "version": "1.0.0",
+  "description": "eXo Perk Store",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exo-addons/exo-perk-store"
+  },
+  "scripts": {
+    "watch": "webpack --config webpack.watch.js --progress --colors --watch -d",
+    "format": "prettier --config ./.prettierrc --write ./src/main/webapp/vue-app/*.js ./src/main/webapp/vue-app/js/*.js",
+    "lint": "eslint --fix ./src/main/webapp/vue-app/*.js ./src/main/webapp/vue-app/components/*.vue",
+    "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
+    "build": "webpack --config webpack.prod.js --mode production"
+  },
+  "author": "eXo",
+  "license": "LGPL",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "eslint": "^5.10.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-jest": "^22.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "jquery": "^3.3.1",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "material-design-icons-iconfont": "^4.0.5",
+    "npm": "^6.4.1",
+    "prettier": "1.15.3",
+    "vue": "^2.5.16",
+    "vue-i18n": "^7.8.1",
+    "vue-loader": "^14.2.3",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.10",
+    "webpack-merge": "^4.1.3"
+  },
+  "dependencies": {
+    "@material-ui/icons": "^3.0.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "tui-editor": "^1.3.3",
+    "vue-date-fns": "^1.0.0",
+    "vue-material": "^1.0.0-beta-10.2",
+    "vue-radial-menu": "^1.1.1",
+    "vue-router": "^3.0.2",
+    "vue-select": "^2.6.3",
+    "vue-tui-editor": "0.0.1",
+    "vuetify": "^1.5.7",
+    "vuetify-upload-button": "^1.2.2",
+    "yimo-vue-editor": "^1.1.1"
+  }
+}

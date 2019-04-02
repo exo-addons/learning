@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/e-learning-packaging/exo-elearning-packaging.iml" filepath="$PROJECT_DIR$/e-learning-packaging/exo-elearning-packaging.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exo-elearning-parent.iml" filepath="$PROJECT_DIR$/exo-elearning-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-learning-services/exo-elearning-services.iml" filepath="$PROJECT_DIR$/e-learning-services/exo-elearning-services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-learning-webapps/exo-elearning-webapps.iml" filepath="$PROJECT_DIR$/e-learning-webapps/exo-elearning-webapps.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="exo-elearning-webapps:war exploded">
+    <output-path>$PROJECT_DIR$/e-learning-webapps/target/exo-elearning</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="exo-elearning-webapps" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="exo-elearning-webapps/web/Web" />
+    </root>
+  </artifact>
+</component>
