@@ -3,6 +3,7 @@ package org.exoplatform.addon.perkstore.entity;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @ExoEntity
@@ -10,17 +11,24 @@ import javax.persistence.*;
 public class Lecon {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name ="ID_LECON")
+  @Column(name = "ID_LECON")
   private Long idLecon;
-  @Column(name ="DESCRIPTION_LECON")
+
+  @Column(name = "DESCRIPTION_LECON")
   private String descriptionLecon;
-  @Column(name ="TITRE_LECON")
+
+  @Column(name = "TITRE_LECON")
   private String titreLecon;
-  @Column(name ="CONTENU_LECON")
+
+  @Column(name = "CONTENU_LECON")
   private String contenuLecon;
+
   @ManyToOne
-  @JoinColumn(name="COURS_ID")
+  @JoinColumn(name = "COURS_ID")
   private Cours cours;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecon")
+  private List<Exercice> exercices;
 
   public Lecon() {
   }
@@ -28,11 +36,13 @@ public class Lecon {
   public Lecon(String descriptionLecon,
                String titreLecon,
                String contenuLecon,
-               Cours cours) {
+               Cours cours,
+               List<Exercice> exercices) {
     this.descriptionLecon = descriptionLecon;
     this.titreLecon = titreLecon;
     this.contenuLecon = contenuLecon;
-    this.cours= cours;
+    this.cours = cours;
+    this.exercices = exercices;
   }
 
   public Long getIdLecon() {
@@ -73,5 +83,13 @@ public class Lecon {
 
   public void setCours(Cours cours) {
     this.cours = cours;
+  }
+
+  public List<Exercice> getExercices() {
+    return exercices;
+  }
+
+  public void setExercices(List<Exercice> exercices) {
+    this.exercices = exercices;
   }
 }

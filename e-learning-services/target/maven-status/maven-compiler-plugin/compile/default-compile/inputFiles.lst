@@ -1,5 +1,8 @@
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/service/rest/CoursRestService.java
+/home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Exercice.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Cours.java
+/home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Category.java
+/home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Examen.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/service/utils/CoursService.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Lecon.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/dao/CoursDao.java

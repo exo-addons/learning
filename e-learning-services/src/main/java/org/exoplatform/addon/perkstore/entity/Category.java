@@ -11,6 +11,7 @@ import java.util.List;
 public class Category {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "ID_CATEGORY")
   private Long        idCategory;
   @Column(name = "LIBELLE_CATEGORY")

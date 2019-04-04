@@ -1,4 +1,4 @@
-Thu Apr 04 09:02:41 CET 2019
+Thu Apr 04 17:58:53 CET 2019
 /home/enigma/.m2/repository/com/googlecode/mp4parser/isoparser/1.0-RC-1/isoparser-1.0-RC-1.jar!com/googlecode/mp4parser/RequiresParseDetailAspect.class [warning] can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
 	
 /home/enigma/.m2/repository/com/googlecode/mp4parser/isoparser/1.0-RC-1/isoparser-1.0-RC-1.jar!com/googlecode/mp4parser/RequiresParseDetailAspect.class [warning] advice defined in com.googlecode.mp4parser.RequiresParseDetailAspect has not been applied [Xlint:adviceDidNotMatch]

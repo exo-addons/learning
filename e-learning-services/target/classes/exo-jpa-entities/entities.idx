@@ -1,2 +1,5 @@
+org.exoplatform.addon.perkstore.entity.Exercice
+org.exoplatform.addon.perkstore.entity.Category
 org.exoplatform.addon.perkstore.entity.Cours
+org.exoplatform.addon.perkstore.entity.Examen
 org.exoplatform.addon.perkstore.entity.Lecon

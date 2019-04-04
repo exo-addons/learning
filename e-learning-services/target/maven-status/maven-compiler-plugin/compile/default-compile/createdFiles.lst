@@ -1,6 +1,9 @@
+org/exoplatform/addon/perkstore/entity/Exercice.class
 org/exoplatform/addon/perkstore/dao/CoursDao.class
 exo-jpa-entities/entities.idx
+org/exoplatform/addon/perkstore/service/utils/CoursService.class
 org/exoplatform/addon/perkstore/entity/Cours.class
 org/exoplatform/addon/perkstore/service/rest/CoursRestService.class
 org/exoplatform/addon/perkstore/entity/Lecon.class
-org/exoplatform/addon/perkstore/service/utils/CoursService.class
+org/exoplatform/addon/perkstore/entity/Examen.class
+org/exoplatform/addon/perkstore/entity/Category.class

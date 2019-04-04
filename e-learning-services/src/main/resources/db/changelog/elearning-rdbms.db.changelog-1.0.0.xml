@@ -7,15 +7,11 @@
   <!-- Managing both DB that use sequences and db that use auto increment -->
   <property name="autoIncrement" value="true" dbms="mysql,mssql,h2,sybase,db2,hsqldb"/>
   <property name="autoIncrement" value="false" dbms="oracle,postgresql"/>
-
-  <changeSet author="perkstore" id="1.0.0-0" dbms="oracle,postgresql">
-    <createSequence sequenceName="SEQ_ADDONS_PERKSTORE_PRODUCT_ID" startValue="1"/>
-    <createSequence sequenceName="SEQ_ADDONS_PERKSTORE_PRODUCT_ORDER_ID" startValue="1"/>
-  </changeSet>
-  <changeSet author="perkstore" id="1.0.0-1">
+    
+  <changeSet author="elearning" id="1.0.0-1">
     <createTable tableName="ELEARNING_LECON">
       <column name="ID_LECON" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
-        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PERKSTORE_LECON"/>
+        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LECON_ID"/>
       </column>
       <column name="DESCRIPTION_LECON" type="NVARCHAR(200)"/>
       <column name="TITRE_LECON" type="NVARCHAR(20)"/>
@@ -23,10 +19,10 @@
     </createTable>
   </changeSet>
 
-  <changeSet author="perkstore" id="1.0.0-2">
+  <changeSet author="elearning" id="1.0.0-2">
     <createTable tableName="ELEARNING_COURS">
       <column name="ID_COURS" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
-        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PERKSTORE_COURS"/>
+        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_COURS_ID"/>
       </column>
       <column name="LIBELLE_COURS" type="NVARCHAR(20)"/>
       <column name="VISIBILITY_COURS" type="BOOLEAN"/>
@@ -35,12 +31,9 @@
       <column name="NB_PERSONNE" type="INT"/>
       <column name="RECOMPENSE_COURS" type="NVARCHAR(20)"/>
     </createTable>
-    <modifySql dbms="mysql">
-      <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
-    </modifySql>
   </changeSet>
 
-  <changeSet author="perkstore" id="1.0.0-3">
+  <changeSet author="elearning" id="1.0.0-3">
     <addColumn tableName="ELEARNING_LECON">
       <column name="COURS_ID" type="BIGINT">
         <constraints nullable="false" foreignKeyName="FK_LECON_COURS_ATTACHMENTS"
@@ -48,12 +41,53 @@
       </column>
     </addColumn>
   </changeSet>
-    <changeSet author="perkstore" id="1.0.0-4">
-        <addColumn tableName="ELEARNING_CATEGORY">
+    <changeSet author="elearning" id="1.0.0-4">
+        <createTable tableName="ELEARNING_CATEGORY">
             <column name="ID_CATEGORY" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PERKSTORE_COURS"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CATEGORY_ID"/>
             </column>
-            <column></column>
+            <column name="LIBELLE_CATEGORY" type="VARCHAR(250)"/>
+        </createTable>
+        <addColumn tableName="ELEARNING_COURS">
+            <column name="CATEGORY_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_COURS_CATEGORY_ATTACHMENTS"
+                             references="ELEARNING_CATEGORY(ID_CATEGORY)"/>
+            </column>
         </addColumn>
+    </changeSet>
+    
+    <changeSet author="elearning" id="1.0.0-5">
+        <createTable tableName="ELEARNING_EXERCICE">
+            <column name="ID_EXERCICE" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CATEGORY_ID"/>
+            </column>
+            <column name="QUESTION_EXERCICE" type="VARCHAR(250)"/>
+            <column name="REPONSE_EXERCICE" type="VARCHAR(250)"/>
+            <column name="BAREME_EXERCICE" type="BIGINT"/>
+        </createTable>
+        <addColumn tableName="ELEARNING_EXERCICE">
+            <column name="LECON_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EXERCICE_LECON_ATTACHMENTS"
+                             references="ELEARNING_LECON(ID_LECON)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="elearning" id="1.0.0-6">
+        <createTable tableName="ELEARNING_EXAMEN">
+            <column name="ID_EXAMEN" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EXAMEN_ID"/>
+            </column>
+            <column name="LIBELLE_EXAMEN" type="VARCHAR(250)"/>
+            <column name="DATE_DEB_EXAMEN" type="DATE"/>
+            <column name="DATE_FIN_EXAMEN" type="DATE"/>
+            <column name="NBRE_TENTATIVE_EXAMEN" type="BIGINT"/>
+            <column name="RECOMPENSE_EXAMEN" type="VARCHAR(250)"/>
+        </createTable>
+            <addColumn tableName="ELEARNING_EXERCICE">
+                <column name="EXAMEN_ID" type="BIGINT">
+                    <constraints nullable="false" foreignKeyName="FK_EXERCICE_EXAMEN_ATTACHMENTS"
+                                 references="ELEARNING_EXAMEN(ID_EXAMEN)"/>
+                </column>
+            </addColumn>
     </changeSet>
 </databaseChangeLog>
