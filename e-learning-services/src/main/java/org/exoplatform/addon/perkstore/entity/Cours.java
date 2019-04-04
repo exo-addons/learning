@@ -4,6 +4,8 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @ExoEntity
 @Table(name = "ELEARNING_COURS")
@@ -24,6 +26,11 @@ public class Cours {
   private int nbPersonne;
   @Column(name ="RECOMPENSE_COURS")
   private String recompenseCours;
+  @OneToMany(cascade=CascadeType.ALL,mappedBy ="cours")
+  private List<Lecon> lecons;
+  @ManyToOne
+  @JoinColumn(name = "CATEGORY_ID")
+  private Category category;
 
   public Cours() {
   }
@@ -33,7 +40,7 @@ public class Cours {
                Date dateDebut,
                Date dateFin,
                int nbPersonne,
-               String recompenseCours) {
+               String recompenseCour) {
     this.libelleCours = libelleCours;
     this.visibilteCours = visibilteCours;
     this.dateDebut = dateDebut;
@@ -98,16 +105,11 @@ public class Cours {
     this.recompenseCours = recompenseCours;
   }
 
-  @Override
-  public String toString() {
-    return "Cours{" +
-        "idCours=" + idCours +
-        ", libelleCours='" + libelleCours + '\'' +
-        ", visibilteCours=" + visibilteCours +
-        ", dateDebut=" + dateDebut +
-        ", dateFin=" + dateFin +
-        ", nbPersonne=" + nbPersonne +
-        ", recompenseCours='" + recompenseCours + '\'' +
-        '}';
+  public List<Lecon> getLecons() {
+    return lecons;
+  }
+
+  public void setLecons(List<Lecon> lecons) {
+    this.lecons = lecons;
   }
 }

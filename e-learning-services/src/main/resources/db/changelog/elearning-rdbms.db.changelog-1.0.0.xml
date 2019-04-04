@@ -12,8 +12,18 @@
     <createSequence sequenceName="SEQ_ADDONS_PERKSTORE_PRODUCT_ID" startValue="1"/>
     <createSequence sequenceName="SEQ_ADDONS_PERKSTORE_PRODUCT_ORDER_ID" startValue="1"/>
   </changeSet>
-
   <changeSet author="perkstore" id="1.0.0-1">
+    <createTable tableName="ELEARNING_LECON">
+      <column name="ID_LECON" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PERKSTORE_LECON"/>
+      </column>
+      <column name="DESCRIPTION_LECON" type="NVARCHAR(200)"/>
+      <column name="TITRE_LECON" type="NVARCHAR(20)"/>
+      <column name="CONTENU_LECON" type="NVARCHAR(2000)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="perkstore" id="1.0.0-2">
     <createTable tableName="ELEARNING_COURS">
       <column name="ID_COURS" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
         <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PERKSTORE_COURS"/>
@@ -30,4 +40,20 @@
     </modifySql>
   </changeSet>
 
+  <changeSet author="perkstore" id="1.0.0-3">
+    <addColumn tableName="ELEARNING_LECON">
+      <column name="COURS_ID" type="BIGINT">
+        <constraints nullable="false" foreignKeyName="FK_LECON_COURS_ATTACHMENTS"
+                     references="ELEARNING_COURS(ID_COURS)"/>
+      </column>
+    </addColumn>
+  </changeSet>
+    <changeSet author="perkstore" id="1.0.0-4">
+        <addColumn tableName="ELEARNING_CATEGORY">
+            <column name="ID_CATEGORY" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PERKSTORE_COURS"/>
+            </column>
+            <column></column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

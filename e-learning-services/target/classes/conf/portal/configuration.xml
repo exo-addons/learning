@@ -7,6 +7,9 @@
     <type>org.exoplatform.addon.perkstore.entity.Cours</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.perkstore.entity.Lecon</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.perkstore.dao.CoursDao</type>
   </component>
   <component>
