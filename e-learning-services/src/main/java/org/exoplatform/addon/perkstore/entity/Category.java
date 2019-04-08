@@ -13,19 +13,18 @@ public class Category {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "ID_CATEGORY")
-  private Long        idCategory;
-  @Column(name = "LIBELLE_CATEGORY")
-  private String      libelleCategory;
+  private Long         idCategory;
+  @Column(name = "NAME_CATEGORY")
+  private String       nameCategory;
   @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
-  private List<Cours> cours;
+  private List<Course> course;
 
   public Category() {
   }
 
-  public Category(Long idCategory, String libelleCategory, List<Cours> cours) {
-    this.idCategory = idCategory;
-    this.libelleCategory = libelleCategory;
-    this.cours = cours;
+  public Category(String nameCategory, List<Course> course) {
+    this.nameCategory = nameCategory;
+    this.course = course;
   }
 
   public Long getIdCategory() {
@@ -36,19 +35,19 @@ public class Category {
     this.idCategory = idCategory;
   }
 
-  public String getLibelleCategory() {
-    return libelleCategory;
+  public String getNameCategory() {
+    return nameCategory;
   }
 
-  public void setLibelleCategory(String libelleCategory) {
-    this.libelleCategory = libelleCategory;
+  public void setNameCategory(String nameCategory) {
+    this.nameCategory = nameCategory;
   }
 
-  public List<Cours> getCours() {
-    return cours;
+  public List<Course> getCourse() {
+    return course;
   }
 
-  public void setCours(List<Cours> cours) {
-    this.cours = cours;
+  public void setCourse(List<Course> course) {
+    this.course = course;
   }
 }

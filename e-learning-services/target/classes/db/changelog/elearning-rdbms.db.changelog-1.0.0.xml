@@ -90,4 +90,72 @@
                 </column>
             </addColumn>
     </changeSet>
+    <changeSet author="elearning" id="1.0.0-7">
+        <createTable tableName="ELEARNING_TYPE_COMPTE">
+            <column name="ID_TYPE_COMPTE" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TYPE_COMPTE_ID"/>
+            </column>
+            <column name="LIBELLE_TYPE_COMPTE" type="VARCHAR(250)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="elearning" id="1.0.0-8">
+        <createTable tableName="ELEARNING_EMPLOYE">
+            <column name="ID_EMPLOYE" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EMPLOYE_ID"/>
+            </column>
+            <column name="NOM_EMPLOYE" type="VARCHAR(250)"/>
+            <column name="FONCTION_EMPLOYE" type="VARCHAR(250)"/>
+            <column name="SKILLS_EMPLOYE" type="VARCHAR(250)"/>
+            <column name="STATUT_EMPLOYE" type="BOOLEAN"/>
+        </createTable>
+        <addColumn tableName="ELEARNING_EMPLOYE">
+            <column name="TYPE_COMPTE_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EMPLOYE_TYPE_COMPTE_ATTACHMENTS"
+                             references="ELEARNING_TYPE_COMPTE(ID_TYPE_COMPTE)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="elearning" id="1.0.0-9">
+        <createTable tableName="ELEARNING_COURSE_REGISTRATION">
+            <column name="ID_REGISTRATION" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_REGISTRATION_ID"/>
+            </column>
+            <column name="REGISTEREDAT_REGISTRATION" type="DATE"/>
+            <column name="LEVEL_REGISTRATION" type="INT"/>
+        </createTable>
+        <addColumn tableName="ELEARNING_COURSE_REGISTRATION">
+            <column name="EMPLOYE_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_REGISTRATION_EMPLOYE_ATTACHMENTS"
+                             references="ELEARNING_EMPLOYE(ID_EMPLOYE)"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="ELEARNING_COURSE_REGISTRATION">
+            <column name="COURSE_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_REGISTRATION_COURSE_ATTACHMENTS"
+                             references="ELEARNING_COURS(ID_COURS)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="elearning" id="1.0.0-10">
+        <createTable tableName="ELEARNING_EXAM_REGISTRATION">
+            <column name="ID_EXAM" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EXAM_REGISTRATION_ID"/>
+            </column>
+            <column name="EXAMDAT_REGISTRATION" type="DATE"/>
+            <column name="NOTE_EXAM" type="INT"/>
+        </createTable>
+        <addColumn tableName="ELEARNING_EXAM_REGISTRATION">
+            <column name="EMPLOYE_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_EMPLOYE_ATTACHMENTS"
+                             references="ELEARNING_EMPLOYE(ID_EMPLOYE)"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="ELEARNING_EXAM_REGISTRATION">
+            <column name="EXAMEN_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_EXAMEN_ATTACHMENTS"
+                             references="ELEARNING_EXAMEN(ID_EXAMEN)"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

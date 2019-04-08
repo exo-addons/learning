@@ -260,7 +260,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.exoplatform.commons:commons-file-storage:5.2.0-RC09" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.exoplatform.social:social-component-common:5.2.0-RC09" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.exoplatform.gatein.portal:exo.portal.component.web.api:5.2.0-RC09" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.json:json:20070829" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.exoplatform.social:social-component-notification:5.2.0-RC09" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.exoplatform.social:social-component-service:5.2.0-RC09" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.sourceforge.nekohtml:nekohtml:1.9.22" level="project" />
@@ -287,5 +286,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.json:json:20070829" level="project" />
   </component>
 </module>

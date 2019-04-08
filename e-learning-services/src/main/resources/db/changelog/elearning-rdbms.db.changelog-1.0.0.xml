@@ -9,35 +9,35 @@
   <property name="autoIncrement" value="false" dbms="oracle,postgresql"/>
     
   <changeSet author="elearning" id="1.0.0-1">
-    <createTable tableName="ELEARNING_LECON">
-      <column name="ID_LECON" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
-        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LECON_ID"/>
+    <createTable tableName="ELEARNING_LESSON">
+      <column name="ID_LESSON" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LESSON_ID"/>
       </column>
-      <column name="DESCRIPTION_LECON" type="NVARCHAR(200)"/>
-      <column name="TITRE_LECON" type="NVARCHAR(20)"/>
-      <column name="CONTENU_LECON" type="NVARCHAR(2000)"/>
+      <column name="DESCRIPTION_LESSON" type="NVARCHAR(2000)"/>
+      <column name="TITLE_LESSON" type="NVARCHAR(20)"/>
+      <column name="CONTENT_LESSON" type="NVARCHAR(2000)"/>
     </createTable>
   </changeSet>
 
   <changeSet author="elearning" id="1.0.0-2">
-    <createTable tableName="ELEARNING_COURS">
-      <column name="ID_COURS" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
-        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_COURS_ID"/>
+    <createTable tableName="ELEARNING_COURSE">
+      <column name="ID_COURSE" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_COURSE_ID"/>
       </column>
-      <column name="LIBELLE_COURS" type="NVARCHAR(20)"/>
-      <column name="VISIBILITY_COURS" type="BOOLEAN"/>
-      <column name="DATE_DEB" type="DATE"/>
-      <column name="DATE_FIN" type="DATE"/>
-      <column name="NB_PERSONNE" type="INT"/>
-      <column name="RECOMPENSE_COURS" type="NVARCHAR(20)"/>
+      <column name="NAME_COURSE" type="NVARCHAR(20)"/>
+      <column name="VISIBILITY_COURSE" type="BOOLEAN"/>
+      <column name="DATE_START" type="DATE"/>
+      <column name="DATE_END" type="DATE"/>
+      <column name="NB_PERSON" type="INT"/>
+      <column name="REWARD_COURSE" type="NVARCHAR(20)"/>
     </createTable>
   </changeSet>
 
   <changeSet author="elearning" id="1.0.0-3">
-    <addColumn tableName="ELEARNING_LECON">
-      <column name="COURS_ID" type="BIGINT">
-        <constraints nullable="false" foreignKeyName="FK_LECON_COURS_ATTACHMENTS"
-                     references="ELEARNING_COURS(ID_COURS)"/>
+    <addColumn tableName="ELEARNING_LESSON">
+      <column name="COURSE_ID" type="BIGINT">
+        <constraints nullable="false" foreignKeyName="FK_LESSON_COURSE_ATTACHMENTS"
+                     references="ELEARNING_COURSE(ID_COURSE)"/>
       </column>
     </addColumn>
   </changeSet>
@@ -48,7 +48,7 @@
             </column>
             <column name="LIBELLE_CATEGORY" type="VARCHAR(250)"/>
         </createTable>
-        <addColumn tableName="ELEARNING_COURS">
+        <addColumn tableName="ELEARNING_COURSE">
             <column name="CATEGORY_ID" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="FK_COURS_CATEGORY_ATTACHMENTS"
                              references="ELEARNING_CATEGORY(ID_CATEGORY)"/>
@@ -57,37 +57,105 @@
     </changeSet>
     
     <changeSet author="elearning" id="1.0.0-5">
-        <createTable tableName="ELEARNING_EXERCICE">
-            <column name="ID_EXERCICE" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <createTable tableName="ELEARNING_EXERCISE">
+            <column name="ID_EXERCISE" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CATEGORY_ID"/>
             </column>
-            <column name="QUESTION_EXERCICE" type="VARCHAR(250)"/>
-            <column name="REPONSE_EXERCICE" type="VARCHAR(250)"/>
-            <column name="BAREME_EXERCICE" type="BIGINT"/>
+            <column name="QUESTION_EXERCISE" type="VARCHAR(2000)"/>
+            <column name="ANSWER_EXERCISE" type="VARCHAR(2000)"/>
+            <column name="SCALE_EXERCISE" type="BIGINT"/>
         </createTable>
-        <addColumn tableName="ELEARNING_EXERCICE">
-            <column name="LECON_ID" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="FK_EXERCICE_LECON_ATTACHMENTS"
-                             references="ELEARNING_LECON(ID_LECON)"/>
+        <addColumn tableName="ELEARNING_EXERCISE">
+            <column name="LESSON_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EXERCISE_LESSON_ATTACHMENTS"
+                             references="ELEARNING_LESSON(ID_LESSON)"/>
             </column>
         </addColumn>
     </changeSet>
     <changeSet author="elearning" id="1.0.0-6">
-        <createTable tableName="ELEARNING_EXAMEN">
-            <column name="ID_EXAMEN" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EXAMEN_ID"/>
+        <createTable tableName="ELEARNING_EXAM">
+            <column name="ID_EXAM" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EXAM_ID"/>
             </column>
-            <column name="LIBELLE_EXAMEN" type="VARCHAR(250)"/>
-            <column name="DATE_DEB_EXAMEN" type="DATE"/>
-            <column name="DATE_FIN_EXAMEN" type="DATE"/>
-            <column name="NBRE_TENTATIVE_EXAMEN" type="BIGINT"/>
-            <column name="RECOMPENSE_EXAMEN" type="VARCHAR(250)"/>
+            <column name="NAME_EXAM" type="VARCHAR(250)"/>
+            <column name="DATE_START_EXAM" type="DATE"/>
+            <column name="DATE_END_EXAM" type="DATE"/>
+            <column name="NB_BID_EXAM" type="BIGINT"/>
+            <column name="REWARD_EXAM" type="VARCHAR(250)"/>
         </createTable>
-            <addColumn tableName="ELEARNING_EXERCICE">
-                <column name="EXAMEN_ID" type="BIGINT">
-                    <constraints nullable="false" foreignKeyName="FK_EXERCICE_EXAMEN_ATTACHMENTS"
-                                 references="ELEARNING_EXAMEN(ID_EXAMEN)"/>
+            <addColumn tableName="ELEARNING_EXERCISE">
+                <column name="EXAM_ID" type="BIGINT">
+                    <constraints nullable="false" foreignKeyName="FK_EXERCISE_EXAM_ATTACHMENTS"
+                                 references="ELEARNING_EXAM(ID_EXAM)"/>
                 </column>
             </addColumn>
+    </changeSet>
+    <changeSet author="elearning" id="1.0.0-7">
+        <createTable tableName="ELEARNING_TYPE_PROFILE">
+            <column name="ID_TYPE_PROFILE" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TYPE_PROFILE_ID"/>
+            </column>
+            <column name="NAME_TYPE_PROFILE" type="VARCHAR(250)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="elearning" id="1.0.0-8">
+        <createTable tableName="ELEARNING_WORKER">
+            <column name="ID_WORKER" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_WORKER_ID"/>
+            </column>
+            <column name="NAME_WORKER" type="VARCHAR(250)"/>
+            <column name="POST_WORKER" type="VARCHAR(250)"/>
+            <column name="SKILLS_WORKER" type="VARCHAR(250)"/>
+            <column name="STATUS_WORKER" type="BOOLEAN"/>
+        </createTable>
+        <addColumn tableName="ELEARNING_WORKER">
+            <column name="ELEARNING_TYPE_PROFILE" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_WORKER_TYPE_PROFILE_ATTACHMENTS"
+                             references="ELEARNING_TYPE_PROFILE(ID_TYPE_PROFILE)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="elearning" id="1.0.0-9">
+        <createTable tableName="ELEARNING_COURSE_REGISTRATION">
+            <column name="ID_REGISTRATION" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_REGISTRATION_ID"/>
+            </column>
+            <column name="REGISTEREDAT_REGISTRATION" type="DATE"/>
+            <column name="LEVEL_REGISTRATION" type="INT"/>
+        </createTable>
+        <addColumn tableName="ELEARNING_COURSE_REGISTRATION">
+            <column name="WORKER_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_REGISTRATION_WORKER_ATTACHMENTS"
+                             references="ELEARNING_WORKER(ID_WORKER)"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="ELEARNING_COURSE_REGISTRATION">
+            <column name="COURSE_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_REGISTRATION_COURSE_ATTACHMENTS"
+                             references="ELEARNING_COURSE(ID_COURSE)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="elearning" id="1.0.0-10">
+        <createTable tableName="ELEARNING_EXAM_REGISTRATION">
+            <column name="ID_EXAM" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EXAM_REGISTRATION_ID"/>
+            </column>
+            <column name="EXAMDAT_REGISTRATION" type="DATE"/>
+            <column name="NOTE_EXAM" type="INT"/>
+        </createTable>
+        <addColumn tableName="ELEARNING_EXAM_REGISTRATION">
+            <column name="EMPLOYE_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_EMPLOYE_ATTACHMENTS"
+                             references="ELEARNING_EMPLOYE(ID_EMPLOYE)"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="ELEARNING_EXAM_REGISTRATION">
+            <column name="EXAMEN_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_EXAMEN_ATTACHMENTS"
+                             references="ELEARNING_EXAMEN(ID_EXAMEN)"/>
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

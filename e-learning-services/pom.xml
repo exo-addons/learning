@@ -72,6 +72,12 @@
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <build>
     <finalName>exo-elearning-services</finalName>

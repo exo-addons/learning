@@ -7,7 +7,28 @@
     <type>org.exoplatform.addon.perkstore.entity.Cours</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.perkstore.entity.Examen</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.perkstore.entity.Lecon</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.entity.Category</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.entity.Exercice</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.entity.Employe</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.entity.TypeCompte</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.entity.CoursRegistration</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.entity.ExamRegistration</type>
   </component>
   <component>
     <type>org.exoplatform.addon.perkstore.dao.CoursDao</type>
