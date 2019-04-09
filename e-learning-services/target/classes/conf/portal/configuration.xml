@@ -4,40 +4,46 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd" xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
 
   <component>
-    <type>org.exoplatform.addon.perkstore.entity.Cours</type>
+    <type>org.exoplatform.addon.perkstore.entity.Course</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.perkstore.entity.Examen</type>
+    <type>org.exoplatform.addon.perkstore.entity.Exam</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.perkstore.entity.Lecon</type>
+    <type>org.exoplatform.addon.perkstore.entity.Lesson</type>
   </component>
   <component>
     <type>org.exoplatform.addon.perkstore.entity.Category</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.perkstore.entity.Exercice</type>
+    <type>org.exoplatform.addon.perkstore.entity.Exercise</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.perkstore.entity.Employe</type>
+    <type>org.exoplatform.addon.perkstore.entity.Worker</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.perkstore.entity.TypeCompte</type>
+    <type>org.exoplatform.addon.perkstore.entity.TypeProfile</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.perkstore.entity.CoursRegistration</type>
+    <type>org.exoplatform.addon.perkstore.entity.CourseRegistration</type>
   </component>
   <component>
     <type>org.exoplatform.addon.perkstore.entity.ExamRegistration</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.perkstore.dao.CoursDao</type>
+    <type>org.exoplatform.addon.perkstore.dao.CourseDao</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.perkstore.service.rest.CoursRestService</type>
+    <type>org.exoplatform.addon.perkstore.service.rest.CourseRestService</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.perkstore.service.utils.CoursService</type>
+    <type>org.exoplatform.addon.perkstore.service.utils.CourseService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.dto.CourseDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.dto.CourseMapper</type>
   </component>
 
   <external-component-plugins>

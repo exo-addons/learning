@@ -6,7 +6,7 @@
       md-placeholder="Add Cours..."
       :md-format="formatName">
       <label>Cours</label>
-      <div class="md-helper-text">Cherchez les cours disponibles </div>
+      <div class="md-helper-text">Cherchez les course disponibles </div>
     </md-chips>
   </div>
 </template>

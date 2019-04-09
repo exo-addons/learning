@@ -6,7 +6,7 @@
         max-width="500px">
         <v-card>
           <v-card-title>
-            <span class="headline">List des cours</span>
+            <span class="headline">List des course</span>
           </v-card-title>
 
           <v-card-text>

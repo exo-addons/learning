@@ -27,7 +27,7 @@ public class Lesson {
   @JoinColumn(name = "COURSE_ID")
   private Course course;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecon")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "lesson")
   private List<Exercise> exercises;
 
   public Lesson() {

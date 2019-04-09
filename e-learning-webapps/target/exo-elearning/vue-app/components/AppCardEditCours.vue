@@ -1,11 +1,11 @@
 <template>
-    <div class="cours">
-        <h1 class="subheading grey--text">cours</h1>
+    <div class="course">
+        <h1 class="subheading grey--text">course</h1>
 
         <v-container class="my-1">
 
             <v-layout>
-                <v-flex md4 lg4 v-for="c in cours" :key="c.name">
+                <v-flex md4 lg4 v-for="c in course" :key="c.name">
                     <v-card flat class="text-xs-center ma-1 elevation-10">
                         <v-card-text>
                             <div>
@@ -48,7 +48,7 @@
     export default {
         data() {
             return {
-                cours: [
+                course: [
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'The Net Ninja', categorie: 'Web developer' },
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'Ryu', categorie: 'Graphic designer' },
                     { src:'yy',name: 'Chun Li', categorie: 'Web developer' },

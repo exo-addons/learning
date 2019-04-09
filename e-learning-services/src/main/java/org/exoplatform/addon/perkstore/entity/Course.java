@@ -41,15 +41,13 @@ public class Course {
                 Date dateEnd,
                 int nbPerson,
                 String rewardCourse,
-                List<CourseRegistration> registrations,
                 Category category) {
-    NameCourse = nameCourse;
+    this.NameCourse = nameCourse;
     this.visibiltyCourse = visibiltyCourse;
     this.dateStart = dateStart;
     this.dateEnd = dateEnd;
     this.nbPerson = nbPerson;
     this.rewardCourse = rewardCourse;
-    this.registrations = registrations;
     this.category = category;
   }
 

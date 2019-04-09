@@ -19,10 +19,10 @@ public class Exercise {
   @Column(name ="SCALE_EXERCISE")
   private Long   scaleExercise;
   @ManyToOne
-  @JoinColumn(name = "LECON_ID")
+  @JoinColumn(name = "LESSON_ID")
   private Lesson lesson;
   @ManyToOne
-  @JoinColumn(name = "EXAMEN_ID")
+  @JoinColumn(name = "EXAM_ID")
   private Exam   exam;
 
   public Exercise() {

@@ -1,7 +1,10 @@
-Mon Apr 08 15:21:50 CET 2019
+Tue Apr 09 17:48:31 CET 2019
 /home/enigma/.m2/repository/com/googlecode/mp4parser/isoparser/1.0-RC-1/isoparser-1.0-RC-1.jar!com/googlecode/mp4parser/RequiresParseDetailAspect.class [warning] can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
 	
-/home/enigma/.m2/repository/com/googlecode/mp4parser/isoparser/1.0-RC-1/isoparser-1.0-RC-1.jar!com/googlecode/mp4parser/RequiresParseDetailAspect.class [warning] advice defined in com.googlecode.mp4parser.RequiresParseDetailAspect has not been applied [Xlint:adviceDidNotMatch]
+org/exoplatform/addon/perkstore/service/utils/CourseService.java:90 [warning] can not implement lazyTjp on this joinpoint method-execution(org.exoplatform.addon.perkstore.dto.CourseDTO org.exoplatform.addon.perkstore.service.utils.CourseService.addCourse(org.exoplatform.addon.perkstore.dto.CourseDTO)) because around advice is used [Xlint:canNotImplementLazyTjp]
 	
-/home/enigma/.m2/repository/org/exoplatform/commons/commons-component-common/5.2.0-RC09/commons-component-common-5.2.0-RC09.jar!org/exoplatform/commons/persistence/impl/ExoTransactionalAspect.class [warning] advice defined in org.exoplatform.commons.persistence.impl.ExoTransactionalAspect has not been applied [Xlint:adviceDidNotMatch]
+	see also: /home/enigma/.m2/repository/org/exoplatform/commons/commons-component-common/5.2.0-RC09/commons-component-common-5.2.0-RC09.jar!org/exoplatform/commons/persistence/impl/ExoTransactionalAspect.class::0
+Join point 'method-execution(org.exoplatform.addon.perkstore.dto.CourseDTO org.exoplatform.addon.perkstore.service.utils.CourseService.addCourse(org.exoplatform.addon.perkstore.dto.CourseDTO))' in Type 'org.exoplatform.addon.perkstore.service.utils.CourseService' (CourseService.java:90) advised by around advice from 'org.exoplatform.commons.persistence.impl.ExoTransactionalAspect' (commons-component-common-5.2.0-RC09.jar!ExoTransactionalAspect.class(from ExoTransactionalAspect.java))
+	
+/home/enigma/.m2/repository/com/googlecode/mp4parser/isoparser/1.0-RC-1/isoparser-1.0-RC-1.jar!com/googlecode/mp4parser/RequiresParseDetailAspect.class [warning] advice defined in com.googlecode.mp4parser.RequiresParseDetailAspect has not been applied [Xlint:adviceDidNotMatch]
 	

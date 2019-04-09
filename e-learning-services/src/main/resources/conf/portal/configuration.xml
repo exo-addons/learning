@@ -39,6 +39,12 @@
   <component>
     <type>org.exoplatform.addon.perkstore.service.utils.CourseService</type>
   </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.dto.CourseDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.perkstore.dto.CourseMapper</type>
+  </component>
 
   <external-component-plugins>
     <target-component>org.exoplatform.commons.api.persistence.DataInitializer</target-component>

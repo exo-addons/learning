@@ -31,7 +31,7 @@
             <v-card
                     class="mb-5"
                     height="650px">
-                <app-edit-cours />
+                <app-edit-course />
             </v-card>
 
             <v-btn
@@ -72,7 +72,7 @@
                             </v-flex>
                             <v-layout>
                                 <v-flex md12>
-                                    <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Catégorie de cours</p>
+                                    <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Catégorie de course</p>
                                 </v-flex>
                             </v-layout>
                             <v-layout>
@@ -135,7 +135,7 @@
                             <div class="para_border">
                                 <v-layout>
                                     <v-flex md6>
-                                        <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1 pa-2">Upload image de cours</p>
+                                        <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1 pa-2">Upload image de course</p>
                                     </v-flex>
                                     <v-flex md6>
                                         <upload-btn icon>
@@ -197,7 +197,7 @@
                                     :rules="inputRules" />
                         </v-flex>
                         <v-flex md12>
-                            <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du cours</p>
+                            <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du course</p>
                         </v-flex>
                         <v-flex md12>
                             <v-text-field

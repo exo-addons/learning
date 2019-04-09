@@ -1,9 +1,9 @@
-org.exoplatform.addon.perkstore.entity.Exercice
+org.exoplatform.addon.perkstore.entity.CourseRegistration
 org.exoplatform.addon.perkstore.entity.Category
-org.exoplatform.addon.perkstore.entity.Cours
-org.exoplatform.addon.perkstore.entity.Examen
-org.exoplatform.addon.perkstore.entity.CoursRegistration
-org.exoplatform.addon.perkstore.entity.TypeCompte
-org.exoplatform.addon.perkstore.entity.Employe
-org.exoplatform.addon.perkstore.entity.Lecon
+org.exoplatform.addon.perkstore.entity.Exercise
+org.exoplatform.addon.perkstore.entity.Worker
+org.exoplatform.addon.perkstore.entity.Course
+org.exoplatform.addon.perkstore.entity.Lesson
+org.exoplatform.addon.perkstore.entity.Exam
 org.exoplatform.addon.perkstore.entity.ExamRegistration
+org.exoplatform.addon.perkstore.entity.TypeProfile

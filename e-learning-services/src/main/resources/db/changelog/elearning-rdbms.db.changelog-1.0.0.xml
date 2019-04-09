@@ -46,7 +46,7 @@
             <column name="ID_CATEGORY" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CATEGORY_ID"/>
             </column>
-            <column name="LIBELLE_CATEGORY" type="VARCHAR(250)"/>
+            <column name="NAME_CATEGORY" type="VARCHAR(250)"/>
         </createTable>
         <addColumn tableName="ELEARNING_COURSE">
             <column name="CATEGORY_ID" type="BIGINT">
@@ -109,7 +109,7 @@
             <column name="STATUS_WORKER" type="BOOLEAN"/>
         </createTable>
         <addColumn tableName="ELEARNING_WORKER">
-            <column name="ELEARNING_TYPE_PROFILE" type="BIGINT">
+            <column name="TYPE_PROFILE_ID" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="FK_WORKER_TYPE_PROFILE_ATTACHMENTS"
                              references="ELEARNING_TYPE_PROFILE(ID_TYPE_PROFILE)"/>
             </column>
@@ -146,15 +146,15 @@
             <column name="NOTE_EXAM" type="INT"/>
         </createTable>
         <addColumn tableName="ELEARNING_EXAM_REGISTRATION">
-            <column name="EMPLOYE_ID" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_EMPLOYE_ATTACHMENTS"
-                             references="ELEARNING_EMPLOYE(ID_EMPLOYE)"/>
+            <column name="WORKER_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_WORKER_ATTACHMENTS"
+                             references="ELEARNING_WORKER(ID_WORKER)"/>
             </column>
         </addColumn>
         <addColumn tableName="ELEARNING_EXAM_REGISTRATION">
-            <column name="EXAMEN_ID" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_EXAMEN_ATTACHMENTS"
-                             references="ELEARNING_EXAMEN(ID_EXAMEN)"/>
+            <column name="EXAM_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_EXAM_ATTACHMENTS"
+                             references="ELEARNING_EXAM(ID_EXAM)"/>
             </column>
         </addColumn>
     </changeSet>

@@ -8,7 +8,7 @@
       </v-layout>
       <v-layout>
         <v-flex
-          v-for="person in cours"
+          v-for="person in course"
           :key="person.libelle"
           md4
           lg4>
@@ -45,7 +45,7 @@
         components:{AppSearchCardMain},
         data() {
             return {
-                cours: [
+                course: [
                     { libelle: 'The Net Ninja', editeurName: 'Web developer',etat:"disponible",src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'},
                     { libelle: 'Ryu', editeurName: 'Graphic designer',etat:"disponible",src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'},
                     { libelle: 'Chun Li', editeurName: 'Web developer' ,etat:"disponible",src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'},
