@@ -27,9 +27,6 @@ public class Lesson {
   @JoinColumn(name = "COURSE_ID")
   private Course course;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "lesson")
-  private List<Exercise> exercises;
-
   public Lesson() {
   }
 
@@ -41,7 +38,6 @@ public class Lesson {
     this.titleLesson = titreLesson;
     this.contentLesson = contentLesson;
     this.course = course;
-    this.exercises = exercises;
   }
 
   public Long getIdLesson() {
@@ -84,11 +80,4 @@ public class Lesson {
     this.course = course;
   }
 
-  public List<Exercise> getExercises() {
-    return exercises;
-  }
-
-  public void setExercises(List<Exercise> exercises) {
-    this.exercises = exercises;
-  }
 }

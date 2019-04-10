@@ -9,26 +9,30 @@ import java.util.Date;
 public class CourseDTO implements Serializable {
   private Long   idCourse;
   private String   NameCourse;
-  private Boolean  visibilityCourse;
-  private Date     dateStart;
-  private Date     dateEnd;
+  private int visibilityCourse;
+  private String     dateStart;
+  private String     dateEnd;
   private int      nbPerson;
   private String   rewardCourse;
-  private Category category;
-  //private List<CourseRegistrationDTO> courseRegistrations;
+  private Long idCategory;
 
   public CourseDTO() {
   }
 
-  public CourseDTO(Course c ) {
-    this.idCourse=c.getIdCourse();
-    this.NameCourse = c.getNameCourse();
-    this.visibilityCourse = c.getVisibiltyCourse();
-    this.dateStart = c.getDateStart();
-    this.dateEnd = c.getDateEnd();
-    this.nbPerson = c.getNbPerson();
-    this.rewardCourse = c.getRewardCourse();
-    this.category = c.getCategory();
+  public CourseDTO(String nameCourse,
+                   int visibilityCourse,
+                   String dateStart,
+                   String dateEnd,
+                   int nbPerson,
+                   String rewardCourse,
+                   Long idCategory) {
+    NameCourse = nameCourse;
+    this.visibilityCourse = visibilityCourse;
+    this.dateStart = dateStart;
+    this.dateEnd = dateEnd;
+    this.nbPerson = nbPerson;
+    this.rewardCourse = rewardCourse;
+    this.idCategory = idCategory;
   }
 
   public Long getIdCourse() {
@@ -47,27 +51,27 @@ public class CourseDTO implements Serializable {
     NameCourse = nameCourse;
   }
 
-  public Boolean getVisibilityCourse() {
+  public int getVisibilityCourse() {
     return visibilityCourse;
   }
 
-  public void setVisibilityCourse(Boolean visibilityCourse) {
+  public void setVisibilityCourse(int visibilityCourse) {
     this.visibilityCourse = visibilityCourse;
   }
 
-  public Date getDateStart() {
+  public String getDateStart() {
     return dateStart;
   }
 
-  public void setDateStart(Date dateStart) {
+  public void setDateStart(String dateStart) {
     this.dateStart = dateStart;
   }
 
-  public Date getDateEnd() {
+  public String getDateEnd() {
     return dateEnd;
   }
 
-  public void setDateEnd(Date dateEnd) {
+  public void setDateEnd(String dateEnd) {
     this.dateEnd = dateEnd;
   }
 
@@ -87,11 +91,11 @@ public class CourseDTO implements Serializable {
     this.rewardCourse = rewardCourse;
   }
 
-  public Category getCategory() {
-    return category;
+  public Long getIdCategory() {
+    return idCategory;
   }
 
-  public void setCategory(Category category) {
-    this.category = category;
+  public void setIdCategory(Long idCategory) {
+    this.idCategory = idCategory;
   }
 }

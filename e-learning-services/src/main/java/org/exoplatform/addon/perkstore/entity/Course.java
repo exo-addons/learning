@@ -9,6 +9,14 @@ import java.util.List;
 @Entity
 @ExoEntity
 @Table(name = "ELEARNING_COURSE")
+
+/*@NamedQueries({
+
+    @NamedQuery(
+        name = "Course.getCategoryCours",
+        query = "SELECT c.idCategory FROM Course cr,Category c where c.idCategory = cr.idCourse AND cr.idCourse:=id"
+    )
+})*/
 public class Course {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,8 +34,6 @@ public class Course {
   private int                      nbPerson;
   @Column(name ="REWARD_COURSE")
   private String                   rewardCourse;
-  @OneToMany(cascade=CascadeType.ALL,mappedBy = "course")
-  private List<CourseRegistration> registrations;
   @ManyToOne
   @JoinColumn(name = "CATEGORY_ID")
   private Category                 category;
@@ -106,15 +112,6 @@ public class Course {
   public void setRewardCourse(String rewardCourse) {
     this.rewardCourse = rewardCourse;
   }
-
-  public List<CourseRegistration> getRegistrations() {
-    return registrations;
-  }
-
-  public void setRegistrations(List<CourseRegistration> registrations) {
-    this.registrations = registrations;
-  }
-
   public Category getCategory() {
     return category;
   }

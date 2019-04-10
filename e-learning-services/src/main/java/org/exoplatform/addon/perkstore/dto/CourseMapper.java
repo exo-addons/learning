@@ -1,4 +1,6 @@
+/*
 package org.exoplatform.addon.perkstore.dto;
+import org.exoplatform.addon.perkstore.entity.Category;
 import org.exoplatform.addon.perkstore.entity.Course;
 import org.mapstruct.Mapper;
 
@@ -20,6 +22,7 @@ public class CourseMapper {
                  .collect(Collectors.toList());
   }
   public Course courseDTOToCourse(CourseDTO courseDTO){
+    CategoryDTO categoryDTO=null;//new Category(1L,"llll");
     try {
       if(courseDTO==null){
         return null;
@@ -31,7 +34,9 @@ public class CourseMapper {
         course.setNbPerson(courseDTO.getNbPerson());
         course.setDateStart(courseDTO.getDateStart());
         course.setDateEnd(courseDTO.getDateEnd());
-        course.setCategory(courseDTO.getCategory());
+        System.out.println("id categorie"+categoryDTO.getIdCategory());
+        categoryDTO.setIdCategory(courseDTO.getIdCategory());
+        course.setCategory(cat);
         return course;
 
       }
@@ -48,3 +53,4 @@ public class CourseMapper {
                      .collect(Collectors.toList());
   }
 }
+*/

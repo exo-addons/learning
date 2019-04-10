@@ -1,4 +1,5 @@
 org/exoplatform/addon/perkstore/entity/ExamRegistration.class
+org/exoplatform/addon/perkstore/dao/CategoryDao.class
 exo-jpa-entities/entities.idx
 org/exoplatform/addon/perkstore/dto/CourseRegistrationDTO.class
 org/exoplatform/addon/perkstore/entity/Exercise.class
@@ -9,7 +10,6 @@ org/exoplatform/addon/perkstore/entity/Exam.class
 org/exoplatform/addon/perkstore/service/rest/CourseRestService.class
 org/exoplatform/addon/perkstore/dao/CourseDao.class
 org/exoplatform/addon/perkstore/dto/CategoryDTO.class
-org/exoplatform/addon/perkstore/dto/CourseMapper.class
 org/exoplatform/addon/perkstore/dto/CourseDTO.class
 org/exoplatform/addon/perkstore/service/utils/CourseService.class
 org/exoplatform/addon/perkstore/entity/Category.class

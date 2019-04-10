@@ -16,15 +16,18 @@ public class Category {
   private Long         idCategory;
   @Column(name = "NAME_CATEGORY")
   private String       nameCategory;
-  @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
-  private List<Course> course;
 
   public Category() {
   }
 
-  public Category(String nameCategory, List<Course> course) {
+  public Category(Long idCategory) {
+    this.idCategory=idCategory;
+  }
+
+
+  public Category(Long idCategory,String nameCategory) {
+    this.idCategory=idCategory;
     this.nameCategory = nameCategory;
-    this.course = course;
   }
 
   public Long getIdCategory() {
@@ -43,11 +46,4 @@ public class Category {
     this.nameCategory = nameCategory;
   }
 
-  public List<Course> getCourse() {
-    return course;
-  }
-
-  public void setCourse(List<Course> course) {
-    this.course = course;
-  }
 }
