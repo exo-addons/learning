@@ -7,13 +7,13 @@
     <application-name>exo-perk-store</application-name>
     <portlet-name>PerkStore</portlet-name>
     <skin-name>Default</skin-name>
-    <css-path>/css/perkstore.css</css-path>
+    <css-path>/css/elearning.css</css-path>
   </portlet-skin>
   <portlet-skin>
     <application-name>exo-perk-store</application-name>
     <portlet-name>PerkStore</portlet-name>
     <skin-name>Enterprise</skin-name>
-    <css-path>/css/perkstore.css</css-path>
+    <css-path>/css/elearning.css</css-path>
   </portlet-skin>
 -->
 

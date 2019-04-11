@@ -1,4 +1,4 @@
-package org.exoplatform.addon.perkstore.dto;
+package org.exoplatform.addon.elearning.dto;
 
 import java.io.Serializable;
 

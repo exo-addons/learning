@@ -6,7 +6,7 @@
 
    <portlet>
      <portlet-name>Elearning</portlet-name>
-     <display-name xml:lang="EN">Perk Store Application</display-name>
+     <display-name xml:lang="EN">Elearning Application</display-name>
      <portlet-class>org.exoplatform.commons.api.portlet.GenericDispatchedViewPortlet</portlet-class>
      <init-param>
       <name>portlet-view-dispatched-file-path</name>

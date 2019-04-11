@@ -1,4 +1,4 @@
-package org.exoplatform.addon.perkstore.entity;
+package org.exoplatform.addon.elearning.entity;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
 

@@ -1,4 +1,4 @@
-package org.exoplatform.addon.perkstore.entity;
+package org.exoplatform.addon.elearning.entity;
 
 /*
  this class define with any space will use connect:"Espace Apprenant" or "Espace Editeur"

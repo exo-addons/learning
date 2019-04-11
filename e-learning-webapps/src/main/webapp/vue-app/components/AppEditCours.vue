@@ -1,84 +1,84 @@
 <template>
     <div class="team">
-      <div>
-      <v-dialog
-        v-model="dialog"
-        max-width="500px">
-        <v-card>
-          <v-card-title>
-            <span class="headline">List des course</span>
-          </v-card-title>
+        <div>
+            <v-dialog
+                    v-model="dialog"
+                    max-width="500px">
+                <v-card>
+                    <v-card-title>
+                        <span class="headline">List des cours</span>
+                    </v-card-title>
 
-          <v-card-text>
-            <v-container grid-list-md>
-              <v-layout wrap>
-                <v-flex
-                  xs12
-                  sm6
-                  md4>
-                  <v-text-field v-model="editedItem.fat" label="Fat (g)" />
-                </v-flex>
-                <v-flex
-                  xs12
-                  sm6
-                  md4>
-                  <v-text-field v-model="editedItem.carbs" label="Carbs (g)" />
-                </v-flex>
-                <v-flex
-                  xs12
-                  sm6
-                  md4>
-                  <v-text-field v-model="editedItem.protein" label="Protein (g)" />
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card-text>
+                    <v-card-text>
+                        <v-container grid-list-md>
+                            <v-layout wrap>
+                                <v-flex
+                                        xs12
+                                        sm6
+                                        md4>
+                                    <v-text-field v-model="editedItem.fat" label="Fat (g)" />
+                                </v-flex>
+                                <v-flex
+                                        xs12
+                                        sm6
+                                        md4>
+                                    <v-text-field v-model="editedItem.carbs" label="Carbs (g)" />
+                                </v-flex>
+                                <v-flex
+                                        xs12
+                                        sm6
+                                        md4>
+                                    <v-text-field v-model="editedItem.protein" label="Protein (g)" />
+                                </v-flex>
+                            </v-layout>
+                        </v-container>
+                    </v-card-text>
 
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              color="blue darken-1"
-              flat
-              @click="close">
-              Cancel
-            </v-btn>
-            <v-btn
-              color="blue darken-1"
-              flat
-              @click="save">
-              Save
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+                    <v-card-actions>
+                        <v-spacer />
+                        <v-btn
+                                color="blue darken-1"
+                                flat
+                                @click="close">
+                            Cancel
+                        </v-btn>
+                        <v-btn
+                                color="blue darken-1"
+                                flat
+                                @click="save">
+                            Save
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+        </div>
+        <v-data-table
+                :headers="headers"
+                :items="desserts"
+                class="elevation-1">
+            <template slot="items" slot-scope="props">
+                <td class="text-xs-left">{{ props.item.fat }}</td>
+                <td class="text-xs-left">{{ props.item.carbs }}</td>
+                <td class=" text-xs-left layout px-0">
+                    <v-icon
+                            flat
+                            class="mr-2"
+                            @click="editItem(props.item)">
+                        edit
+                    </v-icon>
+                    <v-icon
+                            flat
+                            @click="deleteItem(props.item)">
+                        delete
+                    </v-icon>
+                </td>
+            </template>
+            <template v-slot:no-data>
+                <v-btn color="primary" @click="initialize">Reset</v-btn>
+            </template>
+        </v-data-table>
+        <AppCardEditCours></AppCardEditCours> -->
     </div>
-    <v-data-table
-      :headers="headers"
-      :items="desserts"
-      class="elevation-1">
-      <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.fat }}</td>
-        <td class="text-xs-left">{{ props.item.carbs }}</td>
-        <td class=" text-xs-left layout px-0">
-          <v-icon
-            flat
-            class="mr-2"
-            @click="editItem(props.item)">
-            edit
-          </v-icon>
-          <v-icon
-            flat
-            @click="deleteItem(props.item)">
-            delete
-          </v-icon>
-        </td>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template>
-    </v-data-table>
-      <AppCardEditCours></AppCardEditCours>
-  </div>
 </template>
 
 <script>

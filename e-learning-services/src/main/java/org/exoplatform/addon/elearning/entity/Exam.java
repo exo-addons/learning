@@ -1,4 +1,4 @@
-package org.exoplatform.addon.perkstore.entity;
+package org.exoplatform.addon.elearning.entity;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
@@ -23,8 +23,6 @@ public class Exam {
   private Long           nbBidExam;
   @Column(name = "REWARD_EXAM")
   private String         rewardExam;
-  @OneToMany(mappedBy = "exam")
-  private List<Exercise> exercises;
 
   @OneToMany(cascade=CascadeType.ALL,mappedBy = "exam")
   private List<ExamRegistration> examregistrations;
@@ -36,14 +34,12 @@ public class Exam {
               Date dateStartExam,
               Date dateEndExam,
               Long nbBidExam,
-              String rewardExam,
-              List<Exercise> exercises, List<ExamRegistration> examregistrations) {
+              String rewardExam) {
     this.nameExam = nameExam;
     this.dateStartExam = dateStartExam;
     this.dateEndExam = dateEndExam;
     this.nbBidExam = nbBidExam;
     this.rewardExam = rewardExam;
-    this.exercises = exercises;
     this.examregistrations = examregistrations;
   }
 
@@ -93,18 +89,6 @@ public class Exam {
 
   public void setRewardExam(String rewardExam) {
     this.rewardExam = rewardExam;
-  }
-
-  public List<Exercise> getExercises() {
-    return exercises;
-  }
-
-  public void setExercises(List<Exercise> exercises) {
-    this.exercises = exercises;
-  }
-
-  public List<ExamRegistration> getExamregistrations() {
-    return examregistrations;
   }
 
   public void setExamregistrations(List<ExamRegistration> examregistrations) {

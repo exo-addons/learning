@@ -51,7 +51,7 @@
                 course: [
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'The Net Ninja', categorie: 'Web developer' },
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'Ryu', categorie: 'Graphic designer' },
-                    { src:'yy',name: 'Chun Li', categorie: 'Web developer' },
+                   // { src:'yy',name: 'Chun Li', categorie: 'Web developer' },
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'Gouken', categorie: 'Social media ' },
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'Yoshi', categorie: 'Sales guru'}
                 ]

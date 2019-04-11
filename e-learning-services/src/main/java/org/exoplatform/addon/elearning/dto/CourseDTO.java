@@ -1,15 +1,13 @@
-package org.exoplatform.addon.perkstore.dto;
+package org.exoplatform.addon.elearning.dto;
 
-import org.exoplatform.addon.perkstore.entity.Category;
-import org.exoplatform.addon.perkstore.entity.Course;
+import org.exoplatform.addon.elearning.entity.Course;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class CourseDTO implements Serializable {
   private Long   idCourse;
   private String   NameCourse;
-  private int visibilityCourse;
+  private Boolean visibilityCourse;
   private String     dateStart;
   private String     dateEnd;
   private int      nbPerson;
@@ -19,20 +17,9 @@ public class CourseDTO implements Serializable {
   public CourseDTO() {
   }
 
-  public CourseDTO(String nameCourse,
-                   int visibilityCourse,
-                   String dateStart,
-                   String dateEnd,
-                   int nbPerson,
-                   String rewardCourse,
-                   Long idCategory) {
-    NameCourse = nameCourse;
-    this.visibilityCourse = visibilityCourse;
-    this.dateStart = dateStart;
-    this.dateEnd = dateEnd;
-    this.nbPerson = nbPerson;
-    this.rewardCourse = rewardCourse;
-    this.idCategory = idCategory;
+  public CourseDTO(Course course) {
+    this.NameCourse=course.getNameCourse();
+    this.idCategory=course.getCategory().getIdCategory();
   }
 
   public Long getIdCourse() {
@@ -51,11 +38,11 @@ public class CourseDTO implements Serializable {
     NameCourse = nameCourse;
   }
 
-  public int getVisibilityCourse() {
+  public Boolean getVisibilityCourse() {
     return visibilityCourse;
   }
 
-  public void setVisibilityCourse(int visibilityCourse) {
+  public void setVisibilityCourse(Boolean visibilityCourse) {
     this.visibilityCourse = visibilityCourse;
   }
 

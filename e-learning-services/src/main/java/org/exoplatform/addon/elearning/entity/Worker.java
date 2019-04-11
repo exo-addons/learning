@@ -1,9 +1,8 @@
-package org.exoplatform.addon.perkstore.entity;
+package org.exoplatform.addon.elearning.entity;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @ExoEntity
@@ -21,12 +20,6 @@ public class Worker {
   private String                   skillsWorker;
   @Column(name ="STATUS_WORKER")
   private Boolean                  statusWorker;//connecté ou non
-  @OneToMany(cascade=CascadeType.ALL,mappedBy = "worker")
-  private List<CourseRegistration> registrations;
-
-  @OneToMany(cascade=CascadeType.ALL,mappedBy = "workerx")
-  private List<ExamRegistration> examregistrations;
-
   @OneToOne(cascade=CascadeType.ALL)
   @JoinColumn(name = "TYPE_PROFILE_ID",referencedColumnName = "ID_TYPE_PROFILE")
   private TypeProfile typeProfile;
@@ -38,14 +31,12 @@ public class Worker {
                 String postWorker,
                 String skillsWorker,
                 Boolean statusWorker,
-                List<CourseRegistration> registrations,
-                List<ExamRegistration> examregistrations, TypeProfile typeProfile) {
+               TypeProfile typeProfile) {
     this.nomWorker = nomWorker;
     this.postWorker = postWorker;
     this.skillsWorker = skillsWorker;
     this.statusWorker = statusWorker;
-    this.registrations = registrations;
-    this.examregistrations = examregistrations;
+
     this.typeProfile = typeProfile;
   }
 
@@ -87,22 +78,6 @@ public class Worker {
 
   public void setStatusWorker(Boolean statusWorker) {
     this.statusWorker = statusWorker;
-  }
-
-  public List<CourseRegistration> getRegistrations() {
-    return registrations;
-  }
-
-  public void setRegistrations(List<CourseRegistration> registrations) {
-    this.registrations = registrations;
-  }
-
-  public List<ExamRegistration> getExamregistrations() {
-    return examregistrations;
-  }
-
-  public void setExamregistrations(List<ExamRegistration> examregistrations) {
-    this.examregistrations = examregistrations;
   }
 
   public TypeProfile getTypeProfile() {

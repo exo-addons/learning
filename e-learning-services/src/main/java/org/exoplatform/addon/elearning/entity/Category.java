@@ -1,9 +1,8 @@
-package org.exoplatform.addon.perkstore.entity;
+package org.exoplatform.addon.elearning.entity;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @ExoEntity
@@ -20,13 +19,7 @@ public class Category {
   public Category() {
   }
 
-  public Category(Long idCategory) {
-    this.idCategory=idCategory;
-  }
-
-
-  public Category(Long idCategory,String nameCategory) {
-    this.idCategory=idCategory;
+  public Category(String nameCategory) {
     this.nameCategory = nameCategory;
   }
 

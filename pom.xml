@@ -56,14 +56,14 @@
       <!-- Current project artifacts -->
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>exo-perk-store-services</artifactId>
+        <artifactId>exo-elearning-services</artifactId>
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>
 
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>exo-perk-store-webapps</artifactId>
+        <artifactId>exo-elearning-webapps</artifactId>
         <version>${project.version}</version>
         <scope>provided</scope>
         <type>war</type>

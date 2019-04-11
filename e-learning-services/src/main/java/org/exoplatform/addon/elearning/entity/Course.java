@@ -1,10 +1,9 @@
-package org.exoplatform.addon.perkstore.entity;
+package org.exoplatform.addon.elearning.entity;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @ExoEntity
@@ -46,8 +45,7 @@ public class Course {
                 Date dateStart,
                 Date dateEnd,
                 int nbPerson,
-                String rewardCourse,
-                Category category) {
+                String rewardCourse, Category category) {
     this.NameCourse = nameCourse;
     this.visibiltyCourse = visibiltyCourse;
     this.dateStart = dateStart;

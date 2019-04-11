@@ -1,7 +1,7 @@
 /*
-package org.exoplatform.addon.perkstore.dto;
-import org.exoplatform.addon.perkstore.entity.Category;
-import org.exoplatform.addon.perkstore.entity.Course;
+package org.exoplatform.addon.elearning.dto;
+import org.exoplatform.addon.elearning.entity.Category;
+import org.exoplatform.addon.elearning.entity.Course;
 import org.mapstruct.Mapper;
 
 import java.util.List;

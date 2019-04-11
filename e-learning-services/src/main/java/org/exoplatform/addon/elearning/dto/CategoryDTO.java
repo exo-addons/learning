@@ -1,9 +1,8 @@
-package org.exoplatform.addon.perkstore.dto;
+package org.exoplatform.addon.elearning.dto;
 
-import org.exoplatform.addon.perkstore.entity.Category;
+import org.exoplatform.addon.elearning.entity.Category;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class CategoryDTO implements Serializable {
   private Long            idCategory;
