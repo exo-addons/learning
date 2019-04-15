@@ -30,8 +30,8 @@
         <v-stepper-content step="1">
             <v-card
                     class="mb-5"
-                    height="650px">
-                <app-edit-course />
+                    height="750px">
+                <AppEditCours></AppEditCours>
             </v-card>
 
             <v-btn
@@ -71,13 +71,16 @@
                                         :rules="inputRules" />
                             </v-flex>
                             <v-layout>
-                                <v-flex md12>
+                                <v-flex md6>
                                     <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Catégorie de course</p>
                                 </v-flex>
                             </v-layout>
                             <v-layout>
-                                <v-flex md12>
+                                <v-flex md11>
                                     <v-select v-model="selected" :options="options" />
+                                </v-flex>
+                                <v-flex>
+                                    <app-category-cours></app-category-cours>
                                 </v-flex>
                             </v-layout>
                             <v-layout>
@@ -250,7 +253,7 @@
                 color="#1867c0"
                 class="white--text"
                 @click="quitter">
-            Quitter
+            Valider
             </v-btn>
         </v-stepper-content>
       </v-stepper-items>
@@ -265,6 +268,7 @@ import UploadButton from 'vuetify-upload-button';
 import TuiEditor from 'vue-tui-editor';
 import AppProgressAdd from './AppProgressAdd.vue'
 import AppEditCours from './AppEditCours.vue'
+import AppCategoryCours from './AppCategoryCours.vue'
 
 
 Vue.use(TuiEditor)
@@ -272,7 +276,7 @@ Vue.use(TuiEditor)
 Vue.component('v-select', vSelect)
 Vue.component('upload-btn',UploadButton)
 export default {
-    components:{AppProgressAdd,AppEditCours},
+    components:{AppProgressAdd,AppEditCours,AppCategoryCours},
     data () {
         return {
             options: [
@@ -324,6 +328,17 @@ export default {
         quitter:function() {
             this.$router.push('/')
             }
+    },
+    created(){
+        axios.get(`http://jsonplaceholder.typicode.com/posts`)
+            .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+    })
+    .catch(e => {
+            this.errors.push(e)
+    })
+
     }
 
 }

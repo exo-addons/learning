@@ -47,9 +47,6 @@
                     </div>
                   </v-flex>
                   <v-flex md12 lg12>
-                    <app-search-card-main ma-5 pa-5 />
-                  </v-flex>
-                  <v-flex md12 lg12>
                     <v-text-field
                       v-model="nbre_pers"
                       label="Nbre des personnes"

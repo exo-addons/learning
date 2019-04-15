@@ -1,5 +1,6 @@
 <template>
     <div class="team">
+
         <div>
             <v-dialog
                     v-model="dialog"
@@ -52,6 +53,7 @@
                 </v-card>
             </v-dialog>
         </div>
+
         <v-data-table
                 :headers="headers"
                 :items="desserts"
@@ -77,7 +79,7 @@
                 <v-btn color="primary" @click="initialize">Reset</v-btn>
             </template>
         </v-data-table>
-        <AppCardEditCours></AppCardEditCours> -->
+        <AppCardEditCours></AppCardEditCours>
     </div>
 </template>
 

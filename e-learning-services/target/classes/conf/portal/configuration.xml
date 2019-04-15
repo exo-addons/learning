@@ -45,7 +45,12 @@
   <component>
     <type>org.exoplatform.addon.elearning.dto.CourseDTO</type>
   </component>
-
+  <component>
+    <type>org.exoplatform.addon.elearning.service.utils.CategoryService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.rest.CategoryRestService</type>
+  </component>
 
   <external-component-plugins>
     <target-component>org.exoplatform.commons.api.persistence.DataInitializer</target-component>

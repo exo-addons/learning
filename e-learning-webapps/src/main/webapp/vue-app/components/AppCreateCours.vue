@@ -30,8 +30,8 @@
         <v-stepper-content step="1">
             <v-card
                     class="mb-5"
-                    height="650px">
-                <app-edit-course />
+                    height="750px">
+                <AppEditCours></AppEditCours>
             </v-card>
 
             <v-btn
@@ -71,13 +71,31 @@
                                         :rules="inputRules" />
                             </v-flex>
                             <v-layout>
-                                <v-flex md12>
+                                <v-flex md6>
                                     <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Catégorie de course</p>
                                 </v-flex>
                             </v-layout>
                             <v-layout>
-                                <v-flex md12>
-                                    <v-select v-model="selected" :options="options" />
+                                <v-flex md11>
+                                  <!--  <select v-model="selected" placeholder="Categories">
+                                        <option v-for="option in options" v-bind:value="option.value">
+                                            {{ option.nameCategory }}
+                                        </option>
+                                    </select> -->
+                                    <v-select v-if="apiData"
+                                              v-bind:items="options.category"
+                                              v-model="selectedOption"
+                                              label="Select Nation"
+                                              v-on:change="selectionChanged"
+                                              single-line
+                                              bottom
+                                    ></v-select>
+                                    <v-content v-if="selectedCountry">
+                                        {{ apiData.top_10s[selectedCountry] }}
+                                    </v-content>
+                                </v-flex>
+                                <v-flex>
+                                    <app-category-cours></app-category-cours>
                                 </v-flex>
                             </v-layout>
                             <v-layout>
@@ -250,7 +268,7 @@
                 color="#1867c0"
                 class="white--text"
                 @click="quitter">
-            Quitter
+            Valider
             </v-btn>
         </v-stepper-content>
       </v-stepper-items>
@@ -260,32 +278,31 @@
 
 
 <script>
-import vSelect from 'vue-select'
+    import axios from 'axios'
+  //  import vSelect from 'vue-select'
 import UploadButton from 'vuetify-upload-button';
 import TuiEditor from 'vue-tui-editor';
 import AppProgressAdd from './AppProgressAdd.vue'
 import AppEditCours from './AppEditCours.vue'
+import AppCategoryCours from './AppCategoryCours.vue'
 
 
 Vue.use(TuiEditor)
 
-Vue.component('v-select', vSelect)
+//Vue.component('v-select', vSelect)
 Vue.component('upload-btn',UploadButton)
 export default {
-    components:{AppProgressAdd,AppEditCours},
+    components:{AppProgressAdd,AppEditCours,AppCategoryCours},
     data () {
         return {
-            options: [
-                {id: 1, label: 'foo'},
-                {id: 3, label: 'bar'},
-                {id: 2, label: 'baz'},
-            ],
+            options: [],
+            selectedOption:{},
+            selectedCountry:'',
             question:'',
             libelleChapitre:'',
             TitreLecon:'',
             contenu_lecon:'',
             switch1: true,
-            selected: {id: 3, label: 'Dev'},
             selectedDateDeb: new Date('2018/03/26'),
             selectedDateFin:new Date('2018/03/26'),
             e1: 0,
@@ -324,6 +341,21 @@ export default {
         quitter:function() {
             this.$router.push('/')
             }
+    },
+    selectionChanged: function() {
+        console.log('selectionChanged:this.selectedCountry:' , this.selectedCountry);
+    },
+    created(){
+        axios.get(`http://127.0.0.1:8080/portal/rest/category/allCatgories`)
+            .then(response => {
+            // JSON responses are automatically parsed.
+            this.options= response.data
+        //console.log(response.data)
+    })
+    .catch(e => {
+            this.errors.push(e)
+    })
+
     }
 
 }
@@ -332,5 +364,24 @@ export default {
 <style>
 .para_border{
     border: 4px dotted lightslategrey;
+}
+.select_style{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    line-height: 1.42857143;
+    font-size: 1em;
+    display: inline-block;
+    border: 1px solid transparent;
+    border-left: none;
+    outline: none;
+    margin: 4px 0 0;
+    padding: 0 7px;
+    max-width: 100%;
+    background: none;
+    box-shadow: none;
+    flex-grow: 1;
+    width: 0;
+    height: inherit;
 }
 </style>

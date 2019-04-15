@@ -30,7 +30,7 @@ import java.util.List;
   return courseService.getAllCourse();
 }
 
-  @GET @Path("/getdto/{id}")
+  @GET @Path("/getCourse/{id}")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   public CourseDTO select(@PathParam("id") Long id)
@@ -39,10 +39,10 @@ import java.util.List;
   }
 
   @POST
-  @Path("/addcowoker")
+  @Path("/addCourse")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Course addcowoker(CourseDTO course){
+  public Course addCourse(CourseDTO course){
     LOG.info("/**********************rest service***************/");
     LOG.info(courseService.addCourse(course));
     return courseService.addCourse(course);

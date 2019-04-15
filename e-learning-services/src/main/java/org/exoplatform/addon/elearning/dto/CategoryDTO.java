@@ -5,7 +5,6 @@ import org.exoplatform.addon.elearning.entity.Category;
 import java.io.Serializable;
 
 public class CategoryDTO implements Serializable {
-  private Long            idCategory;
   private String          nameCategory;
 
   public CategoryDTO() {
@@ -14,15 +13,6 @@ public class CategoryDTO implements Serializable {
   public CategoryDTO(Category category) {
     this.nameCategory = category.getNameCategory();
   }
-
-  public Long getIdCategory() {
-    return idCategory;
-  }
-
-  public void setIdCategory(Long idCategory) {
-    this.idCategory = idCategory;
-  }
-
   public String getNameCategory() {
     return nameCategory;
   }

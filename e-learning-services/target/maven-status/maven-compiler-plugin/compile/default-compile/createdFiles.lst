@@ -4,6 +4,7 @@ exo-jpa-entities/entities.idx
 org/exoplatform/addon/elearning/entity/TypeProfile.class
 org/exoplatform/addon/elearning/entity/Exam.class
 org/exoplatform/addon/elearning/entity/Exercise.class
+org/exoplatform/addon/elearning/service/utils/CategoryService.class
 org/exoplatform/addon/elearning/service/utils/CourseService.class
 org/exoplatform/addon/elearning/service/rest/CourseRestService.class
 org/exoplatform/addon/elearning/dto/CourseRegistrationDTO.class
@@ -14,4 +15,5 @@ org/exoplatform/addon/elearning/dao/CourseDao.class
 org/exoplatform/addon/elearning/entity/Category.class
 org/exoplatform/addon/elearning/dto/CourseDTO.class
 org/exoplatform/addon/elearning/entity/CourseRegistration.class
+org/exoplatform/addon/elearning/service/rest/CategoryRestService.class
 org/exoplatform/addon/elearning/entity/Course.class

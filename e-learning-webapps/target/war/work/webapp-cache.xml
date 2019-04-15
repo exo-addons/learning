@@ -9,6 +9,7 @@
           <string>vue-app/components/AppDropMain.vue</string>
           <string>vue-app/components/AppCardMain.vue</string>
           <string>vue-app/components/AppCardEditCours.vue</string>
+          <string>vue-app/components/AppCategoryCours.vue</string>
           <string>vue-app/components/AppSearchCardMain.vue</string>
           <string>vue-app/components/AppCreateCours.vue</string>
           <string>vue-app/components/AppEditCours.vue</string>

@@ -10,8 +10,10 @@
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Course.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Category.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dao/CategoryDao.java
+/home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CategoryRestService.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/TypeProfile.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CourseRestService.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Exam.java
+/home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/utils/CategoryService.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dao/CourseDao.java
 /home/enigma/Bureau/projet-learning/learning/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/CourseRegistration.java

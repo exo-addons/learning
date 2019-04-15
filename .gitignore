@@ -20,6 +20,8 @@
 target/
 pom.xml.versionsBackup
 
+.node_modules/
+
 # IntelliJ project files
 *.iml
 *.iws

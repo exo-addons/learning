@@ -1,6 +1,6 @@
 <template>
     <div class="course">
-        <h1 class="subheading grey--text">course</h1>
+        <h3 class="subheading grey--text">course</h3>
 
         <v-container class="my-1">
 
@@ -46,6 +46,7 @@
 </template>
 <script>
     export default {
+        name: 'App',
         data() {
             return {
                 course: [

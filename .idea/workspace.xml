@@ -2,54 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b7f952b-e6e0-43a4-b787-548efa58ff06" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/utils/CourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-packaging/target/exo-elearning-addon.zip" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-packaging/target/exo-elearning-addon.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-packaging/target/exo-elearning-addon/lib/exo-elearning-services.jar" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-packaging/target/exo-elearning-addon/lib/exo-elearning-services.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-packaging/target/exo-elearning-addon/webapps/exo-elearning.war" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-packaging/target/exo-elearning-addon/webapps/exo-elearning.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/dao/CategoryDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dao/CategoryDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/dao/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dao/CourseDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/dto/CategoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CategoryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/dto/CourseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CourseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/dto/CourseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CourseMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/dto/CourseRegistrationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CourseRegistrationDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/CourseRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/CourseRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Exam.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Exam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/ExamRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/ExamRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Exercise.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Exercise.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Lesson.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Lesson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/TypeProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/TypeProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/entity/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Worker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/service/rest/CourseRestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CourseRestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/service/utils/CourseService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CategoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CategoryDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CourseRestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CourseRestService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-services/src/main/resources/conf/portal/configuration.xml" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/src/main/resources/conf/portal/configuration.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-services/target/classes/conf/portal/configuration.xml" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/target/classes/conf/portal/configuration.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-services/target/classes/exo-jpa-entities/entities.idx" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/target/classes/exo-jpa-entities/entities.idx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-services/target/exo-elearning-services-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/target/exo-elearning-services-sources.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-services/target/exo-elearning-services.jar" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/target/exo-elearning-services.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-services/target/jcabi-ajc.log" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/target/jcabi-ajc.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-services/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/target/maven-archiver/pom.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-services/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-services/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-services/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/node_modules/@babel/runtime/helpers/asyncIterator.js" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/node_modules/@babel/runtime/helpers/asyncIterator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/node_modules/@babel/runtime/helpers/esm/asyncIterator.js" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/node_modules/@babel/runtime/helpers/esm/asyncIterator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/node_modules/@babel/runtime/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/node_modules/@babel/runtime/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/node_modules/@material-ui/icons/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/node_modules/@material-ui/icons/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/META-INF/exo-conf/configuration.xml" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/META-INF/exo-conf/configuration.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/WEB-INF/gatein-resources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/WEB-INF/gatein-resources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/WEB-INF/portlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/WEB-INF/portlet.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCardEditCours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCardEditCours.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateCours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateCours.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateGroup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateGroup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppEditCours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppEditCours.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning.war" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/META-INF/exo-conf/configuration.xml" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/META-INF/exo-conf/configuration.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/WEB-INF/gatein-resources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/WEB-INF/gatein-resources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/WEB-INF/portlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/WEB-INF/portlet.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/js/elearning.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/js/elearning.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/vue-app/components/AppCardEditCours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/vue-app/components/AppCardEditCours.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/vue-app/components/AppCreateCours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/vue-app/components/AppCreateCours.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/vue-app/components/AppCreateGroup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/vue-app/components/AppCreateGroup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/vue-app/components/AppEditCours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/exo-elearning/vue-app/components/AppEditCours.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-learning-webapps/target/war/work/webapp-cache.xml" beforeDir="false" afterPath="$PROJECT_DIR$/e-learning-webapps/target/war/work/webapp-cache.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/e-learning-webapps/target/" />
     <ignored path="$PROJECT_DIR$/e-learning-packaging/target/" />
@@ -65,13 +44,15 @@
     <session id="305956410">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="10" />
+          <entry key="project.closed" value="13" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.101" value="1" />
           <entry key="project.open.time.118" value="1" />
           <entry key="project.open.time.147" value="1" />
+          <entry key="project.open.time.154" value="1" />
           <entry key="project.open.time.177" value="1" />
           <entry key="project.open.time.201" value="1" />
+          <entry key="project.open.time.204" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.22" value="1" />
           <entry key="project.open.time.223" value="1" />
@@ -79,30 +60,31 @@
           <entry key="project.open.time.257" value="1" />
           <entry key="project.open.time.289" value="1" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="13" />
+          <entry key="project.open.time.403" value="1" />
+          <entry key="project.opened" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="61" />
-          <entry key="HTML" value="1" />
+          <entry key="HTML" value="2" />
           <entry key="IDEA_MODULE" value="3" />
-          <entry key="JAVA" value="135" />
-          <entry key="JSON" value="3" />
-          <entry key="JavaScript" value="11" />
+          <entry key="JAVA" value="156" />
+          <entry key="JSON" value="4" />
+          <entry key="JavaScript" value="17" />
           <entry key="Less" value="1" />
           <entry key="SPI" value="1" />
-          <entry key="Vue.js" value="24" />
-          <entry key="XML" value="33" />
+          <entry key="Vue.js" value="44" />
+          <entry key="XML" value="35" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="7330" />
+          <entry key="JAVA" value="8024" />
           <entry key="JSON" value="28" />
           <entry key="PLAIN_TEXT" value="27" />
-          <entry key="Vue.js" value="37" />
-          <entry key="XML" value="757" />
+          <entry key="Vue.js" value="1301" />
+          <entry key="XML" value="776" />
         </counts>
       </usages-collector>
     </session>
@@ -110,46 +92,100 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCardMain.vue">
+        <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCategoryCours.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="48" column="101" lean-forward="true" selection-start-line="48" selection-start-column="101" selection-end-line="48" selection-end-column="149" />
+            <state relative-caret-position="238">
+              <caret line="29" column="20" selection-start-line="29" selection-end-line="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateCours.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="124">
+              <caret line="83" column="49" lean-forward="true" selection-start-line="83" selection-start-column="49" selection-end-line="83" selection-end-column="49" />
+              <folding>
+                <element signature="e#11758#11807#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/e-learning-webapps/webpack.common.js">
+        <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#140#161#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/utils/CategoryService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="355">
+              <caret line="29" column="3" lean-forward="true" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#901#914#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/resources/conf/portal/configuration.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="51" column="74" selection-start-line="51" selection-start-column="74" selection-end-line="51" selection-end-column="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCardMain.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="584">
+              <caret line="43" column="15" selection-start-line="43" selection-end-line="44" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppNavMain.vue">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppProgressAdd.vue">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppSearchCardMain.vue">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCardEditCours.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="584">
-              <caret line="53" column="21" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
+            <state relative-caret-position="391">
+              <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/App.vue">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="14" lean-forward="true" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/utils/CourseService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="587">
+              <caret line="67" column="31" lean-forward="true" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="31" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -157,8 +193,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Vue Single File Component" />
         <option value="Interface" />
+        <option value="Vue Single File Component" />
         <option value="Class" />
       </list>
     </option>
@@ -184,6 +220,13 @@
       <find>store</find>
       <find>axios</find>
       <find>yy</find>
+      <find>router</find>
+      <find>AppCardE</find>
+      <find>course</find>
+      <find>s</find>
+      <find>label</find>
+      <find>options</find>
+      <find>para_border</find>
     </findStrings>
     <replaceStrings>
       <replace>author=&quot;elearning&quot;</replace>
@@ -233,13 +276,21 @@
         <option value="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/dto/CourseDTO.java" />
         <option value="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/perkstore/service/utils/CourseService.java" />
         <option value="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/META-INF/exo-conf/configuration.xml" />
-        <option value="$PROJECT_DIR$/e-learning-services/src/main/resources/conf/portal/configuration.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/WEB-INF/portlet.xml" />
         <option value="$PROJECT_DIR$/e-learning-webapps/package-lock.json" />
-        <option value="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppEditCours.vue" />
         <option value="$PROJECT_DIR$/e-learning-webapps/package.json" />
+        <option value="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppEditCours.vue" />
         <option value="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCardEditCours.vue" />
+        <option value="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateGroup.vue" />
+        <option value="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppDropMain.vue" />
+        <option value="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CourseRestService.java" />
+        <option value="$PROJECT_DIR$/e-learning-services/src/main/resources/conf/portal/configuration.xml" />
+        <option value="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCategoryCours.vue" />
+        <option value="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CategoryDTO.java" />
+        <option value="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/utils/CategoryService.java" />
+        <option value="$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CategoryRestService.java" />
+        <option value="$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateCours.vue" />
       </list>
     </option>
   </component>
@@ -276,7 +327,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -287,7 +337,116 @@
             <path>
               <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
               <item name="learning" type="462c0819:PsiDirectoryNode" />
-              <item name="e-learning-packaging" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="elearning" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="elearning" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="elearning" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="elearning" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="elearning" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="elearning" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="rest" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="elearning" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learning" type="462c0819:PsiDirectoryNode" />
+              <item name="e-learning-services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="portal" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
@@ -334,28 +493,19 @@
               <item name="vue-app" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="exo-elearning-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learning" type="462c0819:PsiDirectoryNode" />
-              <item name="e-learning-webapps" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="vue-app" type="462c0819:PsiDirectoryNode" />
-              <item name="router" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ToolWindowTerminal.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555001914550" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555347720868" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -409,18 +559,21 @@
       <workItem from="1554797175278" duration="23964000" />
       <workItem from="1554883626540" duration="24419000" />
       <workItem from="1554927258835" duration="4991000" />
-      <workItem from="1554971207920" duration="18868000" />
+      <workItem from="1554971207920" duration="19376000" />
+      <workItem from="1555061501976" duration="3939000" />
+      <workItem from="1555077124112" duration="733000" />
+      <workItem from="1555314641633" duration="31346000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="161304000" />
+    <option name="totallyTimeSpent" value="197830000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28524047" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29519072" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Persistence" order="2" side_tool="true" />
       <window_info id="Designer" order="3" />
@@ -436,7 +589,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.19763695" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.36197636" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Java Enterprise" order="9" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
@@ -473,7 +626,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/main.js</url>
           <line>2</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
@@ -497,46 +649,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/TypeProfile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Lesson.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="81" selection-start-line="81" selection-end-line="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Exercise.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/ExamRegistration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="22" column="24" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/utils/CourseService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#833#834#0" expanded="true" />
-            <element signature="e#873#874#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -557,44 +669,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dao/CategoryDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dao/CourseDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CategoryDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#333#334#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CourseDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="46" column="3" lean-forward="true" selection-start-line="46" selection-start-column="3" selection-end-line="46" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -612,24 +690,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Category.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#478#479#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Course.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="49" column="6" selection-start-line="49" selection-end-line="55" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/CourseRegistration.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -641,19 +701,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CourseRestService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -700,16 +747,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/webpack.watch.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/resources/conf/portal/configuration.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/e-learning-packaging/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-107" />
@@ -750,59 +787,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppDropMain.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-546" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateGroup.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2552" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateCours.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="33" column="25" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="25" />
-          <folding>
-            <element signature="e#10527#10559#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/e-learning-webapps/webpack.prod.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppEditCours.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="79" column="8" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#140#161#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="60" selection-start-line="60" selection-end-line="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/index.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/router/index.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -813,32 +803,201 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/App.vue">
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppProgressAdd.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppSearchCardMain.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCardMain.vue">
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Worker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="48" column="101" lean-forward="true" selection-start-line="48" selection-start-column="101" selection-end-line="48" selection-end-column="149" />
+        <state relative-caret-position="119">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/webpack.common.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppProgressAdd.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppNavMain.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCardEditCours.vue">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateGroup.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="799">
+          <caret line="47" column="27" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppDropMain.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="986">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dao/CategoryDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Category.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="16" column="26" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="35" />
+          <folding>
+            <element signature="e#478#479#0" expanded="true" />
+            <element signature="e#520#521#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CourseDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="46" column="3" lean-forward="true" selection-start-line="46" selection-start-column="3" selection-end-line="46" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/webpack.watch.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/webpack.common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-153" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="60" selection-start-line="60" selection-end-line="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppEditCours.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="39" lean-forward="true" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/entity/Course.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="49" column="6" selection-start-line="49" selection-end-line="55" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/dto/CategoryDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="14" column="3" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+          <folding>
+            <element signature="e#333#334#0" expanded="true" />
+            <element signature="e#389#390#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CourseRestService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="25" column="4" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="30" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/rest/CategoryRestService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="27" column="10" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1009#1010#0" expanded="true" />
+            <element signature="e#1050#1051#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#140#161#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/utils/CategoryService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="29" column="3" lean-forward="true" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#901#914#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/resources/conf/portal/configuration.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="51" column="74" selection-start-line="51" selection-start-column="74" selection-end-line="51" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="14" lean-forward="true" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppNavMain.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCardMain.vue">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="584">
-          <caret line="53" column="21" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
+          <caret line="43" column="15" selection-start-line="43" selection-end-line="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-services/src/main/java/org/exoplatform/addon/elearning/service/utils/CourseService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
+          <caret line="67" column="31" lean-forward="true" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCategoryCours.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="29" column="20" selection-start-line="29" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-learning-webapps/src/main/webapp/vue-app/components/AppCreateCours.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="83" column="49" lean-forward="true" selection-start-line="83" selection-start-column="49" selection-end-line="83" selection-end-column="49" />
+          <folding>
+            <element signature="e#11758#11807#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
