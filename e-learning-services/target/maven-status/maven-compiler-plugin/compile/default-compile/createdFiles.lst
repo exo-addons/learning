@@ -1,7 +1,6 @@
 org/exoplatform/addon/elearning/dao/CategoryDao.class
 org/exoplatform/addon/elearning/entity/Lesson.class
 exo-jpa-entities/entities.idx
-org/exoplatform/addon/elearning/entity/TypeProfile.class
 org/exoplatform/addon/elearning/entity/Exam.class
 org/exoplatform/addon/elearning/entity/Exercise.class
 org/exoplatform/addon/elearning/service/utils/CategoryService.class

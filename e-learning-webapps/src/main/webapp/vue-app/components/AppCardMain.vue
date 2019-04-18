@@ -2,6 +2,13 @@
   <div class="team">
     <v-container class="my-5" elevation-20>
       <v-layout>
+        <v-flex md12>
+          <app-edit-cours-tab></app-edit-cours-tab>
+        </v-flex>
+      </v-layout>
+      <v-layout>
+        <v-flex md12 lg12>
+      <v-layout>
         <v-flex md12 lg12>
           <app-search-card-main />
         </v-flex>
@@ -32,17 +39,20 @@
           </v-card>
         </v-flex>
       </v-layout>
+        </v-flex>
+      </v-layout>
     </v-container>
   </div>
 </template>
 
 <script>
     import AppSearchCardMain from './AppSearchCardMain.vue'
+    import AppEditCoursTab from './AppEditCoursTabMain.vue'
 
 
     export default {
         name: 'App',
-        components:{AppSearchCardMain},
+        components:{AppSearchCardMain,AppEditCoursTab},
         data() {
             return {
                 course: [

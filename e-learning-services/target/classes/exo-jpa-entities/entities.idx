@@ -4,6 +4,5 @@ org.exoplatform.addon.elearning.entity.Worker
 org.exoplatform.addon.elearning.entity.Course
 org.exoplatform.addon.elearning.entity.Category
 org.exoplatform.addon.elearning.entity.ExamRegistration
-org.exoplatform.addon.elearning.entity.TypeProfile
 org.exoplatform.addon.elearning.entity.Exam
 org.exoplatform.addon.elearning.entity.CourseRegistration

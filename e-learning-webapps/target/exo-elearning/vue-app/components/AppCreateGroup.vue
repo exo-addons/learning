@@ -109,16 +109,7 @@
 
 <script>
     import AppSearchCardMain from './AppSearchCardMain.vue'
-    import 'vue-material/dist/vue-material.min.css'
-    import 'vue-material/dist/theme/default.css'
-    import vSelect from 'vue-select'
-    import UploadButton from 'vuetify-upload-button';
-    import TuiEditor from 'vue-tui-editor';
 
-    Vue.use(TuiEditor)
-
-    Vue.component('v-select', vSelect)
-    Vue.component('upload-btn',UploadButton)
     export default {
         components:{AppSearchCardMain},
         data () {

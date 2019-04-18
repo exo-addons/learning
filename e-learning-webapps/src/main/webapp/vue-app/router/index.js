@@ -2,11 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AppHome from '../components/AppCardMain.vue'
 import AppCreateCours from '../components/AppCreateCours.vue'
-import AppCreateGroup from '../components/AppCreateGroup.vue'
-import AppEditCours from '../components/AppEditCours.vue'
-
-
-
+import AppEditCards from '../components/AppCardEditCours.vue'
+import AppEditCoursTab from '../components/AppEditCoursTabMain.vue'
+import AppCoursTabform from '../components/AppEditCours.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -20,17 +18,21 @@ export default new Router({
       path: '/createCours',
       name: 'AppCreateCours',
       component: AppCreateCours
-    }
-      ,
+    },
       {
-          path: '/createGroup',
-          name: 'AppCreateGroup',
-          component: AppCreateGroup
+          path: '/EditCoursCard',
+          name: 'AppEditCards',
+          component: AppEditCards
       },
       {
-          path: '/EditCours',
-          name: 'AppEditCours',
-          component: AppEditCours
+          path: '/EditCoursTab',
+          name: 'AppEditCoursTab',
+          component: AppEditCoursTab
+      },
+      {
+          path: '/CoursTabform',
+          name: 'CoursTabform',
+          component: AppCoursTabform
       }
   ]
 })

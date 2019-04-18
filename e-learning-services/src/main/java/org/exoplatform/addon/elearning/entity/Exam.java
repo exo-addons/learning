@@ -24,9 +24,6 @@ public class Exam {
   @Column(name = "REWARD_EXAM")
   private String         rewardExam;
 
-  @OneToMany(cascade=CascadeType.ALL,mappedBy = "exam")
-  private List<ExamRegistration> examregistrations;
-
   public Exam() {
   }
 
@@ -40,7 +37,6 @@ public class Exam {
     this.dateEndExam = dateEndExam;
     this.nbBidExam = nbBidExam;
     this.rewardExam = rewardExam;
-    this.examregistrations = examregistrations;
   }
 
   public Long getIdExam() {
@@ -91,7 +87,4 @@ public class Exam {
     this.rewardExam = rewardExam;
   }
 
-  public void setExamregistrations(List<ExamRegistration> examregistrations) {
-    this.examregistrations = examregistrations;
-  }
 }

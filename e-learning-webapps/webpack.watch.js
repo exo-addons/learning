@@ -5,7 +5,7 @@ const webpackProductionConfig = require('./webpack.prod.js');
 
 module.exports = merge(webpackProductionConfig, {
     output: {
-        path: '/home/enigma/Documents/exoStandalone/mysqlplatform/webapps/exo-elearning/',
+        path: '/home/enigma/Documents/exoPlatformNew/webapps/exo-elearning/',
         filename: 'js/[name].bundle.js'
     }
 });

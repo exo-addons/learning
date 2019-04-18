@@ -22,9 +22,6 @@
     <type>org.exoplatform.addon.elearning.entity.Worker</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.entity.TypeProfile</type>
-  </component>
-  <component>
     <type>org.exoplatform.addon.elearning.entity.CourseRegistration</type>
   </component>
   <component>

@@ -54,9 +54,9 @@ const config = {
     vuetify: 'Vuetify',
     jquery: '$',
   },
-  /*plugins: [
-    new ExtractTextWebpackPlugin('css/elearning-v1.0.0-M04.css')
-  ]*/
+  plugins: [
+    new ExtractTextWebpackPlugin('css/elearning-v1.0.0-M01.css')
+  ]
 };
 
 module.exports = config;

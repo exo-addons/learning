@@ -20,9 +20,6 @@ public class Worker {
   private String                   skillsWorker;
   @Column(name ="STATUS_WORKER")
   private Boolean                  statusWorker;//connecté ou non
-  @OneToOne(cascade=CascadeType.ALL)
-  @JoinColumn(name = "TYPE_PROFILE_ID",referencedColumnName = "ID_TYPE_PROFILE")
-  private TypeProfile typeProfile;
 
   public Worker() {
   }
@@ -30,14 +27,11 @@ public class Worker {
   public Worker(String nomWorker,
                 String postWorker,
                 String skillsWorker,
-                Boolean statusWorker,
-               TypeProfile typeProfile) {
+                Boolean statusWorker) {
     this.nomWorker = nomWorker;
     this.postWorker = postWorker;
     this.skillsWorker = skillsWorker;
     this.statusWorker = statusWorker;
-
-    this.typeProfile = typeProfile;
   }
 
   public Long getIdWorker() {
@@ -78,13 +72,5 @@ public class Worker {
 
   public void setStatusWorker(Boolean statusWorker) {
     this.statusWorker = statusWorker;
-  }
-
-  public TypeProfile getTypeProfile() {
-    return typeProfile;
-  }
-
-  public void setTypeProfile(TypeProfile typeProfile) {
-    this.typeProfile = typeProfile;
   }
 }

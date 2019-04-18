@@ -15,7 +15,9 @@
           <string>vue-app/components/AppEditCours.vue</string>
           <string>vue-app/components/AppCreateGroup.vue</string>
           <string>vue-app/components/AppNavMain.vue</string>
+          <string>vue-app/components/AppEditCoursTabMain.vue</string>
           <string>vue-app/main.js</string>
+          <string>vue-app/connexionaxios/http-common.js</string>
           <string>vue-app/router/index.js</string>
           <string>vue-app/App.vue</string>
           <string>css/main.less</string>

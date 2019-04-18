@@ -1,8 +1,9 @@
+<!-- it is the First interface: it contains logo app + button create course + other components App card main-->
 <template>
   <div class="team">
     <v-container class="my-5 backgroundTop" elevation-20>
       <v-layout>
-        <v-flex md3 lg3>
+        <v-flex md6 lg6>
           <v-img
 
             src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-300.png"
@@ -16,8 +17,10 @@
           <br>
           <h3 class="font-weight-medium mb-4 .display-3 text-sm-left white--text">"We need to bring learning to people instead of people to learning." <br><p class=" text-md-right">Elliot Masie</p></h3>
         </v-flex>
-        <v-flex md6 lg6>
-          <app-drop-main />
+        <v-flex md12 lg12>
+          <v-btn flat class="depressed white large blue--text">
+            <i class="fas fa-plus"></i>
+            <span class="title text-sm-left">Create Cours</span></v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -25,13 +28,8 @@
 </template>
 <script>
 
-
-    import AppDropMain from './AppDropMain.vue'
-
-
     export default {
         name: 'App',
-        components:{AppDropMain},
         data() {
             return {
            }
@@ -48,6 +46,11 @@
 
     .backgroundTop{
         background:linear-gradient(to bottom, #1867c0, #5CBBF6);
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      color: #2c3e50;
     }
 </style>
 
