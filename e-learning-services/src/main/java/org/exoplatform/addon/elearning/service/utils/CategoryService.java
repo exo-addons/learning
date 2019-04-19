@@ -2,51 +2,56 @@ package org.exoplatform.addon.elearning.service.utils;
 
 import org.exoplatform.addon.elearning.dao.CategoryDao;
 import org.exoplatform.addon.elearning.dto.CategoryDTO;
+import org.exoplatform.addon.elearning.dto.CategoryMapper;
 import org.exoplatform.addon.elearning.entity.Category;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+
+import org.exoplatform.commons.api.persistence.ExoTransactional;
+import org.exoplatform.commons.utils.CommonsUtils;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 public class CategoryService {
   private CategoryDao categoryDao;
+  private CategoryMapper categoryMapper;
+  private static final Log      LOG = ExoLogger.getExoLogger(Category.class);
 
-  public CategoryService(CategoryDao categoryDao) {
-    this.categoryDao = categoryDao;
+
+  public CategoryService(CategoryDao categoryDao, CategoryMapper categoryMapper) {
+    this.categoryDao =  CommonsUtils.getService(CategoryDao.class);
+    this.categoryMapper = CommonsUtils.getService(CategoryMapper.class);
   }
 
-  public void setCategoryDao(CategoryDao categoryDao) {
-    this.categoryDao = categoryDao;
+  public List<CategoryDTO> getAllCategories() {
+    try {
+      //--- load all Rules
+      List<Category> categories = categoryDao.findAll();
+      if (categories != null) {
+        return categoryMapper.categoryToCategoryDTOs(categories);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find Categories", e.getMessage());
+    }
+    return null;
+
   }
+  @ExoTransactional
+  public CategoryDTO addCategory (CategoryDTO categoryDTO) {
 
+    Category category = null;
 
-  public CategoryDTO getCategorie(Long id){
-    Category cat=categoryDao.find(id);
-    CategoryDTO categoryDTO=new CategoryDTO();
-    categoryDTO.setNameCategory(cat.getNameCategory());
-    return categoryDTO;
+    try {
 
-  }
-  public List<CategoryDTO> getAllCategoryDtos(){
-    List<CategoryDTO> list1=new ArrayList<CategoryDTO>();
-    List<Category> list2= categoryDao.findAll();
-    int i=0;
-    while(i<list2.size()){
-      CategoryDTO cdto=new CategoryDTO();
-      cdto.setNameCategory(list2.get(i).getNameCategory());
-      list1.add(cdto);
-      i++;
+      category= categoryDao.create(categoryMapper.categoryDTOToCategory(categoryDTO));
 
+    } catch (Exception e) {
+      LOG.error("Error to create category with Name {}", categoryDTO.getNameCategory(), e);
     }
 
-
-
-    return list1;
+    return categoryMapper.categoryToCategoryDTO(category);
   }
-  public Category addCategory(CategoryDTO categoryDTO){
-    Category category=new Category(categoryDTO.getNameCategory());
-    categoryDao.create(category);
-    return category;
-  }
+
 }
