@@ -1,26 +1,32 @@
-<!-- it is the First interface: it contains logo app + button create course + other components App card main-->
+<!-- it is the First interface: it contains logo app + button create course-->
 <template>
   <div class="team">
     <v-container class="my-5 backgroundTop" elevation-20>
       <v-layout>
         <v-flex md6 lg6>
-          <v-img
+          <a href="http://127.0.0.1:8080/portal/intranet/elearning#/">
+            <v-img
 
-            src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-300.png"
-            aspect-ratio="1"
-            width="250px"
-            height="250px"
-            class="img_logo" />
+              src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-300.png"
+              aspect-ratio="1"
+              width="150px"
+              height="150px"
+              class="img_logo" />
+          </a>
         </v-flex>
         <v-flex md6 lg6>
           <h1 class=".font-weight-medium mb-4 .display-3 text-sm-left white--text">Elearning eXo</h1>
           <br>
-          <h3 class="font-weight-medium mb-4 .display-3 text-sm-left white--text">"We need to bring learning to people instead of people to learning." <br><p class=" text-md-right">Elliot Masie</p></h3>
+          <h3 class=".font-weight-medium mb-4  .display-3 text-sm-left white--text">"We need to bring learning to people instead of people to learning." <br><p class=" text-md-right">Elliot Masie</p></h3>
         </v-flex>
         <v-flex md12 lg12>
-          <v-btn flat class="depressed white large blue--text">
+          <v-btn
+            flat
+            class="depressed white large blue--text"
+            @click="toLink">
             <i class="fas fa-plus"></i>
-            <span class="title text-sm-left">Create Cours</span></v-btn>
+            <span class="title text-sm-left">Créer Cours</span>
+          </v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -33,6 +39,14 @@
         data() {
             return {
            }
+        },
+        methods:{
+            toLink:function() {
+                this.$router.push('/createCours')
+            },
+            toMain:function() {
+                this.$router.push('/')
+            }
         }
     }
 

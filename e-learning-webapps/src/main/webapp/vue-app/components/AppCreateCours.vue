@@ -1,127 +1,135 @@
 <template>
   <v-container class="my-5" elevation-20>
-  <v-layout>
-    <v-flex md12>
-      <app-edit-cours-tab></app-edit-cours-tab>
-    </v-flex>
-  </v-layout>
     <v-layout>
       <v-flex md12>
-    <v-stepper
-      v-model="e1"
-      flat
-      class="text-xs-center ma-3"
-      height="650px">
-      <v-stepper-header>
-        <v-stepper-step
-          :complete="e1 > 1"
-          step="1"
-          color="blue">
-          <h5 class="blue--text .headline">Ajouter des Cours</h5>
-        </v-stepper-step>
+        <app-edit-cours-tab />
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex md12>
+        <v-stepper
+          v-model="e1"
+          flat
+          class="text-xs-center ma-3"
+          height="650px">
+          <v-stepper-header>
+            <v-stepper-step
+              :complete="e1 > 1"
+              step="1"
+              color="blue">
+              <h5 class="blue--text .headline">Ajouter des Cours</h5>
+            </v-stepper-step>
 
-        <v-divider />
+            <v-divider />
 
-        <v-stepper-step step="2" color="blue"><h5 class="blue--text .headline">Ajouter des Leçons</h5></v-stepper-step>
-      </v-stepper-header>
+            <v-stepper-step step="2" color="blue"><h5 class="blue--text .headline">Ajouter des Leçons</h5></v-stepper-step>
+          </v-stepper-header>
 
-        <v-stepper-content step="1">
-          <v-card
-            class="mb-5"
-            height="650px">
-            <v-card-text>
-              <v-form ref="form" class="px-3">
-                <v-container>
-                  <v-flex md12>
-                    <v-text-field
-                      v-model="libelle"
-                      label="Libellé"
-                      prepend-icon="folder"
-                      :rules="inputRules" />
-                  </v-flex>
-                  <v-layout>
-                    <v-flex md6>
-                      <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Catégorie de course</p>
-                    </v-flex>
-                  </v-layout>
-                  <v-layout>
+          <v-stepper-content step="1">
+            <notification v-bind:notifications="notifications"></notification>
+            <v-card
+              class="mb-5"
+              height="700px">
+              <v-card-text>
+                <v-form ref="form" class="px-3">
+                  <v-container>
                     <v-flex md10>
-                      <i class="uiIconMiniArrowDown uiIconLightGray"></i>
-                      <select
-                        class="select_style"
-                        :options="option"
-                        placeholder="Categories">
-                        <option v-for="option in options" :value="option.value">
-                          {{ option.nameCategory }}
-                        </option>
-                      </select>
-                    </v-flex>
-                    <v-flex md1>
-                      <app-category-cours />
-                    </v-flex>
-                  </v-layout>
-                  <v-layout>
-                    <v-flex md12>
-                      <v-switch
-                        v-model="switch1"
-                        color="blue"
-                        :label="`Visibilité`" />
-                    </v-flex>
-                  </v-layout>
-
-                  <v-flex md12>
-                    <v-text-field
-                      v-model="nbre_pers"
-                      label="Nbre des personnes"
-                      prepend-icon="folder" />
-                  </v-flex>
-                  <v-layout>
-                    <v-flex md6>
-                      <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Date de début</p>
-                      <v-menu v-model="menu" :close-on-content-click="false">
-                        <v-text-field slot="activator"
-                                      :value="formattedDate" clearable label="Due date" prepend-icon="date_range">
-                        </v-text-field>
-                        <v-date-picker v-model="due" @change="menu = false"></v-date-picker>
-                      </v-menu>
-                    </v-flex>
-                    <v-flex md6>
-                      <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Date de Fin</p>
-                      <v-menu v-model="menu" :close-on-content-click="false">
-                        <v-text-field slot="activator"
-                                      :value="formattedDate" clearable label="Due date" prepend-icon="date_range">
-                        </v-text-field>
-                        <v-date-picker v-model="due" @change="menu = false"></v-date-picker>
-                      </v-menu>
-                    </v-flex>
-                    <v-spacer></v-spacer>
-                  </v-layout>
-                  <v-layout>
-                    <v-flex md4>
-                      <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">Récompense</p>
+                      <v-text-field
+                        v-model="course.nameCourse"
+                        label="Libellé"
+                        prepend-icon="folder"
+                        :rules="inputRules" />
                     </v-flex>
                     <v-layout>
-                      <v-flex md4>
-                        <v-checkbox
-                          v-model="selected"
-                          label="Badge"
-                          value="Badge" />
-                      </v-flex>
-                      <v-flex>
-                        <v-checkbox
-                          v-model="selected"
-                          label="Certification"
-                          value="Certification" />
+                      <v-flex md6>
+                        <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Catégorie de cours</p>
                       </v-flex>
                     </v-layout>
-                  </v-layout>
-
-                  <div class="para_border">
+                    <v-layout>
+                      <v-flex md10>
+                        <!--    <i class="uiIconMiniArrowDown uiIconLightGray"></i>-->
+                        <select
+                          class="select_style"
+                          v-model="course.idCategory"
+                          :options="option"
+                          placeholder="Categories">
+                          <option v-for="option in options">
+                            {{ option.nameCategory }}
+                          </option>
+                        </select>
+                      </v-flex>
+                      <v-flex>
+                        <app-category-cours />
+                      </v-flex>
+                    </v-layout>
+                    <v-layout>
+                      <v-flex md10>
+                        <v-switch
+                          v-model="course.visibilityCourse"
+                          color="blue"
+                          :label="`Visibilité`" />
+                      </v-flex>
+                    </v-layout>
+                    <v-layout>
+                        <v-radio-group v-model="course.status" row>
+                          <v-radio label="Drafted" color="blue" value="radio-1"></v-radio>
+                          <v-radio label="Completed" color="blue" value="radio-2"></v-radio>
+                          <v-radio label="Published" color="blue" value="radio-3"></v-radio>
+                        </v-radio-group>
+                    </v-layout>
+                    <v-flex md10>
+                      <v-text-field
+                        v-model="course.nbPerson"
+                        label="Nbre des personnes"
+                        prepend-icon="folder" />
+                    </v-flex>
                     <v-layout>
                       <v-flex md6>
-                        <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1 pa-2">Upload image de course</p>
+                        <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Date de début</p>
+                        <Datepicker
+                          v-model="course.dateStart"
+                          monday-first="true"
+                          typeable="true"
+                          name="uniquename"
+                          :language="fr" />
                       </v-flex>
                       <v-flex md6>
+                        <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Date de Fin</p>
+                        <Datepicker
+                          v-model="course.dateEnd"
+                          monday-first="true"
+                          typeable="true"
+                          name="uniquename"
+                          :language="fr" />
+                      </v-flex>
+                      <v-spacer />
+                    </v-layout>
+                    <v-layout>
+                      <v-flex md4>
+                        <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">Récompense</p>
+                      </v-flex>
+                      <v-layout>
+                        <v-flex md4>
+                          <v-checkbox
+                            v-model="course.rewardCourse"
+                            label="Badge"
+                            value="badge" />
+                        </v-flex>
+                        <v-flex>
+                          <v-checkbox
+                            v-model="course.rewardCourse"
+                            label="Certification"
+                            value="certification" />
+                        </v-flex>
+                      </v-layout>
+                    </v-layout>
+
+                    <div class="para_border">
+                      <v-layout>
+                        <v-flex>
+                          <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1 pa-2">Upload image de course</p>
+                        </v-flex>
+                        <v-flex>
                         <!--
                         <upload-btn icon>
                           <template slot="icon">
@@ -129,103 +137,112 @@
                           </template>
                         </upload-btn>
                         -->
-                      </v-flex>
-                    </v-layout>
-                  </div>
+                        </v-flex>
+                      </v-layout>
+                    </div>
 
-                  <v-spacer />
+                    <v-spacer />
                   <!--  @click="submit"  -->
-                </v-container>
-              </v-form>
-            </v-card-text>
-          </v-card>
-          <v-btn
-            depressed
-            large
-            dark
-            color="#1867c0"
-            class="white--text"
-            @click="e1 = 2">
-            Suivant
-            <v-icon dark>navigate_next</v-icon>
-          </v-btn>
-        </v-stepper-content>
+                  </v-container>
+                </v-form>
+              </v-card-text>
+            </v-card>
+            <v-btn
+              depressed
+              large
+              dark
+              color="#1867c0"
+              class="white--text"
+              @click="e1 = 2">
+              Suivant
+              <v-icon dark>navigate_next</v-icon>
+            </v-btn>
+                       <v-btn
+              depressed
+              large
+              dark
+              color="#1867c0"
+              class="white--text"
+              @click="saveCourse">
+              Suivant
+            </v-btn>
+          </v-stepper-content>
 
-        <v-stepper-content step="2">
-          <v-card
-            class="mb-5"
-            height="650px">
-            <v-form ref="form" class="px-3">
-              <v-container>
-                <v-flex md12>
-                  <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 ">Général</p>
-                </v-flex>
-                <v-flex md12>
-                  <v-textarea
-                    v-model="content"
-                    label="Ce qui vous apprendre"
-                    prepend-icon="edit"
-                    :rules="inputRules" />
-                </v-flex>
-                <v-flex md12>
-                  <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du course</p>
-                </v-flex>
-                <v-flex md12>
-                  <v-text-field
-                    v-model="TitreLecon"
-                    label="Titre de Leçon"
-                    prepend-icon="folder"
-                    :rules="inputRules" />
-                </v-flex>
+          <v-stepper-content step="2">
+            <v-card
+              class="mb-5"
+              height="650px">
+              <v-form ref="form" class="px-3">
+                <v-container>
+                  <v-flex md12>
+                    <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 ">Général</p>
+                  </v-flex>
+                  <v-flex md12>
+                    <v-textarea
+                      v-model="content"
+                      label="Ce qui vous apprendre"
+                      prepend-icon="edit"
+                      :rules="inputRules" />
+                  </v-flex>
+                  <v-flex md12>
+                    <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du course</p>
+                  </v-flex>
+                  <v-flex md12>
+                    <v-text-field
+                      v-model="TitreLecon"
+                      label="Titre de Leçon"
+                      prepend-icon="folder"
+                      :rules="inputRules" />
+                  </v-flex>
 
-                <v-flex md12>
-                  <v-text-field
-                    v-model="contenu_lecon"
-                    label="Contenu de Leçon"
-                    prepend-icon="folder"
-                    :rules="inputRules" />
-                </v-flex>
-                <!--
+                  <v-flex md12>
+                    <v-text-fieldhttp://127.0.0.1:8080/portal/rest/cours/add
+                      v-model="contenu_lecon"
+                      label="Contenu de Leçon"
+                      prepend-icon="folder"
+                      :rules="inputRules" />
+                  </v-flex>
+                  <!--
                         <v-flex md12>
                             <tui-editor :options="options" />
                         </v-flex>
                         -->
 
-                <v-flex md12>
-                  <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Exercices</p>
-                </v-flex>
-                <v-flex md12>
-                  <v-text-field
-                    v-model="question"
-                    label="Question"
-                    prepend-icon="folder"
-                    :rules="inputRules" />
-                </v-flex>
-              </v-container>
-            </v-form>
-          </v-card>
+                  <v-flex md12>
+                    <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Exercices</p>
+                  </v-flex>
+                  <v-flex md12>
+                    <v-text-field
+                      v-model="question"
+                      label="Question"
+                      prepend-icon="folder"
+                      :rules="inputRules" />
+                  </v-flex>
+                </v-container>
+              </v-form>
+            </v-card>
 
-          <v-btn
-            outline
-            large
-            color="blue darken-3"
-            class="indigo--text"
-            @click="e1 = 1">
-            <v-icon dark>navigate_before</v-icon>
-            Précédent
-          </v-btn>
+            <v-btn
+              outline
+              large
+              color="blue darken-3"
+              class="indigo--text"
+              @click="e1 = 1">
+              <v-icon dark>navigate_before</v-icon>
+              Précédent
+            </v-btn>
 
-          <v-btn
-            depressed
-            large
-            color="#1867c0"
-            class="white--text"
-            @click="quitter">
-            Terminer
-          </v-btn>
-        </v-stepper-content>
-      </v-stepper-items>
-    </v-stepper>
+            <v-btn
+              depressed
+              large
+              color="#1867c0"
+              class="white--text"
+              @click="quitter">
+              Terminer
+            </v-btn>
+          </v-stepper-content>
+          </v-stepper-items>
+        </v-stepper>
       </v-flex>
     </v-layout>
   </v-container>
@@ -234,15 +251,23 @@
 
 <script>
     import axios from 'axios'
-import AppEditCours from './AppEditCours.vue'
-import AppCategoryCours from './AppCategoryCours.vue'
+    import AppEditCours from './AppEditCours.vue'
+    import AppCategoryCours from './AppCategoryCours.vue'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
+    import Datepicker from 'vuejs-datepicker';
+    import {en, fr} from 'vuejs-datepicker/dist/locale'
+    import Notification from './notifications.vue';
+
+
 
     export default {
-    components:{AppEditCours,AppCategoryCours,AppEditCoursTab},
+    components:{AppEditCours,AppCategoryCours,AppEditCoursTab,Datepicker,'notification' : Notification},
     data () {
         return {
-            due: null,
+            notifications:[],
+            status:null,
+            en: en,
+            fr: fr,
             menu: false,
             options: [],
             selectedOption:{},
@@ -253,11 +278,13 @@ import AppCategoryCours from './AppCategoryCours.vue'
             contenu_lecon:'',
             switch1: true,
             e1: 0,
-            libelle: '',
+            course:{},
+            name_course: '',
             nbre_pers: '',
             content: '',
-            due: null,
-            menu: false,
+            category:'',
+            dateStart: new Date(2019, 9,  16),
+                        dateEnd: new Date(2019, 9,  16),
             inputRules: [
                 v => !!v || 'This field is required',
             v => v.length >= 3 || 'Minimum length is 3 characters'
@@ -265,10 +292,15 @@ import AppCategoryCours from './AppCategoryCours.vue'
         }
     },
     computed: {
-
         },
+    computed: {
+        formattedDate () {
+            console.log(this.due)
+            return this.due ? format(this.due, 'Do MMM YYYY') : ''
+        }
+    },
     updated(){
-        axios.get(`http://127.0.0.1:8080/portal/rest/category/allCatgories`)
+        axios.get(`http://127.0.0.1:8080/portal/rest/category/all`)
             .then(response => {
             // JSON responses are automatically parsed.
             this.options= response.data
@@ -278,13 +310,27 @@ import AppCategoryCours from './AppCategoryCours.vue'
     .catch(e => {
             this.errors.push(e)
     })
-
     },
     methods: {
-        submit() {
-            if(this.$refs.form.validate()) {
-                console.log(this.title, this.content)
-            }
+        saveCourse() {
+                      axios.post('http://127.0.0.1:8080/portal/rest/cours/add', this.course, {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }).then((response) => {
+                  this.notifications.push({
+                        type: 'success',
+                        message: 'Category created successfully'
+                    });
+
+                }, (response) => {
+                    this.notifications.push({
+                        type: 'error',
+                        message: 'Category not created'
+                    });
+
+                });
+            
         },
         quitter:function() {
             this.$router.push('/')
@@ -292,19 +338,12 @@ import AppCategoryCours from './AppCategoryCours.vue'
     },
     selectionChanged: function() {
         console.log('selectionChanged:this.selectedCountry:' , this.selectedCountry);
-    },
-    computed: {
-        formattedDate () {
-            console.log(this.due)
-            return this.due ? format(this.due, 'Do MMM YYYY') : ''
-        }
     }
-
 }
-
 </script>
 <style>
 .para_border{
+  width:600px;
     border: 4px dotted lightslategrey;
 }
 .select_style {
@@ -314,7 +353,6 @@ import AppCategoryCours from './AppCategoryCours.vue'
     outline: none;
     width: 100%;
     height: 35px;
-
 }
 i.uiIconMiniArrowDown.uiIconLightGray {
     color: #ffffff;

@@ -28,7 +28,8 @@
       <column name="VISIBILITY_COURSE" type="BOOLEAN"/>
       <column name="DATE_START" type="DATE"/>
       <column name="DATE_END" type="DATE"/>
-      <column name="NB_PERSON" type="INT"/>
+        <column name="STATUS" type="ENUM( 'DRAFTED','COMPLETED','PUBLISHED')"></column>
+        <column name="NB_PERSON" type="INT"/>
       <column name="REWARD_COURSE" type="NVARCHAR(20)"/>
     </createTable>
   </changeSet>

@@ -4,52 +4,55 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd" xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
 
   <component>
-    <type>org.exoplatform.addon.elearning.entity.Course</type>
+    <type>org.exoplatform.addon.elearning.entities.CourseEntity</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.entity.Exam</type>
+    <type>org.exoplatform.addon.elearning.entities.ExamEntity</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.entity.Lesson</type>
+    <type>org.exoplatform.addon.elearning.entities.LessonEntity</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.entity.Category</type>
+    <type>org.exoplatform.addon.elearning.entities.CategoryEntity</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.entity.Exercise</type>
+    <type>org.exoplatform.addon.elearning.entities.ExerciseEntity</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.entity.Worker</type>
+    <type>org.exoplatform.addon.elearning.entities.WorkerEntity</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.entity.CourseRegistration</type>
+    <type>org.exoplatform.addon.elearning.entities.CourseRegistrationEntity</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.entity.ExamRegistration</type>
+    <type>org.exoplatform.addon.elearning.entities.ExamRegistrationEntity</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.dao.CourseDao</type>
+    <type>org.exoplatform.addon.elearning.storage.CourseDao</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.dao.CategoryDao</type>
+    <type>org.exoplatform.addon.elearning.storage.CategoryDao</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.service.rest.CourseRestService</type>
+    <type>org.exoplatform.addon.elearning.rest.CourseRestService</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.service.utils.CourseService</type>
+    <type>org.exoplatform.addon.elearning.service.configuration.CourseService</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.dto.CourseDTO</type>
+    <type>org.exoplatform.addon.elearning.service.dto.CourseDTO</type>
+  </component>
+<component>
+  <type>org.exoplatform.addon.elearning.service.configuration.CategoryService</type>
+</component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.CategoryRestService</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.service.utils.CategoryService</type>
+    <type>org.exoplatform.addon.elearning.service.mapper.CategoryMapper</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.service.rest.CategoryRestService</type>
-  </component>
-  <component>
-    <type>org.exoplatform.addon.elearning.dto.CategoryMapper</type>
+    <type>org.exoplatform.addon.elearning.service.mapper.CourseMapper</type>
   </component>
 
   <external-component-plugins>

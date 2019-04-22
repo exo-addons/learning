@@ -14,10 +14,11 @@
         <h4>Add New Category</h4>
       </v-card-title>
       <v-card-text>
-        <v-form ref="form" class="px-3">
-          <div v-if="!submitted">
+        <notification v-bind:notifications="notifications"></notification>
+        <v-form class="px-3">
+          <div>
             <v-text-field
-              v-model="libelle"
+              v-model="category.nameCategory"
               label="libellé Categorie"
               prepend-icon="folder"
               :rules="inputRules" />
@@ -27,7 +28,7 @@
               dark
               color="blue darken-3"
               class="mx-0 mt-3"
-              @click="submit">
+              @click="saveCategory">
               Ajouter
             </v-btn>
             <v-btn
@@ -39,10 +40,6 @@
               Quitter
             </v-btn>
           </div>
-          <div v-else>
-            <h4>You submitted successfully!</h4>
-            <button class="btn btn-success" @click="newCategory">Add</button>
-          </div>
         </v-form>
       </v-card-text>
     </v-card>
@@ -50,38 +47,42 @@
 </template>
 
 <script>
-    import http from "../connexionaxios/http-common.js"
-
+    import axios from 'axios'
+    import Notification from './notifications.vue';
     export default {
         data() {
             return{
+               components:{
+            'notification' : Notification
+          },
                 category:{
-                    libelle:""
                 },
-            submitted:false
-            }
+                notifications:[]
+                
+                }
         },
         methods:{
             saveCategory() {
-                const data = {
-                    nameCategory: this.category.libelle,
-                };
-                http
-                    .post("/category/addCategory", data)
-                    .then(response => {
-                console.log(response.data);
-            })
-            .catch(e => {
-                    console.log(e);
-            });
+                      axios.post('http://127.0.0.1:8080/portal/rest/category/add', this.category, {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }).then((response) => {
+                  this.notifications.push({
+                        type: 'success',
+                        message: 'Category created successfully'
+                    });
 
-                this.submitted = true;
-            },
-            newCustomer() {
-                this.submitted = false;
-                this.customer = {};
+                }, (response) => {
+                    this.notifications.push({
+                        type: 'error',
+                        message: 'Category not created'
+                    });
+
+                });
             }
-        }
-    };
+        },
+      
+            }
 </script>
 

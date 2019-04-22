@@ -1,8 +1,8 @@
-org.exoplatform.addon.elearning.entity.Exercise
-org.exoplatform.addon.elearning.entity.Lesson
-org.exoplatform.addon.elearning.entity.Worker
-org.exoplatform.addon.elearning.entity.Course
-org.exoplatform.addon.elearning.entity.Category
-org.exoplatform.addon.elearning.entity.ExamRegistration
-org.exoplatform.addon.elearning.entity.Exam
-org.exoplatform.addon.elearning.entity.CourseRegistration
+org.exoplatform.addon.elearning.entities.CourseRegistrationEntity
+org.exoplatform.addon.elearning.entities.CategoryEntity
+org.exoplatform.addon.elearning.entities.LessonEntity
+org.exoplatform.addon.elearning.entities.CourseEntity
+org.exoplatform.addon.elearning.entities.ExamRegistrationEntity
+org.exoplatform.addon.elearning.entities.ExerciseEntity
+org.exoplatform.addon.elearning.entities.WorkerEntity
+org.exoplatform.addon.elearning.entities.ExamEntity

@@ -1,18 +1,18 @@
 <template>
-        <v-layout wrap>
-          <v-flex xs12>
-            <v-combobox multiple
-                        v-model="select"
-                        append-icon
-                        chips
-                        deletable-chips
-                        class="tag-input"
-                        :search-input.sync="search"
-                        @keyup.tab="updateTags"
-                        @paste="updateTags">
-            </v-combobox>
-          </v-flex>
-        </v-layout>
+  <v-layout wrap>
+    <v-flex xs12>
+      <v-combobox
+        v-model="select"
+        multiple
+        append-icon
+        chips
+        deletable-chips
+        class="tag-input"
+        :search-input.sync="search"
+        @keyup.tab="updateTags"
+        @paste="updateTags" />
+    </v-flex>
+  </v-layout>
 </template>
 <script>
     export default {

@@ -1,52 +1,33 @@
 <template>
-  <div class="course">
-    <h3 class="subheading grey--text">course</h3>
-
-    <v-container class="my-1">
+  <div>
+    <v-container elevation-20>
+      <v-layout>
+        <v-flex md12>
+          <app-edit-cours-tab />
+        </v-flex>
+      </v-layout>
       <v-layout>
         <v-flex
-          v-for="c in course"
-          :key="c.name"
+          v-for="person in course"
+          :key="person.libelle"
           md4
           lg4>
-          <v-card flat class="text-xs-center ma-1 elevation-10">
+          <v-card flat class="text-xs-center ma-3 elevation-10">
+            <div>
+              <v-img
+                :src="person.src"
+                aspect-ratio="1"
+                class="grey lighten-2" />
+            </div>
             <v-card-text>
-              <div>
-                <v-img
-                  :src="c.src"
-                  aspect-ratio="1"
-                  class="grey lighten-2" />
-              </div>
-              <div class="subheading">{{ c.name }}</div>
-              <div class="grey--text">{{ c.categorie }}</div>
+              <div class="subheading">{{ person.name }}</div>
+              <div class="grey--text">{{ person.categorie }}</div>
             </v-card-text>
             <v-card-actions>
-              <v-layout>
-                <v-flex md6 lg6>
-                  <div class="text-xs-center">
-                    <v-btn
-                      color="blue darken-3"
-                      fab
-                      dark
-                      small>
-                      <v-icon dark>edit</v-icon>
-                    </v-btn>
-                  </div>
-                </v-flex>
-
-                <v-flex md6 lg6>
-                  <div class="text-xs-center">
-                    <v-btn
-                      color="grey"
-                      outline
-                      fab
-                      dark
-                      small>
-                      <v-icon dark>delete</v-icon>
-                    </v-btn>
-                  </div>
-                </v-flex>
-              </v-layout>
+              <v-btn flat color="grey">
+                <v-icon small left>message</v-icon>
+                <span class="">Message</span>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -55,14 +36,15 @@
   </div>
 </template>
 <script>
+    import AppEditCoursTab from './AppEditCoursTabMain.vue'
+
     export default {
-        name: 'App',
+        components:{AppEditCoursTab},
         data() {
             return {
                 course: [
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'The Net Ninja', categorie: 'Web developer' },
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'Ryu', categorie: 'Graphic designer' },
-                   // { src:'yy',name: 'Chun Li', categorie: 'Web developer' },
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'Gouken', categorie: 'Social media ' },
                     { src:'https://www.packtpub.com/sites/default/files/B05939.png',name: 'Yoshi', categorie: 'Sales guru'}
                 ]
