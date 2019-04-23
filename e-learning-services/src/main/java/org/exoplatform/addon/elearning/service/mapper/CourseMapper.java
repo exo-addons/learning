@@ -56,6 +56,7 @@ public class CourseMapper {
     category.setIdCategory(idCategory);
     return category;
   }
+
   public List<CourseEntity> courseDTOsTOCourses(List<CourseDTO> CourseDTOs){
     return CourseDTOs.stream()
                      .filter(Objects::nonNull)

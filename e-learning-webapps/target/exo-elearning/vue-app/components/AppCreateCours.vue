@@ -29,13 +29,13 @@
             <notification v-bind:notifications="notifications"></notification>
             <v-card
               class="mb-5"
-              height="650px">
+              height="700px">
               <v-card-text>
                 <v-form ref="form" class="px-3">
                   <v-container>
                     <v-flex md10>
                       <v-text-field
-                        v-model="libelle"
+                        v-model="course.nameCourse"
                         label="Libellé"
                         prepend-icon="folder"
                         :rules="inputRules" />
@@ -50,6 +50,7 @@
                         <!--    <i class="uiIconMiniArrowDown uiIconLightGray"></i>-->
                         <select
                           class="select_style"
+                          v-model="course.idCategory"
                           :options="option"
                           placeholder="Categories">
                           <option v-for="option in options">
@@ -64,15 +65,21 @@
                     <v-layout>
                       <v-flex md10>
                         <v-switch
-                          v-model="switch1"
+                          v-model="course.visibilityCourse"
                           color="blue"
                           :label="`Visibilité`" />
                       </v-flex>
                     </v-layout>
-
+                    <v-layout>
+                        <v-radio-group v-model="course.status" row>
+                          <v-radio label="Drafted" color="blue" value="DRAFTED"></v-radio>
+                          <v-radio label="Completed" color="blue" value="COMPLETED"></v-radio>
+                          <v-radio label="Published" color="blue" value="PUBLISHED"></v-radio>
+                        </v-radio-group>
+                    </v-layout>
                     <v-flex md10>
                       <v-text-field
-                        v-model="nbre_pers"
+                        v-model="course.nbPerson"
                         label="Nbre des personnes"
                         prepend-icon="folder" />
                     </v-flex>
@@ -80,20 +87,20 @@
                       <v-flex md6>
                         <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Date de début</p>
                         <Datepicker
-                          v-model="dateStart"
+                          v-model="course.dateStart"
+                          id='dateStart'
                           monday-first="true"
-                          typeable="true"
-                          name="uniquename"
-                          :language="fr" />
+                          :format="formatDate"
+                          :language="fr"></Datepicker>
                       </v-flex>
                       <v-flex md6>
                         <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Date de Fin</p>
                         <Datepicker
-                          v-model="dateEnd"
+                          v-model="course.dateEnd"
+                          id='dateEnd'
                           monday-first="true"
-                          typeable="true"
-                          name="uniquename"
-                          :language="fr" />
+                          :format="formatDate"
+                          :language="fr"> </Datepicker>
                       </v-flex>
                       <v-spacer />
                     </v-layout>
@@ -104,15 +111,15 @@
                       <v-layout>
                         <v-flex md4>
                           <v-checkbox
-                            v-model="selected"
+                            v-model="course.rewardCourse"
                             label="Badge"
-                            value="Badge" />
+                            value="badge" />
                         </v-flex>
                         <v-flex>
                           <v-checkbox
-                            v-model="selected"
+                            v-model="course.rewardCourse"
                             label="Certification"
-                            value="Certification" />
+                            value="certification" />
                         </v-flex>
                       </v-layout>
                     </v-layout>
@@ -150,6 +157,15 @@
               Suivant
               <v-icon dark>navigate_next</v-icon>
             </v-btn>
+                       <v-btn
+              depressed
+              large
+              dark
+              color="#1867c0"
+              class="white--text"
+              @click="saveCourse">
+              Save
+            </v-btn>
           </v-stepper-content>
 
           <v-stepper-content step="2">
@@ -180,7 +196,7 @@
                   </v-flex>
 
                   <v-flex md12>
-                    <v-text-field
+                    <v-text-fieldhttp://127.0.0.1:8080/portal/rest/cours/add
                       v-model="contenu_lecon"
                       label="Contenu de Leçon"
                       prepend-icon="folder"
@@ -240,14 +256,22 @@
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
     import Datepicker from 'vuejs-datepicker';
     import {en, fr} from 'vuejs-datepicker/dist/locale'
+    	import moment from 'moment';
     import Notification from './notifications.vue';
-
-
-
+  	Vue.filter('formatDate', function(value) {
+		if (value) {
+			const lang = eXo.env.portal.language;
+			moment.locale(lang);
+			return moment(String(value), value.includes('/') ? 'DD/MM/YYYY' : 'YYYY-MM-DD').format(lang == 'fr' ? 'DD MMMM YYYY' : 'MMMM DD YYYY');
+		}
+	});
     export default {
     components:{AppEditCours,AppCategoryCours,AppEditCoursTab,Datepicker,'notification' : Notification},
+
     data () {
         return {
+            notifications:[],
+            status:null,
             en: en,
             fr: fr,
             menu: false,
@@ -260,23 +284,21 @@
             contenu_lecon:'',
             switch1: true,
             e1: 0,
-            libelle: '',
+             config: {
+                    format: 'YYYY-MM-DD',
+                    useCurrent: false,
+                },
+            course:{},
+            name_course:'', 
             nbre_pers: '',
             content: '',
-            dateStart: new Date(2019, 9,  16),
-                        dateEnd: new Date(2019, 9,  16),
+            category:'',
+            dateStart:'',
+            dateEnd:'',
             inputRules: [
                 v => !!v || 'This field is required',
             v => v.length >= 3 || 'Minimum length is 3 characters'
-        ],
-        }
-    },
-    computed: {
-        },
-    computed: {
-        formattedDate () {
-            console.log(this.due)
-            return this.due ? format(this.due, 'Do MMM YYYY') : ''
+        ]
         }
     },
     updated(){
@@ -292,10 +314,25 @@
     })
     },
     methods: {
-        submit() {
-            if(this.$refs.form.validate()) {
-                console.log(this.title, this.content)
-            }
+        saveCourse() {
+                      axios.post('http://127.0.0.1:8080/portal/rest/cours/add', this.course, {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }).then((response) => {
+                  this.notifications.push({
+                        type: 'success',
+                        message: 'Course created successfully'
+                    });
+
+                }, (response) => {
+                    this.notifications.push({
+                        type: 'error',
+                        message: 'Course not created'
+                    });
+
+                });
+            
         },
         quitter:function() {
             this.$router.push('/')
@@ -303,7 +340,10 @@
     },
     selectionChanged: function() {
         console.log('selectionChanged:this.selectedCountry:' , this.selectedCountry);
-    }
+    },
+    /* formatDate(date) {
+      return moment(date).format('YYYY-MM-DD');
+    }*/
 }
 </script>
 <style>
@@ -325,5 +365,13 @@ i.uiIconMiniArrowDown.uiIconLightGray {
     top: 29px;
     float: right;
     margin-right: 10px;
+}
+input#dateStart {
+    background: transparent;
+    cursor: pointer;
+}
+input#dateEnd {
+    background: transparent;
+    cursor: pointer;
 }
 </style>

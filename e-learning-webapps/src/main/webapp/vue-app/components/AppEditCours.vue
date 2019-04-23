@@ -13,8 +13,20 @@
               <div slot="header" class="subheading font-weight-bold py-1">{{ c.nameCourse}}</div>
               <v-card>
                 <v-card-text class="px-4 grey--text">
+                  <v-layout>
+                  <v-flex md10>
                   <div class="font-weight-bold">Date Début:&nbsp;{{ c.dateStart }}</div>
                   <div class="font-weight-bold">Date Fin:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ c.dateEnd }}</div>
+                  </v-flex>
+                  <v-flex>
+                    <v-btn fab dark small color="#1867c0">
+                  <i class="fas fa-edit"></i>
+                    </v-btn>
+                       <v-btn fab dark small color="deep-orange">
+                    <i class="far fa-trash-alt"></i>                   
+                   </v-btn>
+                  </v-flex>
+                  </v-layout>
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>

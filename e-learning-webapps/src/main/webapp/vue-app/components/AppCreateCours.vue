@@ -51,10 +51,9 @@
                         <select
                           class="select_style"
                           v-model="course.idCategory"
-                          :options="option"
                           placeholder="Categories">
                           <option v-for="option in options">
-                            {{ option.nameCategory }}
+                            {{option.idCategory}}
                           </option>
                         </select>
                       </v-flex>
@@ -72,9 +71,9 @@
                     </v-layout>
                     <v-layout>
                         <v-radio-group v-model="course.status" row>
-                          <v-radio label="Drafted" color="blue" value="radio-1"></v-radio>
-                          <v-radio label="Completed" color="blue" value="radio-2"></v-radio>
-                          <v-radio label="Published" color="blue" value="radio-3"></v-radio>
+                          <v-radio label="Drafted" color="blue" value="DRAFTED"></v-radio>
+                          <v-radio label="Completed" color="blue" value="COMPLETED"></v-radio>
+                          <v-radio label="Published" color="blue" value="PUBLISHED"></v-radio>
                         </v-radio-group>
                     </v-layout>
                     <v-flex md10>
@@ -88,19 +87,21 @@
                         <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Date de début</p>
                         <Datepicker
                           v-model="course.dateStart"
+                          id='dateStart'
+                          placeholder="Select Date Start" 
                           monday-first="true"
-                          typeable="true"
-                          name="uniquename"
-                          :language="fr" />
+                          :format="formatDate"
+                          :language="fr"></Datepicker>
                       </v-flex>
                       <v-flex md6>
                         <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Date de Fin</p>
                         <Datepicker
                           v-model="course.dateEnd"
+                          id='dateEnd'
+                          placeholder="Select Date End" 
                           monday-first="true"
-                          typeable="true"
-                          name="uniquename"
-                          :language="fr" />
+                          :format="formatDate"
+                          :language="fr"> </Datepicker>
                       </v-flex>
                       <v-spacer />
                     </v-layout>
@@ -147,25 +148,22 @@
                 </v-form>
               </v-card-text>
             </v-card>
+            <v-layout>
+              <v-flex>
             <v-btn
               depressed
               large
               dark
               color="#1867c0"
               class="white--text"
-              @click="e1 = 2">
-              Suivant
-              <v-icon dark>navigate_next</v-icon>
-            </v-btn>
-                       <v-btn
-              depressed
-              large
-              dark
-              color="#1867c0"
-              class="white--text"
               @click="saveCourse">
-              Suivant
+              Save
             </v-btn>
+              </v-flex>
+              <v-flex md2>
+              <i class="fas fa-forward fa-3x" style="color:#1867c0;" @click="e1 = 2"></i>
+              </v-flex>
+            </v-layout>
           </v-stepper-content>
 
           <v-stepper-content step="2">
@@ -177,17 +175,17 @@
                   <v-flex md12>
                     <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 ">Général</p>
                   </v-flex>
-                  <v-flex md12>
+                  <v-flex md10>
                     <v-textarea
                       v-model="content"
                       label="Ce qui vous apprendre"
                       prepend-icon="edit"
                       :rules="inputRules" />
                   </v-flex>
-                  <v-flex md12>
+                  <v-flex md10>
                     <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du course</p>
                   </v-flex>
-                  <v-flex md12>
+                  <v-flex md10>
                     <v-text-field
                       v-model="TitreLecon"
                       label="Titre de Leçon"
@@ -195,8 +193,8 @@
                       :rules="inputRules" />
                   </v-flex>
 
-                  <v-flex md12>
-                    <v-text-fieldhttp://127.0.0.1:8080/portal/rest/cours/add
+                  <v-flex md10>
+                    <v-text-field
                       v-model="contenu_lecon"
                       label="Contenu de Leçon"
                       prepend-icon="folder"
@@ -208,10 +206,10 @@
                         </v-flex>
                         -->
 
-                  <v-flex md12>
+                  <v-flex md10>
                     <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Exercices</p>
                   </v-flex>
-                  <v-flex md12>
+                  <v-flex md10>
                     <v-text-field
                       v-model="question"
                       label="Question"
@@ -222,16 +220,11 @@
               </v-form>
             </v-card>
 
-            <v-btn
-              outline
-              large
-              color="blue darken-3"
-              class="indigo--text"
-              @click="e1 = 1">
-              <v-icon dark>navigate_before</v-icon>
-              Précédent
-            </v-btn>
-
+                 <v-layout>
+              <v-flex md2>
+              <i class="fas fa-backward fa-3x" style="color:#1867c0;" @click="e1 = 1"></i>
+              </v-flex>
+              <v-flex>
             <v-btn
               depressed
               large
@@ -240,6 +233,8 @@
               @click="quitter">
               Terminer
             </v-btn>
+             </v-flex>
+            </v-layout>
           </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -256,12 +251,18 @@
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
     import Datepicker from 'vuejs-datepicker';
     import {en, fr} from 'vuejs-datepicker/dist/locale'
+    	import moment from 'moment';
     import Notification from './notifications.vue';
-
-
-
+  	Vue.filter('formatDate', function(value) {
+		if (value) {
+			const lang = eXo.env.portal.language;
+			moment.locale(lang);
+			return moment(String(value), value.includes('/') ? 'DD/MM/YYYY' : 'YYYY-MM-DD').format(lang == 'fr' ? 'DD MMMM YYYY' : 'MMMM DD YYYY');
+		}
+	});
     export default {
     components:{AppEditCours,AppCategoryCours,AppEditCoursTab,Datepicker,'notification' : Notification},
+
     data () {
         return {
             notifications:[],
@@ -269,7 +270,10 @@
             en: en,
             fr: fr,
             menu: false,
-            options: [],
+            options: [
+              {idCategory:''},
+              {nameCategory:''}
+            ],
             selectedOption:{},
             selectedCategory:'',
             question:'',
@@ -278,25 +282,24 @@
             contenu_lecon:'',
             switch1: true,
             e1: 0,
-            course:{},
-            name_course: '',
+             config: {
+                    format: 'YYYY-MM-DD',
+                    useCurrent: false,
+                },
+            course:{
+                  visibilityCourse:false,
+                  status:'DRAFTED'
+            },
+            name_course:'', 
             nbre_pers: '',
             content: '',
             category:'',
-            dateStart: new Date(2019, 9,  16),
-                        dateEnd: new Date(2019, 9,  16),
+            dateStart:'',
+            dateEnd:'',
             inputRules: [
                 v => !!v || 'This field is required',
             v => v.length >= 3 || 'Minimum length is 3 characters'
-        ],
-        }
-    },
-    computed: {
-        },
-    computed: {
-        formattedDate () {
-            console.log(this.due)
-            return this.due ? format(this.due, 'Do MMM YYYY') : ''
+        ]
         }
     },
     updated(){
@@ -313,6 +316,17 @@
     },
     methods: {
         saveCourse() {
+           var nb = parseFloat(this.course.nbPerson);
+                if(isNaN(nb))
+                {
+                    this.notifications.push({
+                        type: 'danger',
+                        message: 'Number of person must be a number'
+                    });
+                    return false;
+                } else {
+                    this.course.nbPerson = this.course.nbPerson;
+                }
                       axios.post('http://127.0.0.1:8080/portal/rest/cours/add', this.course, {
                     headers : {
                         'Content-Type' : 'application/json'
@@ -320,13 +334,13 @@
                 }).then((response) => {
                   this.notifications.push({
                         type: 'success',
-                        message: 'Category created successfully'
+                        message: 'Course created successfully'
                     });
 
                 }, (response) => {
                     this.notifications.push({
                         type: 'error',
-                        message: 'Category not created'
+                        message: 'Course not created'
                     });
 
                 });
@@ -338,7 +352,10 @@
     },
     selectionChanged: function() {
         console.log('selectionChanged:this.selectedCountry:' , this.selectedCountry);
-    }
+    },
+    /* formatDate(date) {
+      return moment(date).format('YYYY-MM-DD');
+    }*/
 }
 </script>
 <style>
@@ -360,5 +377,13 @@ i.uiIconMiniArrowDown.uiIconLightGray {
     top: 29px;
     float: right;
     margin-right: 10px;
+}
+input#dateStart {
+    background: transparent;
+    cursor: pointer;
+}
+input#dateEnd {
+    background: transparent;
+    cursor: pointer;
 }
 </style>

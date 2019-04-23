@@ -1,6 +1,6 @@
 
 <template>
-  <v-dialog width="600px">
+  <v-dialog width="600px" v-model="dialog">
     <v-btn
       slot="activator"
       fab
@@ -9,13 +9,13 @@
       small>
       <v-icon dark>add</v-icon>
     </v-btn>
+            <notification v-bind:notifications="notifications"></notification>
     <v-card>
       <v-card-title>
         <h4>Add New Category</h4>
       </v-card-title>
       <v-card-text>
-        <notification v-bind:notifications="notifications"></notification>
-        <v-form class="px-3">
+        <v-form ref="form" class="px-3">
           <div>
             <v-text-field
               v-model="category.nameCategory"
@@ -36,7 +36,7 @@
               small
               color="blue darken-3"
               class="mx-0 mt-3"
-              @click="cl">
+              @click="cancel">
               Quitter
             </v-btn>
           </div>
@@ -56,17 +56,33 @@
             'notification' : Notification
           },
                 category:{
+                  nameCategory:''
                 },
-                notifications:[]
+                notifications:[],
+                            dialog: false,
+                                inputRules: [
+                v => !!v || 'This field is required',
+            v => v.length >= 3 || 'Minimum length is 3 characters'
+        ]
+
                 
                 }
         },
         methods:{
             saveCategory() {
+               if(!this.$refs.form.validate()) {
+                  return false;
+                     this.notifications.push({
+                        type: 'error',
+                        message: 'Category not created'
+                    })
+                }
+                else{
                       axios.post('http://127.0.0.1:8080/portal/rest/category/add', this.category, {
                     headers : {
                         'Content-Type' : 'application/json'
                     }
+              
                 }).then((response) => {
                   this.notifications.push({
                         type: 'success',
@@ -80,7 +96,15 @@
                     });
 
                 });
-            }
+                                    this.dialog=false
+                }
+                
+            },
+               cancel(){
+      this.dialog=false;
+     
+      console.log(this.dialog);
+    }
         },
       
             }

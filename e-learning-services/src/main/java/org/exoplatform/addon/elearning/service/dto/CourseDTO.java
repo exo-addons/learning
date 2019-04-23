@@ -109,18 +109,5 @@ public class CourseDTO implements Serializable {
     this.status = status;
   }
 
-  @Override
-  public String toString() {
-    return "CourseDTO{" +
-        "idCourse=" + idCourse +
-        ", NameCourse='" + NameCourse + '\'' +
-        ", visibilityCourse=" + visibilityCourse +
-        ", dateStart='" + dateStart + '\'' +
-        ", dateEnd='" + dateEnd + '\'' +
-        ", nbPerson=" + nbPerson +
-        ", rewardCourse='" + rewardCourse + '\'' +
-        ", idCategory=" + idCategory +
-        ", status=" + status +
-        '}';
-  }
+
 }
