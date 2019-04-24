@@ -18,9 +18,11 @@
 
 # Maven
 target/
+bin/
 pom.xml.versionsBackup
 
-.node_modules/
+# Npm
+**/node_modules/
 
 # IntelliJ project files
 *.iml
@@ -28,18 +30,29 @@ pom.xml.versionsBackup
 *.ipr
 .idea/
 
+#log file
+*.log
+
 # eclipse project file
 .settings/
 .classpath
 .project
+.factorypath
+
+# Log
+*.log
 
 # OS
 .DS_Store
 
 # Misc
 *.swp
+transaction.log
 
-# Exclude JEnv Config File
-.java-version
-dependency-reduced-pom.xml
-plf-extension-crsh/overlays
+rebel.xml
+.rebel.xml.bak
+target
+
+release.properties
+*.releaseBackup
+.metadata
