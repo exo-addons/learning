@@ -1,6 +1,6 @@
 
 <template>
-  <v-dialog width="600px" v-model="dialog">
+  <v-dialog v-model="dialog" width="600px">
     <v-btn
       slot="activator"
       fab
@@ -9,7 +9,7 @@
       small>
       <v-icon dark>add</v-icon>
     </v-btn>
-            <notification v-bind:notifications="notifications"></notification>
+    <notification :notifications="notifications" />
     <v-card>
       <v-card-title>
         <h4>Add New Category</h4>

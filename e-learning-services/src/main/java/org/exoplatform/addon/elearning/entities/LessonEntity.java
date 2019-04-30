@@ -26,18 +26,21 @@ public class LessonEntity {
   @ManyToOne
   @JoinColumn(name = "COURSE_ID")
   private CourseEntity course;
+  @Column(name ="USERNAME_LESSON")
+  private String userName;
 
   public LessonEntity() {
   }
 
   public LessonEntity(String descriptionLesson,
-                      String titreLesson,
+                      String titleLesson,
                       String contentLesson,
-                      CourseEntity course, List<ExerciseEntity> exercises) {
+                      CourseEntity course, String userName) {
     this.descriptionLesson = descriptionLesson;
-    this.titleLesson = titreLesson;
+    this.titleLesson = titleLesson;
     this.contentLesson = contentLesson;
     this.course = course;
+    this.userName = userName;
   }
 
   public Long getIdLesson() {
@@ -64,6 +67,14 @@ public class LessonEntity {
     this.titleLesson = titreLesson;
   }
 
+  public String getTitleLesson() {
+    return titleLesson;
+  }
+
+  public void setTitleLesson(String titleLesson) {
+    this.titleLesson = titleLesson;
+  }
+
   public String getContentLesson() {
     return contentLesson;
   }
@@ -80,4 +91,11 @@ public class LessonEntity {
     this.course = course;
   }
 
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 }

@@ -23,6 +23,8 @@ public class ExamEntity {
   private Long           nbBidExam;
   @Column(name = "REWARD_EXAM")
   private String         rewardExam;
+  @Column(name ="USERNAME_EXAM")
+  private String userName;
 
   public ExamEntity() {
   }
@@ -31,12 +33,14 @@ public class ExamEntity {
                     Date dateStartExam,
                     Date dateEndExam,
                     Long nbBidExam,
-                    String rewardExam) {
+                    String rewardExam,
+                    String userName) {
     this.nameExam = nameExam;
     this.dateStartExam = dateStartExam;
     this.dateEndExam = dateEndExam;
     this.nbBidExam = nbBidExam;
     this.rewardExam = rewardExam;
+    this.userName = userName;
   }
 
   public Long getIdExam() {
@@ -87,4 +91,11 @@ public class ExamEntity {
     this.rewardExam = rewardExam;
   }
 
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 }

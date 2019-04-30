@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import AppHome from '../components/AppCardMain.vue'
-import AppCreateCours from '../components/AppCreateCours.vue'
+import AppStepper from '../components/AppStepper.vue'
 import AppEditCards from '../components/AppCardEditCours.vue'
 import AppEditCoursTab from '../components/AppEditCoursTabMain.vue'
 import AppCoursTabform from '../components/AppEditCours.vue'
@@ -14,10 +14,11 @@ export default new Router({
       name: 'AppHome',
       component: AppHome
     },
+
     {
       path: '/createCours',
-      name: 'AppCreateCours',
-      component: AppCreateCours
+      name: 'AppStepper',
+      component: AppStepper
     },
       {
           path: '/EditCoursCard',

@@ -42,6 +42,7 @@ public class CourseMapper {
         CategoryEntity category=this.coursFromLongId(courseDTO.getIdCategory());
         course.setCategory(category);
         course.setStatus(courseDTO.getStatus());
+        course.setIconFileId(courseDTO.getIconFileId());
         return course;
 
       }

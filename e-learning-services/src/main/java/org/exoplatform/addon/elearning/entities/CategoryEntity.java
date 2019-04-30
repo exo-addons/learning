@@ -15,12 +15,15 @@ public class CategoryEntity {
   private Long         idCategory;
   @Column(name = "NAME_CATEGORY")
   private String       nameCategory;
+  @Column(name ="USERNAME_CATEGORY")
+  private String userName;
 
   public CategoryEntity() {
   }
 
-  public CategoryEntity(String nameCategory) {
+  public CategoryEntity(String nameCategory, String userName) {
     this.nameCategory = nameCategory;
+    this.userName = userName;
   }
 
   public Long getIdCategory() {
@@ -39,4 +42,11 @@ public class CategoryEntity {
     this.nameCategory = nameCategory;
   }
 
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 }

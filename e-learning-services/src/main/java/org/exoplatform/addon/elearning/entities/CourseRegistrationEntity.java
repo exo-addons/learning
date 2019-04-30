@@ -5,9 +5,12 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name="cregistration")
 @ExoEntity
 @Table(name = "ELEARNING_COURSE_REGISTRATION")
+@NamedQueries({
+    @NamedQuery(name = "cregistration.findRegitrationByIdWorker", query = "select c from cregistration c where c.worker.nameWorker=:name"),
+})
 public class CourseRegistrationEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

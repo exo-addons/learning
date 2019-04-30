@@ -5,7 +5,7 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name="eregistration")
 @ExoEntity
 @Table(name = "ELEARNING_EXAM_REGISTRATION")
 public class ExamRegistrationEntity {

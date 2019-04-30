@@ -10,22 +10,31 @@
         <v-flex md12>
           <v-expansion-panel>
             <v-expansion-panel-content v-for="c in courses" :key="c.idCourse">
-              <div slot="header" class="subheading font-weight-bold py-1">{{ c.nameCourse}}</div>
+              <div slot="header" class="subheading font-weight-bold py-1">{{ c.nameCourse }}</div>
               <v-card>
                 <v-card-text class="px-4 grey--text">
                   <v-layout>
-                  <v-flex md10>
-                  <div class="font-weight-bold">Date Début:&nbsp;{{ c.dateStart }}</div>
-                  <div class="font-weight-bold">Date Fin:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ c.dateEnd }}</div>
-                  </v-flex>
-                  <v-flex>
-                    <v-btn fab dark small color="#1867c0">
-                  <i class="fas fa-edit"></i>
-                    </v-btn>
-                       <v-btn fab dark small color="deep-orange">
-                    <i class="far fa-trash-alt"></i>                   
-                   </v-btn>
-                  </v-flex>
+                    <v-flex md10>
+                      <div class="font-weight-bold">Date Début:&nbsp;{{ c.dateStart }}</div>
+                      <div class="font-weight-bold">Date Fin:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ c.dateEnd }}</div>
+                    </v-flex>
+                    <v-flex>
+                      <v-btn
+                        fab
+                        dark
+                        small
+                        color="#1867c0">
+                        <i class="fas fa-edit"></i>
+                      </v-btn>
+                      <v-btn
+                        fab
+                        dark
+                        small
+                        color="deep-orange"
+                      @click="deleteCourse(c.idCourse)">
+                        <i class="far fa-trash-alt"></i>                   
+                      </v-btn>
+                    </v-flex>
                   </v-layout>
                 </v-card-text>
               </v-card>
@@ -47,9 +56,6 @@ export default {
       courses:[],
     }
   },
-  created: function(){
-            this.getAllCourses();
-        },
   computed: {
     myProjects() {
       return this.projects.filter(project => {
@@ -57,14 +63,36 @@ export default {
       })
     }
   },
+  mounted: function(){
+            this.getAllCourses();
+        },
+
   methods:{
        getAllCourses: function()
             {
-                axios.get('http://127.0.0.1:8080/portal/rest/cours/all').then((response) => {
+                axios.get('http://127.0.0.1:8080/portal/rest/cours/allCompletedByuser/COMPLETED').then((response) => {
                     this.courses = response.data;
-                }, (response) => {
-                });
+                }).catch(error => {
+                    console.log(error)
+                    this.errored = true
+                })
             },
-  }
+      deleteCourse: function(event)
+      {
+          console.log("http://127.0.0.1:8080/portal/rest/cours/delete/"+event);
+          axios.delete('http://127.0.0.1:8080/portal/rest/cours/delete/'+event, {
+              headers : {
+                  'Content-Type' : 'application/json'
+              }
+          }).then((response) => {
+          }, (response) => {
+              this.notifications.push({
+                  type: 'danger',
+                  message: 'Product could not deleted'
+              });
+              console.log("****************deleted ok***********");
+          });
+      }
+  },
 }
 </script>

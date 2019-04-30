@@ -13,25 +13,13 @@ public class WorkerEntity {
   @Column(name ="ID_WORKER")
   private Long                     idWorker;
   @Column(name ="NAME_WORKER")
-  private String                   nomWorker;
-  @Column(name ="POST_WORKER")
-  private String                   postWorker;
-  @Column(name ="SKILLS_WORKER")
-  private String                   skillsWorker;
-  @Column(name ="STATUS_WORKER")
-  private Boolean                  statusWorker;//connecté ou non
+  private String                   nameWorker;
 
   public WorkerEntity() {
   }
 
-  public WorkerEntity(String nomWorker,
-                      String postWorker,
-                      String skillsWorker,
-                      Boolean statusWorker) {
-    this.nomWorker = nomWorker;
-    this.postWorker = postWorker;
-    this.skillsWorker = skillsWorker;
-    this.statusWorker = statusWorker;
+  public WorkerEntity(String nameWorker) {
+    this.nameWorker = nameWorker;
   }
 
   public Long getIdWorker() {
@@ -42,35 +30,11 @@ public class WorkerEntity {
     this.idWorker = idWorker;
   }
 
-  public String getNomWorker() {
-    return nomWorker;
+  public String getNameWorker() {
+    return nameWorker;
   }
 
-  public void setNomWorker(String nomWorker) {
-    this.nomWorker = nomWorker;
-  }
-
-  public String getPostWorker() {
-    return postWorker;
-  }
-
-  public void setPostWorker(String postWorker) {
-    this.postWorker = postWorker;
-  }
-
-  public String getSkillsWorker() {
-    return skillsWorker;
-  }
-
-  public void setSkillsWorker(String skillsWorker) {
-    this.skillsWorker = skillsWorker;
-  }
-
-  public Boolean getStatusWorker() {
-    return statusWorker;
-  }
-
-  public void setStatusWorker(Boolean statusWorker) {
-    this.statusWorker = statusWorker;
+  public void setNameWorker(String nameWorker) {
+    this.nameWorker = nameWorker;
   }
 }

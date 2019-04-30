@@ -24,6 +24,9 @@ public class ExerciseEntity {
   @ManyToOne
   @JoinColumn(name = "EXAM_ID")
   private ExamEntity   exam;
+  @Column(name ="USERNAME_EXERCISE")
+  private String userName;
+
 
   public ExerciseEntity() {
   }
@@ -31,12 +34,13 @@ public class ExerciseEntity {
   public ExerciseEntity(String questionExercise,
                         String answerExercise,
                         Long scaleExercise,
-                        LessonEntity lesson, ExamEntity exam) {
+                        LessonEntity lesson, ExamEntity exam, String userName) {
     this.questionExercise = questionExercise;
     this.answerExercise = answerExercise;
     this.scaleExercise = scaleExercise;
     this.lesson = lesson;
     this.exam = exam;
+    this.userName = userName;
   }
 
   public Long getIdExercise() {
@@ -85,5 +89,13 @@ public class ExerciseEntity {
 
   public void setExam(ExamEntity exam) {
     this.exam = exam;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 }

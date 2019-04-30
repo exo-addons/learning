@@ -16,6 +16,7 @@
       <column name="DESCRIPTION_LESSON" type="NVARCHAR(2000)"/>
       <column name="TITLE_LESSON" type="NVARCHAR(20)"/>
       <column name="CONTENT_LESSON" type="NVARCHAR(2000)"/>
+        <column name="USERNAME_LESSON" type="NVARCHAR(20)"/>
     </createTable>
   </changeSet>
 
@@ -28,6 +29,10 @@
       <column name="VISIBILITY_COURSE" type="BOOLEAN"/>
       <column name="DATE_START" type="DATE"/>
       <column name="DATE_END" type="DATE"/>
+        <column name="USERNAME_COURSE" type="NVARCHAR(20)"/>
+        <column name="ICON_FILE_ID" type="BIGINT">
+            <constraints nullable="true"/>
+        </column>
         <column name="STATUS" type="ENUM( 'DRAFTED','COMPLETED','PUBLISHED')"></column>
         <column name="NB_PERSON" type="INT"/>
       <column name="REWARD_COURSE" type="NVARCHAR(20)"/>
@@ -48,6 +53,8 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CATEGORY_ID"/>
             </column>
             <column name="NAME_CATEGORY" type="VARCHAR(250)"/>
+            <column name="USERNAME_CATEGORY" type="NVARCHAR(20)"/>
+
         </createTable>
         <addColumn tableName="ELEARNING_COURSE">
             <column name="CATEGORY_ID" type="BIGINT">
@@ -65,6 +72,7 @@
             <column name="QUESTION_EXERCISE" type="VARCHAR(2000)"/>
             <column name="ANSWER_EXERCISE" type="VARCHAR(2000)"/>
             <column name="SCALE_EXERCISE" type="BIGINT"/>
+            <column name="USERNAME_EXERCISE" type="NVARCHAR(20)"/>
         </createTable>
         <addColumn tableName="ELEARNING_EXERCISE">
             <column name="LESSON_ID" type="BIGINT">
@@ -83,6 +91,7 @@
             <column name="DATE_END_EXAM" type="DATE"/>
             <column name="NB_BID_EXAM" type="BIGINT"/>
             <column name="REWARD_EXAM" type="VARCHAR(250)"/>
+            <column name="USERNAME_EXAM" type="NVARCHAR(20)"/>
         </createTable>
             <addColumn tableName="ELEARNING_EXERCISE">
                 <column name="EXAM_ID" type="BIGINT">
@@ -97,9 +106,6 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_WORKER_ID"/>
             </column>
             <column name="NAME_WORKER" type="VARCHAR(250)"/>
-            <column name="POST_WORKER" type="VARCHAR(250)"/>
-            <column name="SKILLS_WORKER" type="VARCHAR(250)"/>
-            <column name="STATUS_WORKER" type="BOOLEAN"/>
         </createTable>
     </changeSet>
     <changeSet author="elearning" id="1.0.0-8">

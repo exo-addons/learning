@@ -5,17 +5,32 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name = "ELearningCourse")
 @ExoEntity
 @Table(name = "ELEARNING_COURSE")
-
-/*@NamedQueries({
-
+@NamedQueries({
     @NamedQuery(
-        name = "CourseEntity.getCategoryCours",
-        query = "SELECT c.idCategory FROM CourseEntity cr,CategoryEntity c where c.idCategory = cr.idCourse AND cr.idCourse:=id"
+        name = "ELearningCourse.findCourseByName",
+        query = "SELECT course FROM ELearningCourse course where course.NameCourse = :courseName"
+    ),
+    @NamedQuery(
+        name = "ELearningCourse.getCompletedCourseByUser",
+        query = "SELECT course FROM ELearningCourse course where course.status = :COMPLETED and course.userName=:user"
+    ),
+    @NamedQuery(
+        name = "ELearningCourse.getDraftedCourse",
+        query = "SELECT course FROM ELearningCourse course where course.status = :DRAFTED and course.userName=:user"
+    ),
+    @NamedQuery(
+        name = "ELearningCourse.getPublishedCourse",
+        query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName=:user"
+    ),
+    @NamedQuery(
+        name = "ELearningCourse.deleteCourseById",
+        query = "DELETE FROM ELearningCourse course WHERE course.idCourse = :courseId "
     )
-})*/
+    })
+
 public class CourseEntity {
 
   public enum Status{
@@ -40,11 +55,15 @@ public class CourseEntity {
   private int            nbPerson;
   @Column(name ="REWARD_COURSE")
   private String         rewardCourse;
+  @Column(name ="USERNAME_COURSE")
+  private String userName;
   @ManyToOne
   @JoinColumn(name = "CATEGORY_ID")
   private CategoryEntity category;
   @Enumerated(EnumType.STRING)
   private Status status;
+  @Column(name="ICON_FILE_ID")
+  private long iconFileId;
 
   public CourseEntity() {
   }
@@ -54,14 +73,20 @@ public class CourseEntity {
                       Date dateStart,
                       Date dateEnd,
                       int nbPerson,
-                      String rewardCourse, CategoryEntity category) {
-    this.NameCourse = nameCourse;
+                      String rewardCourse,
+                      String userName,
+                      CategoryEntity category,
+                      Status status, long iconFileId) {
+    NameCourse = nameCourse;
     this.visibiltyCourse = visibiltyCourse;
     this.dateStart = dateStart;
     this.dateEnd = dateEnd;
     this.nbPerson = nbPerson;
     this.rewardCourse = rewardCourse;
+    this.userName = userName;
     this.category = category;
+    this.status = status;
+    this.iconFileId = iconFileId;
   }
 
   public Long getIdCourse() {
@@ -133,5 +158,21 @@ public class CourseEntity {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public long getIconFileId() {
+    return iconFileId;
+  }
+
+  public void setIconFileId(long iconFileId) {
+    this.iconFileId = iconFileId;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 }

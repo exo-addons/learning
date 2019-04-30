@@ -42,11 +42,23 @@
   <component>
     <type>org.exoplatform.addon.elearning.service.dto.CourseDTO</type>
   </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.CategoryDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.LessonDTO</type>
+  </component>
 <component>
   <type>org.exoplatform.addon.elearning.service.configuration.CategoryService</type>
 </component>
   <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.LessonService</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.rest.CategoryRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.LessonRestService</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CategoryMapper</type>
@@ -54,6 +66,26 @@
   <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CourseMapper</type>
   </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.LessonMapper</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.LessonDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.CourseRegistrationDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.CourseRegistrationRestSevice</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.CourseRegistrationService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.CourseRegistrationMapper</type>
+  </component>
+
+
 
   <external-component-plugins>
     <target-component>org.exoplatform.commons.api.persistence.DataInitializer</target-component>
@@ -67,6 +99,22 @@
           <description>Change logs of Elearning RDBMS</description>
           <value>db/changelog/elearning-rdbms.db.changelog-master.xml</value>
         </values-param>
+      </init-params>
+    </component-plugin>
+  </external-component-plugins>
+  <external-component-plugins>
+    <target-component>org.exoplatform.commons.file.services.NameSpaceService</target-component>
+    <component-plugin>
+      <name>SocialNameSpacePlugin</name>
+      <set-method>addNameSpacePlugin</set-method>
+      <type>org.exoplatform.commons.file.services.NameSpacePlugin</type>
+      <priority>1000</priority>
+      <init-params>
+        <properties-param>
+          <name>fileNameSpace.params</name>
+          <property name="name" value="learning"/>
+          <property name="description" value="learning files storage"/>
+        </properties-param>
       </init-params>
     </component-plugin>
   </external-component-plugins>
