@@ -3,6 +3,7 @@ package org.exoplatform.addon.elearning.entities;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @ExoEntity
@@ -11,9 +12,13 @@ public class WorkerEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name ="ID_WORKER")
-  private Long                     idWorker;
+  private Long                                 idWorker;
   @Column(name ="NAME_WORKER")
-  private String                   nameWorker;
+  private String                               nameWorker;
+  @OneToMany(mappedBy="worker",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<CourseRegistrationEntity> coursesRegistrations;
+  @OneToMany(mappedBy="exam",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<ExamRegistrationEntity> examsRegistrations;
 
   public WorkerEntity() {
   }

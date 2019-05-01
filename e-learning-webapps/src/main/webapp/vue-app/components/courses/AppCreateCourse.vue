@@ -211,7 +211,7 @@
             categories:[]
         }
     },
-        updated(){
+        mounted(){
             axios.get(`http://127.0.0.1:8080/portal/rest/category/all`)
                 .then(response => {
                     // JSON responses are automatically parsed.

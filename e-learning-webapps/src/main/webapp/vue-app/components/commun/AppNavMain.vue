@@ -1,7 +1,7 @@
 <!-- it is the First interface: it contains logo app + button create course-->
 <template>
   <div class="team">
-    <v-container class="my-5 backgroundTop" elevation-20>
+    <v-container class="my-5 backgroundTop" elevation-10>
       <v-layout>
         <v-flex md6 lg6>
           <a href="http://127.0.0.1:8080/portal/intranet/elearning#/">
@@ -19,13 +19,22 @@
           <br>
           <h3 class=".font-weight-medium mb-4  .display-3 text-sm-left white--text">"We need to bring learning to people instead of people to learning." <br><p class=" text-md-right">Elliot Masie</p></h3>
         </v-flex>
-        <v-flex md12 lg12>
+        <v-flex>
           <v-btn
             flat
             class="depressed white large blue--text"
-            @click="toLink">
+            @click="toCreateCourse">
             <i class="fas fa-plus"></i>
             <span class="title text-sm-left">Créer Cours</span>
+          </v-btn>
+        </v-flex>
+        <v-flex>
+          <v-btn
+                  flat
+                  class="depressed white large blue--text"
+                  @click="toCreateExam">
+            <i class="fas fa-plus"></i>
+            <span class="title text-sm-left">Créer Examen</span>
           </v-btn>
         </v-flex>
       </v-layout>
@@ -41,11 +50,11 @@
            }
         },
         methods:{
-            toLink:function() {
+            toCreateCourse:function() {
                 this.$router.push('/createCours')
             },
-            toMain:function() {
-                this.$router.push('/')
+            toCreateExam:function() {
+                this.$router.push('/createExam')
             }
         }
     }

@@ -1,20 +1,33 @@
 package org.exoplatform.addon.elearning.service.dto;
 
 import org.exoplatform.addon.elearning.entities.LessonEntity;
+import org.exoplatform.commons.utils.CommonsUtils;
+import org.exoplatform.services.security.ConversationState;
+import org.exoplatform.social.core.manager.IdentityManager;
 
 import java.io.Serializable;
 
 public class LessonDTO   implements Serializable {
+ // protected IdentityManager identityManager = null;
+
   private Long idLesson;
+  private String titleLesson;
   private String descriptionLesson;
   private String contentLesson;
   private Long idCourse;
+  private String userName;
+
 
   public LessonDTO() {
+    //identityManager = CommonsUtils.getService(IdentityManager.class);
   }
 
   public LessonDTO(LessonEntity lesson) {
+    //String user= ConversationState.getCurrent().getIdentity().getUserId();
+
     this.idLesson = lesson.getIdLesson();
+    this.userName=lesson.getUserName();
+    this.titleLesson=lesson.getTitleLesson();
     this.descriptionLesson = lesson.getDescriptionLesson();
     this.contentLesson =lesson.getContentLesson();
     this.idCourse=lesson.getCourse().getIdCourse();
@@ -50,5 +63,21 @@ public class LessonDTO   implements Serializable {
 
   public void setIdCourse(Long idCourse) {
     this.idCourse = idCourse;
+  }
+
+  public String getTitleLesson() {
+    return titleLesson;
+  }
+
+  public void setTitleLesson(String titleLesson) {
+    this.titleLesson = titleLesson;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 }

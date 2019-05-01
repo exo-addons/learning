@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container class="my-5" elevation-20>
+    <v-container class="my-5" elevation-10>
       <v-layout>
         <v-flex md12>
           <app-edit-cours-tab />
@@ -9,7 +9,7 @@
       <v-layout>
         <v-flex md12>
           <v-expansion-panel>
-            <v-expansion-panel-content v-for="c in courses" :key="c.idCourse">
+            <v-expansion-panel-content v-for="(c,index) in courses" :key="c.idCourse">
               <div slot="header" class="subheading font-weight-bold py-1">{{ c.nameCourse }}</div>
               <v-card>
                 <v-card-text class="px-4 grey--text">
@@ -30,8 +30,8 @@
                         fab
                         dark
                         small
-                        color="deep-orange"
-                      @click="deleteCourse(c.idCourse)">
+                        color="#BDBDBD"
+                      @click.prevent="deleteCourse(c.idCourse,index)">
                         <i class="far fa-trash-alt"></i>                   
                       </v-btn>
                     </v-flex>
@@ -79,12 +79,14 @@ export default {
             },
       deleteCourse: function(event)
       {
-          console.log("http://127.0.0.1:8080/portal/rest/cours/delete/"+event);
+          const idx = this.courses.indexOf(event)
           axios.delete('http://127.0.0.1:8080/portal/rest/cours/delete/'+event, {
               headers : {
                   'Content-Type' : 'application/json'
               }
+
           }).then((response) => {
+              this.courses.splice(idx, 1)
           }, (response) => {
               this.notifications.push({
                   type: 'danger',

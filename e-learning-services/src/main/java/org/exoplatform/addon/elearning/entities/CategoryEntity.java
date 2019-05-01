@@ -3,6 +3,7 @@ package org.exoplatform.addon.elearning.entities;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @ExoEntity
@@ -17,6 +18,8 @@ public class CategoryEntity {
   private String       nameCategory;
   @Column(name ="USERNAME_CATEGORY")
   private String userName;
+  @OneToMany(mappedBy="category",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<CourseEntity> courses;
 
   public CategoryEntity() {
   }

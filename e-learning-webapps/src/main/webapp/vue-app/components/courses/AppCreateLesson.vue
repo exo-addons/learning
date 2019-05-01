@@ -18,7 +18,7 @@
             :rules="inputRules" />
         </v-flex>
         <v-flex md10>
-          <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du course</p>
+          <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du cours</p>
         </v-flex>
         <v-flex md10>
           <v-textarea
@@ -26,6 +26,13 @@
             label="Contenu de Leçon"
             prepend-icon="folder"
             :rules="inputRules" />
+        </v-flex>
+        <v-flex md10>
+          <v-text-field
+                  v-model="lessonTitle"
+                  label="Titre de Leçon"
+                  prepend-icon="folder"
+                  :rules="inputRules" />
         </v-flex>
         <v-flex md10>
           <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">libellé Cours</p>
@@ -65,7 +72,7 @@
 </template>
 <script>
     import axios from 'axios'
-    import Notification from './notifications.vue';
+    import Notification from '../commun/notifications.vue';
 
     export default {
         components:{
@@ -73,6 +80,7 @@
         },
       data: function () {
             return {
+                lessonTitle:'',
                 lessonName:'',
                 lessonGeneral:'',
                 lessonContent:'',
@@ -81,6 +89,7 @@
                 courses:{},
                 lesson:{
                     idLesson:null,
+                    titleLesson:'',
                     contentLesson:'',
                     descriptionLesson:'',
                     idCourse:null
@@ -114,6 +123,7 @@
                         this.lesson.idCourse=this.selectedCourse;
                         this.lesson.contentLesson=this.lessonContent;
                         this.lesson.descriptionLesson=this.lessonGeneral;
+                        this.lesson.titleLesson=this.lessonTitle;
                         console.log(this.lesson);
                         axios.post('http://127.0.0.1:8080/portal/rest/lesson/add', this.lesson, {
                             headers : {
@@ -126,6 +136,7 @@
                             });
                                 this.lessonContent='';
                                 this.lessonGeneral='';
+                                this.lessonTitle='';
 
                             },
                             (response) => {

@@ -3,6 +3,7 @@ package org.exoplatform.addon.elearning.entities;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity(name = "ELearningCourse")
@@ -29,7 +30,7 @@ import java.util.Date;
         name = "ELearningCourse.deleteCourseById",
         query = "DELETE FROM ELearningCourse course WHERE course.idCourse = :courseId "
     )
-    })
+})
 
 public class CourseEntity {
 
@@ -50,20 +51,22 @@ public class CourseEntity {
   @Column(name ="DATE_START")
   private Date           dateStart;
   @Column(name ="DATE_END")
-  private Date           dateEnd;
+  private Date                     dateEnd;
   @Column(name ="NB_PERSON")
-  private int            nbPerson;
+  private int                      nbPerson;
   @Column(name ="REWARD_COURSE")
-  private String         rewardCourse;
+  private String                   rewardCourse;
   @Column(name ="USERNAME_COURSE")
-  private String userName;
+  private String                   userName;
   @ManyToOne
   @JoinColumn(name = "CATEGORY_ID")
-  private CategoryEntity category;
+  private CategoryEntity           category;
   @Enumerated(EnumType.STRING)
-  private Status status;
+  private Status                   status;
   @Column(name="ICON_FILE_ID")
-  private long iconFileId;
+  private long                     iconFileId;
+  @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH} )
+  private Collection<CourseRegistrationEntity> coursesRegistrations;
 
   public CourseEntity() {
   }

@@ -3,6 +3,7 @@ package org.exoplatform.addon.elearning.entities;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -12,19 +13,21 @@ public class ExamEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name ="ID_EXAM")
-  private Long           idExam;
+  private Long                                 idExam;
   @Column(name ="NAME_EXAM")
-  private String         nameExam;
+  private String                               nameExam;
   @Column(name ="DATE_START_EXAM")
-  private Date           dateStartExam;
+  private Date                                 dateStartExam;
   @Column(name ="DATE_END_EXAM")
-  private Date           dateEndExam;
+  private Date                                 dateEndExam;
   @Column(name ="NB_BID_EXAM")
-  private Long           nbBidExam;
+  private Long                                 nbBidExam;
   @Column(name = "REWARD_EXAM")
-  private String         rewardExam;
+  private String                               rewardExam;
   @Column(name ="USERNAME_EXAM")
-  private String userName;
+  private String                               userName;
+  @OneToMany(mappedBy="exam",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<ExerciseEntity> exercises;
 
   public ExamEntity() {
   }

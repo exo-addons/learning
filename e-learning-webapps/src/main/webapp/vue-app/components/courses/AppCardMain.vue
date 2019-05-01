@@ -1,6 +1,6 @@
 <template>
   <div class="team">
-    <v-container class="my-5" elevation-20>
+    <v-container class="my-5" elevation-10>
       <v-layout>
         <v-flex md12>
           <app-edit-cours-tab />

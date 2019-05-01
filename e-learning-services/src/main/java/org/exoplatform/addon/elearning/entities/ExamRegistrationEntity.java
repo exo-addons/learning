@@ -21,7 +21,7 @@ public class ExamRegistrationEntity {
 
   @ManyToOne
   @JoinColumn(name = "WORKER_ID")
-  WorkerEntity workerx;
+  WorkerEntity worker;
 
   @ManyToOne
   @JoinColumn(name = "EXAM_ID")
@@ -30,10 +30,10 @@ public class ExamRegistrationEntity {
   public ExamRegistrationEntity() {
   }
 
-  public ExamRegistrationEntity(Date registeredExam, int markExam, WorkerEntity workerx, ExamEntity exam) {
+  public ExamRegistrationEntity(Date registeredExam, int markExam, WorkerEntity worker, ExamEntity exam) {
     this.registeredExam = registeredExam;
     this.markExam = markExam;
-    this.workerx = workerx;
+    this.worker = worker;
     this.exam = exam;
   }
 
@@ -61,12 +61,12 @@ public class ExamRegistrationEntity {
     this.markExam = markExam;
   }
 
-  public WorkerEntity getWorkerx() {
-    return workerx;
+  public WorkerEntity getWorker() {
+    return worker;
   }
 
-  public void setWorkerx(WorkerEntity workerx) {
-    this.workerx = workerx;
+  public void setWorker(WorkerEntity worker) {
+    this.worker= worker;
   }
 
   public ExamEntity getExam() {

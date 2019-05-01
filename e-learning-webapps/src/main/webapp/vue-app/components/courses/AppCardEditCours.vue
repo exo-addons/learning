@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container elevation-20>
+    <v-container elevation-10>
       <v-layout>
         <v-flex md12>
           <app-edit-cours-tab />

@@ -3,6 +3,7 @@ package org.exoplatform.addon.elearning.entities;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -25,9 +26,11 @@ public class LessonEntity {
 
   @ManyToOne
   @JoinColumn(name = "COURSE_ID")
-  private CourseEntity course;
+  private CourseEntity                         course;
   @Column(name ="USERNAME_LESSON")
-  private String userName;
+  private String                               userName;
+  @OneToMany(mappedBy="lesson",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<ExerciseEntity> exercises;
 
   public LessonEntity() {
   }

@@ -48,7 +48,7 @@
 
 <script>
     import axios from 'axios'
-    import Notification from './notifications.vue';
+    import Notification from '../commun/notifications.vue';
     export default {
         data() {
             return{

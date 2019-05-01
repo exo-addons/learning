@@ -1,5 +1,5 @@
 <template>
-  <v-container class="my-5" elevation-20>
+  <v-container class="my-5" elevation-10>
     <v-layout>
       <v-flex md12>
         <app-edit-cours-tab />
@@ -28,10 +28,17 @@
           <v-stepper-content step="1">
             <!-- create course-->
             <notification :notifications="notifications" />
-            <app-create-course :course="courseInForm"
+              <v-layout>
+                  <v-flex>
+              <app-create-course :course="courseInForm"
                                @testevent="submitAction"
                                @cancel="resetCourseInForm" />
-            <v-layout>
+                  </v-flex>
+              </v-layout>
+              <v-layout>
+                  <v-flex md10>
+
+                  </v-flex>
               <v-flex md2>
                 <v-btn flat icon color="indigo">
 
@@ -48,7 +55,7 @@
             <!-- create lesson-->
             <app-create-lesson />
             <v-layout>
-              <v-flex md2>
+              <v-flex md1>
                 <v-btn flat icon color="indigo">
                 <i
                         class="fas fa-backward fa-3x"
@@ -68,7 +75,7 @@
     import AppCreateCourse from './AppCreateCourse.vue'
     import AppCreateLesson from './AppCreateLesson.vue'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
-    import Notification from './notifications.vue';
+    import Notification from '../commun/notifications.vue';
 
 
 

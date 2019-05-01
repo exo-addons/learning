@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AppHome from '../components/AppCardMain.vue'
-import AppStepper from '../components/AppStepper.vue'
-import AppEditCards from '../components/AppCardEditCours.vue'
-import AppEditCoursTab from '../components/AppEditCoursTabMain.vue'
-import AppCoursTabform from '../components/AppEditCours.vue'
+import AppHome from '../components/courses/AppCardMain.vue'
+import AppStepper from '../components/courses/AppStepper.vue'
+import AppEditCards from '../components/courses/AppCardEditCours.vue'
+import AppEditCoursTab from '../components/courses/AppEditCoursTabMain.vue'
+import AppCoursTabform from '../components/courses/AppEditCours.vue'
+import AppStepperExam from '../components/exam/AppStepperExam.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +35,11 @@ export default new Router({
           path: '/CoursTabform',
           name: 'CoursTabform',
           component: AppCoursTabform
+      },
+      {
+          path: '/createExam',
+          name: 'AppStepperExam',
+          component: AppStepperExam
       }
   ]
 })
