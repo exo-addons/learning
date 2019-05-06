@@ -13,7 +13,6 @@
         props: ['notifications'],
         data(){
             return{
-                alerte:false
             }
         },
         methods: {
@@ -21,8 +20,8 @@
                 return `alert alert-${  notification.type}`;
             },
             cancel() {
-                this.alerte = false;
-                console.log(this.alerte);
+                this.state.$remove(notification)
+
             }
         }
     }

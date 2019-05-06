@@ -2,37 +2,55 @@
   <v-layout wrap>
     <v-flex xs12>
       <v-combobox
-        v-model="select"
+        v-model="searchWord"
         multiple
         append-icon
         chips
         deletable-chips
         class="tag-input"
         :search-input.sync="search"
+        @click="searchCourse"
         @keyup.tab="updateTags"
         @paste="updateTags" />
     </v-flex>
   </v-layout>
 </template>
 <script>
+    import axios from 'axios'
+
     export default {
         data() {
             return {
-                select: ['add-tags-with', 'enter', 'tab', 'paste'],
-                items: [],
+                searchWord:['seach'],
+                courses: [],
                 search: "" //sync search
             };
         },
         methods: {
             updateTags() {
                 this.$nextTick(() => {
-                    this.select.push(...this.search.split(","));
+                    this.searchWord.push(...this.search.split(","));
                 this.$nextTick(() => {
                     this.search = "";
             });
             });
+            },
+            searchCourse(){
+                var x=this.searchWord;
+                for(var i= 0; i < x.length; i++)
+                {
+                    var searching=x[x.length-1]
+                }
+
+                axios.get(`/portal/rest/cours/getCourse/`+searching).then((response) => {
+                    this.courses = response.data;
+                    console.log('ok',this.courses)
+                }).catch(error => {
+                    console.log(error)
+                })
+
             }
-        }
+        },
     }
 </script>
 <style>

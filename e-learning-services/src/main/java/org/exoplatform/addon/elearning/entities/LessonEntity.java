@@ -29,8 +29,7 @@ public class LessonEntity {
   private CourseEntity                         course;
   @Column(name ="USERNAME_LESSON")
   private String                               userName;
-  @OneToMany(mappedBy="lesson",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-  private Collection<ExerciseEntity> exercises;
+
 
   public LessonEntity() {
   }

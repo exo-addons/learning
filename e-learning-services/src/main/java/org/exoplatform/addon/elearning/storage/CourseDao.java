@@ -12,8 +12,7 @@ public class CourseDao extends GenericDAOJPAImpl<CourseEntity,Long> {
   public CourseEntity findCourseByName(String courseName) throws PersistenceException {
 
     TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.findCourseByName",CourseEntity.class);
-    query.setParameter("courseName",courseName);
-
+    query.setParameter("courseName","%"+courseName+"%");
     try {
       return query.getSingleResult();
     } catch (NoResultException e) {
@@ -27,14 +26,21 @@ public class CourseDao extends GenericDAOJPAImpl<CourseEntity,Long> {
     query.setParameter("user", user);
     return query.getResultList();
   }
-  public List<CourseEntity> getDraftedCourse(CourseEntity.Status DRAFTED){
-    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getDraftedCourse", CourseEntity.class);
-    query.setParameter("DRAFTED",DRAFTED);
+  public List<CourseEntity> getDrafetCourse(CourseEntity.Status DRAFET){
+    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getDRAFETCourse", CourseEntity.class);
+    query.setParameter("DRAFET",DRAFET);
     return query.getResultList();
   }
   public List<CourseEntity> getPublishedCourse(CourseEntity.Status PUBLISHED){
     TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getPublishedCourse", CourseEntity.class);
     query.setParameter("PUBLISHED",PUBLISHED);
+    return query.getResultList();
+  }
+
+  public List<CourseEntity> getOtherPublishedCourse(CourseEntity.Status PUBLISHED,String user){
+    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getOtherPublishedCourse", CourseEntity.class);
+    query.setParameter("PUBLISHED",PUBLISHED);
+    query.setParameter("user", user);
     return query.getResultList();
   }
 

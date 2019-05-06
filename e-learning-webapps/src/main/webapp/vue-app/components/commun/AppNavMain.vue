@@ -28,6 +28,7 @@
             <span class="title text-sm-left">Créer Cours</span>
           </v-btn>
         </v-flex>
+        <!--
         <v-flex>
           <v-btn
                   flat
@@ -37,6 +38,7 @@
             <span class="title text-sm-left">Créer Examen</span>
           </v-btn>
         </v-flex>
+                  -->
       </v-layout>
     </v-container>
   </div>

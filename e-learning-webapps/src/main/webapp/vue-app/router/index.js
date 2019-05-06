@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AppHome from '../components/courses/AppCardMain.vue'
 import AppStepper from '../components/courses/AppStepper.vue'
+import AppCoursPublished from '../components/courses/AppCardMain.vue'
 import AppEditCards from '../components/courses/AppCardEditCours.vue'
 import AppEditCoursTab from '../components/courses/AppEditCoursTabMain.vue'
 import AppCoursTabform from '../components/courses/AppEditCours.vue'
@@ -25,6 +26,11 @@ export default new Router({
           path: '/EditCoursCard',
           name: 'AppEditCards',
           component: AppEditCards
+      },
+      {
+          path: '/EditCoursPublished',
+          name: 'EditCoursPublished',
+          component: AppCoursPublished
       },
       {
           path: '/EditCoursTab',

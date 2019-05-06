@@ -33,7 +33,7 @@
             <column name="ICON_FILE_ID" type="BIGINT">
                 <constraints nullable="true"/>
             </column>
-            <column name="STATUS" type="ENUM( 'DRAFTED','COMPLETED','PUBLISHED')"></column>
+            <column name="STATUS" type="ENUM( 'DRAFET','COMPLETED','PUBLISHED')"></column>
             <column name="NB_PERSON" type="INT"/>
             <column name="REWARD_COURSE" type="NVARCHAR(20)"/>
         </createTable>
@@ -73,11 +73,14 @@
             <column name="ANSWER_EXERCISE" type="VARCHAR(2000)"/>
             <column name="SCALE_EXERCISE" type="BIGINT"/>
             <column name="USERNAME_EXERCISE" type="NVARCHAR(20)"/>
+            <column name="CHOOSE1_EXERCISE" type="NVARCHAR(20)"/>
+            <column name="CHOOSE2_EXERCISE" type="NVARCHAR(20)"/>
+            <column name="CHOOSE3_EXERCISE" type="NVARCHAR(20)"/>
         </createTable>
         <addColumn tableName="ELEARNING_EXERCISE">
-            <column name="LESSON_ID" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="FK_EXERCISE_LESSON_ATTACHMENTS"
-                             references="ELEARNING_LESSON(ID_LESSON)" deleteCascade="true"/>
+            <column name="COURSE_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_EXERCISE_COURSE_ATTACHMENTS"
+                             references="ELEARNING_COURSE(ID_COURSE)"/>
             </column>
         </addColumn>
     </changeSet>
@@ -192,20 +195,20 @@
 
     <changeSet  author="elearning" id="1.0.0-12">
         <dropForeignKeyConstraint baseTableName="ELEARNING_EXERCISE"
-                                  constraintName="FK_EXERCISE_LESSON_ATTACHMENTS"
+                                  constraintName="FK_EXERCISE_COURSE_ATTACHMENTS"
         />
         <addForeignKeyConstraint
-                baseColumnNames="LESSON_ID"
+                baseColumnNames="COURSE_ID"
                 baseTableName="ELEARNING_EXERCISE"
-                constraintName="FK_EXERCISE_LESSON_ATTACHMENTS"
+                constraintName="FK_EXERCISE_COURSE_ATTACHMENTS"
 
                 onDelete="CASCADE"
 
                 onUpdate="CASCADE"
 
-                referencedColumnNames="ID_LESSON"
+                referencedColumnNames="ID_COURSE"
 
-                referencedTableName="ELEARNING_LESSON"/>
+                referencedTableName="ELEARNING_COURSE"/>
     </changeSet>
 
 

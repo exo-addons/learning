@@ -4,7 +4,6 @@
     height="650px">
     <notification v-bind:notifications="notifications" >
     </notification>
-
     <v-form ref="form" class="px-3">
       <v-container>
         <v-flex md12>
@@ -73,10 +72,9 @@
 <script>
     import axios from 'axios'
     import Notification from '../commun/notifications.vue';
-
     export default {
         components:{
-          Notification
+            Notification
         },
       data: function () {
             return {
@@ -94,12 +92,16 @@
                     descriptionLesson:'',
                     idCourse:null
                 },
-                notifications:[]
+                notifications:[],
+                inputRules: [
+                    v => !!v || 'This field is required',
+                    v => v.length >= 3 || 'Minimum length is 3 characters'
+                ],
             }
         },
 
-        updated(){
-            axios.get(`http://127.0.0.1:8080/portal/rest/cours/all`)
+        mounted(){
+            axios.get(`/portal/rest/cours/all`)
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.courses= response.data
@@ -125,7 +127,7 @@
                         this.lesson.descriptionLesson=this.lessonGeneral;
                         this.lesson.titleLesson=this.lessonTitle;
                         console.log(this.lesson);
-                        axios.post('http://127.0.0.1:8080/portal/rest/lesson/add', this.lesson, {
+                        axios.post('/portal/rest/lesson/add', this.lesson, {
                             headers : {
                                 'Content-Type' : 'application/json'
                             }

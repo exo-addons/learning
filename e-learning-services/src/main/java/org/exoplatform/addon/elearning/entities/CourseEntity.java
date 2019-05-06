@@ -11,20 +11,24 @@ import java.util.Date;
 @Table(name = "ELEARNING_COURSE")
 @NamedQueries({
     @NamedQuery(
+        //it is a function to search course by name
         name = "ELearningCourse.findCourseByName",
-        query = "SELECT course FROM ELearningCourse course where course.NameCourse = :courseName"
+        query = "SELECT course FROM ELearningCourse course where course.NameCourse LIKE :courseName"
     ),
     @NamedQuery(
+        //the list of the user completed courses
         name = "ELearningCourse.getCompletedCourseByUser",
         query = "SELECT course FROM ELearningCourse course where course.status = :COMPLETED and course.userName=:user"
     ),
     @NamedQuery(
-        name = "ELearningCourse.getDraftedCourse",
-        query = "SELECT course FROM ELearningCourse course where course.status = :DRAFTED and course.userName=:user"
+        //the list of the user where created courses in progress
+        name = "ELearningCourse.getDrafetCourse",
+        query = "SELECT course FROM ELearningCourse course where course.status = :DRAFET and course.userName=:user"
     ),
     @NamedQuery(
-        name = "ELearningCourse.getPublishedCourse",
-        query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName=:user"
+        //list of published courses of the others users(not the user connected in the current session)
+        name = "ELearningCourse.getOtherPublishedCourse",
+        query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName <>:user"
     ),
     @NamedQuery(
         name = "ELearningCourse.deleteCourseById",
@@ -35,7 +39,7 @@ import java.util.Date;
 public class CourseEntity {
 
   public enum Status{
-    DRAFTED,
+    DRAFET,
     COMPLETED,
     PUBLISHED,
   }
@@ -67,6 +71,8 @@ public class CourseEntity {
   private long                     iconFileId;
   @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH} )
   private Collection<CourseRegistrationEntity> coursesRegistrations;
+  @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<ExerciseEntity> exercises;
 
   public CourseEntity() {
   }

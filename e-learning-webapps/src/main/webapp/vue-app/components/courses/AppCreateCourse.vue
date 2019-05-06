@@ -44,9 +44,9 @@
             <v-layout>
               <v-radio-group v-model="courseStatus" row>
                 <v-radio
-                  label="Drafted"
+                  label="DRAFET"
                   color="blue"
-                  value="DRAFTED" />
+                  value="DRAFET" />
                 <v-radio
                   label="Completed"
                   color="blue"
@@ -94,8 +94,8 @@
                 <v-flex md4>
                   <v-checkbox
                     v-model="rewardCourse"
-                    label="course"
-                    value="course" />
+                    label="Badge"
+                    value="badge" />
                 </v-flex>
                 <v-flex>
                   <v-checkbox
@@ -173,7 +173,7 @@
         return{
             selectedCategory:'',
             categories:[],
-            image:'',
+            icon:'',
             en: en,
             fr: fr,
                 date: new Date(),
@@ -188,7 +188,7 @@
             e1: 0,
             nameCourse:'',
             visibilityCourse:true,
-            courseStatus:'DRAFTED',
+            courseStatus:'DRAFET',
             rewardCourse:'',
             dateStart:'',
             dateEnd:'',
@@ -230,48 +230,46 @@
             },
             onImageChange(e) {
                 console.log(e.target.files[0]);
-                this.course.icon = e.target.files[0];
+                //__proto__.__proto__
+                this.courses.icon = e.target.files[0];
             },
-            onSubmit(course) {
+            onSubmit() {
                 const formData = new FormData();
 
                 formData.append('image', this.courses.icon)
                 const MAX_RANDOM_NUMBER = 100000;
                 const uploadId = Math.round(Math.random() * MAX_RANDOM_NUMBER);
 
-                axios.post(`http://127.0.0.1:8080/portal/upload?uploadId=${uploadId}&action=upload`, formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }).then(response => {
-                    this.courses.nameCourse=this.nameCourse;
-                    this.courses.dateStart=this.dateStart;
-                    this.courses.dateEnd=this.dateEnd;
-                    this.courses.nbPerson=this.nbPerson;
-                    this.courses.rewardCourse=this.rewardCourse;
-                    this.courses.visibilityCourse=this.visibility;
-                    this.courses.idCategory=this.selectedCategory;
-                    this.courses.icon=this.formData
-                    axios.post(`http://127.0.0.1:8080/portal/rest/cours/add`, this.course)
-                        .then(response => {
-                            console.log("uploadId this", this.course)
-                            this.$emit('testevent', this.course)
+                axios.post(`/portal/upload?uploadId=${uploadId}&action=upload`,this.formData, {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }).then((response) => {
+                    console.log('data okokok'+response)
+                    this.courses.icon=uploadId
 
-                            this.addSuccess = true
-                            this.updateMessage = 'added'
-                        })
-                        .catch(e => {
-                            this.addError = true
-                        })
+                }),
 
-                })
-                    .catch(e => {
-                        console.log("Error")
-                    })
-            },
+                this.courses.nameCourse = this.nameCourse;
+                this.courses.dateStart = this.dateStart;
+                this.courses.dateEnd = this.dateEnd;
+                this.courses.nbPerson = this.nbPerson;
+                this.courses.rewardCourse = this.rewardCourse;
+                this.courses.status=this.courseStatus;
+                this.courses.visibilityCourse = this.visibility;
+                this.courses.idCategory = this.selectedCategory;
+                this.courses.icon =uploadId
+                axios.post(`/portal/rest/cours/add`, this.courses, {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }).then((response) => {
+
+                }, (response) => {
+
+                });
+            }
+            }
         }
-
-}
 </script>
 

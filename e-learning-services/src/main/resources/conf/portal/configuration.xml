@@ -28,16 +28,43 @@
     <type>org.exoplatform.addon.elearning.entities.ExamRegistrationEntity</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.elearning.storage.ExerciseDao</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.storage.CourseDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.ExamDao</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.storage.CategoryDao</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.elearning.storage.LessonDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.CourseRegistrationDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.ExamRestService</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.rest.CourseRestService</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.service.configuration.CourseService</type>
+    <type>org.exoplatform.addon.elearning.rest.ExerciseRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.CategoryRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.LessonRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.CourseRegistrationRestSevice</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.ExerciseDTO</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.dto.CourseDTO</type>
@@ -48,6 +75,12 @@
   <component>
     <type>org.exoplatform.addon.elearning.service.dto.LessonDTO</type>
   </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.CourseService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.ExamService</type>
+  </component>
 <component>
   <type>org.exoplatform.addon.elearning.service.configuration.CategoryService</type>
 </component>
@@ -55,10 +88,7 @@
     <type>org.exoplatform.addon.elearning.service.configuration.LessonService</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.rest.CategoryRestService</type>
-  </component>
-  <component>
-    <type>org.exoplatform.addon.elearning.rest.LessonRestService</type>
+    <type>org.exoplatform.addon.elearning.service.configuration.ExerciseService</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CategoryMapper</type>
@@ -70,19 +100,25 @@
     <type>org.exoplatform.addon.elearning.service.mapper.LessonMapper</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.storage.LessonDao</type>
+    <type>org.exoplatform.addon.elearning.service.mapper.ExamMapper</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.storage.CourseRegistrationDao</type>
-  </component>
-  <component>
-    <type>org.exoplatform.addon.elearning.rest.CourseRegistrationRestSevice</type>
+    <type>org.exoplatform.addon.elearning.service.mapper.ExerciseMapper</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.configuration.CourseRegistrationService</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CourseRegistrationMapper</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.setting.course.model.CourseConfig</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.setting.course.impl.CourseRegistryImpl</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.setting.course.CourseRegistry</type>
   </component>
 
 

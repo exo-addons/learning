@@ -77,6 +77,18 @@ public class CourseService {
     return null;
 
   }
+  public List<CourseDTO> getOtherPublishedCourse(CourseEntity.Status PUBLISHED,String user){
+    try {
+      List<CourseEntity> course = courseDao.getOtherPublishedCourse(PUBLISHED,user);
+      if (course != null) {
+        return courseMapper.coursesToCourseDTOs(course);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find the other published course", e.getMessage());
+    }
+    return null;
+  }
   @ExoTransactional
   public void deleteCourseById (Long courseId) {
     CourseEntity c=courseDao.find(courseId);

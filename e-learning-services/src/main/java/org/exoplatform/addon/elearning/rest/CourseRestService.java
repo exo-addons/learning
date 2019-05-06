@@ -86,6 +86,23 @@ import java.util.List;
       }
     }
     @GET
+    @Path("/allOtherPublishedCourse/{PUBLISHED}")
+    public Response getOtherPublishedCourse(@PathParam("PUBLISHED") CourseEntity.Status PUBLISHED) {
+      try {
+        String user= ConversationState.getCurrent().getIdentity().getUserId();
+        List<CourseDTO> allOtherPublishedCourse = courseService.getOtherPublishedCourse(PUBLISHED,user);
+        return Response.ok(allOtherPublishedCourse, MediaType.APPLICATION_JSON).build();
+
+      } catch (Exception e) {
+
+        LOG.error("Error listing all other published course", e);
+
+        return Response.serverError()
+                       .entity("Error listing all other published course")
+                       .build();
+      }
+    }
+    @GET
     @Path("/allCompletedByuser/{COMPLETED}")
     public Response getCompletedCourseByUser(@PathParam("COMPLETED") CourseEntity.Status COMPLETED) {
       try {

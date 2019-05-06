@@ -1,6 +1,10 @@
 <template>
     <v-container class="my-5" elevation-10>
+        <v-layout>
+            <v-flex md12>
                 <app-edit-cours-tab />
+            </v-flex>
+        </v-layout>
         <v-layout>
             <v-flex md12>
                 <v-stepper
@@ -25,39 +29,33 @@
                         <notification v-bind:notifications="notifications"></notification>
                         <app-create-exam></app-create-exam>
                         <v-layout>
-                            <v-flex>
-                                <v-btn
-                                        depressed
-                                        large
-                                        dark
-                                        color="#1867c0"
-                                        class="white--text"
-                                        @click.prevent="saveCourse">
-                                    Save
-                                </v-btn>
+                            <v-flex md10>
+
                             </v-flex>
+
                             <v-flex md2>
-                                <v-btn flat icon color="indigo">
-                                <i class="fas fa-forward fa-3x" style="color:#1867c0;" @click.prevent="e1 = 2"></i>
+                                <v-btn flat icon color="#578dc9">
+                                <i class="fas fa-forward fa-3x" style="color:#578dc9;" @click.prevent="e1 = 2"></i>
                                 </v-btn>
                             </v-flex>
                         </v-layout>
                     </v-stepper-content>
 
                     <v-stepper-content step="2">
+                        <!-- create qcm-->
+                        <app-create-qcm></app-create-qcm>
 
                         <v-layout>
                             <v-flex md2>
-                                <i class="fas fa-backward fa-3x" style="color:#1867c0;" @click="e1 = 1"></i>
+                                <v-btn flat icon color="#578dc9">
+                                <i class="fas fa-backward fa-3x" style="color:#578dc9;" @click="e1 = 1"></i>
+                                </v-btn>
+                            </v-flex>
+                            <v-flex md8>
                             </v-flex>
                             <v-flex>
-                                <v-btn
-                                        depressed
-                                        large
-                                        color="#1867c0"
-                                        class="white--text"
-                                        @click="quitter">
-                                    Terminer
+                                <v-btn flat icon color="#578dc9">
+                                    <i class="fas fa-home fa-3x" style="color:#578dc9;"></i>
                                 </v-btn>
                             </v-flex>
                         </v-layout>
@@ -70,7 +68,9 @@
 
 
 <script>
+    import AppEditCoursTab from '../courses/AppEditCoursTabMain.vue'
     import AppCreateExam from './AppCreateExam.vue'
+    import AppCreateQcm from './AppCreateQcm.vue'
     import {en, fr} from 'vuejs-datepicker/dist/locale'
     import moment from 'moment';
     import Notification from '../commun/notifications.vue';
@@ -82,7 +82,7 @@
         }
     });
     export default {
-        components:{AppCreateExam, 'notification' : Notification},
+        components:{AppCreateExam, AppCreateQcm,'notification' : Notification,AppEditCoursTab},
         data () {
             return {
                 notifications:[],
@@ -108,7 +108,7 @@
                 },
                 course:{
                     visibilityCourse:false,
-                    status:'DRAFTED'
+                    status:'DRAFET'
                 },
                 name_course:'',
                 nbre_pers: '',
