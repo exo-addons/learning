@@ -74,6 +74,13 @@
                                 prepend-icon="folder"
                                 :rules="inputRules" />
                     </v-flex>
+                    <v-flex md10>
+                        <v-text-field
+                                v-model="scaleExam"
+                                label="Barème Examen"
+                                prepend-icon="folder"
+                                :rules="inputRules" />
+                    </v-flex>
                 </v-container>
                 <v-flex>
                     <button class="btn btn-primary" type="button"  @click.prevent="addExam">Ajouter</button>
@@ -116,6 +123,7 @@
                 dateStartExam:'',
                 dateEndExam:'',
                 dureeExam:'',
+                scaleExam:'',
                 exam:{
                     nameExam: '',
                     dateStartExam: '',

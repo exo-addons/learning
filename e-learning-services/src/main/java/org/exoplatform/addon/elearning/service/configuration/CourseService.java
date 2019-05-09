@@ -77,6 +77,33 @@ public class CourseService {
     return null;
 
   }
+
+  public List<CourseDTO> getDrafetCourseByUser(CourseEntity.Status DRAFET, String user){
+    try {
+      List<CourseEntity> course = courseDao.getDrafetCourseByUser(DRAFET,user);
+      if (course != null) {
+        return courseMapper.coursesToCourseDTOs(course);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find completed course", e.getMessage());
+    }
+    return null;
+
+  }
+  public List<CourseDTO> getPublishedCourseByUser(CourseEntity.Status PUBLISHED, String user){
+    try {
+      List<CourseEntity> course = courseDao.getPublishedCourseByUser(PUBLISHED,user);
+      if (course != null) {
+        return courseMapper.coursesToCourseDTOs(course);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find published course", e.getMessage());
+    }
+    return null;
+
+  }
   public List<CourseDTO> getOtherPublishedCourse(CourseEntity.Status PUBLISHED,String user){
     try {
       List<CourseEntity> course = courseDao.getOtherPublishedCourse(PUBLISHED,user);

@@ -1,9 +1,9 @@
 <template>
     <v-card
             class="mb-5"
-            height="600px">
+            height="650px" >
         <v-card-text>
-            <v-form ref="form" class="px-3">
+            <v-form ref="form">
                 <v-container>
                     <v-flex md10>
                         <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">Cours Affecté {{idExamen}}</p>

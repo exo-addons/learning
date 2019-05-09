@@ -70,7 +70,7 @@ export default {
   methods:{
        getAllCourses: function()
             {
-                axios.get('http://127.0.0.1:8080/portal/rest/cours/allCompletedByuser/COMPLETED').then((response) => {
+                axios.get('/portal/rest/cours/allPublishedByUser/COMPLETED').then((response) => {
                     this.courses = response.data;
                 }).catch(error => {
                     console.log(error)
@@ -79,14 +79,17 @@ export default {
             },
       deleteCourse: function(event)
       {
-          const idx = this.courses.indexOf(event)
+          //const idx= this.courses.indexOf(event)
+          console.log('http://127.0.0.1:8080/portal/rest/cours/delete/'+event)
+          console.log('tab',this.courses[event.idCourse])
           axios.delete('http://127.0.0.1:8080/portal/rest/cours/delete/'+event, {
               headers : {
                   'Content-Type' : 'application/json'
               }
 
           }).then((response) => {
-              this.courses.splice(idx, 1)
+
+              this.courses.filter(item => item !== event)
           }, (response) => {
               this.notifications.push({
                   type: 'danger',

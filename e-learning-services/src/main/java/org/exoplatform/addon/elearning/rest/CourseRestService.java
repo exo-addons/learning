@@ -103,12 +103,12 @@ import java.util.List;
       }
     }
     @GET
-    @Path("/allCompletedByuser/{COMPLETED}")
+    @Path("/allCompletedByUser/{COMPLETED}")
     public Response getCompletedCourseByUser(@PathParam("COMPLETED") CourseEntity.Status COMPLETED) {
       try {
         String user= ConversationState.getCurrent().getIdentity().getUserId();
-        List<CourseDTO> allCoursePublishedByUser = courseService.getCompletedCourseByUser(COMPLETED,user);
-        return Response.ok(allCoursePublishedByUser, MediaType.APPLICATION_JSON).build();
+        List<CourseDTO> allCourseCompletedByUser = courseService.getCompletedCourseByUser(COMPLETED,user);
+        return Response.ok(allCourseCompletedByUser, MediaType.APPLICATION_JSON).build();
 
       } catch (Exception e) {
 
@@ -116,6 +116,41 @@ import java.util.List;
 
         return Response.serverError()
                        .entity("Error listing all Course Completed user")
+                       .build();
+      }
+    }
+    @GET
+    @Path("/allPublishedByUser/{PUBLISHED}")
+    public Response getPublishedCourseByUser(@PathParam("PUBLISHED") CourseEntity.Status PUBLISHED) {
+      try {
+        String user= ConversationState.getCurrent().getIdentity().getUserId();
+        List<CourseDTO> allCoursePublishedByUser = courseService.getCompletedCourseByUser(PUBLISHED,user);
+        return Response.ok(allCoursePublishedByUser, MediaType.APPLICATION_JSON).build();
+
+      } catch (Exception e) {
+
+        LOG.error("Error listing all Course Published by user ", e);
+
+        return Response.serverError()
+                       .entity("Error listing all Course Published user")
+                       .build();
+      }
+    }
+
+    @GET
+    @Path("/allDrafetByUser/{DRAFET}")
+    public Response getDrafetCourseByUser(@PathParam("DRAFET") CourseEntity.Status DRAFET) {
+      try {
+        String user= ConversationState.getCurrent().getIdentity().getUserId();
+        List<CourseDTO> allCourseDrafetByUser = courseService.getDrafetCourseByUser(DRAFET,user);
+        return Response.ok(allCourseDrafetByUser, MediaType.APPLICATION_JSON).build();
+
+      } catch (Exception e) {
+
+        LOG.error("Error listing all Course Drafet by user ", e);
+
+        return Response.serverError()
+                       .entity("Error listing all Course drafet user")
                        .build();
       }
     }

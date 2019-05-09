@@ -100,7 +100,7 @@
             }
         },
         mounted(){
-            axios.get(`/portal/rest/cours/allOtherPublishedCourse/PUBLISHED`)
+            axios.get(`/portal/rest/cours/allDrafetByUser/DRAFET`)
                 .then(response => {
                     this.courses = response.data
                 })

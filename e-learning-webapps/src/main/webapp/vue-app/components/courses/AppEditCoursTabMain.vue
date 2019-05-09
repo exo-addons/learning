@@ -40,7 +40,7 @@
                 tab: null,
                 links: [
                     { icon: 'dashboard', text: 'Cours Disponibles', route: '/EditCoursPublished' },
-                    { icon: 'folder', text: 'Mes Cours Crée', route: '/' },
+                    { icon: 'folder', text: 'Mes Cours Crée', route: '/EditMyDrafetCours' },
                     { icon: 'person', text: 'Mes Cours Disponibles', route: '/EditCoursCard' },
                     { icon: 'person', text: 'Mes Cours Completés', route: '/CoursTabform' },
                     { icon: 'dashboard', text: 'Créer Examen', route: '/createExam' },

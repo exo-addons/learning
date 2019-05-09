@@ -26,14 +26,16 @@ public class CourseDao extends GenericDAOJPAImpl<CourseEntity,Long> {
     query.setParameter("user", user);
     return query.getResultList();
   }
-  public List<CourseEntity> getDrafetCourse(CourseEntity.Status DRAFET){
-    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getDRAFETCourse", CourseEntity.class);
+  public List<CourseEntity> getDrafetCourseByUser(CourseEntity.Status DRAFET,String user){
+    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getDrafetCourseByUser", CourseEntity.class);
     query.setParameter("DRAFET",DRAFET);
+    query.setParameter("user", user);
     return query.getResultList();
   }
-  public List<CourseEntity> getPublishedCourse(CourseEntity.Status PUBLISHED){
-    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getPublishedCourse", CourseEntity.class);
+  public List<CourseEntity> getPublishedCourseByUser(CourseEntity.Status PUBLISHED,String user){
+    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getPublishedCourseByUser", CourseEntity.class);
     query.setParameter("PUBLISHED",PUBLISHED);
+    query.setParameter("user", user);
     return query.getResultList();
   }
 

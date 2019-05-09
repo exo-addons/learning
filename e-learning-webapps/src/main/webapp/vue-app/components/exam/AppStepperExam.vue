@@ -22,7 +22,7 @@
 
                         <v-divider />
 
-                        <v-stepper-step step="2" color="blue"><h5 class="blue--text .headline">Ajouter Contenu Examen</h5></v-stepper-step>
+                        <v-stepper-step step="2" color="blue"><h5 class="blue--text .headline">Ajouter Nouveau Question</h5></v-stepper-step>
                     </v-stepper-header>
 
                     <v-stepper-content step="1">
@@ -54,9 +54,9 @@
                             <v-flex md8>
                             </v-flex>
                             <v-flex>
-                                <v-btn flat icon color="#578dc9">
-                                    <i class="fas fa-home fa-3x" style="color:#578dc9;"></i>
-                                </v-btn>
+                                <v-flex class="mt-4 mb-3">
+                                    <app-search-qcm></app-search-qcm>
+                                </v-flex>
                             </v-flex>
                         </v-layout>
                     </v-stepper-content>
@@ -69,6 +69,7 @@
 
 <script>
     import AppEditCoursTab from '../courses/AppEditCoursTabMain.vue'
+    import AppSearchQcm from './AppSearchQcm.vue'
     import AppCreateExam from './AppCreateExam.vue'
     import AppCreateQcm from './AppCreateQcm.vue'
     import {en, fr} from 'vuejs-datepicker/dist/locale'
@@ -82,7 +83,7 @@
         }
     });
     export default {
-        components:{AppCreateExam, AppCreateQcm,'notification' : Notification,AppEditCoursTab},
+        components:{AppCreateExam, AppCreateQcm,'notification' : Notification,AppEditCoursTab,AppSearchQcm},
         data () {
             return {
                 notifications:[],

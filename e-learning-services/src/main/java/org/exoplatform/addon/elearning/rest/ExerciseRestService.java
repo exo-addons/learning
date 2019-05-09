@@ -1,18 +1,17 @@
 package org.exoplatform.addon.elearning.rest;
 
+import org.exoplatform.addon.elearning.entities.ExerciseEntity;
 import org.exoplatform.addon.elearning.service.configuration.ExerciseService;
 import org.exoplatform.addon.elearning.service.dto.ExerciseDTO;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.manager.IdentityManager;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -68,4 +67,53 @@ public class ExerciseRestService implements ResourceContainer {
     }
 
   }
+  @GET
+  @Path("/getExercisesFromCourse/{idCourse}")
+  public Response findExercisesByNameCourse(@PathParam("idCourse") Long idCourse) {
+    try {
+      String user= ConversationState.getCurrent().getIdentity().getUserId();
+      List<ExerciseDTO> exerciseDTOS = exerciseService.findExercisesByCourseId(idCourse,user);
+      return Response.ok(exerciseDTOS, MediaType.APPLICATION_JSON).build();
+    } catch (Exception e) {
+
+      LOG.error("Error listing the Exercises By Course name ", e);
+
+      return Response.serverError()
+                     .entity("Error listing Error listing the Exercises By Course name")
+                     .build();
+    }
+  }
+  @DELETE
+  @Path("/delete/{id}")
+  public  Response deltetidea(@PathParam("id") Long id ) {
+    try {
+
+      exerciseService.deleteExercise(id);
+
+      return Response.ok().build();
+    } catch (Exception e) {
+      return Response.serverError()
+                     .entity("Error delete exercise")
+                     .build();
+
+    }
+
+    }
+
+  @PUT
+  @Path("/update")
+  public Response updateExercise(ExerciseDTO exerciseDTO) {
+
+    try {
+      exerciseDTO = exerciseService.updateExercise(exerciseDTO);
+      return Response.ok().entity(exerciseDTO).build();
+    } catch (Exception e) {
+      LOG.error("Error updating exercise {} by {} ", exerciseDTO.getQuestionExercise(), e);
+      return Response.serverError()
+                     .entity("Error updating a exercise")
+                     .build();
+    }
+
+  }
 }
+

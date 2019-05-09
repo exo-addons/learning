@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AppHome from '../components/courses/AppCardMain.vue'
+import AppHome from '../components/courses/CoursPublishedCard.vue'
 import AppStepper from '../components/courses/AppStepper.vue'
-import AppCoursPublished from '../components/courses/AppCardMain.vue'
-import AppEditCards from '../components/courses/AppCardEditCours.vue'
+import AppCoursPublished from '../components/courses/CoursPublishedCard.vue'
+import MyDrafetCours from '../components/courses/MyCoursDrafetCard.vue'
+import AppEditCards from '../components/courses/MyPublishedCourse.vue'
 import AppEditCoursTab from '../components/courses/AppEditCoursTabMain.vue'
-import AppCoursTabform from '../components/courses/AppEditCours.vue'
+import AppCoursTabform from '../components/courses/MyCompletedCourse.vue'
 import AppStepperExam from '../components/exam/AppStepperExam.vue'
+import AppListQcm from '../components/exam/AppListQcm.vue'
+import AppEditQcm from '../components/exam/AppEditQcm.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +36,11 @@ export default new Router({
           component: AppCoursPublished
       },
       {
+          path: '/EditMyDrafetCours',
+          name: 'MyDrafetCours',
+          component: MyDrafetCours
+      },
+      {
           path: '/EditCoursTab',
           name: 'AppEditCoursTab',
           component: AppEditCoursTab
@@ -46,6 +54,16 @@ export default new Router({
           path: '/createExam',
           name: 'AppStepperExam',
           component: AppStepperExam
+      },
+      {
+          path: '/listeQcm',
+          name: 'AppListQcm',
+          component: AppListQcm
+      },
+      {
+          path: '/editQcm',
+          name: 'AppEditQcm',
+          component: AppEditQcm
       }
   ]
 })

@@ -4,9 +4,13 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "ElearningExercise")
 @ExoEntity
 @Table(name = "ELEARNING_EXERCISE")
+@NamedQueries({
+    // it is a function to get exercises by courseName for the current user
+    @NamedQuery(name = "ElearningExercise.findExercisesByCourseId", query = "select e from ElearningExercise e where e.course.idCourse=:id and e.userName=:user"),
+})
 public class ExerciseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

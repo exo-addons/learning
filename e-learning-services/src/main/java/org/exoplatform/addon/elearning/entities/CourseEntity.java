@@ -21,8 +21,13 @@ import java.util.Date;
         query = "SELECT course FROM ELearningCourse course where course.status = :COMPLETED and course.userName=:user"
     ),
     @NamedQuery(
+        //the list of the user published courses but he can improve his content
+        name = "ELearningCourse.getPublishedCourseByUser",
+        query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName=:user"
+    ),
+    @NamedQuery(
         //the list of the user where created courses in progress
-        name = "ELearningCourse.getDrafetCourse",
+        name = "ELearningCourse.getDrafetCourseByUser",
         query = "SELECT course FROM ELearningCourse course where course.status = :DRAFET and course.userName=:user"
     ),
     @NamedQuery(
