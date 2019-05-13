@@ -1,11 +1,15 @@
 <template>
     <v-card
             class="mb-5"
-            height="500px">
+            height="550px">
         <v-card-text>
+                <center>
+                    <div class="alert alert-error"  v-if="alt">
+                  <i class="uiIconError" @click="changeError"></i>Aucun Examen Crée
+                </div>
+                </center>
             <v-form ref="form" class="px-3">
                 <v-container>
-
                 <v-flex md10>
                     <v-text-field
                             v-model="nameExam"
@@ -23,7 +27,7 @@
                                 <v-checkbox
                                         v-model="rewardExam"
                                         label="Badge"
-                                        value="course" />
+                                        value="badge" />
                             </v-flex>
                             <v-flex>
                                 <v-checkbox
@@ -36,10 +40,11 @@
                     </v-flex>
                     <v-flex md10>
                     <v-text-field
+                            type="number"
                             v-model="nbrBidExam"
                             label="Tentative"
                             prepend-icon="folder"
-                            :rules="inputRules" />
+                             />
 
                 </v-flex>
                     <v-flex md10>
@@ -69,17 +74,19 @@
                     </v-flex>
                     <v-flex md10>
                         <v-text-field
+                                type="number"
                                 v-model="dureeExam"
                                 label="Durée Examen"
                                 prepend-icon="folder"
-                                :rules="inputRules" />
+                                 />
                     </v-flex>
                     <v-flex md10>
                         <v-text-field
+                                type="number"
                                 v-model="scaleExam"
                                 label="Barème Examen"
                                 prepend-icon="folder"
-                                :rules="inputRules" />
+                                 />
                     </v-flex>
                 </v-container>
                 <v-flex>
@@ -94,7 +101,6 @@
 
 <script>
     import axios from 'axios';
-    import {bus} from '../../main.js';
     import Datepicker from 'vuejs-datepicker';
     import moment from 'moment';
     Vue.filter('formatDate', function(value) {
@@ -116,14 +122,15 @@
         },
         data:function(){
             return{
+                alt:false,
                 childData:'',
                 nameExam:'',
                 rewardExam:'',
-                nbrBidExam:'',
+                nbrBidExam:null,
                 dateStartExam:'',
                 dateEndExam:'',
-                dureeExam:'',
-                scaleExam:'',
+                dureeExam:null,
+                scaleExam:null,
                 exam:{
                     nameExam: '',
                     dateStartExam: '',
@@ -132,6 +139,10 @@
                     rewardExam:'',
                     dureeExam:''
                 },
+                inputRules: [
+                    v => !!v || 'les champs sont obligatoires',
+                    v => v.length >= 3 || 'entrer plus que 3 caractéres'
+                ],
                 config: {
                     format: 'YYYY-MM-DD',
                     useCurrent: false,
@@ -147,28 +158,40 @@
                 this.exam.dateStartExam=this.dateStartExam;
                 this.exam.dateEndExam=this.dateEndExam;
                 this.exam.dureeExam=this.dureeExam;
-                axios.post(`/portal/rest/exam/add`,this.exam, {
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    }
-            }).then(response => {
-                        this.exam= response.data
-                    console.log("contenu exam",this.exam.idExam)
-                    this.idExamen=this.exam.idExam
-                    bus.$emit('sendIdExam',this.exam.idExam)
-                    this.nameExam='';
-                        this.rewardExam='';
-                        this.nbrBidExam='';
-                        this.dureeExam='';
-                    })
-                    .catch(e => {
-                    })
+                if((this.nameExam==='')||(this.nbrBidExam===null)||(this.dureeExam===null)||(this.scaleExam===null))
+                {
+                    this.alt=true;
+                    console.log(this.alt);
+                }
+                if(this.alt===false){
+                    axios.post(`/portal/rest/exam/add`, this.exam, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response => {
 
+                        this.exam = response.data
+                        this.nameExam = '';
+                        this.rewardExam='';
+                        this.scaleExam = null;
+                        this.nbrBidExam = null;
+                        this.dureeExam = null;
+                    })
+                        .catch(e => {
+                        })
+                }
+
+            },
+            changeError(){
+                this.alt=false
             }
         }
     }
 </script>
 
 <style scoped>
+    .alert.alert-error {
+        width: 700px;
+    }
 
 </style>

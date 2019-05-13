@@ -3,6 +3,11 @@
             class="mb-5"
             height="650px" >
         <v-card-text>
+            <center>
+                <div class="alert alert-error"  v-if="alt">
+                    <i class="uiIconError" @click="changeError"></i>Aucun Examen Crée
+                </div>
+            </center>
             <v-form ref="form">
                 <v-container>
                     <v-flex md10>
@@ -16,8 +21,20 @@
                             </option>
                         </select>
                     </v-flex>
+                    <v-flex md10>
+                        <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">Examen Affecté {{idExamen}}</p>
+                        <select
+                                v-model="selectedExam"
+                                class="select_style">
+                            <option value="" >Select Examen</option>
+                            <option v-for="option in exams" :value="option.idExam">
+                                {{ option.nameExam }}
+                            </option>
+                        </select>
+                    </v-flex>
                    <v-flex md10>
                         <v-text-field
+                                type="number"
                                 v-model="scaleExam"
                                 label="barème"
                                 prepend-icon="folder"
@@ -37,28 +54,28 @@
                                 v-model="optionExam1"
                                 label="Réponse 1"
                                 prepend-icon="edit"
-                                :rules="inputRules" />
+                               />
                     </v-flex>
                     <v-flex md8>
                         <v-text-field
                                 v-model="optionExam2"
                                 label="Réponse 2"
                                 prepend-icon="edit"
-                                :rules="inputRules" />
+                                />
                     </v-flex>
                     <v-flex md8>
                         <v-text-field
                                 v-model="optionExam3"
                                 label="Réponse 3"
                                 prepend-icon="edit"
-                                :rules="inputRules" />
+                                />
                     </v-flex>
                     <v-flex md10>
                         <v-text-field
                                 v-model="answer"
                                 label="Réponse Correcte"
                                 prepend-icon="edit"
-                                :rules="inputRules" />
+                                />
                     </v-flex>
                 </v-container>
                 <button class="btn btn-primary" type="button"  @click.prevent="saveQcm">Ajouter</button>
@@ -71,29 +88,21 @@
 
 <script>
     import axios from 'axios';
-    import {bus} from '../../main.js';
-    import Notification from '../commun/notifications.vue';
-
     export default {
-        components:{
-            Notification
-        },
-        props:{
-            idExamen: {
-                type: Number
-            }
-        },
         data:function(){
             return{
+                alt:false,
+                selectedExam:'',
                 selectedCourse:'',
                 questionExam:'',
                 optionExam1:'',
                 optionExam2:'',
                 optionExam3:'',
-                scaleExam:'',
+                scaleExam:null,
                 answer:'',
                 idref:null,
                 courses:{},
+                exams:[],
                 qcm:{
                     idCourse: null,
                     idExam: null,
@@ -104,18 +113,15 @@
                     choose2: '',
                     choose3: '',
                 },
-                notifications:[]
+                inputRules: [
+                    v => !!v || 'les champs sont obligatoires',
+                    v => v.length >= 3 || 'entrer plus que 3 caractéres'
+                ],
             }
         },
-        created(){
-            bus.$on('sendIdExam',(data)=>{
-                this.idExamen=data;
-                this.idref=this.idExamen;
-                console.log('contenu',this.idExamen)
-            })
-        },
+
         mounted(){
-            axios.get(`/portal/rest/cours/all`)
+            axios.get(`/portal/rest/cours/allCompletedByUser/COMPLETED`)
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.courses= response.data
@@ -124,37 +130,43 @@
                 .catch(e => {
                     this.errors.push(e)
                 })
+            axios.get(`/portal/rest/exam/allExamByUser`)
+                .then(response => {
+                    // JSON responses are automatically parsed.
+                    this.exams= response.data
+                    console.log(this.selectedCourse)
+                })
         },
         methods: {
-            saveQcm: function()
-            {
-                this.qcm.idCourse=this.selectedCourse;
-                this.qcm.idExam=this.idref;
-                this.qcm.questionExercise=this.questionExam;
-                this.qcm.scaleExercise=this.scaleExam;
-                this.qcm.answerExercise=this.answer;
-                this.qcm.choose1=this.optionExam1;
-                this.qcm.choose2=this.optionExam2;
-                this.qcm.choose3=this.optionExam3;
+            saveQcm: function() {
+                this.qcm.idCourse = this.selectedCourse;
+                this.qcm.idExam = this.selectedExam;
+                this.qcm.questionExercise = this.questionExam;
+                this.qcm.scaleExercise = this.scaleExam;
+                this.qcm.answerExercise = this.answer;
+                this.qcm.choose1 = this.optionExam1;
+                this.qcm.choose2 = this.optionExam2;
+                this.qcm.choose3 = this.optionExam3;
+                if ((this.questionExam === '') || (this.scaleExam === null) || (this.answer === '')) {
+                    this.alt = true;
+                    console.log(this.alt);
+                }
                 console.log(this.qcm);
-                axios.post(`/portal/rest/exercise/add`, this.qcm, {
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    }
-                }).then((response) => {
-                        this.notifications.push({
-                            type: 'success',
-                            message: 'Lesson created successfully'
-                        });
-                      //  this.lessonContent='';
+                if (this.alt === false) {
+                    axios.post(`/portal/rest/exercise/add`, this.qcm, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        this.questionExam='';
+                        this.scaleExam=null;
+                        this.answer='';
 
-                    },
-                    (response) => {
-                        this.notifications.push({
-                            type: 'error',
-                            message: 'Lesson not created'
                         });
-                    });
+                }
+            },
+            changeError(){
+                this.alt=false
             }
 
         }

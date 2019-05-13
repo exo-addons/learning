@@ -11,14 +11,21 @@ import java.util.List;
 public class ExerciseDao  extends GenericDAOJPAImpl<ExerciseEntity,Long> {
   public List<ExerciseEntity> findExercisesByCourseId(Long id, String user) throws PersistenceException {
 
-    TypedQuery<ExerciseEntity>
-        query =
-        getEntityManager().createNamedQuery("ElearningExercise.findExercisesByCourseId", ExerciseEntity.class);
+    TypedQuery<ExerciseEntity> query = getEntityManager().createNamedQuery("ElearningExercise.findExercisesByCourseId", ExerciseEntity.class);
     try {
-      query.setParameter("id",id);
+      query.setParameter("id", id);
       query.setParameter("user", user);
       return query.getResultList();
-
+    } catch (NoResultException e) {
+      return null;
+    }
+  }
+  public List<ExerciseEntity> findExercisesByIdForOther(Long id, String user) throws PersistenceException {
+    TypedQuery<ExerciseEntity> query = getEntityManager().createNamedQuery("ElearningExercise.findExercisesByIdForOther", ExerciseEntity.class);
+    try {
+      query.setParameter("id", id);
+      query.setParameter("user", user);
+      return query.getResultList();
     } catch (NoResultException e) {
       return null;
     }

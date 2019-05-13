@@ -1,18 +1,18 @@
 package org.exoplatform.addon.elearning.rest;
 
+import org.exoplatform.addon.elearning.entities.CourseEntity;
 import org.exoplatform.addon.elearning.service.configuration.ExamService;
+import org.exoplatform.addon.elearning.service.dto.CourseDTO;
 import org.exoplatform.addon.elearning.service.dto.ExamDTO;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.manager.IdentityManager;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -64,5 +64,23 @@ public class ExamRestService implements ResourceContainer {
                      .build();
     }
 
+  }
+
+  @GET
+  @Path("/allExamByUser")
+  public Response getExamByUser() {
+    try {
+      String user= ConversationState.getCurrent().getIdentity().getUserId();
+      List<ExamDTO> allExamByUser = examService.getExamByUser(user);
+      return Response.ok(allExamByUser, MediaType.APPLICATION_JSON).build();
+
+    } catch (Exception e) {
+
+      LOG.error("Error listing all Exam by user ", e);
+
+      return Response.serverError()
+                     .entity("Error listing all Exam  user")
+                     .build();
+    }
   }
 }

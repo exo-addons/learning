@@ -15,7 +15,7 @@
                                 <v-card-text class="px-4">
                                         <v-layout>
                                             <v-flex md10>
-                                                <div class="font-weight-bold">Question n°:{{ index}}</div>
+                                                <div class="font-weight-bold">Question n°{{ index}}: {{c.questionExercise}}</div>
                                             </v-flex>
                                         </v-layout>
                                     <br>

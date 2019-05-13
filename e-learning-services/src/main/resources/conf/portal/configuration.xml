@@ -111,15 +111,7 @@
   <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CourseRegistrationMapper</type>
   </component>
-  <component>
-    <type>org.exoplatform.addon.elearning.service.setting.course.model.CourseConfig</type>
-  </component>
-  <component>
-    <type>org.exoplatform.addon.elearning.service.setting.course.impl.CourseRegistryImpl</type>
-  </component>
-  <component>
-    <type>org.exoplatform.addon.elearning.service.setting.course.CourseRegistry</type>
-  </component>
+
 
 
 

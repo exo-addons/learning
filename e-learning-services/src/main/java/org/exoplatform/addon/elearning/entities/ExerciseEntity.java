@@ -10,7 +10,10 @@ import javax.persistence.*;
 @NamedQueries({
     // it is a function to get exercises by courseName for the current user
     @NamedQuery(name = "ElearningExercise.findExercisesByCourseId", query = "select e from ElearningExercise e where e.course.idCourse=:id and e.userName=:user"),
+    //it is a function to get Exercises of courses( I use it for published) of the other users By id Course
+    @NamedQuery(name = "ElearningExercise.findExercisesByIdForOther", query = "select e from ElearningExercise e where e.course.idCourse = :id and e.userName<>:user"),
 })
+
 public class ExerciseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

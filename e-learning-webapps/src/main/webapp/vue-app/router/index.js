@@ -10,6 +10,7 @@ import AppCoursTabform from '../components/courses/MyCompletedCourse.vue'
 import AppStepperExam from '../components/exam/AppStepperExam.vue'
 import AppListQcm from '../components/exam/AppListQcm.vue'
 import AppEditQcm from '../components/exam/AppEditQcm.vue'
+import AppPassExam from '../components/exam/PassExam.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -64,6 +65,11 @@ export default new Router({
           path: '/editQcm',
           name: 'AppEditQcm',
           component: AppEditQcm
+      },
+      {
+          path: '/passExam',
+          name: 'AppPassExam',
+          component: AppPassExam
       }
   ]
 })

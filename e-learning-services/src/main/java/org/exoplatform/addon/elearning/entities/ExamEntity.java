@@ -6,10 +6,17 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
-@Entity
+@Entity(name="ElearningExam")
 @ExoEntity
 @Table(name = "ELEARNING_EXAM")
-public class ExamEntity {
+@NamedQueries({
+    @NamedQuery(
+        //it is a function to search course by name
+        name = "ElearningExam.findExamByUser",
+        query = "SELECT exam FROM ElearningExam exam where exam.userName=:user"
+    ),
+})
+    public class ExamEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name ="ID_EXAM")

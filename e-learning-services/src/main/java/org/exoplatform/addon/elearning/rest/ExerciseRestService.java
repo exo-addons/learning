@@ -83,9 +83,26 @@ public class ExerciseRestService implements ResourceContainer {
                      .build();
     }
   }
+  @GET
+  @Path("/getExercisesByIdForOther/{idCourse}")
+  //By id Course
+  public Response findExercisesByIdForOther(@PathParam("idCourse") Long idCourse) {
+    try {
+      String user= ConversationState.getCurrent().getIdentity().getUserId();
+      List<ExerciseDTO> exerciseDTOS = exerciseService.findExercisesForOtherPublished(idCourse,user);
+      return Response.ok(exerciseDTOS, MediaType.APPLICATION_JSON).build();
+    } catch (Exception e) {
+
+      LOG.error("Error listing the Exercises By Course name ", e);
+
+      return Response.serverError()
+                     .entity("Error listing Error listing the Exercises By Course name")
+                     .build();
+    }
+  }
   @DELETE
   @Path("/delete/{id}")
-  public  Response deltetidea(@PathParam("id") Long id ) {
+  public  Response deleteExercise(@PathParam("id") Long id ) {
     try {
 
       exerciseService.deleteExercise(id);

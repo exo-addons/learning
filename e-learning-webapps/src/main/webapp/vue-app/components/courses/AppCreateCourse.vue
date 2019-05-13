@@ -201,7 +201,6 @@
                 rewardCourse: '',
                 visibilityCourse:'',
                 idCategory:'',
-                icon: '',
                 status:''
 
             },
@@ -231,12 +230,12 @@
             onImageChange(e) {
                 console.log(e.target.files[0]);
                 //__proto__.__proto__
-                this.courses.icon = e.target.files[0];
+                this.courses.iconFileId = e.target.files[0];
             },
             onSubmit() {
                 const formData = new FormData();
 
-                formData.append('image', this.courses.icon)
+                formData.append('image', this.courses.iconFileId)
                 const MAX_RANDOM_NUMBER = 100000;
                 const uploadId = Math.round(Math.random() * MAX_RANDOM_NUMBER);
 
@@ -246,10 +245,6 @@
                     }
                 }).then((response) => {
                     console.log('data okokok'+response)
-                    this.courses.icon=uploadId
-
-                }),
-
                 this.courses.nameCourse = this.nameCourse;
                 this.courses.dateStart = this.dateStart;
                 this.courses.dateEnd = this.dateEnd;
@@ -258,7 +253,8 @@
                 this.courses.status=this.courseStatus;
                 this.courses.visibilityCourse = this.visibility;
                 this.courses.idCategory = this.selectedCategory;
-                this.courses.icon =uploadId
+                this.courses.iconFileId =uploadId
+                    console.log('contenu de cours',this.courses)
                 axios.post(`/portal/rest/cours/add`, this.courses, {
                     headers : {
                         'Content-Type' : 'application/json'
@@ -267,8 +263,9 @@
 
                 }, (response) => {
 
-                });
-            }
+                })
+                })
+                }
             }
         }
 </script>

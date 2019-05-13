@@ -67,6 +67,25 @@ public class ExerciseService {
     return null;
 
   }
+
+  @ExoTransactional
+  public List<ExerciseDTO> findExercisesForOtherPublished(Long id,String user) {
+
+    try {
+      //--- Get Entity from DB
+      List<ExerciseEntity> exercises=exerciseDao.findExercisesByIdForOther(id,user);
+      //--- Convert Entity to DTO
+      if (exercises != null) {
+        return exerciseMapper.exercisesToExerciseDTOs(exercises);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find Exercise for other users entity with id : {}", id, e.getMessage());
+    }
+    return null;
+
+  }
+
   @ExoTransactional
   public void deleteExercise(Long id) {
     ExerciseEntity exercise=exerciseDao.find(id);

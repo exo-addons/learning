@@ -8,7 +8,7 @@
             </template>
             <v-card>
                 <v-card-title>
-                    <span class="headline">Ajouter Cours</span>
+                    <span class="headline">Choisir Cours</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container grid-list-md>
@@ -53,7 +53,7 @@
             }
         },
         mounted(){
-            axios.get(`/portal/rest/cours/all`)
+            axios.get(`/portal/rest/cours/allCompletedByUser/COMPLETED`)
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.courses= response.data

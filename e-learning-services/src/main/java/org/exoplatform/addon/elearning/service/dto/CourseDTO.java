@@ -17,9 +17,7 @@ public class CourseDTO implements Serializable {
   private String   rewardCourse;
   private Long idCategory;
   private CourseEntity.Status status;
-  private byte[] icon;
   private long iconFileId;
-  private String uploadId;
 
   public CourseDTO() {
   }
@@ -113,13 +111,6 @@ public class CourseDTO implements Serializable {
     this.status = status;
   }
 
-  public byte[] getIcon() {
-    return icon;
-  }
-
-  public void setIcon(byte[] icon) {
-    this.icon = icon;
-  }
 
   public long getIconFileId() {
     return iconFileId;
@@ -129,11 +120,4 @@ public class CourseDTO implements Serializable {
     this.iconFileId = iconFileId;
   }
 
-  public String getUploadId() {
-    return uploadId;
-  }
-
-  public void setUploadId(String uploadId) {
-    this.uploadId = uploadId;
-  }
 }

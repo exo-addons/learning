@@ -15,7 +15,7 @@
           </v-layout>
           <v-layout>
             <v-flex
-              v-for="c in courses"
+              v-for="(c,index) in courses"
               :key="c.idCourse"
               md4
               lg4>
@@ -53,7 +53,7 @@
                               dark
                               small
                               color="#424242"
-                              @click.prevent="deleteCourse(c.idCourse,index)">
+                              @click.prevent="passExam(courses[index])">
                         <i class="fas fa-graduation-cap fa-2x"></i>
                       </v-btn>
                     </v-flex>
@@ -121,10 +121,15 @@
                 })
                 .catch(error => {
                     console.log(error)
-                    this.errored = true
                 })
                 .finally(() => this.loading = false)
         },
+        methods:{
+            passExam(el){
+                console.log(el.idCourse)
+                this.$router.push('/passExam?id='+el.idCourse);
+            }
+        }
     }
 </script>
 

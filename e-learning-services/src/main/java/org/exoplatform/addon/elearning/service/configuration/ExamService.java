@@ -51,4 +51,18 @@ public class ExamService {
     return examMapper.examToExamDTO(exam);
   }
 
+  public List<ExamDTO> getExamByUser(String user){
+    try {
+      List<ExamEntity> exam = examDao.getExamByUser(user);
+      if (exam != null) {
+        return examMapper.examsToExamDTOs(exam);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find published exam", e.getMessage());
+    }
+    return null;
+
+  }
+
 }

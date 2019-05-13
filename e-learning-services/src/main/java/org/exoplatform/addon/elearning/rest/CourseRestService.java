@@ -3,24 +3,18 @@ package org.exoplatform.addon.elearning.rest;
 import org.exoplatform.addon.elearning.entities.CourseEntity;
 import org.exoplatform.addon.elearning.service.dto.CourseDTO;
 import org.exoplatform.addon.elearning.service.configuration.CourseService;
-import org.exoplatform.addon.elearning.service.setting.course.impl.CourseRegistryImpl;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
-import org.exoplatform.commons.file.model.FileItem;
 import org.exoplatform.commons.file.services.FileService;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.manager.IdentityManager;
-import org.exoplatform.upload.UploadResource;
 import org.exoplatform.upload.UploadService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
 
   @Path("cours")
@@ -180,51 +174,11 @@ import java.util.List;
     @Path("/add")
     public Response add(CourseDTO coursDTO) {
 
-      InputStream inputStream = null;
-
-      /** Upload course's icon into DB */
-      FileItem fileItem = null;
-
       try {
 
-        if (coursDTO.getUploadId() != null) {
-          UploadResource uploadResource = uploadService.getUploadResource(coursDTO.getUploadId());
-
-          if (uploadResource != null) {
-
-            fileItem = new FileItem(null,
-                                    coursDTO.getNameCourse().toLowerCase(),
-                                    uploadResource.getMimeType(),
-                                    DEFAULT_COURSE_ICON_NAMESPACE,
-                                    (long) uploadResource.getUploadedSize(),
-                                    new Date(),
-                                    "hassen",
-                                    false,
-                                    new FileInputStream(uploadResource.getStoreLocation()));
-            fileItem = fileService.writeFile(fileItem);
-
-          } else {
-            inputStream = CourseRegistryImpl.class.getClassLoader().getResourceAsStream("medias/images/default_badge.png");
-
-            fileItem = new FileItem(null,
-                                    DEFAULT_COURSE_ICON_NAME,
-                                    DEFAULT_COURSE_ICON_MIME_TYPE,
-                                    DEFAULT_COURSE_ICON_NAMESPACE,
-                                    inputStream.available(),
-                                    new Date(),
-                                    "HASSEN",
-                                    false,
-                                    inputStream);
-
-            fileItem = fileService.writeFile(fileItem);
-
-          }
-        }
-
         /** END upload */
-        coursDTO.setIconFileId(fileItem.getFileInfo().getId());
 
-        //--- Add badge
+        //--- Add Course
         coursDTO = courseService.addCours(coursDTO);
 
         return Response.ok().entity(coursDTO).build();

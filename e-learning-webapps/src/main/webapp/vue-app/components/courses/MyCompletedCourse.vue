@@ -31,7 +31,7 @@
                         dark
                         small
                         color="#BDBDBD"
-                      @click.prevent="deleteCourse(c.idCourse,index)">
+                      @click.prevent="deleteCourse(c.idCourse)">
                         <i class="far fa-trash-alt"></i>                   
                       </v-btn>
                     </v-flex>
@@ -79,24 +79,16 @@ export default {
             },
       deleteCourse: function(event)
       {
-          //const idx= this.courses.indexOf(event)
           console.log('http://127.0.0.1:8080/portal/rest/cours/delete/'+event)
-          console.log('tab',this.courses[event.idCourse])
+          console.log('tab',event)
           axios.delete('http://127.0.0.1:8080/portal/rest/cours/delete/'+event, {
               headers : {
                   'Content-Type' : 'application/json'
               }
 
-          }).then((response) => {
-
-              this.courses.filter(item => item !== event)
-          }, (response) => {
-              this.notifications.push({
-                  type: 'danger',
-                  message: 'Product could not deleted'
-              });
-              console.log("****************deleted ok***********");
-          });
+          }).then(
+             this.courses=this.courses.filter(d=>d.idCourse !==event)
+          )
       }
   },
 }
