@@ -40,6 +40,7 @@ public class CourseService {
 
       cours = courseDao.create(courseMapper.courseDTOToCourse(coursDTO));
 
+
     } catch (Exception e) {
       LOG.error("Error to create course with title {}", coursDTO.getNameCourse() , e);
     }

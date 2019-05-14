@@ -5,54 +5,60 @@
                         <app-edit-cours-tab />
                     </v-flex>
                 </v-layout>
-                <v-layout column>
-                    <v-flex>
-                        <v-card width="200px" height="200px">
+                        <div class="t1">
+                        <v-card  >
                             <v-card-text>{{time}}</v-card-text>
                         </v-card>
-                    </v-flex>
-
-                    <v-flex style="width:500px" v-for="(c,index) in questions" :key="c.idExercise" >
-                        <div class="cardTemp">
-                        <v-card>
-                            <v-card-text>
-                                <form>
-                                    <v-layout>
-                                        <label class="mt-2">Question</label>
-                                        <div class="uiLargeTextField">
-                                            <div class="input-xxxlarge ml-2">
-                                                <input type="text" v-model="c.questionExercise" disabled>
-                                            </div>
-                                        </div>
-                                    </v-layout>
-                                    <div>
-                                        <label >Réponse</label>
-                                        <div class="ml-5">
-                                            <v-layout>
-                                                <v-radio-group v-model="courseStatus" >
-                                                    <v-radio
-                                                            :label=c.choose1
-                                                            color="blue"
-                                                            :value="c.choose1" />
-                                                    <v-radio
-                                                            :label="c.choose2"
-                                                            color="blue"
-                                                            :value="c.choose2" />
-                                                    <v-radio
-                                                            :label="c.choose3"
-                                                            color="blue"
-                                                            :value="c.choose3" />
-                                                </v-radio-group>
-                                            </v-layout>
-                                        </div>
-                                    </div>
-                                    <center><button class="btn btn-primary mt-4" type="button" @click="validateAnswer">valider</button></center>
-                                </form>
-                            </v-card-text>
-                        </v-card>
                         </div>
-                    </v-flex>
-                </v-layout>
+                    <div class="cardTemp" v-for="(c,index) in questions" :key="c.idExercise" >
+                        <v-card >
+                            <v-card-title>
+                                <label class="mt-2">Question</label>
+                                <div class="Q1">
+                                    <input type="text" style="width:422%" v-model="c.questionExercise" disabled>
+
+                                </div>
+
+
+                            </v-card-title>
+                            <v-card-title>
+                                <label >Réponse</label>
+
+                            </v-card-title>
+                            <v-card-text>
+                                <div class="Q2">
+                                    <div class="ml-5">
+                                        <v-layout>
+                                            <v-radio-group v-model="courseStatus" >
+                                                <v-radio
+                                                        :label=c.choose1
+                                                        color="blue"
+                                                        :value="c.choose1" />
+                                                <v-radio
+                                                        :label="c.choose2"
+                                                        color="blue"
+                                                        :value="c.choose2" />
+                                                <v-radio
+                                                        :label="c.choose3"
+                                                        color="blue"
+                                                        :value="c.choose3" />
+                                            </v-radio-group>
+                                        </v-layout>
+                                </div>
+                                </div>
+                            </v-card-text>
+                            <v-card-title>
+                                <div class="Q5">
+                                    <button class="btn-primary" >save</button>
+                                </div>
+                            </v-card-title>
+                        </v-card>
+         <br>
+                        <br>
+
+
+                    </div>
+
             </v-container>
 </template>
 <script>
@@ -111,7 +117,21 @@
     }
 </script>
 <style>
+    .t1{
+        width: 15%;
+    }
     .cardTemp{
-
+        margin-bottom: 1%;
+        width: 83%;
+        margin-left: 16%;
+        margin-top: -4%;
+    }
+    .Q1{
+        margin-left: 5%;
+        margin-top: 1%;
+    }
+    .Q2{
+        margin-top: -6%;
+        margin-left: 2%;
     }
 </style>

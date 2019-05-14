@@ -19,6 +19,7 @@ public class CourseDTO implements Serializable {
   private CourseEntity.Status status;
   private long iconFileId;
 
+
   public CourseDTO() {
   }
 
@@ -119,5 +120,6 @@ public class CourseDTO implements Serializable {
   public void setIconFileId(long iconFileId) {
     this.iconFileId = iconFileId;
   }
+
 
 }

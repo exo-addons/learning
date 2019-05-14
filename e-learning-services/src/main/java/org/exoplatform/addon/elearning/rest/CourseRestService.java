@@ -3,18 +3,26 @@ package org.exoplatform.addon.elearning.rest;
 import org.exoplatform.addon.elearning.entities.CourseEntity;
 import org.exoplatform.addon.elearning.service.dto.CourseDTO;
 import org.exoplatform.addon.elearning.service.configuration.CourseService;
+import org.exoplatform.commons.file.model.FileInfo;
+import org.exoplatform.commons.file.services.FileStorageException;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.exoplatform.commons.file.model.FileItem;
 import org.exoplatform.commons.file.services.FileService;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.manager.IdentityManager;
+import org.exoplatform.upload.UploadResource;
 import org.exoplatform.upload.UploadService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
   @Path("cours")
@@ -44,6 +52,7 @@ import java.util.List;
       uploadService = CommonsUtils.getService(UploadService.class);
 
     }
+
     @GET
     @Path("/getCourse/{nameCourse}")
     public Response findCourseByName(@PathParam("nameCourse") String courseName) {
@@ -79,12 +88,13 @@ import java.util.List;
                        .build();
       }
     }
+
     @GET
     @Path("/allOtherPublishedCourse/{PUBLISHED}")
     public Response getOtherPublishedCourse(@PathParam("PUBLISHED") CourseEntity.Status PUBLISHED) {
       try {
-        String user= ConversationState.getCurrent().getIdentity().getUserId();
-        List<CourseDTO> allOtherPublishedCourse = courseService.getOtherPublishedCourse(PUBLISHED,user);
+        String user = ConversationState.getCurrent().getIdentity().getUserId();
+        List<CourseDTO> allOtherPublishedCourse = courseService.getOtherPublishedCourse(PUBLISHED, user);
         return Response.ok(allOtherPublishedCourse, MediaType.APPLICATION_JSON).build();
 
       } catch (Exception e) {
@@ -96,12 +106,13 @@ import java.util.List;
                        .build();
       }
     }
+
     @GET
     @Path("/allCompletedByUser/{COMPLETED}")
     public Response getCompletedCourseByUser(@PathParam("COMPLETED") CourseEntity.Status COMPLETED) {
       try {
-        String user= ConversationState.getCurrent().getIdentity().getUserId();
-        List<CourseDTO> allCourseCompletedByUser = courseService.getCompletedCourseByUser(COMPLETED,user);
+        String user = ConversationState.getCurrent().getIdentity().getUserId();
+        List<CourseDTO> allCourseCompletedByUser = courseService.getCompletedCourseByUser(COMPLETED, user);
         return Response.ok(allCourseCompletedByUser, MediaType.APPLICATION_JSON).build();
 
       } catch (Exception e) {
@@ -113,12 +124,13 @@ import java.util.List;
                        .build();
       }
     }
+
     @GET
     @Path("/allPublishedByUser/{PUBLISHED}")
     public Response getPublishedCourseByUser(@PathParam("PUBLISHED") CourseEntity.Status PUBLISHED) {
       try {
-        String user= ConversationState.getCurrent().getIdentity().getUserId();
-        List<CourseDTO> allCoursePublishedByUser = courseService.getCompletedCourseByUser(PUBLISHED,user);
+        String user = ConversationState.getCurrent().getIdentity().getUserId();
+        List<CourseDTO> allCoursePublishedByUser = courseService.getCompletedCourseByUser(PUBLISHED, user);
         return Response.ok(allCoursePublishedByUser, MediaType.APPLICATION_JSON).build();
 
       } catch (Exception e) {
@@ -135,8 +147,8 @@ import java.util.List;
     @Path("/allDrafetByUser/{DRAFET}")
     public Response getDrafetCourseByUser(@PathParam("DRAFET") CourseEntity.Status DRAFET) {
       try {
-        String user= ConversationState.getCurrent().getIdentity().getUserId();
-        List<CourseDTO> allCourseDrafetByUser = courseService.getDrafetCourseByUser(DRAFET,user);
+        String user = ConversationState.getCurrent().getIdentity().getUserId();
+        List<CourseDTO> allCourseDrafetByUser = courseService.getDrafetCourseByUser(DRAFET, user);
         return Response.ok(allCourseDrafetByUser, MediaType.APPLICATION_JSON).build();
 
       } catch (Exception e) {
@@ -148,41 +160,62 @@ import java.util.List;
                        .build();
       }
     }
+
     @DELETE
     @Path("/delete/{idCourse}")
-    public Response deleteCourseById( @PathParam("idCourse") Long idCourse) {
+    public Response deleteCourseById(@PathParam("idCourse") Long idCourse) {
 
-        try {
-          //--- Remove the course
-          courseService.deleteCourseById(idCourse);
+      try {
+        //--- Remove the course
+        courseService.deleteCourseById(idCourse);
 
+        return Response.ok("Deleted ", MediaType.APPLICATION_JSON).build();
 
-          return Response.ok("Deleted ", MediaType.APPLICATION_JSON).build();
+      } catch (Exception e) {
 
-        } catch (Exception e) {
+        LOG.error("Error deleting course ", e);
 
-          LOG.error("Error deleting course ", e);
-
-          return Response.serverError()
-                         .entity("Error deleting course")
-                         .build();
-                }
-
+        return Response.serverError()
+                       .entity("Error deleting course")
+                       .build();
       }
+
+    }
 
     @POST
     @Path("/add")
     public Response add(CourseDTO coursDTO) {
+      ConversationState conversationState = ConversationState.getCurrent();
 
-      try {
+      InputStream inputStream = null;
 
-        /** END upload */
+      /** Upload badge's icon into DB */
+      FileItem fileItem ;
 
-        //--- Add Course
-        coursDTO = courseService.addCours(coursDTO);
 
-        return Response.ok().entity(coursDTO).build();
+      /** END upload */
+          coursDTO.setIconFileId(coursDTO.getIconFileId());
 
+          try{
+            String currentUserName = conversationState.getIdentity().getUserId();
+
+            String idFile=Long.toString(coursDTO.getIconFileId());
+            UploadResource uploadResource = uploadService.getUploadResource(idFile);
+
+              fileItem = new FileItem(null,
+                                      coursDTO.getNameCourse().toLowerCase(),
+                                      uploadResource.getMimeType(),
+                                      DEFAULT_COURSE_ICON_NAMESPACE ,
+                                      (long)uploadResource.getUploadedSize(),
+                                      new Date(),
+                                      currentUserName,
+                                      false,
+                                      new FileInputStream(uploadResource.getStoreLocation()));
+              fileItem = fileService.writeFile(fileItem);
+              //--- Add Course
+          coursDTO = courseService.addCours(coursDTO);
+
+          return Response.ok().entity(coursDTO).build();
       } catch (Exception e) {
 
         LOG.error("Error adding new course {} by {} ", coursDTO.getNameCourse(), e);
@@ -193,6 +226,26 @@ import java.util.List;
 
       }
 
+    }
+    private InputStream getCourseIconInputStream(CourseDTO courseDTO) throws IOException {
+      FileItem file = null;
+      if (courseDTO == null) {
+        return null;
+      }
+      Long courseId = courseDTO.getIconFileId();
+      if (courseId == null) {
+        return null;
+      }
+      try {
+        file = CommonsUtils.getService(FileService.class).getFile(courseId);
+      } catch (FileStorageException e) {
+        return null;
+      }
+
+      if (file == null) {
+        return null;
+      }
+      return file.getAsStream();
     }
 
   }
