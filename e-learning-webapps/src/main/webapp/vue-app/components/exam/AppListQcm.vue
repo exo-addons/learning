@@ -9,7 +9,7 @@
             <v-layout>
                 <v-flex md12>
                     <v-expansion-panel>
-                        <v-expansion-panel-content v-for="(c,index) in courses" :key="c.idExercise">
+                        <v-expansion-panel-content v-for="(c,index) in exercises" :key="c.idExercise">
                             <div slot="header" class="subheading font-weight-bold py-1">Examen {{nameC}}</div>
                             <v-card>
                                 <v-card-text class="px-4">
@@ -68,22 +68,19 @@
                                         </v-flex>
                                         </v-layout>
                                     <v-layout>
-                                        <v-flex md10>
-
-                                        </v-flex>
-                                        <v-flex md1>
-                                            <app-edit-qcm :exercise="courses[index]"></app-edit-qcm>
-                                        </v-flex>
-                                        <v-flex>
+                                            <div class="btn-qcm-edit">
+                                            <app-edit-qcm :exercise="exercises[index]"></app-edit-qcm>
+                                            </div>
+                                            <div class="btn-qcm-delete">
                                             <v-btn
                                                     fab
                                                     dark
                                                     small
                                                     color="#BDBDBD"
-                                                    @click.prevent="deleteCourse(c.idCourse,index)">
+                                                    @click.prevent="deleteCourse(c.idExercise)">
                                                 <i class="far fa-trash-alt"></i>
                                             </v-btn>
-                                        </v-flex>
+                                            </div>
                                     </v-layout>
                                 </v-card-text>
                             </v-card>
@@ -106,42 +103,42 @@
             return {
                 idC:this.$route.query.id,
                 nameC:this.$route.query.name,
-                courses: []
+                exercises: []
             }
         },
 
         mounted() {
                 axios.get(`/portal/rest/exercise/getExercisesFromCourse/` + this.idC).then((response) => {
-                    this.courses = response.data;
-                    console.log('ok', this.courses)
+                    this.exercises = response.data;
+                    console.log('ok', this.exercises)
                     console.log('id course'+this.idCourse)
 
                 }).catch(error => {
                     console.log(error)
                 })
-            console.log("val null",this.courses)
+            console.log("val null",this.exercises)
         },
         methods:{
+
+            deleteCourse: function(event)
+            {
+                console.log('tab',event)
+                axios.delete('http://127.0.0.1:8080/portal/rest/exercise/delete/'+event, {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+
+                }).then(
+                    this.exercises=this.exercises.filter(d=>d.idExercise !==event)
+                )
+            }
 
         }
     }
 </script>
 <style>
-    .borderResponse{
-        border-style: solid;
-        width:90%;
-        border-color: #149130;
-        border-radius: 2px;
-
-
-    }
-    .borderResponseCorrect{
-        /* Animation */
-        -webkit-animation: ombre ease-in infinite alternate 500ms;
-        -moz-animation: ombre ease-in infinite alternate 500ms;
-        animation: ombre ease-in infinite alternate 500ms;
-
-
+    .btn-qcm-edit{
+        margin-left: 90%;
     }
 
 </style>

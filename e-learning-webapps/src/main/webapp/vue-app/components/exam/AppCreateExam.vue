@@ -100,6 +100,7 @@
 </template>
 
 <script>
+    import { bus } from '../../main';
     import axios from 'axios';
     import Datepicker from 'vuejs-datepicker';
     import moment from 'moment';
@@ -112,13 +113,9 @@
     });
 
     export default {
+        props:['contentExam'],
         components:{
             Datepicker
-        },
-        props:{
-            idExamen:{
-                type:Number
-            }
         },
         data:function(){
             return{
@@ -170,7 +167,8 @@
                         }
                     }).then(response => {
 
-                        this.exam = response.data
+                        this.exam = response.data;
+                        bus.$emit('ExamChanged', this.exam);
                         this.nameExam = '';
                         this.rewardExam='';
                         this.scaleExam = null;

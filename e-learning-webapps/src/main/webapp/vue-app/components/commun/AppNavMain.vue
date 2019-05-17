@@ -1,7 +1,7 @@
 <!-- it is the First interface: it contains logo app + button create course-->
 <template>
   <div class="team">
-    <v-container class="my-5 backgroundTop" elevation-10>
+    <v-container class="my-5 backgroundTop" elevation-1>
       <v-layout>
         <v-flex md6 lg6>
           <a href="http://127.0.0.1:8080/portal/intranet/elearning#/">

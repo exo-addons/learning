@@ -1,9 +1,11 @@
 package org.exoplatform.addon.elearning.rest;
 
+import org.exoplatform.addon.elearning.entities.CourseRegistrationEntity;
 import org.exoplatform.addon.elearning.service.configuration.CourseRegistrationService;
 import org.exoplatform.addon.elearning.service.dto.CourseRegistrationDTO;
 import org.exoplatform.addon.elearning.service.mapper.CourseRegistrationMapper;
 import org.exoplatform.addon.elearning.storage.CourseRegistrationDao;
+import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -12,10 +14,7 @@ import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.manager.IdentityManager;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -35,7 +34,7 @@ public class CourseRegistrationRestSevice implements ResourceContainer {
   }
 
   @GET
-  @Path("/CoursesRegitered")
+  @Path("/all")
   public Response getAllCoursesRegitered() {
 
 
@@ -56,5 +55,20 @@ public class CourseRegistrationRestSevice implements ResourceContainer {
     }
   }
 
+  @POST
+  @Path("/add")
+  public Response addRegistredCourse(CourseRegistrationDTO courseRegistrationDTO) {
+    try {
+      courseRegistrationDTO=courseService.addCours(courseRegistrationDTO);
+      return Response.ok().entity(courseRegistrationDTO).build();
+
+
+    } catch (Exception e) {
+      return Response.serverError()
+                     .entity("Error adding new course registration")
+                     .build();
+    }
+
+  }
 
 }

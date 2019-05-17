@@ -2,9 +2,9 @@
     <v-layout row justify-center>
         <v-dialog v-model="dialog" persistent width="600px">
             <template v-slot:activator="{ on }">
-                <v-btn flat slot="activator" icon color="#578dc9">
-                    <i class="fas fa-clipboard-list fa-3x" style="color:#578dc9;"></i>
-                </v-btn>
+                    <button class="btn" type="button" slot="activator">
+                        Editer
+                    </button>
             </template>
             <v-card>
                 <v-card-title>

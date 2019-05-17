@@ -26,7 +26,6 @@
                     </v-stepper-header>
 
                     <v-stepper-content step="1">
-                        <notification v-bind:notifications="notifications"></notification>
                         <app-create-exam></app-create-exam>
                         <v-layout>
                             <v-flex md10>
@@ -53,11 +52,6 @@
                             </v-flex>
                             <v-flex md8>
                             </v-flex>
-                            <v-flex>
-                                <v-flex class="mt-4 mb-3">
-                                    <app-search-qcm></app-search-qcm>
-                                </v-flex>
-                            </v-flex>
                         </v-layout>
                     </v-stepper-content>
                 </v-stepper>
@@ -69,12 +63,10 @@
 
 <script>
     import AppEditCoursTab from '../courses/AppEditCoursTabMain.vue'
-    import AppSearchQcm from './AppSearchQcm.vue'
     import AppCreateExam from './AppCreateExam.vue'
     import AppCreateQcm from './AppCreateQcm.vue'
     import {en, fr} from 'vuejs-datepicker/dist/locale'
     import moment from 'moment';
-    import Notification from '../commun/notifications.vue';
     Vue.filter('formatDate', function(value) {
         if (value) {
             const lang = eXo.env.portal.language;
@@ -83,7 +75,7 @@
         }
     });
     export default {
-        components:{AppCreateExam, AppCreateQcm,'notification' : Notification,AppEditCoursTab,AppSearchQcm},
+        components:{AppCreateExam, AppCreateQcm,AppEditCoursTab},
         data () {
             return {
                 notifications:[],

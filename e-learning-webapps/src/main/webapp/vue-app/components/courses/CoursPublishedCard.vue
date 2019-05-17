@@ -9,29 +9,24 @@
       <v-layout>
         <v-flex md12 lg12>
           <v-layout>
-            <v-flex md12 lg12>
-              <app-search-card-main />
-            </v-flex>
-          </v-layout>
-          <v-layout>
             <v-flex
-              v-for="(c,index) in courses"
-              :key="c.idCourse"
-              md4
-              lg4>
-              <v-card flat class="text-xs-center ma-3 elevation-10">
+                    v-for="(c,index) in courses"
+                    :key="c.idCourse"
+                    md4
+                    lg4>
+              <v-card flat class="text-xs-center ma-3 elevation-5">
                 <div>
                 </div>
                 <v-card-text>
                   <center>
                     <v-img
-                              height="100px"
-                              width="100px"
-                              :src="course[1]"
-                              aspect-ratio="1"
-                              md4
-                              lg4
-                              class="grey lighten-2" />
+                            height="100px"
+                            width="100px"
+                            :src="course[1]"
+                            aspect-ratio="1"
+                            md4
+                            lg4
+                            class="grey lighten-2" />
                   </center>
                   <div class="subheading">{{ c.nameCourse }}</div>
                   <div class="grey--text">{{ c.status }}</div>
@@ -40,14 +35,15 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-layout>
-                  <v-flex>
-                    <v-btn
+                    <v-flex>
+                      <v-btn
                               fab
                               dark
                               small slot="activator"
+                              @click.prevent="passCourse(courses[index])"
                               color="#578dc9">
-                      <i class="fas fa-university fa-2x"></i>
-                    </v-btn>
+                        <i class="fas fa-university fa-2x"></i>
+                      </v-btn>
                       <v-btn
                               fab
                               dark
@@ -66,20 +62,37 @@
       </v-layout>
     </v-container>
   </div>
+
 </template>
 
 <script>
     import axios from 'axios'
-    import AppSearchCardMain from './AppSearchCardMain.vue'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
 
 
     export default {
         name: 'App',
-        components: {AppSearchCardMain, AppEditCoursTab},
+        components: {AppEditCoursTab},
         data() {
             return {
+                allworkers:[],
+                allregistration:[
+                    {
+                        idCourse: null,
+                        idWorker: null,
+                        dateRegistration: null
+                    }
+                ],
+                dialog:false,
                 courses: [],
+                users:[],
+                datajsonfor:{
+                    idCourse:null,
+                    idWorker: null
+                },
+                datajson:{
+
+                },
                 course: [
                     {
                         libelle: 'The Net Ninja',
@@ -128,7 +141,29 @@
             passExam(el){
                 console.log(el.idCourse)
                 this.$router.push('/passExam?id='+el.idCourse);
-            }
+            },
+            passCourse(el){
+                console.log("course id",el.idCourse)
+                axios.get(`http://127.0.0.1:8080/portal/rest/worker/all`)
+                    .then(response=>{
+                        this.allworkers=response.data
+                console.log("all registration",this.allworkers);
+                           axios.post(`/portal/rest/worker/addNewUser`, this.datajson)
+                                .then(response => {
+                                    this.datajsonfor.idCourse = el.idCourse;
+                                    this.datajsonfor.idWorker = response.data.id;
+                                    axios.post(`/portal/rest/cregistration/add`, this.datajsonfor)
+                                        .then(
+                                            console.log("****************", this.datajsonfor))
+                                    this.$router.push('/contentCourse')
+
+
+                                })
+
+
+                });
+            },
+
         }
     }
 </script>

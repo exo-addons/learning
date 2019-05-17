@@ -19,21 +19,16 @@
                       <div class="font-weight-bold">Date Fin:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ c.dateEnd }}</div>
                     </v-flex>
                     <v-flex>
-                      <v-btn
-                        fab
-                        dark
-                        small
-                        color="#1867c0">
-                        <i class="fas fa-edit"></i>
-                      </v-btn>
+                      <div class="btn-complet-edit">
                       <v-btn
                         fab
                         dark
                         small
                         color="#BDBDBD"
                       @click.prevent="deleteCourse(c.idCourse)">
-                        <i class="far fa-trash-alt"></i>                   
+                        <i class="far fa-trash-alt"></i>
                       </v-btn>
+                      </div>
                     </v-flex>
                   </v-layout>
                 </v-card-text>
@@ -93,3 +88,8 @@ export default {
   },
 }
 </script>
+<style>
+  .btn-complet-edit{
+    margin-left: 59%;
+  }
+</style>

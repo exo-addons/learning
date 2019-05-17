@@ -80,6 +80,9 @@
                 </v-container>
                 <button class="btn btn-primary" type="button"  @click.prevent="saveQcm">Ajouter</button>
                 <button class="btn " type="button">Annuler</button>
+                <div class="btn-popup">
+                <app-search-qcm></app-search-qcm>
+                </div>
             </v-form>
         </v-card-text>
     </v-card>
@@ -87,8 +90,12 @@
 </template>
 
 <script>
+    import { bus } from '../../main';
     import axios from 'axios';
+    import AppSearchQcm from './AppSearchQcm.vue'
     export default {
+        props:['contentExam'],
+        components:{AppSearchQcm},
         data:function(){
             return{
                 alt:false,
@@ -119,13 +126,21 @@
                 ],
             }
         },
-
+        created(){
+            bus.$on('ExamChanged', (data) => {
+                this.contentExam=data;
+                this.exams.push(this.contentExam)
+                console.log("bus value",this.exams)
+            });
+        },
         mounted(){
             axios.get(`/portal/rest/cours/allCompletedByUser/COMPLETED`)
                 .then(response => {
                     // JSON responses are automatically parsed.
-                    this.courses= response.data
-                    console.log(this.selectedCourse)
+                    this.courses= response.data;
+                    if(this.courses.length===0){
+                        this.alt=true;
+                    }
                 })
                 .catch(e => {
                     this.errors.push(e)
@@ -167,12 +182,14 @@
             },
             changeError(){
                 this.alt=false
-            }
-
+            },
         }
     }
 </script>
 
-<style scoped>
-
+<style >
+.btn-popup{
+    margin-left: 26.3%;
+    margin-top: -3.5%;
+}
 </style>

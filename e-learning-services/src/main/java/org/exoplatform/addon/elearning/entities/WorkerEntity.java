@@ -5,7 +5,7 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
+@Entity(name="ElearningWorker")
 @ExoEntity
 @Table(name = "ELEARNING_WORKER")
 public class WorkerEntity {

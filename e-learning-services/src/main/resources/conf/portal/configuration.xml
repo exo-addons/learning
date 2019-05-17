@@ -43,6 +43,9 @@
     <type>org.exoplatform.addon.elearning.storage.LessonDao</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.elearning.storage.WorkerDao</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.storage.CourseRegistrationDao</type>
   </component>
   <component>
@@ -64,6 +67,9 @@
     <type>org.exoplatform.addon.elearning.rest.CourseRegistrationRestSevice</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.elearning.rest.WorkerRestService</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.service.dto.ExerciseDTO</type>
   </component>
   <component>
@@ -74,6 +80,9 @@
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.dto.LessonDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.WorkerDTO</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.configuration.CourseService</type>
@@ -91,6 +100,12 @@
     <type>org.exoplatform.addon.elearning.service.configuration.ExerciseService</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.WorkerService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.CourseRegistrationService</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CategoryMapper</type>
   </component>
   <component>
@@ -106,14 +121,11 @@
     <type>org.exoplatform.addon.elearning.service.mapper.ExerciseMapper</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.service.configuration.CourseRegistrationService</type>
-  </component>
-  <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CourseRegistrationMapper</type>
   </component>
-
-
-
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.WorkerMapper</type>
+  </component>
 
   <external-component-plugins>
     <target-component>org.exoplatform.commons.api.persistence.DataInitializer</target-component>

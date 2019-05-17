@@ -26,8 +26,7 @@ public class CourseRegistrationEntity {
   CourseEntity course;
   @Column(name = "REGISTEREDAT_REGISTRATION")
   Date         registeredAt;
-  @Column(name = "LEVEL_REGISTRATION")
-  int          level;
+
 
   public CourseRegistrationEntity() {
   }
@@ -36,7 +35,6 @@ public class CourseRegistrationEntity {
     this.worker = worker;
     this.course = course;
     this.registeredAt = registeredAt;
-    this.level = level;
   }
 
   public Long getIdRegistration() {
@@ -71,11 +69,4 @@ public class CourseRegistrationEntity {
     this.registeredAt = registeredAt;
   }
 
-  public int getLevel() {
-    return level;
-  }
-
-  public void setLevel(int level) {
-    this.level = level;
-  }
 }

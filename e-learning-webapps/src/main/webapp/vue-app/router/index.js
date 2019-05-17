@@ -11,6 +11,8 @@ import AppStepperExam from '../components/exam/AppStepperExam.vue'
 import AppListQcm from '../components/exam/AppListQcm.vue'
 import AppEditQcm from '../components/exam/AppEditQcm.vue'
 import AppPassExam from '../components/exam/PassExam.vue'
+import AppQcmCreate from '../components/exam/AppCreateQcm.vue'
+import AppContentCourse from '../components/courses/ContentCourse.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -57,6 +59,11 @@ export default new Router({
           component: AppStepperExam
       },
       {
+          path: '/createOcm',
+          name: 'AppQcmCreate',
+          component: AppQcmCreate
+      },
+      {
           path: '/listeQcm',
           name: 'AppListQcm',
           component: AppListQcm
@@ -70,6 +77,11 @@ export default new Router({
           path: '/passExam',
           name: 'AppPassExam',
           component: AppPassExam
+      },
+      {
+          path: '/contentCourse',
+          name: 'AppContentCourse',
+          component: AppContentCourse
       }
   ]
 })

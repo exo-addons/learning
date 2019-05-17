@@ -4,6 +4,7 @@ import org.exoplatform.addon.elearning.entities.CourseRegistrationEntity;
 import org.exoplatform.addon.elearning.service.dto.CourseRegistrationDTO;
 import org.exoplatform.addon.elearning.service.mapper.CourseRegistrationMapper;
 import org.exoplatform.addon.elearning.storage.CourseRegistrationDao;
+import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -19,10 +20,26 @@ public class CourseRegistrationService {
     this.courseDao = CommonsUtils.getService(CourseRegistrationDao.class);
     this.courseMapper = CommonsUtils.getService(CourseRegistrationMapper.class);
   }
+  @ExoTransactional
+  public CourseRegistrationDTO addCours (CourseRegistrationDTO coursRegistrationDTO) {
+
+    CourseRegistrationEntity cours = null;
+
+    try {
+
+      cours = courseDao.create(courseMapper.courseRegistrationDTOToCourseRegistration(coursRegistrationDTO));
+
+
+    } catch (Exception e) {
+      LOG.error("Error to create course with title {}", coursRegistrationDTO.getIdCourse() , e);
+    }
+
+    return courseMapper.courseRegistrationToCourseRegistrationDTO(cours);
+  }
   public List<CourseRegistrationDTO> getAllCoursesRegitered(String worker) {
     try {
-      //--- load all Rules
-      List<CourseRegistrationEntity> courses = courseDao.findRegitrationByIdWorker(worker);
+      //--- load all registrations
+      List<CourseRegistrationEntity> courses = courseDao.findAll();
       if (courses != null) {
         return courseMapper.coursesRegistrationsToCourseRegistartionDTOs(courses);
       }

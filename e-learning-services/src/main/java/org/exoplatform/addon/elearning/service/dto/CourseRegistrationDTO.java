@@ -4,13 +4,15 @@ import org.exoplatform.addon.elearning.entities.CourseRegistrationEntity;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class CourseRegistrationDTO implements Serializable {
-  private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+  String pattern = "yyyy-mm-dd hh:mm:ss";
+  SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, new Locale("fr", "FR"));
 
   private Long idRegistration;
-  private String nameCourse;
-  private String nameWorker;
+  private Long idCourse;
+  private Long idWorker;
   private String dateRegistration;
 
   public CourseRegistrationDTO() {
@@ -18,10 +20,10 @@ public class CourseRegistrationDTO implements Serializable {
 
   public CourseRegistrationDTO(CourseRegistrationEntity courseRegistration) {
     this.idRegistration = courseRegistration.getIdRegistration();
-    this.nameCourse = courseRegistration.getCourse().getNameCourse();
-    this.nameWorker = courseRegistration.getWorker().getNameWorker();
+    this.idCourse = courseRegistration.getCourse().getIdCourse();
+    this.idWorker = courseRegistration.getWorker().getIdWorker();
     if (courseRegistration.getRegisteredAt()!= null) {
-      this.dateRegistration= formatter.format(courseRegistration.getRegisteredAt());
+      this.dateRegistration= simpleDateFormat.format(courseRegistration.getRegisteredAt());
     }
   }
 
@@ -33,20 +35,20 @@ public class CourseRegistrationDTO implements Serializable {
     this.idRegistration = idRegistration;
   }
 
-  public String getNameCourse() {
-    return nameCourse;
+  public Long getIdCourse() {
+    return idCourse;
   }
 
-  public void setNameCourse(String nameCourse) {
-    this.nameCourse = nameCourse;
+  public void setIdCourse(Long idCourse) {
+    this.idCourse = idCourse;
   }
 
-  public String getNameWorker() {
-    return nameWorker;
+  public Long getIdWorker() {
+    return idWorker;
   }
 
-  public void setNameWorker(String nameWorker) {
-    this.nameWorker = nameWorker;
+  public void setIdWorker(Long idWorker) {
+    this.idWorker = idWorker;
   }
 
   public String getDateRegistration() {

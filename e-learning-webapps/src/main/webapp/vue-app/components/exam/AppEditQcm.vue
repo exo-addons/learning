@@ -3,6 +3,7 @@
         <v-dialog v-model="dialog" persistent width="600px">
             <template v-slot:activator="{ on }">
                 <v-btn
+                        @click="exit"
                         fab
                         dark
                         small slot="activator"
@@ -99,13 +100,18 @@
                     }
                 }).then(response => {
                     this.qcm= response.data
+                    this.dialog=false;
+                    console.log(this.dialog);
                     console.log("contenu exam",this.qcm)
                 })
                     .catch(e => {
                     })
 
             }
-        }
+        },
+
     }
 </script>
+<style>
+</style>
 
