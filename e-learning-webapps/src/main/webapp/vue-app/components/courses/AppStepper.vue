@@ -11,7 +11,7 @@
                 v-model="e1"
                 flat
                 class="text-xs-center ma-3"
-                height="650px">
+                height="700px">
           <v-stepper-header>
             <v-stepper-step
                     :complete="e1 > 1"
@@ -40,11 +40,11 @@
 
                   </v-flex>
               <v-flex md2>
-                <v-btn flat icon color="indigo">
+                <v-btn flat icon color="#578dc9">
 
                 <i
                         class="fas fa-forward fa-3x"
-                        style="color:#1867c0;"
+                        style="color:#578dc9;"
                         @click.prevent="e1 = 2"></i>
                 </v-btn>
               </v-flex>
@@ -56,7 +56,7 @@
             <app-create-lesson />
             <v-layout>
               <v-flex md1>
-                <v-btn flat icon color="indigo">
+                <v-btn flat icon color="#578dc9">
                 <i
                         class="fas fa-backward fa-3x"
                         style="color:#1867c0;"

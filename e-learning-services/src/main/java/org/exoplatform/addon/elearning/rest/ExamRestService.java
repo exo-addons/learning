@@ -67,19 +67,35 @@ public class ExamRestService implements ResourceContainer {
   }
 
   @GET
-  @Path("/allExamByUser")
-  public Response getExamByUser() {
+  @Path("/allExamById/{id}")
+  public Response getExamById(@PathParam("id")Long id) {
     try {
-      String user= ConversationState.getCurrent().getIdentity().getUserId();
-      List<ExamDTO> allExamByUser = examService.getExamByUser(user);
+      List<ExamDTO> allExamByUser = examService.getExamById(id);
       return Response.ok(allExamByUser, MediaType.APPLICATION_JSON).build();
 
     } catch (Exception e) {
 
-      LOG.error("Error listing all Exam by user ", e);
+      LOG.error("Error listing all Exam by id ", e);
 
       return Response.serverError()
-                     .entity("Error listing all Exam  user")
+                     .entity("Error listing all Exam  id")
+                     .build();
+    }
+  }
+
+  @GET
+  @Path("/allExamByUserName/{user}")
+  public Response getExamByUserName(@PathParam("user")String user) {
+    try {
+      List<ExamDTO> allExamByUser = examService.getExamByUserName(user);
+      return Response.ok(allExamByUser, MediaType.APPLICATION_JSON).build();
+
+    } catch (Exception e) {
+
+      LOG.error("Error listing all Exam by username ", e);
+
+      return Response.serverError()
+                     .entity("Error listing all Exam  username")
                      .build();
     }
   }

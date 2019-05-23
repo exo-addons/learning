@@ -46,23 +46,16 @@
         </v-flex>
         <v-layout>
         <v-flex>
-          <v-btn Product not created
-
-                  depressed
-                  large
-                  color="#1867c0"
-                  class="white--text"
-                  @click="addLesson">
-            Valider
-          </v-btn>
-          <v-btn
-                  depressed
-                  large
-                  color="#1867c0"
-                  class="white--text"
-                  @click="quitter">
+          <button
+                  type="button" class="btn btn-primary"
+                  @click.prevent="addLesson">
+            Ajouter
+          </button>
+          <button
+                  type="button" class="btn"
+                  @click.prevent="quitter">
             Terminer
-          </v-btn>
+          </button>
         </v-flex>
         </v-layout>
       </v-container>

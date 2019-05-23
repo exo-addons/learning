@@ -28,10 +28,24 @@
                             lg4
                             class="grey lighten-2" />
                   </center>
-                  <div class="subheading">{{ c.nameCourse }}</div>
-                  <div class="grey--text">{{ c.status }}</div>
-                  <div class="grey--text">{{ c.dateStart }}</div>
-                  <div class="grey--text">{{ c.dateStart }}</div>
+                  <table align="center">
+                    <tr>
+                      <td><div class="title-content">Nom de cours:</div></td>
+                      <td><div class="text-content">{{ c.nameCourse }}</div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="title-content">Auteur:</div></td>
+                      <td> <div class="text-content">{{ c.userName }}</div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="title-content">Début:</div></td>
+                      <td> <div class="text-content">{{ c.dateStart }}</div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="title-content">Fin:</div></td>
+                      <td> <div class="text-content">{{ c.dateEnd }}</div></td>
+                    </tr>
+                  </table>
                 </v-card-text>
                 <v-card-actions>
                   <v-layout>
@@ -68,13 +82,19 @@
 <script>
     import axios from 'axios'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
+    import {bus} from '../../main.js'
 
 
     export default {
-        name: 'App',
+        props:{
+            exams:{
+            }
+        },
         components: {AppEditCoursTab},
         data() {
             return {
+                count:null,
+                counterWorker:0,
                 allworkers:[],
                 allregistration:[
                     {
@@ -89,6 +109,15 @@
                 datajsonfor:{
                     idCourse:null,
                     idWorker: null
+                },
+                dataExam:{
+                    idExam: null,
+                    idWorker:null
+
+                },
+                dataExercise:{
+                    idExam:null
+
                 },
                 datajson:{
 
@@ -137,34 +166,71 @@
                 })
                 .finally(() => this.loading = false)
         },
-        methods:{
-            passExam(el){
-                console.log(el.idCourse)
-                this.$router.push('/passExam?id='+el.idCourse);
+        methods: {
+            passExam(el) {
+               // this.$router.push('/passExam?id=' + el.idCourse);
+                this.$router.push('/ChooseExam')
+                console.log("el!!!!!!!!!!!!!",el)
+                axios.get(`/portal/rest/exam/allExamByUserName/`+ el.userName)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.exams= response.data
+                        console.log("all exams",this.exams)
+                        bus.$emit('transferData',this.exams)
+                    })
             },
-            passCourse(el){
-                console.log("course id",el.idCourse)
-                axios.get(`http://127.0.0.1:8080/portal/rest/worker/all`)
-                    .then(response=>{
-                        this.allworkers=response.data
-                console.log("all registration",this.allworkers);
-                           axios.post(`/portal/rest/worker/addNewUser`, this.datajson)
-                                .then(response => {
-                                    this.datajsonfor.idCourse = el.idCourse;
-                                    this.datajsonfor.idWorker = response.data.id;
-                                    axios.post(`/portal/rest/cregistration/add`, this.datajsonfor)
-                                        .then(
-                                            console.log("****************", this.datajsonfor))
-                                    this.$router.push('/contentCourse')
+            passCourse(el) {
+                console.log("course id", el.idCourse)
+                        axios.post(`/portal/rest/worker/addNewUser`, this.datajson)
+                            .then(response => {
+                                this.datajsonfor.idCourse = el.idCourse;
+                                this.datajsonfor.idWorker = response.data.id;
+                                console.log("id worker passé",this.datajsonfor.idWorker )
+                                axios.get(`/portal/rest/cregistration/countNumberWorker/` + this.datajsonfor.idWorker)
+                                    .then(response => {
+                                        this.count = response.data
+                                        console.log("counter",this.count.counter_worker)
+                                        if (this.count.counter_worker<1) {
+                                            console.log("id of worker", this.datajsonfor.idWorker)
+                                            axios.get(`/portal/rest/cregistration/countNumberWorker/` + this.datajsonfor.idWorker)
+                                                .then(response => {
+                                                    this.counterWorker = this.data
 
 
-                                })
+                                                    axios.post(`/portal/rest/cregistration/add`, this.datajsonfor)
+                                                        .then(
+                                                            console.log("****************", this.datajsonfor))
+                                                    this.$router.push('/contentCourse')
 
 
-                });
+                                                })
+                                        }else{
+                                            this.$router.push('/contentCourse')
+
+                                        }
+                                    })
+                    });
             },
-
         }
     }
 </script>
+<style>
+  .text-content {
+    text-align: left;
+    margin: 0;
+    font-family: roberto sans-serif !important;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+  }
+
+  .title-content {
+    margin: 0;
+    font-family: roberto sans-serif !important;
+    font-size: 14px;
+    line-height: 32px;
+    color: #333333;
+    font-weight: bold !important;
+  }
+</style>
 

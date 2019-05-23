@@ -46,6 +46,9 @@
     <type>org.exoplatform.addon.elearning.storage.WorkerDao</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.elearning.storage.ExamRegistrationDao</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.storage.CourseRegistrationDao</type>
   </component>
   <component>
@@ -64,10 +67,13 @@
     <type>org.exoplatform.addon.elearning.rest.LessonRestService</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.rest.CourseRegistrationRestSevice</type>
+    <type>org.exoplatform.addon.elearning.rest.CourseRegistrationRestService</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.rest.WorkerRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.ExamRegistrationRestService</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.dto.ExerciseDTO</type>
@@ -83,6 +89,9 @@
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.dto.WorkerDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.ExamRegistrationDTO</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.configuration.CourseService</type>
@@ -106,6 +115,9 @@
     <type>org.exoplatform.addon.elearning.service.configuration.CourseRegistrationService</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.ExamRegistrationService</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CategoryMapper</type>
   </component>
   <component>
@@ -125,6 +137,9 @@
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.mapper.WorkerMapper</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.ExamRegistrationMapper</type>
   </component>
 
   <external-component-plugins>

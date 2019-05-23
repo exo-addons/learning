@@ -13,6 +13,9 @@ import AppEditQcm from '../components/exam/AppEditQcm.vue'
 import AppPassExam from '../components/exam/PassExam.vue'
 import AppQcmCreate from '../components/exam/AppCreateQcm.vue'
 import AppContentCourse from '../components/courses/ContentCourse.vue'
+import AppSearchQcm from '../components/exam/AppSearchQcm.vue'
+import GestionQcm from '../components/exam/GestionQcm.vue'
+import ChooseExam from '../components/exam/ChooseExam.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -82,6 +85,23 @@ export default new Router({
           path: '/contentCourse',
           name: 'AppContentCourse',
           component: AppContentCourse
+      },
+      {
+          path: '/configQcm',
+          name: 'AppSearchQcm',
+          component: AppSearchQcm
+      },
+      {
+          path: '/GestionQcm',
+          name: 'AppGestionQcm',
+          component: GestionQcm
+      },
+
+      {
+          path: '/ChooseExam',
+          name: 'ChooseExam',
+          component: ChooseExam
       }
+
   ]
 })

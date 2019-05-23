@@ -78,6 +78,8 @@ public class CourseEntity {
   private Collection<CourseRegistrationEntity> coursesRegistrations;
   @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
   private Collection<ExerciseEntity> exercises;
+  @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+  private Collection<ExamEntity> exams;
 
   public CourseEntity() {
   }

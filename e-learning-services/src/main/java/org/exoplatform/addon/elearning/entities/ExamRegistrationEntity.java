@@ -8,6 +8,9 @@ import java.util.Date;
 @Entity(name="eregistration")
 @ExoEntity
 @Table(name = "ELEARNING_EXAM_REGISTRATION")
+@NamedQueries({
+    @NamedQuery(name = "eregistration.getCountWorker", query = "SELECT count(*) FROM eregistration e where e.worker.idWorker=:id")
+})
 public class ExamRegistrationEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +19,7 @@ public class ExamRegistrationEntity {
 
   @Column(name = "EXAMDAT_REGISTRATION")
   Date registeredExam;
-  @Column(name = "MARK_EXAM")
+  @Column(name = "NOTE_EXAM")
   int markExam;
 
   @ManyToOne

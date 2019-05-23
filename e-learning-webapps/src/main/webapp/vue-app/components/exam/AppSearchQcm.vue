@@ -2,9 +2,7 @@
     <v-layout row justify-center>
         <v-dialog v-model="dialog" persistent width="600px">
             <template v-slot:activator="{ on }">
-                    <button class="btn" type="button" slot="activator">
-                        Editer
-                    </button>
+                <i class="fas fa-cog" slot="activator"><strong>Editer Examen</strong></i>
             </template>
             <v-card>
                 <v-card-title>
@@ -28,12 +26,8 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-layout>
-                        <v-flex md2>
-                    <button class="btn btn-primary" type="button"  @click.prevent="selectSearchName">Afficher</button>
-                        </v-flex>
-                        <v-flex md5>
+                             <button class="btn btn-primary" type="button"  @click.prevent="selectSearchName">Afficher</button>
                             <button class="btn " type="button" @click.prevent="dialog = false">Annuler</button>
-                        </v-flex>
                     </v-layout>
                 </v-card-actions>
             </v-card>
@@ -53,7 +47,7 @@
             }
         },
         mounted(){
-            axios.get(`/portal/rest/cours/allCompletedByUser/COMPLETED`)
+            axios.get(`/portal/rest/cours/allPublishedByUser/PUBLISHED`)
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.courses= response.data
@@ -77,4 +71,12 @@
         }
     }
 </script>
+<style>
+    i.fas.fa-cog {
+        color: #ffffff;
+        font-family: Helvetica, arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+    }
+</style>
 

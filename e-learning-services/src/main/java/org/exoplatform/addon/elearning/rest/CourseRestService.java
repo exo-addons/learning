@@ -187,14 +187,12 @@ import java.util.List;
     public Response add(CourseDTO coursDTO) {
       ConversationState conversationState = ConversationState.getCurrent();
 
-      InputStream inputStream = null;
-
       /** Upload badge's icon into DB */
       FileItem fileItem ;
 
 
-      /** END upload */
-          coursDTO.setIconFileId(coursDTO.getIconFileId());
+      /** store image in db course */
+          coursDTO.setIcon(coursDTO.getIcon());
 
           try{
             String currentUserName = conversationState.getIdentity().getUserId();
@@ -212,7 +210,9 @@ import java.util.List;
                                       false,
                                       new FileInputStream(uploadResource.getStoreLocation()));
               fileItem = fileService.writeFile(fileItem);
-              //--- Add Course
+            coursDTO.setIconFileId(fileItem.getFileInfo().getId());
+
+            //--- Add Course
           coursDTO = courseService.addCours(coursDTO);
 
           return Response.ok().entity(coursDTO).build();

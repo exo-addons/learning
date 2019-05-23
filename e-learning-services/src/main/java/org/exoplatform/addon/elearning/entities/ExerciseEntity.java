@@ -12,6 +12,9 @@ import javax.persistence.*;
     @NamedQuery(name = "ElearningExercise.findExercisesByCourseId", query = "select e from ElearningExercise e where e.course.idCourse=:id and e.userName=:user"),
     //it is a function to get Exercises of courses( I use it for published) of the other users By id Course
     @NamedQuery(name = "ElearningExercise.findExercisesByIdForOther", query = "select e from ElearningExercise e where e.course.idCourse = :id and e.userName<>:user"),
+    @NamedQuery(name = "ElearningExercise.findExercisesByIdExam", query = "select DISTINCT e from ElearningExercise e where e.exam.idExam = :id"),
+    @NamedQuery(name = "ElearningExercise.findExercisesByCourseExamId", query = "select e from ElearningExercise e where e.course.idCourse=:idc and e.exam.idExam=:ide"),
+
 })
 
 public class ExerciseEntity {

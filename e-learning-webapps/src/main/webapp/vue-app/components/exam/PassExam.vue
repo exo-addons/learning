@@ -21,6 +21,7 @@
                     <div class="cardTemp" v-for="(c,index) in questions" :key="c.idExercise" >
                         <v-card >
                             <v-card-title>
+                                <h3>{{c.idExam}}</h3>
                                 <label class="mt-2">Question</label>
                                 <div class="Q1">
                                     <input type="text" style="width:300%" v-model="c.questionExercise" disabled>
@@ -81,13 +82,14 @@
         },
         data () {
             return {
+
                 counter:0,
                 note:0,
                 global:0,
                 courseStatus:[],
                 date: moment(60 * 0.1 * 1000),
                 questionIndex: 0,
-                idC:this.$route.query.id,
+                idE:this.$route.query.id,
                 questions:[],
                 userResponses:false
             }
@@ -101,7 +103,7 @@
                 setInterval(() => {
                     this.date = moment(this.date.subtract(1, 'seconds'))
                 }, 1000);
-            axios.get(`/portal/rest/exercise/getExercisesByIdForOther/` + this.idC).then((response) => {
+            axios.get(`/portal/rest/exercise/getExercisesByIdExam/` + this.idE).then((response) => {
                 this.questions = response.data;
                 console.log('ok', this.questions)
             }).catch(error => {

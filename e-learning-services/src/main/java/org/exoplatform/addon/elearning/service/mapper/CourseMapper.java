@@ -3,6 +3,8 @@ import org.exoplatform.addon.elearning.entities.CategoryEntity;
 import org.exoplatform.addon.elearning.entities.CourseEntity;
 import org.exoplatform.addon.elearning.service.dto.CategoryDTO;
 import org.exoplatform.addon.elearning.service.dto.CourseDTO;
+import org.exoplatform.services.security.ConversationState;
+import org.exoplatform.social.core.manager.IdentityManager;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -10,7 +12,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CourseMapper {
-  private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+  protected      IdentityManager  identityManager = null;
+  private static SimpleDateFormat formatter       = new SimpleDateFormat("yyyy-MM-dd");
 
   public CourseMapper() {
   }
@@ -28,6 +31,8 @@ public class CourseMapper {
       if(courseDTO==null){
         return null;
       }else{
+        String user = ConversationState.getCurrent().getIdentity().getUserId();
+
         CourseEntity course=new CourseEntity();
         course.setNameCourse(courseDTO.getNameCourse());
         course.setVisibiltyCourse(courseDTO.getVisibilityCourse());
@@ -42,6 +47,7 @@ public class CourseMapper {
         CategoryEntity category=this.coursFromLongId(courseDTO.getIdCategory());
         course.setCategory(category);
         course.setStatus(courseDTO.getStatus());
+        course.setUserName(user);
         course.setIconFileId(courseDTO.getIconFileId());
         return course;
 

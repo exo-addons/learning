@@ -15,7 +15,7 @@ public class ExamDTO implements Serializable {
   private Long nbBidExam;
   private String rewardExam;
   private String userName;
-
+  private Long idCourse;
 
   public ExamDTO() {
   }
@@ -32,6 +32,7 @@ public class ExamDTO implements Serializable {
     this.nbBidExam = exam.getNbBidExam();
     this.rewardExam = exam.getRewardExam();
     this.userName=exam.getUserName();
+    this.idCourse=exam.getCourse().getIdCourse();
   }
 
   public Long getIdExam() {
@@ -88,5 +89,13 @@ public class ExamDTO implements Serializable {
 
   public void setUserName(String userName) {
     this.userName = userName;
+  }
+
+  public Long getIdCourse() {
+    return idCourse;
+  }
+
+  public void setIdCourse(Long idCourse) {
+    this.idCourse = idCourse;
   }
 }

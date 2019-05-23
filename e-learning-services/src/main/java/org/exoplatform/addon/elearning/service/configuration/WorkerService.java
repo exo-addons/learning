@@ -55,6 +55,7 @@ public class WorkerService {
     return workerMapper.workToWorkDTO(worker);
   }
 
+  // add a new user only one time for registration
   @ExoTransactional
   public WorkerDTO insertNewWorker(WorkerDTO workerDTO) {
     WorkerEntity worker = null;

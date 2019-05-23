@@ -1,7 +1,7 @@
 <template>
     <v-card
       class="mb-5"
-      height="700px">
+      height="750px">
       <v-card-text>
         <v-form ref="form" class="px-3">
           <v-container>
@@ -112,7 +112,7 @@
                   <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1 pa-2">Upload image</p>
                 </v-flex>
                 <v-flex>
-                  <input type="file"  v-on:change="onImageChange">
+                  <input type="file"  v-on:change="onImageChange" >
                 </v-flex>
               </v-layout>
 
@@ -123,19 +123,13 @@
             <v-layout>
 
             </v-layout>
-            <v-flex>
-              <v-btn
-                type="button"
-                depressed
-                large
-                dark
-                color="#1867c0"
-                class="white--text"
-                @click.prevent="onSubmit">
-                ADD
-              </v-btn>
-            </v-flex>
             <v-spacer />
+
+              <button
+                type="button" class="btn btn-primary"
+                @click.prevent="onSubmit">
+                Ajouter
+              </button>
           </v-container>
         </v-form>
       </v-card-text>
@@ -147,8 +141,7 @@
     import AppCategoryCours from './AppCategoryCours.vue'
     import {en, fr} from 'vuejs-datepicker/dist/locale'
     import moment from 'moment';
-   // import UploadButton from 'vuetify-upload-button';
-   /// import Notification from './notifications.vue';
+
 
     Vue.filter('formatDate', function(value) {
         if (value) {
@@ -173,7 +166,6 @@
         return{
             selectedCategory:'',
             categories:[],
-            icon:'',
             en: en,
             fr: fr,
                 date: new Date(),
@@ -201,7 +193,10 @@
                 rewardCourse: '',
                 visibilityCourse:'',
                 idCategory:'',
-                status:''
+                status:'',
+                icon:null,
+                iconFileId:null,
+
 
             },
             addSuccess: false,
@@ -230,12 +225,12 @@
             onImageChange(e) {
                 console.log(e.target.files[0]);
                 //__proto__.__proto__
-                this.courses.iconFileId = e.target.files[0];
+                this.courses.icon = e.target.files[0];
             },
             onSubmit() {
                 const formData = new FormData();
 
-                formData.append('image', this.courses.iconFileId)
+                formData.append('file', this.courses.icon)
                 const MAX_RANDOM_NUMBER = 100000;
                 const uploadId = Math.round(Math.random() * MAX_RANDOM_NUMBER);
 
@@ -253,7 +248,7 @@
                 this.courses.status=this.courseStatus;
                 this.courses.visibilityCourse = this.visibility;
                 this.courses.idCategory = this.selectedCategory;
-                this.courses.iconFileId =uploadId
+                this.courses.iconFileId=uploadId;
                     console.log('contenu de cours',this.courses)
                 axios.post(`/portal/rest/cours/add`, this.courses, {
                     headers : {

@@ -10,7 +10,6 @@
         <v-flex md12 lg12>
           <v-layout>
             <v-flex md12 lg12>
-              <app-search-card-main />
             </v-flex>
           </v-layout>
           <v-layout>
@@ -55,13 +54,12 @@
 
 <script>
     import axios from 'axios'
-    import AppSearchCardMain from './AppSearchCardMain.vue'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
 
 
     export default {
         name: 'App',
-        components: {AppSearchCardMain, AppEditCoursTab},
+        components: {AppEditCoursTab},
         data() {
             return {
                 courses: [],

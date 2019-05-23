@@ -100,6 +100,40 @@ public class ExerciseRestService implements ResourceContainer {
                      .build();
     }
   }
+  @GET
+  @Path("/getExercisesByIdExam/{id}")
+  //By id exam
+  public Response findExercisesByIdExam(@PathParam("id") Long id) {
+    try {
+      String user= ConversationState.getCurrent().getIdentity().getUserId();
+      List<ExerciseDTO> exerciseDTOS = exerciseService.findExercisesByIdExam(id);
+      return Response.ok(exerciseDTOS, MediaType.APPLICATION_JSON).build();
+    } catch (Exception e) {
+
+      LOG.error("Error listing the Exercises By id exam ", e);
+
+      return Response.serverError()
+                     .entity("Error listing Error listing the Exercises By id exam")
+                     .build();
+    }
+  }
+  @GET
+  @Path("/getExercisesByCourseExamId/{idc}/{ide}")
+  //By id exam
+  public Response findExercisesByCourseExamId(@PathParam("idc") Long idc,@PathParam("ide")Long ide) {
+    try {
+      String user= ConversationState.getCurrent().getIdentity().getUserId();
+      List<ExerciseDTO> exerciseDTOS = exerciseService.findExercisesByCourseExamID(idc,ide);
+      return Response.ok(exerciseDTOS, MediaType.APPLICATION_JSON).build();
+    } catch (Exception e) {
+
+      LOG.error("Error listing the Exercises By id exam and id course ", e);
+
+      return Response.serverError()
+                     .entity("Error listing Error listing the Exercises By id exam and id course")
+                     .build();
+    }
+  }
   @DELETE
   @Path("/delete/{id}")
   public  Response deleteExercise(@PathParam("id") Long id ) {

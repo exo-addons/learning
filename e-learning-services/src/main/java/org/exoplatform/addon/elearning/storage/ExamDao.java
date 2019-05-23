@@ -8,8 +8,13 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class ExamDao extends GenericDAOJPAImpl<ExamEntity,Long> {
-  public List<ExamEntity> getExamByUser(String user){
-    TypedQuery<ExamEntity> query = getEntityManager().createNamedQuery("ElearningExam.findExamByUser", ExamEntity.class);
+  public List<ExamEntity> getExamById(Long id){
+    TypedQuery<ExamEntity> query = getEntityManager().createNamedQuery("ElearningExam.findExamById", ExamEntity.class);
+    query.setParameter("id", id);
+    return query.getResultList();
+  }
+  public List<ExamEntity> getExamByUserName(String user){
+    TypedQuery<ExamEntity> query = getEntityManager().createNamedQuery("ElearningExam.findExamByUserName", ExamEntity.class);
     query.setParameter("user", user);
     return query.getResultList();
   }

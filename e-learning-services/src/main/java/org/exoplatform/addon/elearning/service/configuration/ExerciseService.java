@@ -85,6 +85,41 @@ public class ExerciseService {
     return null;
 
   }
+  @ExoTransactional
+  public List<ExerciseDTO> findExercisesByIdExam(Long id) {
+
+    try {
+      //--- Get Entity from DB
+      List<ExerciseEntity> exercises=exerciseDao.findExercisesByIdExam(id);
+      //--- Convert Entity to DTO
+      if (exercises != null) {
+        return exerciseMapper.exercisesToExerciseDTOs(exercises);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find Exercise for other users entity with id exam : {}", id, e.getMessage());
+    }
+    return null;
+
+  }
+
+  @ExoTransactional
+  public List<ExerciseDTO> findExercisesByCourseExamID(Long idc,Long ide) {
+
+    try {
+      //--- Get Entity from DB
+      List<ExerciseEntity> exercises=exerciseDao.findExercisesByCourseExamId(idc,ide);
+      //--- Convert Entity to DTO
+      if (exercises != null) {
+        return exerciseMapper.exercisesToExerciseDTOs(exercises);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find Exercise for other users entity with id exam and id course: {}",ide, idc,e.getMessage());
+    }
+    return null;
+
+  }
 
   @ExoTransactional
   public void deleteExercise(Long id) {

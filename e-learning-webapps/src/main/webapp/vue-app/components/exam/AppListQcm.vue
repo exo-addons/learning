@@ -10,7 +10,7 @@
                 <v-flex md12>
                     <v-expansion-panel>
                         <v-expansion-panel-content v-for="(c,index) in exercises" :key="c.idExercise">
-                            <div slot="header" class="subheading font-weight-bold py-1">Examen {{nameC}}</div>
+                            <div slot="header" class="subheading font-weight-bold py-1">Examen</div>
                             <v-card>
                                 <v-card-text class="px-4">
                                         <v-layout>
@@ -98,25 +98,22 @@
 
 
     export default {
+
         components: {AppEditCoursTab,AppEditQcm},
         data() {
             return {
-                idC:this.$route.query.id,
-                nameC:this.$route.query.name,
+                idC:this.$route.query.idc,
+                idE:this.$route.query.ide,
                 exercises: []
             }
         },
-
         mounted() {
-                axios.get(`/portal/rest/exercise/getExercisesFromCourse/` + this.idC).then((response) => {
+                axios.get(`/portal/rest/exercise/getExercisesByCourseExamId/` + this.idC+`/`+this.idE).then((response) => {
                     this.exercises = response.data;
-                    console.log('ok', this.exercises)
-                    console.log('id course'+this.idCourse)
-
+                    console.log('ok', this.exercises);
                 }).catch(error => {
                     console.log(error)
                 })
-            console.log("val null",this.exercises)
         },
         methods:{
 

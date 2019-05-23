@@ -10,6 +10,18 @@
                 </center>
             <v-form ref="form" class="px-3">
                 <v-container>
+
+                    <v-flex md10>
+                        <!--    <i class="uiIconMiniArrowDown uiIconLightGray"></i>-->
+                        <select
+                                v-model="selectedCourse"
+                                class="select_style">
+                            <option value="" >Select Course</option>
+                            <option v-for="option in courses"  :value="option.idCourse">
+                                {{ option.nameCourse }}
+                            </option>
+                        </select>
+                    </v-flex>
                 <v-flex md10>
                     <v-text-field
                             v-model="nameExam"
@@ -119,6 +131,8 @@
         },
         data:function(){
             return{
+                courses:[],
+                selectedCourse:null,
                 alt:false,
                 childData:'',
                 nameExam:'',
@@ -134,7 +148,8 @@
                     dateEndExam:'',
                     nbBidExam:'',
                     rewardExam:'',
-                    dureeExam:''
+                    dureeExam:'',
+                    idCourse:null
                 },
                 inputRules: [
                     v => !!v || 'les champs sont obligatoires',
@@ -146,6 +161,18 @@
                 }
             }
         },
+        mounted(){
+            axios.get(`/portal/rest/cours/allPublishedByUser/PUBLISHED`)
+                .then(response => {
+                    // JSON responses are automatically parsed.
+                    this.courses= response.data
+                    //console.log(response.data)
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })
+        },
+
 
         methods:{
             addExam:function() {
@@ -155,6 +182,7 @@
                 this.exam.dateStartExam=this.dateStartExam;
                 this.exam.dateEndExam=this.dateEndExam;
                 this.exam.dureeExam=this.dureeExam;
+                this.exam.idCourse=this.selectedCourse;
                 if((this.nameExam==='')||(this.nbrBidExam===null)||(this.dureeExam===null)||(this.scaleExam===null))
                 {
                     this.alt=true;

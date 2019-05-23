@@ -12,6 +12,7 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.manager.IdentityManager;
+import org.json.simple.JSONObject;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Path("cregistration")
 @Produces(MediaType.APPLICATION_JSON)
-public class CourseRegistrationRestSevice implements ResourceContainer {
+public class CourseRegistrationRestService implements ResourceContainer {
   protected IdentityManager identityManager = null;
 
   private static Log LOG = ExoLogger.getLogger(CourseRegistrationService.class);
@@ -29,7 +30,7 @@ public class CourseRegistrationRestSevice implements ResourceContainer {
   @Inject
   private CourseRegistrationService courseService;
 
-  public CourseRegistrationRestSevice() {
+  public CourseRegistrationRestService() {
     identityManager = CommonsUtils.getService(IdentityManager.class);
   }
 
@@ -47,10 +48,10 @@ public class CourseRegistrationRestSevice implements ResourceContainer {
 
     } catch (Exception e) {
 
-      LOG.error("Error listing all GamificationInformationsPortlet ", e);
+      LOG.error("Error listing all Courses registration ", e);
 
       return Response.serverError()
-                     .entity("Error listing all GamificationInformationsPortlet")
+                     .entity("Error listing all Courses registration ")
                      .build();
     }
   }
@@ -70,5 +71,24 @@ public class CourseRegistrationRestSevice implements ResourceContainer {
     }
 
   }
+
+  @GET
+  @Path("/countNumberWorker/{id}")
+  public Response getNumberWorker(@PathParam("id")Long id)
+  {
+    try {
+      String count = courseService.getNumberWorker(id).toString();
+      JSONObject jo = new JSONObject();
+      jo.put("counter_worker",count);
+      return Response.ok(jo).build();
+
+    } catch(Exception e) {
+      LOG.error("Erreur to count worker"+e.getMessage());
+      return  Response.serverError()
+                      .entity("Error counting")
+                      .build();
+    }
+  }
+
 
 }

@@ -11,10 +11,16 @@ import java.util.Date;
 @Table(name = "ELEARNING_EXAM")
 @NamedQueries({
     @NamedQuery(
-        //it is a function to search course by name
-        name = "ElearningExam.findExamByUser",
+        //it is a function to search course by it id
+        name = "ElearningExam.findExamById",
+        query = "SELECT exam FROM ElearningExam exam where exam.idExam=:id"
+    ),
+    @NamedQuery(
+        //it is a function to search course by it id
+        name = "ElearningExam.findExamByUserName",
         query = "SELECT exam FROM ElearningExam exam where exam.userName=:user"
     ),
+
 })
     public class ExamEntity {
   @Id
@@ -35,6 +41,10 @@ import java.util.Date;
   private String                               userName;
   @OneToMany(mappedBy="exam",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
   private Collection<ExerciseEntity> exercises;
+  @ManyToOne
+  @JoinColumn(name = "COURSE_ID")
+  private CourseEntity course;
+
 
   public ExamEntity() {
   }
@@ -44,13 +54,14 @@ import java.util.Date;
                     Date dateEndExam,
                     Long nbBidExam,
                     String rewardExam,
-                    String userName) {
+                    String userName, CourseEntity course) {
     this.nameExam = nameExam;
     this.dateStartExam = dateStartExam;
     this.dateEndExam = dateEndExam;
     this.nbBidExam = nbBidExam;
     this.rewardExam = rewardExam;
     this.userName = userName;
+    this.course = course;
   }
 
   public Long getIdExam() {
@@ -107,5 +118,13 @@ import java.util.Date;
 
   public void setUserName(String userName) {
     this.userName = userName;
+  }
+
+  public CourseEntity getCourse() {
+    return course;
+  }
+
+  public void setCourse(CourseEntity course) {
+    this.course = course;
   }
 }

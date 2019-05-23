@@ -80,9 +80,6 @@
                 </v-container>
                 <button class="btn btn-primary" type="button"  @click.prevent="saveQcm">Ajouter</button>
                 <button class="btn " type="button">Annuler</button>
-                <div class="btn-popup">
-                <app-search-qcm></app-search-qcm>
-                </div>
             </v-form>
         </v-card-text>
     </v-card>
@@ -92,10 +89,8 @@
 <script>
     import { bus } from '../../main';
     import axios from 'axios';
-    import AppSearchQcm from './AppSearchQcm.vue'
     export default {
         props:['contentExam'],
-        components:{AppSearchQcm},
         data:function(){
             return{
                 alt:false,
@@ -134,10 +129,11 @@
             });
         },
         mounted(){
-            axios.get(`/portal/rest/cours/allCompletedByUser/COMPLETED`)
+            axios.get(`/portal/rest/cours/allPublishedByUser/PUBLISHED`)
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.courses= response.data;
+                    console.log("fffffffffffff",this.courses)
                     if(this.courses.length===0){
                         this.alt=true;
                     }
@@ -145,7 +141,7 @@
                 .catch(e => {
                     this.errors.push(e)
                 })
-            axios.get(`/portal/rest/exam/allExamByUser`)
+            axios.get(`/portal/rest/exam/allExamByUserName/`+eXo.env.portal.userName)
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.exams= response.data
@@ -189,7 +185,7 @@
 
 <style >
 .btn-popup{
-    margin-left: 26.3%;
-    margin-top: -3.5%;
+    margin-left: 52.27%;
+    margin-top: -4.16%;
 }
 </style>

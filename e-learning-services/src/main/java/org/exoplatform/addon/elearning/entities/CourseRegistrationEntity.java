@@ -10,6 +10,7 @@ import java.util.Date;
 @Table(name = "ELEARNING_COURSE_REGISTRATION")
 @NamedQueries({
     @NamedQuery(name = "cregistration.findRegitrationByIdWorker", query = "select c from cregistration c where c.worker.nameWorker=:name"),
+    @NamedQuery(name = "cregistration.getCountWorker", query = "SELECT count(*) FROM cregistration c where c.worker.idWorker=:id")
 })
 public class CourseRegistrationEntity {
   @Id

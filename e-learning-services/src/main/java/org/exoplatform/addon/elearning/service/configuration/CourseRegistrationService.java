@@ -22,6 +22,7 @@ public class CourseRegistrationService {
   }
   @ExoTransactional
   public CourseRegistrationDTO addCours (CourseRegistrationDTO coursRegistrationDTO) {
+    List<CourseRegistrationEntity> courseRegistrationDaos=courseDao.findAll();
 
     CourseRegistrationEntity cours = null;
 
@@ -49,6 +50,10 @@ public class CourseRegistrationService {
     }
     return null;
 
+  }
+
+  public Long getNumberWorker(Long id){
+    return courseDao.getCountNumberEmploye(id);
   }
 
 }

@@ -1,5 +1,6 @@
 package org.exoplatform.addon.elearning.service.mapper;
 
+import org.exoplatform.addon.elearning.entities.CourseEntity;
 import org.exoplatform.addon.elearning.entities.ExamEntity;
 import org.exoplatform.addon.elearning.service.dto.ExamDTO;
 import org.exoplatform.commons.utils.CommonsUtils;
@@ -48,6 +49,9 @@ public class ExamMapper {
         if (examDTO.getDateEndExam() != null) {
           exam.setDateEndExam(formatter.parse(examDTO.getDateEndExam()));
         }
+        CourseEntity course=this.examFromLongId(examDTO.getIdCourse());
+        exam.setUserName(user);
+        exam.setCourse(course);
         return exam;
       }
 
@@ -55,5 +59,10 @@ public class ExamMapper {
       pe.printStackTrace();
     }
     return null;
+  }
+  public CourseEntity examFromLongId(Long idCourse) {
+    CourseEntity course=new CourseEntity();
+    course.setIdCourse(idCourse);
+    return course;
   }
 }

@@ -96,6 +96,12 @@
             <column name="REWARD_EXAM" type="VARCHAR(250)"/>
             <column name="USERNAME_EXAM" type="NVARCHAR(20)"/>
         </createTable>
+        <addColumn tableName="ELEARNING_EXAM">
+            <column name="COURSE_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_COURSE_EXAM_ATTACHMENTS"
+                             references="ELEARNING_COURSE(ID_COURSE)" deleteCascade="true"/>
+            </column>
+        </addColumn>
         <addColumn tableName="ELEARNING_EXERCISE">
             <column name="EXAM_ID" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="FK_EXERCISE_EXAM_ATTACHMENTS"
@@ -281,6 +287,23 @@
                 referencedColumnNames="ID_EXAM"
 
                 referencedTableName="ELEARNING_EXAM"/>
+    </changeSet>
+    <changeSet  author="elearning" id="1.0.0-17">
+        <dropForeignKeyConstraint baseTableName="ELEARNING_EXAM"
+                                  constraintName="FK_COURSE_EXAM_ATTACHMENTS"
+        />
+        <addForeignKeyConstraint
+                baseColumnNames="COURSE_ID"
+                baseTableName="ELEARNING_EXAM"
+                constraintName="FK_COURSE_EXAM_ATTACHMENTS"
+
+                onDelete="CASCADE"
+
+                onUpdate="CASCADE"
+
+                referencedColumnNames="ID_COURSE"
+
+                referencedTableName="ELEARNING_COURSE"/>
     </changeSet>
 
 </databaseChangeLog>
