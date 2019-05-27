@@ -74,8 +74,6 @@ export default {
             },
       deleteCourse: function(event)
       {
-          console.log('http://127.0.0.1:8080/portal/rest/cours/delete/'+event)
-          console.log('tab',event)
           axios.delete('http://127.0.0.1:8080/portal/rest/cours/delete/'+event, {
               headers : {
                   'Content-Type' : 'application/json'

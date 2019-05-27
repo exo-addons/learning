@@ -8,10 +8,7 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -63,4 +60,34 @@ public class LessonRestService implements ResourceContainer {
     }
 
   }
+  @GET
+  @Path("/getLessonsByIdCourse/{id}")
+  public Response findLessonsByIdCourse(@PathParam("id")Long id){
+    try {
+      List<LessonDTO> lessonDTOS = lessonService.findLessonsByCourseId(id);
+      return Response.ok(lessonDTOS, MediaType.APPLICATION_JSON).build();
+    }catch(Exception e){
+      LOG.error("Error listing the Lessons By id course ", e);
+
+      return Response.serverError()
+                     .entity("Error listing Error listing the Lessons By id course")
+                     .build();
+    }
+
+  }
+  @PUT
+  @Path("/update")
+  public Response updateLesson(LessonDTO lessonDTO){
+    try{
+      lessonDTO=lessonService.updateLesson(lessonDTO);
+      return Response.ok().entity(lessonDTO).build();
+    }catch (Exception e){
+      LOG.error("Error updating lesson {} by {} ", lessonDTO.getTitleLesson(), e);
+      return Response.serverError()
+                     .entity("Error updating a lesson")
+                     .build();
+
+    }
+  }
+
 }

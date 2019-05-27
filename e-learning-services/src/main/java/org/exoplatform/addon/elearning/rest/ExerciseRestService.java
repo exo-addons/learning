@@ -9,6 +9,7 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.manager.IdentityManager;
+import org.json.simple.JSONObject;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -166,5 +167,7 @@ public class ExerciseRestService implements ResourceContainer {
     }
 
   }
+
+
 }
 

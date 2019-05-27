@@ -52,4 +52,35 @@ public class LessonService {
     return lessonMapper.lessonToLessonDTO(lesson);
   }
 
+  @ExoTransactional
+  public List<LessonDTO> findLessonsByCourseId(Long id){
+    try {
+      List<LessonEntity> lessons=lessonDao.findLessonsByIdCourse(id);
+      if(lessons!=null){
+        return lessonMapper.lessonsToLessonDTOs(lessons);
+      }
+    }catch(Exception e){
+      LOG.error("Error to find Lesson entity with id : {}", id, e.getMessage());
+    }
+    return null;
+
+  }
+
+  @ExoTransactional
+  public LessonDTO updateLesson(LessonDTO lessonDTO){
+    try{
+      LessonEntity lessonEntity=lessonDao.find(lessonDTO.getIdLesson());
+      if(lessonEntity!=null){
+        lessonEntity.setTitleLesson(lessonDTO.getTitleLesson());
+        lessonEntity.setContentLesson(lessonDTO.getContentLesson());
+        lessonEntity.setDescriptionLesson(lessonDTO.getDescriptionLesson());
+        return lessonMapper.lessonToLessonDTO(lessonEntity);
+      }
+
+    }catch (Exception e){
+      LOG.error("Error to update with id {}", lessonDTO.getTitleLesson() , e);
+    }
+    return null;
+  }
+
 }

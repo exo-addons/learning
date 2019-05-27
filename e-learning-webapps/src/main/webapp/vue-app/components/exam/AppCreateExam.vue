@@ -16,7 +16,7 @@
                         <select
                                 v-model="selectedCourse"
                                 class="select_style">
-                            <option value="" >Select Course</option>
+                            <option value="" selected>Select Course</option>
                             <option v-for="option in courses"  :value="option.idCourse">
                                 {{ option.nameCourse }}
                             </option>

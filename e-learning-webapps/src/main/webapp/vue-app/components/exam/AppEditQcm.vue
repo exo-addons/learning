@@ -101,8 +101,6 @@
                 }).then(response => {
                     this.qcm= response.data
                     this.dialog=false;
-                    console.log(this.dialog);
-                    console.log("contenu exam",this.qcm)
                 })
                     .catch(e => {
                     })

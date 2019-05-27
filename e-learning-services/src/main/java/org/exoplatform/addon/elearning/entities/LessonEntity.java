@@ -6,9 +6,16 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
+@Entity(name="ElearningLesson")
 @ExoEntity
 @Table(name = "ELEARNING_LESSON")
+@NamedQueries({
+    @NamedQuery(
+        //it is a function to search Lesson by it idcourse
+        name = "ElearningLesson.findLessonById",
+        query = "SELECT lesson FROM ElearningLesson lesson where lesson.course.idCourse=:id"
+    ),
+})
 public class LessonEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

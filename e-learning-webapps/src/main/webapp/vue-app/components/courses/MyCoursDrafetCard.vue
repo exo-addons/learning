@@ -14,7 +14,7 @@
           </v-layout>
           <v-layout>
             <v-flex
-              v-for="c in courses"
+              v-for="(c,index) in courses"
               :key="c.idCourse"
               md4
               lg4>
@@ -24,24 +24,49 @@
                 <v-card-text>
                   <center>
                     <v-img
-                              height="100px"
-                              width="100px"
-                              :src="course[1]"
-                              aspect-ratio="1"
-                              md4
-                              lg4
-                              class="grey lighten-2" />
+                            height="100px"
+                            width="100px"
+                            :src="cr[0]"
+                            aspect-ratio="1"
+                            md4
+                            lg4
+                            class="grey lighten-2" />
                   </center>
-                  <div class="subheading">{{ c.nameCourse }}</div>
-                  <div class="grey--text">{{ c.status }}</div>
-                  <div class="grey--text">{{ c.dateStart }}</div>
-                  <div class="grey--text">{{ c.dateStart }}</div>
+                  <table align="center">
+                    <tr>
+                      <td><div class="title-content">Nom de cours:</div></td>
+                      <td><div class="text-content">{{ c.nameCourse }}</div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="title-content">Auteur:</div></td>
+                      <td> <div class="text-content">{{ c.userName }}</div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="title-content">Début:</div></td>
+                      <td> <div class="text-content">{{ c.dateStart }}</div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="title-content">Fin:</div></td>
+                      <td> <div class="text-content">{{ c.dateEnd }}</div></td>
+                    </tr>
+                  </table>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn flat color="grey">
-                    <v-icon small left>message</v-icon>
-                    <span class="">Message</span>
-                  </v-btn>
+                  <v-flex>
+                    <div class="btn-qcm-edit">
+                    <Editcourse :course="courses[index]"></Editcourse>
+                    </div>
+                    <v-btn
+                            dark v-on="on"
+                            fab
+                            dark
+                            small slot="activator"
+                            color="#BDBDBD"
+                            @click.prevent="deleteCourse(c.idCourse)">
+                      <i class="far fa-trash-alt fa-2x" ></i>
+                    </v-btn>
+
+                  </v-flex>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -55,45 +80,22 @@
 <script>
     import axios from 'axios'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
+    import Editcourse from './editCourse.vue'
 
 
     export default {
         name: 'App',
-        components: {AppEditCoursTab},
+        components: {AppEditCoursTab,Editcourse},
         data() {
             return {
                 courses: [],
-                course: [
+                cr: [
                     {
                         libelle: 'The Net Ninja',
                         editeurName: 'Web developer',
                         etat: "disponible",
                         src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
                     },
-                    {
-                        libelle: 'Ryu',
-                        editeurName: 'Graphic designer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Chun Li',
-                        editeurName: 'Web developer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Gouken',
-                        editeurName: 'Social media maverick',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Yoshi',
-                        editeurName: 'Sales guru',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    }
                 ]
             }
         },
@@ -104,10 +106,44 @@
                 })
                 .catch(error => {
                     console.log(error)
-                    this.errored = true
                 })
-                .finally(() => this.loading = false)
+        },
+        methods:{
+            deleteCourse: function(event)
+            {
+                axios.delete('http://127.0.0.1:8080/portal/rest/cours/delete/'+event, {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }).then(
+                    this.courses=this.courses.filter(d=>d.idCourse !==event)
+                )
+            }
         },
     }
 </script>
+<style>
+  .text-content {
+    text-align: left;
+    margin: 0;
+    font-family: roberto sans-serif !important;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+  }
+
+  .title-content {
+    margin: 0;
+    font-family: roberto sans-serif !important;
+    font-size: 14px;
+    line-height: 32px;
+    color: #333333;
+    font-weight: bold !important;
+  }
+   .btn-qcm-edit{
+     margin-left: 37%;
+     margin-bottom: -11.2%;
+   }
+
+</style>
 

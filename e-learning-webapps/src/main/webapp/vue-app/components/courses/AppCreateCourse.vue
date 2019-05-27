@@ -19,7 +19,6 @@
             </v-layout>
             <v-layout>
               <v-flex md10>
-                <!--    <i class="uiIconMiniArrowDown uiIconLightGray"></i>-->
                 <select
                   v-model="selectedCategory"
                   class="select_style">
@@ -42,6 +41,7 @@
               </v-flex>
             </v-layout>
             <v-layout>
+
               <v-radio-group v-model="courseStatus" row>
                 <v-radio
                   label="DRAFET"
@@ -105,21 +105,6 @@
                 </v-flex>
               </v-layout>
             </v-layout>
-
-            <div class="para_border">
-              <v-layout>
-                <v-flex>
-                  <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1 pa-2">Upload image</p>
-                </v-flex>
-                <v-flex>
-                  <input type="file"  v-on:change="onImageChange" >
-                </v-flex>
-              </v-layout>
-
-            </div>
-
-            <!--  @click="submit"  -->
-
             <v-layout>
 
             </v-layout>
@@ -152,64 +137,64 @@
     });
 
     export default {
-        components:{
+        components: {
             AppCategoryCours,
             Datepicker
-    },
+        },
         props: {
             course: {
                 type: Object,
                 default: () => null
             }
         },
-    data:function(){
-        return{
-            selectedCategory:'',
-            categories:[],
-            en: en,
-            fr: fr,
+        data: function () {
+            return {
+                selectedCategory: '',
+                categories: [],
+                en: en,
+                fr: fr,
                 date: new Date(),
                 config: {
                     format: 'YYYY-MM-DD',
                     useCurrent: false,
                 },
-            inputRules: [
-                v => !!v || 'This field is required',
-                v => v.length >= 3 || 'Minimum length is 3 characters'
-            ],
-            e1: 0,
-            nameCourse:'',
-            visibilityCourse:true,
-            courseStatus:'DRAFET',
-            rewardCourse:'',
-            dateStart:'',
-            dateEnd:'',
-            nbPerson:'',
-            courses: {
+                inputRules: [
+                    v => !!v || 'This field is required',
+                    v => v.length >= 3 || 'Minimum length is 3 characters'
+                ],
+                e1: 0,
                 nameCourse: '',
+                visibilityCourse: true,
+                courseStatus: 'DRAFET',
+                rewardCourse: '',
                 dateStart: '',
                 dateEnd: '',
                 nbPerson: '',
-                rewardCourse: '',
-                visibilityCourse:'',
-                idCategory:'',
-                status:'',
-                icon:null,
-                iconFileId:null,
+                courses: {
+                    nameCourse: '',
+                    dateStart: '',
+                    dateEnd: '',
+                    nbPerson: '',
+                    rewardCourse: '',
+                    visibilityCourse: '',
+                    idCategory: '',
+                    status: '',
+                    icon: null,
+                    iconFileId: null,
 
 
-            },
-            addSuccess: false,
-            addError: false,
-            updateMessage: '',
-            categories:[]
-        }
-    },
-        mounted(){
+                },
+                addSuccess: false,
+                addError: false,
+                updateMessage: '',
+                categories: []
+            }
+        },
+        mounted() {
             axios.get(`http://127.0.0.1:8080/portal/rest/category/all`)
                 .then(response => {
                     // JSON responses are automatically parsed.
-                    this.categories= response.data
+                    this.categories = response.data
                     //console.log(response.data)
                 })
                 .catch(e => {
@@ -222,46 +207,25 @@
             quitter: function () {
                 this.$router.push('/')
             },
-            onImageChange(e) {
-                console.log(e.target.files[0]);
-                //__proto__.__proto__
-                this.courses.icon = e.target.files[0];
-            },
             onSubmit() {
-                const formData = new FormData();
-
-                formData.append('file', this.courses.icon)
-                const MAX_RANDOM_NUMBER = 100000;
-                const uploadId = Math.round(Math.random() * MAX_RANDOM_NUMBER);
-
-                axios.post(`/portal/upload?uploadId=${uploadId}&action=upload`,formData, {
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    }
-                }).then((response) => {
-                    console.log('data okokok'+response)
                 this.courses.nameCourse = this.nameCourse;
                 this.courses.dateStart = this.dateStart;
                 this.courses.dateEnd = this.dateEnd;
                 this.courses.nbPerson = this.nbPerson;
                 this.courses.rewardCourse = this.rewardCourse;
-                this.courses.status=this.courseStatus;
-                this.courses.visibilityCourse = this.visibility;
+                this.courses.status = this.courseStatus;
+                this.courses.visibilityCourse = this.visibilityCourse;
                 this.courses.idCategory = this.selectedCategory;
-                this.courses.iconFileId=uploadId;
-                    console.log('contenu de cours',this.courses)
+                console.log('contenu de cours', this.courses)
                 axios.post(`/portal/rest/cours/add`, this.courses, {
-                    headers : {
-                        'Content-Type' : 'application/json'
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
                 }).then((response) => {
 
-                }, (response) => {
-
                 })
-                })
-                }
             }
         }
+    }
 </script>
 

@@ -16,6 +16,7 @@ import AppContentCourse from '../components/courses/ContentCourse.vue'
 import AppSearchQcm from '../components/exam/AppSearchQcm.vue'
 import GestionQcm from '../components/exam/GestionQcm.vue'
 import ChooseExam from '../components/exam/ChooseExam.vue'
+import EditCourse from '../components/courses/editCourse.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -65,6 +66,11 @@ export default new Router({
           path: '/createOcm',
           name: 'AppQcmCreate',
           component: AppQcmCreate
+      },
+      {
+          path: '/editCourse',
+          name: 'EditCourse',
+          component: EditCourse
       },
       {
           path: '/listeQcm',

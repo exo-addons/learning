@@ -7,6 +7,8 @@ import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.security.ConversationState;
+
 import java.util.List;
 
 public class CourseService {
@@ -126,7 +128,22 @@ public class CourseService {
     } catch (Exception e) {
       LOG.error("Error to delete course with title {}",c.getNameCourse(), e);
     }
+  }
 
-
+  @ExoTransactional
+  public CourseDTO updateCourse(CourseDTO courseDTO){
+    try {
+      CourseEntity courseEntity=courseDao.find(courseDTO.getIdCourse());
+      if(courseEntity!=null){
+        courseEntity.setNameCourse(courseDTO.getNameCourse());
+        courseEntity.setNbPerson(courseDTO.getNbPerson());
+        courseEntity.setRewardCourse(courseDTO.getRewardCourse());
+        courseEntity.setStatus(courseDTO.getStatus());
+        return courseMapper.courseToCourseDTO(courseEntity);
+      }
+    }catch(Exception e){
+      LOG.error("Error to update with id {}", courseDTO.getNameCourse() , e);
+    }
+    return null;
   }
   }

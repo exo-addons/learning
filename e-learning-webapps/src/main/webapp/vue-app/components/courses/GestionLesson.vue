@@ -8,9 +8,9 @@
             </v-layout>
             <v-layout>
                 <v-flex xs12 sm6 offset-sm3>
-                <v-card>
-                    <v-card-text>
-                        <v-container>
+                    <v-card>
+                        <v-card-text>
+                            <v-container>
                                 <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">Choisir Cours</p>
                                 <select v-model="selectedCourse">
                                     <option value="" >Select Course</option>
@@ -18,22 +18,15 @@
                                         {{ option.nameCourse }}
                                     </option>
                                 </select>
-                            <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">Choisir Exam</p>
-                            <select v-model="selectedExam">
-                                <option value="" >Select Exam</option>
-                                <option v-for="option in exams" :value="option.idExam">
-                                    {{ option.nameExam }}
-                                </option>
-                            </select>
-                        </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-flex text-xs-center>
-                        <button class="btn btn-primary" type="button"  @click.prevent="selectSearchName">Afficher</button>
-                            <button class="btn " type="button" @click.prevent="dialog = false">Annuler</button>
-                        </v-flex>
-                    </v-card-actions>
-                </v-card>
+                            </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-flex text-xs-center>
+                                <button class="btn btn-primary" type="button"  @click.prevent="selectSearchName">Afficher</button>
+                                <button class="btn " type="button" @click.prevent="dialog = false">Annuler</button>
+                            </v-flex>
+                        </v-card-actions>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -50,13 +43,11 @@
         data: function () {
             return {
                 dialog: false,
-                selectedExam:null,
                 selectedCourse: null,
                 namec:'',
                 courses:[],
-                exams:[]
             }
-    },
+        },
         mounted(){
             axios.get(`/portal/rest/cours/allPublishedByUser/PUBLISHED`)
                 .then(response => {

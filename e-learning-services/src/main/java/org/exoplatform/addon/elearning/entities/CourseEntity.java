@@ -72,8 +72,6 @@ public class CourseEntity {
   private CategoryEntity           category;
   @Enumerated(EnumType.STRING)
   private Status                   status;
-  @Column(name="ICON_FILE_ID")
-  private long                     iconFileId;
   @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH} )
   private Collection<CourseRegistrationEntity> coursesRegistrations;
   @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
@@ -102,7 +100,6 @@ public class CourseEntity {
     this.userName = userName;
     this.category = category;
     this.status = status;
-    this.iconFileId = iconFileId;
   }
 
   public Long getIdCourse() {
@@ -174,14 +171,6 @@ public class CourseEntity {
 
   public void setStatus(Status status) {
     this.status = status;
-  }
-
-  public long getIconFileId() {
-    return iconFileId;
-  }
-
-  public void setIconFileId(long iconFileId) {
-    this.iconFileId = iconFileId;
   }
 
   public String getUserName() {

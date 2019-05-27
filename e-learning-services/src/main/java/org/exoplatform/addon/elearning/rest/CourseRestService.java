@@ -185,34 +185,8 @@ import java.util.List;
     @POST
     @Path("/add")
     public Response add(CourseDTO coursDTO) {
+      try{
       ConversationState conversationState = ConversationState.getCurrent();
-
-      /** Upload badge's icon into DB */
-      FileItem fileItem ;
-
-
-      /** store image in db course */
-          coursDTO.setIcon(coursDTO.getIcon());
-
-          try{
-            String currentUserName = conversationState.getIdentity().getUserId();
-
-            String idFile=Long.toString(coursDTO.getIconFileId());
-            UploadResource uploadResource = uploadService.getUploadResource(idFile);
-
-              fileItem = new FileItem(null,
-                                      coursDTO.getNameCourse().toLowerCase(),
-                                      uploadResource.getMimeType(),
-                                      DEFAULT_COURSE_ICON_NAMESPACE ,
-                                      (long)uploadResource.getUploadedSize(),
-                                      new Date(),
-                                      currentUserName,
-                                      false,
-                                      new FileInputStream(uploadResource.getStoreLocation()));
-              fileItem = fileService.writeFile(fileItem);
-            coursDTO.setIconFileId(fileItem.getFileInfo().getId());
-
-            //--- Add Course
           coursDTO = courseService.addCours(coursDTO);
 
           return Response.ok().entity(coursDTO).build();
@@ -227,25 +201,20 @@ import java.util.List;
       }
 
     }
-    private InputStream getCourseIconInputStream(CourseDTO courseDTO) throws IOException {
-      FileItem file = null;
-      if (courseDTO == null) {
-        return null;
-      }
-      Long courseId = courseDTO.getIconFileId();
-      if (courseId == null) {
-        return null;
-      }
+    @PUT
+    @Path("/update")
+    public Response updateCourse(CourseDTO courseDTO) {
+
       try {
-        file = CommonsUtils.getService(FileService.class).getFile(courseId);
-      } catch (FileStorageException e) {
-        return null;
+        courseDTO = courseService.updateCourse(courseDTO);
+        return Response.ok().entity(courseDTO).build();
+      } catch (Exception e) {
+        LOG.error("Error updating course {} by {} ", courseDTO.getNameCourse(), e);
+        return Response.serverError()
+                       .entity("Error updating a course")
+                       .build();
       }
 
-      if (file == null) {
-        return null;
-      }
-      return file.getAsStream();
     }
 
   }

@@ -48,7 +48,6 @@ public class CourseMapper {
         course.setCategory(category);
         course.setStatus(courseDTO.getStatus());
         course.setUserName(user);
-        course.setIconFileId(courseDTO.getIconFileId());
         return course;
 
       }

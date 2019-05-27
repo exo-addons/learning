@@ -26,7 +26,7 @@
                     <v-img
                             height="100px"
                             width="100px"
-                            :src="course[1]"
+                            :src="course[0]"
                             aspect-ratio="1"
                             md4
                             lg4
@@ -98,30 +98,6 @@
                     {
                         libelle: 'The Net Ninja',
                         editeurName: 'Web developer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Ryu',
-                        editeurName: 'Graphic designer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Chun Li',
-                        editeurName: 'Web developer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Gouken',
-                        editeurName: 'Social media maverick',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Yoshi',
-                        editeurName: 'Sales guru',
                         etat: "disponible",
                         src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
                     }

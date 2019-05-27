@@ -120,7 +120,7 @@
             deleteCourse: function(event)
             {
                 console.log('tab',event)
-                axios.delete('http://127.0.0.1:8080/portal/rest/exercise/delete/'+event, {
+                axios.delete('/portal/rest/exercise/delete/'+event, {
                     headers : {
                         'Content-Type' : 'application/json'
                     }
