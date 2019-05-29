@@ -13,10 +13,6 @@
 
     export default {
         components:{AppNavMain},
-        name: 'App',
-        created: function () {
-                console.log('new child created: ');
-            }
     }
 </script>
 

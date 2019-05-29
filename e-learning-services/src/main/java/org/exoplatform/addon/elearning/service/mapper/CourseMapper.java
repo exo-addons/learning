@@ -35,7 +35,6 @@ public class CourseMapper {
 
         CourseEntity course=new CourseEntity();
         course.setNameCourse(courseDTO.getNameCourse());
-        course.setVisibiltyCourse(courseDTO.getVisibilityCourse());
         course.setRewardCourse(courseDTO.getRewardCourse());
         course.setNbPerson(courseDTO.getNbPerson());
         if (courseDTO.getDateStart() != null) {

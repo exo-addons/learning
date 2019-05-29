@@ -57,18 +57,15 @@
             bus.$on('transferData',(data)=>{
                 this.Exams=data;
                 for(let i=0;i<this.Exams.length;i++) {
-                    console.log('exam a rc',this.Exams[i])
                     axios.get(`/portal/rest/exercise/getExercisesByIdExam/` + this.Exams[i].idExam)
                         .then(response => {
                             this.examsname[i] = response.data
-                            console.log("data exams", this.examsname[i])
                         })
                 }
             })
             },
         methods: {
             selectSearchName() {
-                console.log(this.selectedCourse)
               this.$router.push('/passExam?id='+this.selectedCourse);
 
             }

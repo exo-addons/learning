@@ -1,147 +1,142 @@
 <template>
-    <v-card
+    <div class="team">
+        <v-container class="my-5" elevation-1 >
+   <v-card
             class="mb-5"
             height="650px">
         <notification v-bind:notifications="notifications" >
         </notification>
-        <v-form ref="form" class="px-3">
+       <app-edit-cours-tab />
+
+       <v-form ref="form" class="px-3">
             <v-container>
+                <div >
                 <v-flex md12>
                     <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 ">Général</p>
                 </v-flex>
                 <v-flex md10>
                     <v-textarea
-                            v-model="lessonGeneral"
-                            label="Ce qui vous apprendre"
+                            v-model="lessons[0].descriptionLesson"
                             prepend-icon="edit"
                             :rules="inputRules" />
+
                 </v-flex>
                 <v-flex md10>
                     <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du cours</p>
                 </v-flex>
                 <v-flex md10>
-                    <v-textarea
-                            v-model="lessonContent"
-                            label="Contenu de Leçon"
-                            prepend-icon="folder"
-                            :rules="inputRules" />
-                </v-flex>
-                <v-flex md10>
                     <v-text-field
-                            v-model="lessonTitle"
+                            v-model="lessons[0].titleLesson"
                             label="Titre de Leçon"
                             prepend-icon="folder"
                             :rules="inputRules" />
                 </v-flex>
                 <v-flex md10>
-                    <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">libellé Cours</p>
-                    <select
-                            v-model="selectedCourse"
-                            class="select_style">
-                        <option value="" >Select Course</option>
-                        <option v-for="option in courses" :value="option.idCourse">
-                            {{ option.nameCourse }}
-                        </option>
-                    </select>
+                    <v-textarea
+                            v-model="lessons[0].contentLesson"
+                            label="Contenu de Leçon"
+                            prepend-icon="folder"
+                            :rules="inputRules" />
                 </v-flex>
-                <v-layout>
-                    <v-flex>
+                <center>
+
                         <button
                                 type="button" class="btn btn-primary"
-                                @click.prevent="addLesson">
-                            Ajouter
+                                @click.prevent="updateLesson(lessons[0].idCourse,lessons[0].idLesson,lessons[0].descriptionLesson,lessons[0].titleLesson,lessons[0].contentLesson)">
+                            Valider
                         </button>
                         <button
                                 type="button" class="btn"
                                 @click.prevent="quitter">
                             Terminer
                         </button>
-                    </v-flex>
-                </v-layout>
+
+                </center>
+                </div>
             </v-container>
         </v-form>
     </v-card>
+        </v-container>
+    </div>
 </template>
 <script>
     import axios from 'axios'
+    import AppEditCoursTab from './AppEditCoursTabMain.vue'
     import Notification from '../commun/notifications.vue';
     export default {
-        components:{
-            Notification
+        components: {
+            Notification, AppEditCoursTab
         },
         data: function () {
             return {
-                lessonTitle:'',
-                lessonName:'',
-                lessonGeneral:'',
-                lessonContent:'',
-                selectedCourse:'',
-                alerte:false,
-                courses:{},
-                lesson:{
+                idc: this.$route.query.id,
+                alerte: false,
+                courses: [],
+                lessonsupdate:
+                    {
+                        descriptionLesson:'',
+                        titleLesson:'',
+                        contentLesson:''
+
+                    },
+                lessons: [
+                    {
+                        descriptionLesson:'',
+                        titleLesson:'',
+                        contentLesson:''
+
+                    }],
+                newlessons:{
                     idLesson:null,
-                    titleLesson:'',
-                    contentLesson:'',
+                    idCourse:null,
                     descriptionLesson:'',
-                    idCourse:null
+                    titleLesson:'',
+                    contentLesson:''
                 },
-                notifications:[],
+                notifications: [],
                 inputRules: [
                     v => !!v || 'This field is required',
                     v => v.length >= 3 || 'Minimum length is 3 characters'
                 ],
             }
         },
-
-        mounted(){
+        mounted() {
             axios.get(`/portal/rest/cours/all`)
                 .then(response => {
                     // JSON responses are automatically parsed.
-                    this.courses= response.data
-                    console.log(this.selectedCourse)
+                    this.courses = response.data
                 })
                 .catch(e => {
-                    this.errors.push(e)
+                })
+            axios.get(`/portal/rest/lesson/getLessonsByIdCourse/` + this.idc)
+                .then(response => {
+                    this.lessons = response.data;
+                    if (this.lessons.length !== 0) {
+                        this.alt = true;
+                    }
                 })
         },
         methods: {
-            cancel(){
-                this.alerte=false;
+            cancel() {
+                this.alerte = false;
 
-                console.log(this.alerte);
             },
             quitter: function () {
                 this.$router.push('/')
             },
-            addLesson: function()
-            {
-                this.lesson.idCourse=this.selectedCourse;
-                this.lesson.contentLesson=this.lessonContent;
-                this.lesson.descriptionLesson=this.lessonGeneral;
-                this.lesson.titleLesson=this.lessonTitle;
-                console.log(this.lesson);
-                axios.post('/portal/rest/lesson/add', this.lesson, {
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    }
-                }).then((response) => {
-                        this.notifications.push({
-                            type: 'success',
-                            message: 'Lesson created successfully'
-                        });
-                        this.lessonContent='';
-                        this.lessonGeneral='';
-                        this.lessonTitle='';
-
+            updateLesson: function (idCourse,idLesson,descriptionLesson,titleLesson,contentLesson) {
+                this.lessonsupdate.idCourse=idCourse;
+                this.lessonsupdate.idLesson=idLesson;
+                 this.lessonsupdate.descriptionLesson=descriptionLesson;
+                 this.lessonsupdate.titleLesson=titleLesson;
+                 this.lessonsupdate.contentLesson=contentLesson;
+                axios.put(`/portal/rest/lesson/update`,this.lessonsupdate,{
+                    headers: {
+                        'Content-type': 'application/json',
                     },
-                    (response) => {
-                        this.notifications.push({
-                            type: 'error',
-                            message: 'Lesson not created'
-                        });
-                    });
-            }
-        },
+                })
+            },
+        }
     }
 </script>
 

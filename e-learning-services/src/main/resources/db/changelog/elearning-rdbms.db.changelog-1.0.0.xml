@@ -26,7 +26,6 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_COURSE_ID"/>
             </column>
             <column name="NAME_COURSE" type="NVARCHAR(20)"/>
-            <column name="VISIBILITY_COURSE" type="BOOLEAN"/>
             <column name="DATE_START" type="DATE"/>
             <column name="DATE_END" type="DATE"/>
             <column name="USERNAME_COURSE" type="NVARCHAR(20)"/>
@@ -142,6 +141,8 @@
             </column>
             <column name="EXAMDAT_REGISTRATION" type="DATE"/>
             <column name="NOTE_EXAM" type="INT"/>
+            <column name="USERNAME_EXAM_REGISTRATION" type="NVARCHAR(20)"/>
+
         </createTable>
         <addColumn tableName="ELEARNING_EXAM_REGISTRATION">
             <column name="WORKER_ID" type="BIGINT">

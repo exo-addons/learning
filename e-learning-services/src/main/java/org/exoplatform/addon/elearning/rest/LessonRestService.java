@@ -90,4 +90,21 @@ public class LessonRestService implements ResourceContainer {
     }
   }
 
+  @DELETE
+  @Path("/delete/{id}")
+  public  Response deleteLesson(@PathParam("id") Long id ) {
+    try {
+
+      lessonService.deleteLesson(id);
+
+      return Response.ok().build();
+    } catch (Exception e) {
+      return Response.serverError()
+                     .entity("Error delete lesson")
+                     .build();
+
+    }
+
+  }
+
 }

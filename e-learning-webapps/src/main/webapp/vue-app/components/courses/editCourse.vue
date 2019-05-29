@@ -110,8 +110,6 @@
                 }).then(response => {
                     this.currentcourse= response.data
                     this.dialog=false;
-                    console.log(this.dialog);
-                    console.log("contenu exam",this.currentcourse)
                 })
                     .catch(e => {
                     })

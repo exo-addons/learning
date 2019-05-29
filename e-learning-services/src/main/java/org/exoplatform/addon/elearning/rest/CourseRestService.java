@@ -9,20 +9,13 @@ import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
-import org.exoplatform.commons.file.model.FileItem;
-import org.exoplatform.commons.file.services.FileService;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.manager.IdentityManager;
-import org.exoplatform.upload.UploadResource;
-import org.exoplatform.upload.UploadService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
+
 import java.util.List;
 
   @Path("cours")
@@ -32,24 +25,14 @@ import java.util.List;
 
     private static Log LOG = ExoLogger.getLogger(CourseRestService.class);
 
-    private static final String DEFAULT_COURSE_ICON_NAME = "DEFAULT_COURSE_ICON";
-
-    private static final String DEFAULT_COURSE_ICON_MIME_TYPE = "image/png";
-
-    private static final String DEFAULT_COURSE_ICON_NAMESPACE = "elearning";
 
     @Inject
     private CourseService courseService;
 
-    protected FileService fileService = null;
-
-    protected UploadService uploadService = null;
 
     public CourseRestService() {
       courseService = CommonsUtils.getService(CourseService.class);
       identityManager = CommonsUtils.getService(IdentityManager.class);
-      fileService = CommonsUtils.getService(FileService.class);
-      uploadService = CommonsUtils.getService(UploadService.class);
 
     }
 
@@ -186,7 +169,6 @@ import java.util.List;
     @Path("/add")
     public Response add(CourseDTO coursDTO) {
       try{
-      ConversationState conversationState = ConversationState.getCurrent();
           coursDTO = courseService.addCours(coursDTO);
 
           return Response.ok().entity(coursDTO).build();

@@ -6,13 +6,13 @@
             </v-flex>
         </v-layout>
         <v-layout>
-            <div class="t1 mt-2">
+            <div class="tmp mt-2">
                 <v-card>
                     <v-card-text>{{time}}</v-card-text>
                 </v-card>
             </div>
 
-            <div class="t2 mt-2">
+            <div class="note mt-2">
                 <v-card>
                     <v-card-text>{{this.note}}/{{this.global}}</v-card-text>
                 </v-card>
@@ -23,7 +23,7 @@
                 <v-card-title>
                     <h3>{{c.idExam}}</h3>
                     <label class="mt-2">Question</label>
-                    <div class="Q1">
+                    <div class="question-card">
                         <input type="text" style="width:300%" v-model="c.questionExercise" disabled>
 
                     </div>
@@ -32,7 +32,7 @@
                     <label >Réponse</label>
                 </v-card-title>
                 <v-card-text>
-                    <div class="Q2">
+                    <div class="answer-card">
                         <div class="ml-5">
                             <v-layout>
                                 <v-radio-group v-model="courseStatus[index]" >
@@ -84,10 +84,19 @@
                 note:0,
                 global:0,
                 courseStatus:[],
-                date: moment(60 * 0.1 * 1000),
+                date: moment(60 *0.1* 1000),
                 questionIndex: 0,
                 idE:this.$route.query.id,
-                questions:[],
+                questions:{
+                    idCourse: null,
+                    idExam: null,
+                    questionExercise: '',
+                    answerExercise: '',
+                    scaleExercise: null,
+                    choose1: '',
+                    choose2: '',
+                    choose3: '',
+                },
                 userResponses:false
             }
         },
@@ -102,29 +111,21 @@
             }, 1000);
             axios.get(`/portal/rest/exercise/getExercisesByIdExam/` + this.idE).then((response) => {
                 this.questions = response.data;
-                console.log('ok', this.questions)
             }).catch(error => {
-                console.log(error)
             })
-            console.log("val null",this.questions)
         },
         methods: {
             validateAnswer(c) {
                 this.counter++;
-                console.log("val compteur",this.counter)
                 if (this.counter < 2) {
                     for (let i = 0; i < this.questions.length; i++) {
-                        console.log("correcte", this.questions[i].answerExercise)
-                        console.log("ok sta", this.courseStatus[i])
                         this.global += this.questions[i].scaleExercise
                         if (this.questions[i].answerExercise == this.courseStatus[i]) {
                             this.note += this.questions[i].scaleExercise;
-                            // console.log(this.note)
                         }
                         this.courseStatus[i]=null
 
                     }
-                    console.log("valeur final", this.note, "/", this.global)
                 }
             },
             quitter: function () {
@@ -134,7 +135,7 @@
     }
 </script>
 <style>
-    .t1{
+    .tmp{
         width: 15%;
     }
     .cardTemp{
@@ -143,15 +144,15 @@
         margin-left: 17%;
         margin-top: -4%;
     }
-    .Q1{
+    .question-card{
         margin-left: 5%;
         margin-top: 1%;
     }
-    .Q2{
+    .answer-card{
         margin-top: -6%;
         margin-left: 2%;
     }
-    .t2 {
+    .note {
         width: 16%;
         margin-left: 83%;
     }

@@ -18,7 +18,7 @@
               </v-flex>
             </v-layout>
             <v-layout>
-              <v-flex md10>
+              <v-flex md8>
                 <select
                   v-model="selectedCategory"
                   class="select_style">
@@ -28,17 +28,7 @@
                   </option>
                 </select>
               </v-flex>
-              <v-flex>
-                <app-category-cours />
-              </v-flex>
-            </v-layout>
-            <v-layout>
-              <v-flex md10>
-                <v-switch
-                  v-model="visibilityCourse"
-                  color="blue"
-                  :label="`Visibilité`" />
-              </v-flex>
+                <app-category-cours> </app-category-cours>
             </v-layout>
             <v-layout>
 
@@ -122,6 +112,7 @@
 </template>
 <script>
     import axios from 'axios'
+    import { bus } from '../../main';
     import Datepicker from 'vuejs-datepicker';
     import AppCategoryCours from './AppCategoryCours.vue'
     import {en, fr} from 'vuejs-datepicker/dist/locale'
@@ -137,6 +128,8 @@
     });
 
     export default {
+        props:['contentcourse'],
+        props: ['contentcat'],
         components: {
             AppCategoryCours,
             Datepicker
@@ -164,7 +157,6 @@
                 ],
                 e1: 0,
                 nameCourse: '',
-                visibilityCourse: true,
                 courseStatus: 'DRAFET',
                 rewardCourse: '',
                 dateStart: '',
@@ -176,7 +168,6 @@
                     dateEnd: '',
                     nbPerson: '',
                     rewardCourse: '',
-                    visibilityCourse: '',
                     idCategory: '',
                     status: '',
                     icon: null,
@@ -186,22 +177,25 @@
                 },
                 addSuccess: false,
                 addError: false,
-                updateMessage: '',
-                categories: []
+                updateMessage: ''
             }
+        },
+        created(){
+            bus.$on('categoryChanged', (data) => {
+                this.contentcat=data;
+                this.categories.push(this.contentcat)
+
+            });
         },
         mounted() {
             axios.get(`http://127.0.0.1:8080/portal/rest/category/all`)
                 .then(response => {
-                    // JSON responses are automatically parsed.
                     this.categories = response.data
-                    //console.log(response.data)
+
                 })
                 .catch(e => {
                     this.errors.push(e)
                 })
-        },
-        created() {
         },
         methods: {
             quitter: function () {
@@ -214,15 +208,15 @@
                 this.courses.nbPerson = this.nbPerson;
                 this.courses.rewardCourse = this.rewardCourse;
                 this.courses.status = this.courseStatus;
-                this.courses.visibilityCourse = this.visibilityCourse;
                 this.courses.idCategory = this.selectedCategory;
-                console.log('contenu de cours', this.courses)
                 axios.post(`/portal/rest/cours/add`, this.courses, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 }).then((response) => {
-
+                    this.courses=response.data
+                    bus.$emit('CourseChanged', this.courses);
+                    console.log("course changed",this.courses)
                 })
             }
         }

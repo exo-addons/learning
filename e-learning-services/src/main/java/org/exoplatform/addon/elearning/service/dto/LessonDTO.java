@@ -19,11 +19,9 @@ public class LessonDTO   implements Serializable {
 
 
   public LessonDTO() {
-    //identityManager = CommonsUtils.getService(IdentityManager.class);
   }
 
   public LessonDTO(LessonEntity lesson) {
-    //String user= ConversationState.getCurrent().getIdentity().getUserId();
 
     this.idLesson = lesson.getIdLesson();
     this.userName=lesson.getUserName();

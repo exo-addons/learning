@@ -125,7 +125,6 @@
             bus.$on('ExamChanged', (data) => {
                 this.contentExam=data;
                 this.exams.push(this.contentExam)
-                console.log("bus value",this.exams)
             });
         },
         mounted(){
@@ -133,7 +132,6 @@
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.courses= response.data;
-                    console.log("fffffffffffff",this.courses)
                     if(this.courses.length===0){
                         this.alt=true;
                     }
@@ -145,7 +143,6 @@
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.exams= response.data
-                    console.log(this.selectedCourse)
                 })
         },
         methods: {
@@ -160,9 +157,7 @@
                 this.qcm.choose3 = this.optionExam3;
                 if ((this.questionExam === '') || (this.scaleExam === null) || (this.answer === '')) {
                     this.alt = true;
-                    console.log(this.alt);
                 }
-                console.log(this.qcm);
                 if (this.alt === false) {
                     axios.post(`/portal/rest/exercise/add`, this.qcm, {
                         headers: {

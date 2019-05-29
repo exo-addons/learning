@@ -68,13 +68,12 @@ export default {
                 axios.get('/portal/rest/cours/allPublishedByUser/COMPLETED').then((response) => {
                     this.courses = response.data;
                 }).catch(error => {
-                    console.log(error)
                     this.errored = true
                 })
             },
       deleteCourse: function(event)
       {
-          axios.delete('http://127.0.0.1:8080/portal/rest/cours/delete/'+event, {
+          axios.delete('/portal/rest/cours/delete/'+event, {
               headers : {
                   'Content-Type' : 'application/json'
               }

@@ -12,7 +12,7 @@
             <v-flex md12 lg12>
             </v-flex>
           </v-layout>
-          <v-layout>
+            <v-row>
             <v-flex
                     v-for="(c,index) in courses"
                     :key="c.idCourse"
@@ -52,30 +52,24 @@
                   </table>
                 </v-card-text>
                 <v-card-actions>
-                  <v-layout>
-                    <v-flex>
-                      <v-btn
-                              dark v-on="on"
-                              fab
-                              dark
-                              small slot="activator"
-                              color="#578dc9">
-                        <i class="fas fa-university fa-2x" ></i>
-                      </v-btn>
-                      <v-btn
-                              fab
-                              dark
-                              small
-                              color="#424242"
-                              @click.prevent="editExam(courses[index])">
-                        <i class="fas fa-edit fa-2x" title="editer les questions examens"></i>
-                      </v-btn>
-                    </v-flex>
-                  </v-layout>
+                  <div class="btn-center">
+                    <div class="btn-qcm-edit">
+                      <Editcourse :course="courses[index]"></Editcourse>
+                    </div>
+                    <v-btn
+                            dark v-on="on"
+                            fab
+                            dark
+                            small slot="activator"
+                            color="#BDBDBD"
+                            @click.prevent="deleteCourse(c.idCourse)">
+                      <i class="far fa-trash-alt fa-2x" ></i>
+                    </v-btn>
+                  </div>
                 </v-card-actions>
               </v-card>
             </v-flex>
-          </v-layout>
+            </v-row>
         </v-flex>
       </v-layout>
     </v-container>
@@ -85,11 +79,13 @@
 <script>
     import axios from 'axios'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
+    import Editcourse from './editCourse.vue'
+
 
 
     export default {
         name: 'App',
-        components: {AppEditCoursTab},
+        components: {AppEditCoursTab,Editcourse},
         data() {
             return {
                 exercises:[],
@@ -110,27 +106,19 @@
                     this.courses = response.data
                 })
                 .catch(error => {
-                    console.log(error)
                 })
                 .finally(() => this.loading = false)
         },
         methods: {
-            editExam(e) {
-                axios.get(`/portal/rest/exercise/getExercisesFromCourse/` + e.idCourse)
-                    .then(response => {
-                        this.exercises = response.data;
-                        this.$router.push('/listeQcm?id=' + e.idCourse);
-
-                    })
-            },
-            editCourse(e){
-                axios.get(`/portal/rest/course/getExercisesFromCourse/` + e.idCourse)
-                    .then(response => {
-                        this.exercises = response.data;
-                        this.$router.push('/listeQcm?id=' + e.idCourse);
-
-                    })
-
+            deleteCourse: function(event)
+            {
+                axios.delete('http://127.0.0.1:8080/portal/rest/cours/delete/'+event, {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }).then(
+                    this.courses=this.courses.filter(d=>d.idCourse !==event)
+                )
             }
         }
     }
@@ -153,5 +141,25 @@
     color: #333333;
     font-weight: bold !important;
   }
+  .flex.md4.lg4 {
+    min-width: 25%;
+    display: inline-block;
+
+  }
+  .title-content {
+    float: left;
+  }
+  table {
+    width: 100%;
+    margin-top: 22px;
+  }
+  .btn-qcm-edit{
+    margin-left: -147%;
+    margin-bottom: -100.2%;
+  }
+  .btn-center {
+    margin-left: 49%!important;
+  }
+
 </style>
 

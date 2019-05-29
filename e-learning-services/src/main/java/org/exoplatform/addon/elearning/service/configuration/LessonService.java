@@ -65,6 +65,20 @@ public class LessonService {
     return null;
 
   }
+  @ExoTransactional
+  public void deleteLesson(Long id) {
+    LessonEntity lesson=lessonDao.find(id);
+    if(lesson!=null) {
+      try {
+
+        lessonDao.delete(lesson);
+
+      } catch (Exception e) {
+        LOG.error("Error to delete Lesson with id {}", id, e);
+      }
+    }
+  }
+
 
   @ExoTransactional
   public LessonDTO updateLesson(LessonDTO lessonDTO){

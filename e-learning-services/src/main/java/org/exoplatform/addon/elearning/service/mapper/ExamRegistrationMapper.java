@@ -4,6 +4,7 @@ import org.exoplatform.addon.elearning.entities.ExamEntity;
 import org.exoplatform.addon.elearning.entities.ExamRegistrationEntity;
 import org.exoplatform.addon.elearning.entities.WorkerEntity;
 import org.exoplatform.addon.elearning.service.dto.ExamRegistrationDTO;
+import org.exoplatform.services.security.ConversationState;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,12 +31,14 @@ public class ExamRegistrationMapper {
       if(examRegistrationDTO==null){
         return null;
       }else{
+        String user = ConversationState.getCurrent().getIdentity().getUserId();
         ExamRegistrationEntity examRegistration=new ExamRegistrationEntity();
         examRegistration.setRegisteredExam(new Date());
         WorkerEntity worker=this.workerFromLongId(examRegistrationDTO.getIdWorker());
         examRegistration.setWorker(worker);
         ExamEntity exam=this.examFromLongId(examRegistrationDTO.getIdExam());
         examRegistration.setExam(exam);
+        examRegistration.setUserName(user);
         return examRegistration;
 
       }

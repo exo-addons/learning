@@ -62,9 +62,6 @@
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.courses= response.data
-                    console.log("name",this.courses.nameCourse)
-                    console.log("contenu courses",this.courses)
-                    console.log(this.selectedCourse)
                 })
                 .catch(e => {
                     this.errors.push(e)

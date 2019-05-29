@@ -64,8 +64,10 @@
 </template>
 <script>
     import axios from 'axios'
+    import { bus } from '../../main';
     import Notification from '../commun/notifications.vue';
     export default {
+        props:['contentcourse'],
         components:{
             Notification
         },
@@ -77,7 +79,7 @@
                 lessonContent:'',
                 selectedCourse:'',
                 alerte:false,
-                courses:{},
+                courses:[],
                 lesson:{
                     idLesson:null,
                     titleLesson:'',
@@ -92,13 +94,19 @@
                 ],
             }
         },
+        created(){
+            bus.$on('CourseChanged', (data) => {
+                this.contentcourse=data;
+                this.courses.push(this.contentcourse)
+
+            });
+        },
 
         mounted(){
             axios.get(`/portal/rest/cours/all`)
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.courses= response.data
-                    console.log(this.selectedCourse)
                 })
                 .catch(e => {
                     this.errors.push(e)
@@ -107,8 +115,6 @@
                 methods: {
                     cancel(){
                         this.alerte=false;
-
-                        console.log(this.alerte);
                     },
                     quitter: function () {
                         this.$router.push('/')
@@ -119,7 +125,6 @@
                         this.lesson.contentLesson=this.lessonContent;
                         this.lesson.descriptionLesson=this.lessonGeneral;
                         this.lesson.titleLesson=this.lessonTitle;
-                        console.log(this.lesson);
                         axios.post('/portal/rest/lesson/add', this.lesson, {
                             headers : {
                                 'Content-Type' : 'application/json'

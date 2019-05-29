@@ -110,16 +110,13 @@
         mounted() {
                 axios.get(`/portal/rest/exercise/getExercisesByCourseExamId/` + this.idC+`/`+this.idE).then((response) => {
                     this.exercises = response.data;
-                    console.log('ok', this.exercises);
                 }).catch(error => {
-                    console.log(error)
                 })
         },
         methods:{
 
             deleteCourse: function(event)
             {
-                console.log('tab',event)
                 axios.delete('/portal/rest/exercise/delete/'+event, {
                     headers : {
                         'Content-Type' : 'application/json'

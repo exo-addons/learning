@@ -44,9 +44,7 @@
 
                 axios.get(`/portal/rest/cours/getCourse/`+searching).then((response) => {
                     this.courses = response.data;
-                    console.log('ok',this.courses)
                 }).catch(error => {
-                    console.log(error)
                 })
 
             }

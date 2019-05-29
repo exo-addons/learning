@@ -9,12 +9,16 @@
       <v-layout>
         <v-flex md12 lg12>
           <v-layout>
-            <v-flex
+            <v-flex md12 lg12>
+            </v-flex>
+          </v-layout>
+          <v-row>
+            <v-flex class="md4 lg4"
                     v-for="(c,index) in courses"
-                    :key="c.idCourse"
-                    md4
-                    lg4>
-              <v-card flat class="text-xs-center ma-3 elevation-5">
+                    :key="c.idCourse">
+
+
+              <v-card flat class="text-xs-center ma-3 elevation-10">
                 <div>
                 </div>
                 <v-card-text>
@@ -22,7 +26,7 @@
                     <v-img
                             height="100px"
                             width="100px"
-                            :src="course[1]"
+                            :src="cr[0]"
                             aspect-ratio="1"
                             md4
                             lg4
@@ -71,13 +75,13 @@
                 </v-card-actions>
               </v-card>
             </v-flex>
-          </v-layout>
+          </v-row>
         </v-flex>
       </v-layout>
     </v-container>
   </div>
-
 </template>
+
 
 <script>
     import axios from 'axios'
@@ -122,7 +126,7 @@
                 datajson:{
 
                 },
-                course: [
+                cr: [
                     {
                         libelle: 'The Net Ninja',
                         editeurName: 'Web developer',
@@ -162,7 +166,6 @@
                     this.courses = response.data
                 })
                 .catch(error => {
-                    console.log(error)
                 })
                 .finally(() => this.loading = false)
         },
@@ -170,13 +173,12 @@
             passExam(el) {
                // this.$router.push('/passExam?id=' + el.idCourse);
                 this.$router.push('/ChooseExam')
-                console.log("el!!!!!!!!!!!!!",el)
                 axios.get(`/portal/rest/exam/allExamByUserName/`+ el.userName)
                     .then(response => {
                         // JSON responses are automatically parsed.
                         this.exams= response.data
-                        console.log("all exams",this.exams)
                         bus.$emit('transferData',this.exams)
+
                     })
             },
             passCourse(el) {
@@ -185,24 +187,16 @@
                             .then(response => {
                                 this.datajsonfor.idCourse = el.idCourse;
                                 this.datajsonfor.idWorker = response.data.id;
-                                console.log("id worker passé",this.datajsonfor.idWorker )
                                 axios.get(`/portal/rest/cregistration/countNumberWorker/` + this.datajsonfor.idWorker)
                                     .then(response => {
                                         this.count = response.data
-                                        console.log("counter",this.count.counter_worker)
                                         if (this.count.counter_worker<1) {
-                                            console.log("id of worker", this.datajsonfor.idWorker)
                                             axios.get(`/portal/rest/cregistration/countNumberWorker/` + this.datajsonfor.idWorker)
                                                 .then(response => {
                                                     this.counterWorker = this.data
-
-
                                                     axios.post(`/portal/rest/cregistration/add`, this.datajsonfor)
                                                         .then(
-                                                            console.log("****************", this.datajsonfor))
-                                                    this.$router.push('/contentCourse')
-
-
+                                                    this.$router.push('/contentCourse'))
                                                 })
                                         }else{
                                             this.$router.push('/contentCourse')
@@ -232,5 +226,21 @@
     color: #333333;
     font-weight: bold !important;
   }
-</style>
+  .btn-qcm-edit{
+    margin-left: 37%;
+    margin-bottom: -11.2%;
+  }
+  .flex.md4.lg4 {
+    min-width: 25%;
+    display: inline-block;
 
+  }
+  .title-content {
+    float: left;
+  }
+  table {
+    width: 100%;
+    margin-top: 22px;
+  }
+
+</style>

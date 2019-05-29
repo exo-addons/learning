@@ -166,7 +166,6 @@
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.courses= response.data
-                    //console.log(response.data)
                 })
                 .catch(e => {
                     this.errors.push(e)
@@ -186,7 +185,6 @@
                 if((this.nameExam==='')||(this.nbrBidExam===null)||(this.dureeExam===null)||(this.scaleExam===null))
                 {
                     this.alt=true;
-                    console.log(this.alt);
                 }
                 if(this.alt===false){
                     axios.post(`/portal/rest/exam/add`, this.exam, {

@@ -49,7 +49,10 @@
 <script>
     import axios from 'axios'
     import Notification from '../commun/notifications.vue';
+    import { bus } from '../../main';
+
     export default {
+        props: ['contentcat'],
         data() {
             return{
                components:{
@@ -84,6 +87,7 @@
                     }
               
                 }).then((response) => {
+                          bus.$emit('categoryChanged',this.category);
                   this.notifications.push({
                         type: 'success',
                         message: 'Category created successfully'
@@ -93,7 +97,7 @@
                     this.notifications.push({
                         type: 'error',
                         message: 'Category not created'
-                    });
+                    })
 
                 });
                                     this.dialog=false
@@ -102,9 +106,7 @@
             },
                cancel(){
       this.dialog=false;
-     
-      console.log(this.dialog);
-    }
+               }
         },
       
             }

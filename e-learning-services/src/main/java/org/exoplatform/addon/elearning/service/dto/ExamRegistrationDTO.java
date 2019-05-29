@@ -15,6 +15,8 @@ public class ExamRegistrationDTO implements Serializable {
   private Long idWorker;
   private String dateRegistration;
   private int mark;
+  private String userName;
+
 
   public ExamRegistrationDTO() {
   }
@@ -27,6 +29,7 @@ public class ExamRegistrationDTO implements Serializable {
       this.dateRegistration= simpleDateFormat.format(examRegistration.getRegisteredExam());
     }
     this.mark=examRegistration.getMarkExam();
+    this.userName=examRegistration.getUserName();
   }
 
   public Long getIdRegistration() {
@@ -67,5 +70,13 @@ public class ExamRegistrationDTO implements Serializable {
 
   public void setMark(int mark) {
     this.mark = mark;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 }

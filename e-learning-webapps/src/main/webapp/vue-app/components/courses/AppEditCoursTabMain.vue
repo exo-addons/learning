@@ -1,7 +1,7 @@
 <template>
   <div class="dd">
     <ul class="nav nav-tabs userNavigation" style="visibility: visible;">
-      <li class="item" style="margin-left: 13%;">
+      <li class="item">
         <router-link to="/EditCoursPublished">
           <div class="link-text">Cours Disponibles</div>
         </router-link>
@@ -32,6 +32,13 @@
                 <i class="fas fa-cog" slot="activator"></i>
                 Configuration Examen</div>
             </router-link>
+      </li>
+      <li class="item">
+        <router-link to="/gestionLesson">
+          <div class="link-text">
+            <i class="fas fa-cog" slot="activator"></i>
+            Configuration Lesson</div>
+        </router-link>
       </li>
     </ul>
   </div>

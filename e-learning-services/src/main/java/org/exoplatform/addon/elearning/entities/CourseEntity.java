@@ -55,8 +55,6 @@ public class CourseEntity {
   private Long                     idCourse;
   @Column(name ="NAME_COURSE")
   private String         NameCourse;
-  @Column(name ="VISIBILITY_COURSE")
-  private Boolean        visibiltyCourse;
   @Column(name ="DATE_START")
   private Date           dateStart;
   @Column(name ="DATE_END")
@@ -92,7 +90,6 @@ public class CourseEntity {
                       CategoryEntity category,
                       Status status, long iconFileId) {
     NameCourse = nameCourse;
-    this.visibiltyCourse = visibiltyCourse;
     this.dateStart = dateStart;
     this.dateEnd = dateEnd;
     this.nbPerson = nbPerson;
@@ -116,14 +113,6 @@ public class CourseEntity {
 
   public void setNameCourse(String nameCourse) {
     NameCourse = nameCourse;
-  }
-
-  public Boolean getVisibiltyCourse() {
-    return visibiltyCourse;
-  }
-
-  public void setVisibiltyCourse(Boolean visibiltyCourse) {
-    this.visibiltyCourse = visibiltyCourse;
   }
 
   public Date getDateStart() {

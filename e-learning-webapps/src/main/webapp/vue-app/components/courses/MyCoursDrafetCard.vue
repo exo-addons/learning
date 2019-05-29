@@ -12,12 +12,12 @@
             <v-flex md12 lg12>
             </v-flex>
           </v-layout>
-          <v-layout>
-            <v-flex
+          <v-row>
+            <v-flex class="md4 lg4"
               v-for="(c,index) in courses"
-              :key="c.idCourse"
-              md4
-              lg4>
+              :key="c.idCourse">
+
+
               <v-card flat class="text-xs-center ma-3 elevation-10">
                 <div>
                 </div>
@@ -52,7 +52,7 @@
                   </table>
                 </v-card-text>
                 <v-card-actions>
-                  <v-flex>
+                  <div class="btn-center">
                     <div class="btn-qcm-edit">
                     <Editcourse :course="courses[index]"></Editcourse>
                     </div>
@@ -65,12 +65,11 @@
                             @click.prevent="deleteCourse(c.idCourse)">
                       <i class="far fa-trash-alt fa-2x" ></i>
                     </v-btn>
-
-                  </v-flex>
+                  </div>
                 </v-card-actions>
               </v-card>
             </v-flex>
-          </v-layout>
+          </v-row>
         </v-flex>
       </v-layout>
     </v-container>
@@ -105,13 +104,12 @@
                     this.courses = response.data
                 })
                 .catch(error => {
-                    console.log(error)
                 })
         },
         methods:{
             deleteCourse: function(event)
             {
-                axios.delete('http://127.0.0.1:8080/portal/rest/cours/delete/'+event, {
+                axios.delete('/portal/rest/cours/delete/'+event, {
                     headers : {
                         'Content-Type' : 'application/json'
                     }
@@ -141,9 +139,24 @@
     font-weight: bold !important;
   }
    .btn-qcm-edit{
-     margin-left: 37%;
-     margin-bottom: -11.2%;
+     margin-left: -147%;
+     margin-bottom: -100.2%;
    }
+  .flex.md4.lg4 {
+    min-width: 25%;
+    display: inline-block;
+
+  }
+  .title-content {
+    float: left;
+  }
+  table {
+    width: 100%;
+    margin-top: 22px;
+  }
+  .btn-center {
+    margin-left: 49%!important;
+  }
 
 </style>
 

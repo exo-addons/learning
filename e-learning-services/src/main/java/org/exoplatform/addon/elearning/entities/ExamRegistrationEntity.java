@@ -22,6 +22,9 @@ public class ExamRegistrationEntity {
   @Column(name = "NOTE_EXAM")
   int markExam;
 
+  @Column(name ="USERNAME_EXAM_REGISTRATION")
+  private String                   userName;
+
   @ManyToOne
   @JoinColumn(name = "WORKER_ID")
   WorkerEntity worker;
@@ -33,9 +36,13 @@ public class ExamRegistrationEntity {
   public ExamRegistrationEntity() {
   }
 
-  public ExamRegistrationEntity(Date registeredExam, int markExam, WorkerEntity worker, ExamEntity exam) {
+  public ExamRegistrationEntity(Date registeredExam,
+                                int markExam,
+                                String userName,
+                                WorkerEntity worker, ExamEntity exam) {
     this.registeredExam = registeredExam;
     this.markExam = markExam;
+    this.userName = userName;
     this.worker = worker;
     this.exam = exam;
   }
@@ -78,5 +85,13 @@ public class ExamRegistrationEntity {
 
   public void setExam(ExamEntity exam) {
     this.exam = exam;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 }
