@@ -3,23 +3,48 @@ package org.exoplatform.addon.elearning.entities;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
-@Entity
+@Entity(name = "ELearningCourse")
 @ExoEntity
 @Table(name = "ELEARNING_COURSE")
-
-/*@NamedQueries({
-
+@NamedQueries({
     @NamedQuery(
-        name = "CourseEntity.getCategoryCours",
-        query = "SELECT c.idCategory FROM CourseEntity cr,CategoryEntity c where c.idCategory = cr.idCourse AND cr.idCourse:=id"
+        //it is a function to search course by name
+        name = "ELearningCourse.findCourseByName",
+        query = "SELECT course FROM ELearningCourse course where course.NameCourse LIKE :courseName"
+    ),
+    @NamedQuery(
+        //the list of the user completed courses
+        name = "ELearningCourse.getCompletedCourseByUser",
+        query = "SELECT course FROM ELearningCourse course where course.status = :COMPLETED and course.userName=:user"
+    ),
+    @NamedQuery(
+        //the list of the user published courses but he can improve his content
+        name = "ELearningCourse.getPublishedCourseByUser",
+        query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName=:user"
+    ),
+    @NamedQuery(
+        //the list of the user where created courses in progress
+        name = "ELearningCourse.getDrafetCourseByUser",
+        query = "SELECT course FROM ELearningCourse course where course.status = :DRAFET and course.userName=:user"
+    ),
+    @NamedQuery(
+        //list of published courses of the others users(not the user connected in the current session)
+        name = "ELearningCourse.getOtherPublishedCourse",
+        query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName <>:user"
+    ),
+    @NamedQuery(
+        name = "ELearningCourse.deleteCourseById",
+        query = "DELETE FROM ELearningCourse course WHERE course.idCourse = :courseId "
     )
-})*/
+})
+
 public class CourseEntity {
 
   public enum Status{
-    DRAFTED,
+    DRAFET,
     COMPLETED,
     PUBLISHED,
   }
@@ -30,21 +55,27 @@ public class CourseEntity {
   private Long                     idCourse;
   @Column(name ="NAME_COURSE")
   private String         NameCourse;
-  @Column(name ="VISIBILITY_COURSE")
-  private Boolean        visibiltyCourse;
   @Column(name ="DATE_START")
   private Date           dateStart;
   @Column(name ="DATE_END")
-  private Date           dateEnd;
+  private Date                     dateEnd;
   @Column(name ="NB_PERSON")
-  private int            nbPerson;
+  private int                      nbPerson;
   @Column(name ="REWARD_COURSE")
-  private String         rewardCourse;
+  private String                   rewardCourse;
+  @Column(name ="USERNAME_COURSE")
+  private String                   userName;
   @ManyToOne
   @JoinColumn(name = "CATEGORY_ID")
-  private CategoryEntity category;
+  private CategoryEntity           category;
   @Enumerated(EnumType.STRING)
-  private Status status;
+  private Status                   status;
+  @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH} )
+  private Collection<CourseRegistrationEntity> coursesRegistrations;
+  @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<ExerciseEntity> exercises;
+  @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+  private Collection<ExamEntity> exams;
 
   public CourseEntity() {
   }
@@ -54,14 +85,18 @@ public class CourseEntity {
                       Date dateStart,
                       Date dateEnd,
                       int nbPerson,
-                      String rewardCourse, CategoryEntity category) {
-    this.NameCourse = nameCourse;
-    this.visibiltyCourse = visibiltyCourse;
+                      String rewardCourse,
+                      String userName,
+                      CategoryEntity category,
+                      Status status, long iconFileId) {
+    NameCourse = nameCourse;
     this.dateStart = dateStart;
     this.dateEnd = dateEnd;
     this.nbPerson = nbPerson;
     this.rewardCourse = rewardCourse;
+    this.userName = userName;
     this.category = category;
+    this.status = status;
   }
 
   public Long getIdCourse() {
@@ -78,14 +113,6 @@ public class CourseEntity {
 
   public void setNameCourse(String nameCourse) {
     NameCourse = nameCourse;
-  }
-
-  public Boolean getVisibiltyCourse() {
-    return visibiltyCourse;
-  }
-
-  public void setVisibiltyCourse(Boolean visibiltyCourse) {
-    this.visibiltyCourse = visibiltyCourse;
   }
 
   public Date getDateStart() {
@@ -133,5 +160,13 @@ public class CourseEntity {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 }

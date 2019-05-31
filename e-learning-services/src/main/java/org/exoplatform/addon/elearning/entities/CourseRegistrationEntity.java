@@ -5,9 +5,13 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name="cregistration")
 @ExoEntity
 @Table(name = "ELEARNING_COURSE_REGISTRATION")
+@NamedQueries({
+    @NamedQuery(name = "cregistration.findRegitrationByIdWorker", query = "select c from cregistration c where c.worker.nameWorker=:name"),
+    @NamedQuery(name = "cregistration.getCountWorker", query = "SELECT count(*) FROM cregistration c where c.worker.idWorker=:id")
+})
 public class CourseRegistrationEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,8 +27,7 @@ public class CourseRegistrationEntity {
   CourseEntity course;
   @Column(name = "REGISTEREDAT_REGISTRATION")
   Date         registeredAt;
-  @Column(name = "LEVEL_REGISTRATION")
-  int          level;
+
 
   public CourseRegistrationEntity() {
   }
@@ -33,7 +36,6 @@ public class CourseRegistrationEntity {
     this.worker = worker;
     this.course = course;
     this.registeredAt = registeredAt;
-    this.level = level;
   }
 
   public Long getIdRegistration() {
@@ -68,11 +70,4 @@ public class CourseRegistrationEntity {
     this.registeredAt = registeredAt;
   }
 
-  public int getLevel() {
-    return level;
-  }
-
-  public void setLevel(int level) {
-    this.level = level;
-  }
 }

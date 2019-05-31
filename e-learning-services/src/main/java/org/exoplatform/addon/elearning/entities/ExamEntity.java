@@ -3,26 +3,48 @@ package org.exoplatform.addon.elearning.entities;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
-@Entity
+@Entity(name="ElearningExam")
 @ExoEntity
 @Table(name = "ELEARNING_EXAM")
-public class ExamEntity {
+@NamedQueries({
+    @NamedQuery(
+        //it is a function to search course by it id
+        name = "ElearningExam.findExamById",
+        query = "SELECT exam FROM ElearningExam exam where exam.idExam=:id"
+    ),
+    @NamedQuery(
+        //it is a function to search course by it id
+        name = "ElearningExam.findExamByUserName",
+        query = "SELECT exam FROM ElearningExam exam where exam.userName=:user"
+    ),
+
+})
+    public class ExamEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name ="ID_EXAM")
-  private Long           idExam;
+  private Long                                 idExam;
   @Column(name ="NAME_EXAM")
-  private String         nameExam;
+  private String                               nameExam;
   @Column(name ="DATE_START_EXAM")
-  private Date           dateStartExam;
+  private Date                                 dateStartExam;
   @Column(name ="DATE_END_EXAM")
-  private Date           dateEndExam;
+  private Date                                 dateEndExam;
   @Column(name ="NB_BID_EXAM")
-  private Long           nbBidExam;
+  private Long                                 nbBidExam;
   @Column(name = "REWARD_EXAM")
-  private String         rewardExam;
+  private String                               rewardExam;
+  @Column(name ="USERNAME_EXAM")
+  private String                               userName;
+  @OneToMany(mappedBy="exam",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<ExerciseEntity> exercises;
+  @ManyToOne
+  @JoinColumn(name = "COURSE_ID")
+  private CourseEntity course;
+
 
   public ExamEntity() {
   }
@@ -31,12 +53,15 @@ public class ExamEntity {
                     Date dateStartExam,
                     Date dateEndExam,
                     Long nbBidExam,
-                    String rewardExam) {
+                    String rewardExam,
+                    String userName, CourseEntity course) {
     this.nameExam = nameExam;
     this.dateStartExam = dateStartExam;
     this.dateEndExam = dateEndExam;
     this.nbBidExam = nbBidExam;
     this.rewardExam = rewardExam;
+    this.userName = userName;
+    this.course = course;
   }
 
   public Long getIdExam() {
@@ -87,4 +112,19 @@ public class ExamEntity {
     this.rewardExam = rewardExam;
   }
 
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public CourseEntity getCourse() {
+    return course;
+  }
+
+  public void setCourse(CourseEntity course) {
+    this.course = course;
+  }
 }

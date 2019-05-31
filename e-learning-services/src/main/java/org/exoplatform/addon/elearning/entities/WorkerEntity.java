@@ -3,35 +3,31 @@ package org.exoplatform.addon.elearning.entities;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
-@Entity
+@Entity(name="ElearningWorker")
 @ExoEntity
 @Table(name = "ELEARNING_WORKER")
+@NamedQueries({
+    @NamedQuery(name = "ElearningWorker.getIdWorkerByName", query = "SELECT e FROM ElearningWorker e where e.nameWorker=:name")
+})
 public class WorkerEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name ="ID_WORKER")
-  private Long                     idWorker;
+  private Long                                 idWorker;
   @Column(name ="NAME_WORKER")
-  private String                   nomWorker;
-  @Column(name ="POST_WORKER")
-  private String                   postWorker;
-  @Column(name ="SKILLS_WORKER")
-  private String                   skillsWorker;
-  @Column(name ="STATUS_WORKER")
-  private Boolean                  statusWorker;//connecté ou non
+  private String                               nameWorker;
+  @OneToMany(mappedBy="worker",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<CourseRegistrationEntity> coursesRegistrations;
+  @OneToMany(mappedBy="exam",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Collection<ExamRegistrationEntity> examsRegistrations;
 
   public WorkerEntity() {
   }
 
-  public WorkerEntity(String nomWorker,
-                      String postWorker,
-                      String skillsWorker,
-                      Boolean statusWorker) {
-    this.nomWorker = nomWorker;
-    this.postWorker = postWorker;
-    this.skillsWorker = skillsWorker;
-    this.statusWorker = statusWorker;
+  public WorkerEntity(String nameWorker) {
+    this.nameWorker = nameWorker;
   }
 
   public Long getIdWorker() {
@@ -42,35 +38,11 @@ public class WorkerEntity {
     this.idWorker = idWorker;
   }
 
-  public String getNomWorker() {
-    return nomWorker;
+  public String getNameWorker() {
+    return nameWorker;
   }
 
-  public void setNomWorker(String nomWorker) {
-    this.nomWorker = nomWorker;
-  }
-
-  public String getPostWorker() {
-    return postWorker;
-  }
-
-  public void setPostWorker(String postWorker) {
-    this.postWorker = postWorker;
-  }
-
-  public String getSkillsWorker() {
-    return skillsWorker;
-  }
-
-  public void setSkillsWorker(String skillsWorker) {
-    this.skillsWorker = skillsWorker;
-  }
-
-  public Boolean getStatusWorker() {
-    return statusWorker;
-  }
-
-  public void setStatusWorker(Boolean statusWorker) {
-    this.statusWorker = statusWorker;
+  public void setNameWorker(String nameWorker) {
+    this.nameWorker = nameWorker;
   }
 }

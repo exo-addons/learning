@@ -4,9 +4,19 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "ElearningExercise")
 @ExoEntity
 @Table(name = "ELEARNING_EXERCISE")
+@NamedQueries({
+    // it is a function to get exercises by courseName for the current user
+    @NamedQuery(name = "ElearningExercise.findExercisesByCourseId", query = "select e from ElearningExercise e where e.course.idCourse=:id and e.userName=:user"),
+    //it is a function to get Exercises of courses( I use it for published) of the other users By id Course
+    @NamedQuery(name = "ElearningExercise.findExercisesByIdForOther", query = "select e from ElearningExercise e where e.course.idCourse = :id and e.userName<>:user"),
+    @NamedQuery(name = "ElearningExercise.findExercisesByIdExam", query = "select DISTINCT e from ElearningExercise e where e.exam.idExam = :id"),
+    @NamedQuery(name = "ElearningExercise.findExercisesByCourseExamId", query = "select e from ElearningExercise e where e.course.idCourse=:idc and e.exam.idExam=:ide"),
+
+})
+
 public class ExerciseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,29 +24,44 @@ public class ExerciseEntity {
   private Long         idExercise;
   @Column(name ="QUESTION_EXERCISE")
   private String       questionExercise;
+  @Column(name ="CHOOSE1_EXERCISE")
+  private String       choose1;
+  @Column(name ="CHOOSE2_EXERCISE")
+  private String       choose2;
+  @Column(name ="CHOOSE3_EXERCISE")
+  private String       choose3;
   @Column(name ="ANSWER_EXERCISE")
   private String       answerExercise;
   @Column(name ="SCALE_EXERCISE")
   private Long         scaleExercise;
   @ManyToOne
-  @JoinColumn(name = "LESSON_ID")
-  private LessonEntity lesson;
+  @JoinColumn(name = "COURSE_ID")
+  private CourseEntity course;
   @ManyToOne
   @JoinColumn(name = "EXAM_ID")
   private ExamEntity   exam;
+  @Column(name ="USERNAME_EXERCISE")
+  private String userName;
+
 
   public ExerciseEntity() {
   }
 
   public ExerciseEntity(String questionExercise,
+                        String choose1,
+                        String choose2,
+                        String choose3,
                         String answerExercise,
-                        Long scaleExercise,
-                        LessonEntity lesson, ExamEntity exam) {
+                        Long scaleExercise, CourseEntity course, ExamEntity exam, String userName) {
     this.questionExercise = questionExercise;
+    this.choose1 = choose1;
+    this.choose2 = choose2;
+    this.choose3 = choose3;
     this.answerExercise = answerExercise;
     this.scaleExercise = scaleExercise;
-    this.lesson = lesson;
+    this.course = course;
     this.exam = exam;
+    this.userName = userName;
   }
 
   public Long getIdExercise() {
@@ -71,12 +96,12 @@ public class ExerciseEntity {
     this.scaleExercise = scaleExercise;
   }
 
-  public LessonEntity getLesson() {
-    return lesson;
+  public CourseEntity getCourse() {
+    return course;
   }
 
-  public void setLesson(LessonEntity lesson) {
-    this.lesson = lesson;
+  public void setCourse(CourseEntity course) {
+    this.course = course;
   }
 
   public ExamEntity getExam() {
@@ -85,5 +110,42 @@ public class ExerciseEntity {
 
   public void setExam(ExamEntity exam) {
     this.exam = exam;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public String getChoose1() {
+    return choose1;
+  }
+
+  public void setChoose1(String choose1) {
+    this.choose1 = choose1;
+  }
+
+  public String getChoose2() {
+    return choose2;
+  }
+
+  public void setChoose2(String choose2) {
+    this.choose2 = choose2;
+  }
+
+  public String getChoose3() {
+    return choose3;
+  }
+
+  public void setChoose3(String choose3) {
+    this.choose3 = choose3;
+  }
+  @Override
+  public boolean equals(Object obj) {
+    ExerciseEntity question = (ExerciseEntity) obj;
+    return this.questionExercise.equals(question.getQuestionExercise());
   }
 }

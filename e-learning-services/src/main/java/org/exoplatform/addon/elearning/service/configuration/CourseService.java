@@ -7,6 +7,8 @@ import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.security.ConversationState;
+
 import java.util.List;
 
 public class CourseService {
@@ -20,7 +22,6 @@ public class CourseService {
   }
   public List<CourseDTO> getAllCourses() {
     try {
-      //--- load all Rules
       List<CourseEntity> courses = courseDao.findAll();
       if (courses != null) {
         return courseMapper.coursesToCourseDTOs(courses);
@@ -41,10 +42,108 @@ public class CourseService {
 
       cours = courseDao.create(courseMapper.courseDTOToCourse(coursDTO));
 
+
     } catch (Exception e) {
-      LOG.error("Error to create badge with title {}", coursDTO.getNameCourse() , e);
+      LOG.error("Error to create course with title {}", coursDTO.getNameCourse() , e);
     }
 
     return courseMapper.courseToCourseDTO(cours);
+  }
+  @ExoTransactional
+  public CourseDTO findCourseByName(String courseName) {
+
+    try {
+      //--- Get Entity from DB
+      CourseEntity entity = courseDao.findCourseByName(courseName);
+      //--- Convert Entity to DTO
+      if (entity != null) {
+        return courseMapper.courseToCourseDTO(entity);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find Course entity with title : {}", courseName, e.getMessage());
+    }
+    return null;
+
+  }
+
+  public List<CourseDTO> getCompletedCourseByUser(CourseEntity.Status COMPLETED, String user){
+    try {
+      List<CourseEntity> course = courseDao.getCompletedCourseByUser(COMPLETED,user);
+      if (course != null) {
+        return courseMapper.coursesToCourseDTOs(course);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find completed course", e.getMessage());
+    }
+    return null;
+
+  }
+
+  public List<CourseDTO> getDrafetCourseByUser(CourseEntity.Status DRAFET, String user){
+    try {
+      List<CourseEntity> course = courseDao.getDrafetCourseByUser(DRAFET,user);
+      if (course != null) {
+        return courseMapper.coursesToCourseDTOs(course);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find completed course", e.getMessage());
+    }
+    return null;
+
+  }
+  public List<CourseDTO> getPublishedCourseByUser(CourseEntity.Status PUBLISHED, String user){
+    try {
+      List<CourseEntity> course = courseDao.getPublishedCourseByUser(PUBLISHED,user);
+      if (course != null) {
+        return courseMapper.coursesToCourseDTOs(course);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find published course", e.getMessage());
+    }
+    return null;
+
+  }
+  public List<CourseDTO> getOtherPublishedCourse(CourseEntity.Status PUBLISHED,String user){
+    try {
+      List<CourseEntity> course = courseDao.getOtherPublishedCourse(PUBLISHED,user);
+      if (course != null) {
+        return courseMapper.coursesToCourseDTOs(course);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find the other published course", e.getMessage());
+    }
+    return null;
+  }
+  @ExoTransactional
+  public void deleteCourseById (Long courseId) {
+    CourseEntity c=courseDao.find(courseId);
+
+    try {
+      courseDao.deleteCourseById(courseId);
+    } catch (Exception e) {
+      LOG.error("Error to delete course with title {}",c.getNameCourse(), e);
+    }
+  }
+
+  @ExoTransactional
+  public CourseDTO updateCourse(CourseDTO courseDTO){
+    try {
+      CourseEntity courseEntity=courseDao.find(courseDTO.getIdCourse());
+      if(courseEntity!=null){
+        courseEntity.setNameCourse(courseDTO.getNameCourse());
+        courseEntity.setNbPerson(courseDTO.getNbPerson());
+        courseEntity.setRewardCourse(courseDTO.getRewardCourse());
+        courseEntity.setStatus(courseDTO.getStatus());
+        return courseMapper.courseToCourseDTO(courseEntity);
+      }
+    }catch(Exception e){
+      LOG.error("Error to update with id {}", courseDTO.getNameCourse() , e);
+    }
+    return null;
   }
 }

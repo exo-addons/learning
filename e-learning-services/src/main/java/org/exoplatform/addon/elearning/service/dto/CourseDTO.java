@@ -10,21 +10,19 @@ public class CourseDTO implements Serializable {
 
   private Long   idCourse;
   private String   NameCourse;
-  private Boolean visibilityCourse;
   private String     dateStart;
   private String     dateEnd;
   private int      nbPerson;
   private String   rewardCourse;
   private Long idCategory;
   private CourseEntity.Status status;
-
+  private String userName;
   public CourseDTO() {
   }
 
   public CourseDTO(CourseEntity cours) {
     this.idCourse = cours.getIdCourse();
     NameCourse = cours.getNameCourse();
-    this.visibilityCourse = cours.getVisibiltyCourse();
     if (cours.getDateStart()!= null) {
       this.dateStart= formatter.format(cours.getDateStart());
     }
@@ -35,6 +33,7 @@ public class CourseDTO implements Serializable {
     this.rewardCourse = cours.getRewardCourse();
     this.idCategory = cours.getCategory().getIdCategory();
     this.status=cours.getStatus();
+    this.userName=cours.getUserName();
   }
 
   public Long getIdCourse() {
@@ -52,15 +51,7 @@ public class CourseDTO implements Serializable {
   public void setNameCourse(String nameCourse) {
     NameCourse = nameCourse;
   }
-
-  public Boolean getVisibilityCourse() {
-    return visibilityCourse;
-  }
-
-  public void setVisibilityCourse(Boolean visibilityCourse) {
-    this.visibilityCourse = visibilityCourse;
-  }
-
+  
   public String getDateStart() {
     return dateStart;
   }
@@ -110,4 +101,11 @@ public class CourseDTO implements Serializable {
   }
 
 
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 }

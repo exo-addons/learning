@@ -28,25 +28,94 @@
     <type>org.exoplatform.addon.elearning.entities.ExamRegistrationEntity</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.elearning.storage.ExerciseDao</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.storage.CourseDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.ExamDao</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.storage.CategoryDao</type>
   </component>
   <component>
+    <type>org.exoplatform.addon.elearning.storage.LessonDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.WorkerDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.ExamRegistrationDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.CourseRegistrationDao</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.ExamRestService</type>
+  </component>
+  <component>
     <type>org.exoplatform.addon.elearning.rest.CourseRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.ExerciseRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.CategoryRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.LessonRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.CourseRegistrationRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.WorkerRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.rest.ExamRegistrationRestService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.ExerciseDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.CourseDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.CategoryDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.LessonDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.WorkerDTO</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.dto.ExamRegistrationDTO</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.configuration.CourseService</type>
   </component>
   <component>
-    <type>org.exoplatform.addon.elearning.service.dto.CourseDTO</type>
+    <type>org.exoplatform.addon.elearning.service.configuration.ExamService</type>
   </component>
 <component>
   <type>org.exoplatform.addon.elearning.service.configuration.CategoryService</type>
 </component>
   <component>
-    <type>org.exoplatform.addon.elearning.rest.CategoryRestService</type>
+    <type>org.exoplatform.addon.elearning.service.configuration.LessonService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.ExerciseService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.WorkerService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.CourseRegistrationService</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.configuration.ExamRegistrationService</type>
   </component>
   <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CategoryMapper</type>
@@ -54,7 +123,24 @@
   <component>
     <type>org.exoplatform.addon.elearning.service.mapper.CourseMapper</type>
   </component>
-
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.LessonMapper</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.ExamMapper</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.ExerciseMapper</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.CourseRegistrationMapper</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.WorkerMapper</type>
+  </component>
+  <component>
+    <type>org.exoplatform.addon.elearning.service.mapper.ExamRegistrationMapper</type>
+  </component>
   <external-component-plugins>
     <target-component>org.exoplatform.commons.api.persistence.DataInitializer</target-component>
     <component-plugin>
@@ -70,5 +156,20 @@
       </init-params>
     </component-plugin>
   </external-component-plugins>
-
+  <external-component-plugins>
+    <target-component>org.exoplatform.commons.file.services.NameSpaceService</target-component>
+    <component-plugin>
+      <name>SocialNameSpacePlugin</name>
+      <set-method>addNameSpacePlugin</set-method>
+      <type>org.exoplatform.commons.file.services.NameSpacePlugin</type>
+      <priority>1000</priority>
+      <init-params>
+        <properties-param>
+          <name>fileNameSpace.params</name>
+          <property name="name" value="learning"/>
+          <property name="description" value="learning files storage"/>
+        </properties-param>
+      </init-params>
+    </component-plugin>
+  </external-component-plugins>
 </configuration>

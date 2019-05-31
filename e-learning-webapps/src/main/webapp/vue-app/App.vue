@@ -7,16 +7,10 @@
 
 <script>
 
-    import AppNavMain from './components/AppNavMain.vue'
-
-
+    import AppNavMain from './components/commun/AppNavMain.vue'
 
     export default {
         components:{AppNavMain},
-        name: 'App',
-        created: function () {
-                console.log('new child created: ');
-            }
     }
 </script>
 

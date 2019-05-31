@@ -3,11 +3,19 @@ package org.exoplatform.addon.elearning.entities;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
-@Entity
+@Entity(name="ElearningLesson")
 @ExoEntity
 @Table(name = "ELEARNING_LESSON")
+@NamedQueries({
+    @NamedQuery(
+        //it is a function to search Lesson by it idcourse
+        name = "ElearningLesson.findLessonById",
+        query = "SELECT lesson FROM ElearningLesson lesson where lesson.course.idCourse=:id"
+    ),
+})
 public class LessonEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,19 +33,23 @@ public class LessonEntity {
 
   @ManyToOne
   @JoinColumn(name = "COURSE_ID")
-  private CourseEntity course;
+  private CourseEntity                         course;
+  @Column(name ="USERNAME_LESSON")
+  private String                               userName;
+
 
   public LessonEntity() {
   }
 
   public LessonEntity(String descriptionLesson,
-                      String titreLesson,
+                      String titleLesson,
                       String contentLesson,
-                      CourseEntity course, List<ExerciseEntity> exercises) {
+                      CourseEntity course, String userName) {
     this.descriptionLesson = descriptionLesson;
-    this.titleLesson = titreLesson;
+    this.titleLesson = titleLesson;
     this.contentLesson = contentLesson;
     this.course = course;
+    this.userName = userName;
   }
 
   public Long getIdLesson() {
@@ -64,6 +76,14 @@ public class LessonEntity {
     this.titleLesson = titreLesson;
   }
 
+  public String getTitleLesson() {
+    return titleLesson;
+  }
+
+  public void setTitleLesson(String titleLesson) {
+    this.titleLesson = titleLesson;
+  }
+
   public String getContentLesson() {
     return contentLesson;
   }
@@ -80,4 +100,11 @@ public class LessonEntity {
     this.course = course;
   }
 
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 }

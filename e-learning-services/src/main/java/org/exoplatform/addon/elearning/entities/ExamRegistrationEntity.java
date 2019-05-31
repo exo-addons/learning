@@ -5,9 +5,12 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name="eregistration")
 @ExoEntity
 @Table(name = "ELEARNING_EXAM_REGISTRATION")
+@NamedQueries({
+    @NamedQuery(name = "eregistration.getCountWorker", query = "SELECT count(*) FROM eregistration e where e.worker.idWorker=:id")
+})
 public class ExamRegistrationEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,12 +19,15 @@ public class ExamRegistrationEntity {
 
   @Column(name = "EXAMDAT_REGISTRATION")
   Date registeredExam;
-  @Column(name = "MARK_EXAM")
+  @Column(name = "NOTE_EXAM")
   int markExam;
+
+  @Column(name ="USERNAME_EXAM_REGISTRATION")
+  private String                   userName;
 
   @ManyToOne
   @JoinColumn(name = "WORKER_ID")
-  WorkerEntity workerx;
+  WorkerEntity worker;
 
   @ManyToOne
   @JoinColumn(name = "EXAM_ID")
@@ -30,10 +36,14 @@ public class ExamRegistrationEntity {
   public ExamRegistrationEntity() {
   }
 
-  public ExamRegistrationEntity(Date registeredExam, int markExam, WorkerEntity workerx, ExamEntity exam) {
+  public ExamRegistrationEntity(Date registeredExam,
+                                int markExam,
+                                String userName,
+                                WorkerEntity worker, ExamEntity exam) {
     this.registeredExam = registeredExam;
     this.markExam = markExam;
-    this.workerx = workerx;
+    this.userName = userName;
+    this.worker = worker;
     this.exam = exam;
   }
 
@@ -61,12 +71,12 @@ public class ExamRegistrationEntity {
     this.markExam = markExam;
   }
 
-  public WorkerEntity getWorkerx() {
-    return workerx;
+  public WorkerEntity getWorker() {
+    return worker;
   }
 
-  public void setWorkerx(WorkerEntity workerx) {
-    this.workerx = workerx;
+  public void setWorker(WorkerEntity worker) {
+    this.worker= worker;
   }
 
   public ExamEntity getExam() {
@@ -75,5 +85,13 @@ public class ExamRegistrationEntity {
 
   public void setExam(ExamEntity exam) {
     this.exam = exam;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 }
