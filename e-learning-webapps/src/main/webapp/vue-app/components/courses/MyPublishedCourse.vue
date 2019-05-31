@@ -34,26 +34,26 @@
                   </center>
                   <table align="center">
                     <tr>
-                      <td><div class="title-content">Nom de cours:</div></td>
-                      <td><div class="text-content">{{ c.nameCourse }}</div></td>
+                      <td><div class="title-content-mpublished">Nom de cours:</div></td>
+                      <td><div class="text-content-mpublished">{{ c.nameCourse }}</div></td>
                     </tr>
                     <tr>
-                      <td><div class="title-content">Auteur:</div></td>
-                      <td> <div class="text-content">{{ c.userName }}</div></td>
+                      <td><div class="title-content-mpublished">Auteur:</div></td>
+                      <td> <div class="text-content-mpublished">{{ c.userName }}</div></td>
                     </tr>
                     <tr>
-                      <td><div class="title-content">Début:</div></td>
-                      <td> <div class="text-content">{{ c.dateStart }}</div></td>
+                      <td><div class="title-content-mpublished">Début:</div></td>
+                      <td> <div class="text-content-mpublished">{{ c.dateStart }}</div></td>
                     </tr>
                     <tr>
-                      <td><div class="title-content">Fin:</div></td>
-                      <td> <div class="text-content">{{ c.dateEnd }}</div></td>
+                      <td><div class="title-content-mpublished">Fin:</div></td>
+                      <td> <div class="text-content-mpublished">{{ c.dateEnd }}</div></td>
                     </tr>
                   </table>
                 </v-card-text>
                 <v-card-actions>
-                  <div class="btn-center">
-                    <div class="btn-qcm-edit">
+                  <div class="btn-center-mpublished">
+                    <div class="btn-qcm-edit-mpublished">
                       <Editcourse :course="courses[index]"></Editcourse>
                     </div>
                     <v-btn
@@ -124,7 +124,7 @@
     }
 </script>
 <style>
-  .text-content {
+  .text-content-mpublished {
     text-align: left;
     margin: 0;
     font-family: roberto sans-serif !important;
@@ -133,31 +133,30 @@
     color: #333333;
   }
 
-  .title-content {
+  .title-content-mpublished {
     margin: 0;
     font-family: roberto sans-serif !important;
     font-size: 14px;
     line-height: 32px;
     color: #333333;
     font-weight: bold !important;
+    float: left;
+
   }
   .flex.md4.lg4 {
     min-width: 25%;
     display: inline-block;
 
   }
-  .title-content {
-    float: left;
-  }
   table {
     width: 100%;
     margin-top: 22px;
   }
-  .btn-qcm-edit{
+  .btn-qcm-edit-mpublished{
     margin-left: -147%;
     margin-bottom: -100.2%;
   }
-  .btn-center {
+  .btn-center-mpublished{
     margin-left: 49%!important;
   }
 

@@ -80,6 +80,7 @@
         },
         data () {
             return {
+                users:[],
                 counter:0,
                 note:0,
                 global:0,
@@ -87,15 +88,11 @@
                 date: moment(60 *0.1* 1000),
                 questionIndex: 0,
                 idE:this.$route.query.id,
-                questions:{
-                    idCourse: null,
-                    idExam: null,
-                    questionExercise: '',
-                    answerExercise: '',
-                    scaleExercise: null,
-                    choose1: '',
-                    choose2: '',
-                    choose3: '',
+                questions:[],
+                examregistration:   {
+                    'idExam':'',
+                    'idWorker':null,
+                    'mark': null,
                 },
                 userResponses:false
             }
@@ -113,6 +110,14 @@
                 this.questions = response.data;
             }).catch(error => {
             })
+            axios.get(`/portal/rest/worker/getidWorkerByname/`+ eXo.env.portal.userName)
+                .then((response)=>{
+                    this.users=response.data
+                    console.log("idEmploye1",this.users.id)
+
+
+                })
+
         },
         methods: {
             validateAnswer(c) {
@@ -126,7 +131,18 @@
                         this.courseStatus[i]=null
 
                     }
+                    console.log("note",this.note);
+                    console.log("idEmploye2",this.users.id);
+                    this.examregistration.idExam=this.idE;
+                    this.examregistration.idWorker=this.users.id;
+                    this.examregistration.mark=this.note;
+                    axios.post(`/portal/rest/eregistration/add`,this.examregistration,{
+                        headers: {
+                            'Content-type': 'application/json',
+                        },
+                    })
                 }
+
             },
             quitter: function () {
                 this.$router.push('/')

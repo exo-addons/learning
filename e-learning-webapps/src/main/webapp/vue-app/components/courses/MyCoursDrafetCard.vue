@@ -137,6 +137,8 @@
     line-height: 32px;
     color: #333333;
     font-weight: bold !important;
+    float: left;
+
   }
    .btn-qcm-edit{
      margin-left: -147%;
@@ -148,7 +150,6 @@
 
   }
   .title-content {
-    float: left;
   }
   table {
     width: 100%;

@@ -4,6 +4,18 @@
       height="750px">
       <v-card-text>
         <v-form ref="form" class="px-3">
+            <div>
+                <div v-if="alt" class="alert alert-error" style="    margin-left: 11%;
+    width: 74%;">
+                    <i class="uiIconClose" @click="DontShow"></i>Remplire tout les champs
+                </div>
+                <div
+                        v-if="alt"
+                        class="UIPopupWindow uiPopup UIDragObject NormalStyle"
+                        style="width: 785px; position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;"
+                >
+                </div>
+            </div>
           <v-container>
             <v-flex md10>
               <v-text-field
@@ -17,21 +29,64 @@
                 <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Catégorie de cours</p>
               </v-flex>
             </v-layout>
+
             <v-layout>
               <v-flex md8>
                 <select
                   v-model="selectedCategory"
                   class="select_style">
-                  <option value="" >Select Categorie</option>
-                  <option v-for="option in categories"  :value="option.idCategory">
+                  <option value>select category</option>
+                  <option v-for="option in category"  :value="option.idCategory">
                     {{ option.nameCategory }}
                   </option>
                 </select>
               </v-flex>
-                <app-category-cours> </app-category-cours>
             </v-layout>
-            <v-layout>
+              <v-dialog v-model="dialogs" width="600px">
+                  <v-btn
+                          slot="activator"
+                          fab
+                          dark
+                          color="blue darken-3"
+                          small>
+                      <v-icon dark>add</v-icon>
+                  </v-btn>
+                  <v-card>
+                      <v-card-title>
+                          <h4>Add New Category</h4>
+                      </v-card-title>
+                      <v-card-text>
+                          <v-form ref="form" class="px-3">
+                              <div>
+                                  <v-text-field
+                                          v-model="nameCategory"
+                                          label="libellé Categorie"
+                                          prepend-icon="folder"
+                                          :rules="inputRules" />
+                                  <v-spacer />
+                                  <v-btn
+                                          small
+                                          dark
+                                          color="blue darken-3"
+                                          class="mx-0 mt-3"
+                                  @click="saveCategory">
+                                      Ajouter
+                                  </v-btn>
+                                  <v-btn
+                                          outline
+                                          small
+                                          color="blue darken-3"
+                                          class="mx-0 mt-3"
+                                  @click="cancel">
+                                      Quitter
+                                  </v-btn>
+                              </div>
+                          </v-form>
+                      </v-card-text>
+                  </v-card>
+              </v-dialog>
 
+            <v-layout>
               <v-radio-group v-model="courseStatus" row>
                 <v-radio
                   label="DRAFET"
@@ -49,6 +104,7 @@
             </v-layout>
             <v-flex md10>
               <v-text-field
+                      type="number"
                 v-model="nbPerson"
                 label="Nbre des personnes"
                 prepend-icon="folder" />
@@ -114,7 +170,6 @@
     import axios from 'axios'
     import { bus } from '../../main';
     import Datepicker from 'vuejs-datepicker';
-    import AppCategoryCours from './AppCategoryCours.vue'
     import {en, fr} from 'vuejs-datepicker/dist/locale'
     import moment from 'moment';
 
@@ -128,10 +183,8 @@
     });
 
     export default {
-        props:['contentcourse'],
-        props: ['contentcat'],
+        props: ['contentcourse'],
         components: {
-            AppCategoryCours,
             Datepicker
         },
         props: {
@@ -142,8 +195,16 @@
         },
         data: function () {
             return {
+                alt: false,
+                category: {
+                    nameCategory: ''
+                },
+                dialogs: false,
                 selectedCategory: '',
-                categories: [],
+                categories: {
+                    idCategory:null,
+                    nameCategory: ''
+                },
                 en: en,
                 fr: fr,
                 date: new Date(),
@@ -155,6 +216,7 @@
                     v => !!v || 'This field is required',
                     v => v.length >= 3 || 'Minimum length is 3 characters'
                 ],
+                nameCategory: '',
                 e1: 0,
                 nameCourse: '',
                 courseStatus: 'DRAFET',
@@ -180,17 +242,10 @@
                 updateMessage: ''
             }
         },
-        created(){
-            bus.$on('categoryChanged', (data) => {
-                this.contentcat=data;
-                this.categories.push(this.contentcat)
-
-            });
-        },
         mounted() {
-            axios.get(`http://127.0.0.1:8080/portal/rest/category/all`)
+            axios.get(`/portal/rest/category/all`)
                 .then(response => {
-                    this.categories = response.data
+                    this.category = response.data
 
                 })
                 .catch(e => {
@@ -198,26 +253,54 @@
                 })
         },
         methods: {
+            DontShow() {
+                this.alt = false;
+            },
+            ShowDialogs() {
+                this.dialogs = true;
+            },
             quitter: function () {
-                this.$router.push('/')
+                this.$router.push('/createCours')
             },
             onSubmit() {
-                this.courses.nameCourse = this.nameCourse;
+                if(this.nameCourse===''|| this.dateStart===''||this.dateEnd===''||this.nbPerson===null||this.selectedCategory===''){
+                    this.alt=true;
+                }
+                if (this.alt === false) {
+                    this.courses.nameCourse = this.nameCourse;
                 this.courses.dateStart = this.dateStart;
                 this.courses.dateEnd = this.dateEnd;
                 this.courses.nbPerson = this.nbPerson;
                 this.courses.rewardCourse = this.rewardCourse;
                 this.courses.status = this.courseStatus;
                 this.courses.idCategory = this.selectedCategory;
-                axios.post(`/portal/rest/cours/add`, this.courses, {
+                    axios.post(`/portal/rest/cours/add`, this.courses, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        this.courses = response.data
+                        bus.$emit('CourseChanged', this.courses);
+                        console.log("course changed", this.courses)
+                    })
+                }
+            },
+            saveCategory() {
+                this.categories.nameCategory = this.nameCategory;
+                axios.post('/portal/rest/category/add', this.categories, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
+
                 }).then((response) => {
-                    this.courses=response.data
-                    bus.$emit('CourseChanged', this.courses);
-                    console.log("course changed",this.courses)
-                })
+                    console.log(response.data)
+                    this.category.push(response.data)
+                });
+                this.dialogs = false
+
+            },
+            cancel() {
+                this.dialogs = false;
             }
         }
     }

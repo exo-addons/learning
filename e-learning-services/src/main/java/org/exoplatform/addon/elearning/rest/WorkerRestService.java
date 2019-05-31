@@ -6,12 +6,10 @@ import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.json.simple.JSONObject;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -75,6 +73,23 @@ public class WorkerRestService  implements ResourceContainer {
                      .build();
     }
 
+  }
+
+  @GET
+  @Path("/getidWorkerByname/{name}")
+  public Response getIdWorkerByname(@PathParam("name")String name)
+  {
+    try {
+      WorkerDTO worker = workerService.getIdWorkerByName(name);
+      LOG.info("id worker!!!!!!!!!!!!!!!"+worker);
+      return Response.ok(worker, MediaType.APPLICATION_JSON).build();
+
+    } catch(Exception e) {
+      LOG.error("Erreur to get id worker"+e.getMessage());
+      return  Response.serverError()
+                      .entity("Error getting")
+                      .build();
+    }
   }
 
 }

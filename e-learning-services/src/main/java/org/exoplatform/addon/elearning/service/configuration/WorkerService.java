@@ -79,5 +79,19 @@ public class WorkerService {
 
   }
 
+  public WorkerDTO getIdWorkerByName(String name) {
+    try {
+      WorkerEntity worker = workerDao.findIdWorkerByname(name);
+      if (worker != null) {
+        return workerMapper.workToWorkDTO(worker);
+      }
+
+    } catch (Exception e) {
+      LOG.error("Error to find Worker", e.getMessage());
+    }
+    return null;
+
+  }
+
 }
 

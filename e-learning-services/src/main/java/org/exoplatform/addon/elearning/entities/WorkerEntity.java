@@ -8,6 +8,9 @@ import java.util.Collection;
 @Entity(name="ElearningWorker")
 @ExoEntity
 @Table(name = "ELEARNING_WORKER")
+@NamedQueries({
+    @NamedQuery(name = "ElearningWorker.getIdWorkerByName", query = "SELECT e FROM ElearningWorker e where e.nameWorker=:name")
+})
 public class WorkerEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

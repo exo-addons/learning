@@ -38,6 +38,7 @@ public class ExamRegistrationMapper {
         examRegistration.setWorker(worker);
         ExamEntity exam=this.examFromLongId(examRegistrationDTO.getIdExam());
         examRegistration.setExam(exam);
+        examRegistration.setMarkExam(examRegistrationDTO.getMark());
         examRegistration.setUserName(user);
         return examRegistration;
 

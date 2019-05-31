@@ -12,7 +12,7 @@
                 <v-container>
 
                     <v-flex md10>
-                        <!--    <i class="uiIconMiniArrowDown uiIconLightGray"></i>-->
+                        <p class=" text-md-left subheading  font-weight-light blue-grey--text text--darken-1">Cours Affecté</p>
                         <select
                                 v-model="selectedCourse"
                                 class="select_style">

@@ -134,8 +134,11 @@
                     headers: {
                         'Content-type': 'application/json',
                     },
-                })
-            },
+                }).then(()=>{
+                    this.$router.push('/gestionLesson')
+                }
+            )
+        },
         }
     }
 </script>

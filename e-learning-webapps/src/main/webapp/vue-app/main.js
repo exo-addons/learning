@@ -6,7 +6,6 @@ import router from './router'
 import '../css/main.less'
 
 Vue.config.productionTip = false;
-
 export const bus=new Vue();
 Vue.use(Vuetify)
 
