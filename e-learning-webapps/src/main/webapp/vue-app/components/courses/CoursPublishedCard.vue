@@ -6,6 +6,9 @@
           <app-edit-cours-tab />
         </v-flex>
       </v-layout>
+        <div v-if="alt" class="alert alert-info">
+            <i class="uiIconInfo"></i>Aucun Cours Crée
+        </div>
       <v-layout>
         <v-flex md12 lg12>
           <v-layout>
@@ -97,6 +100,7 @@
         components: {AppEditCoursTab},
         data() {
             return {
+                alt:false,
                 count:null,
                 counterWorker:0,
                 allworkers:[],
@@ -128,34 +132,7 @@
                 },
                 cr: [
                     {
-                        libelle: 'The Net Ninja',
-                        editeurName: 'Web developer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Ryu',
-                        editeurName: 'Graphic designer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Chun Li',
-                        editeurName: 'Web developer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Gouken',
-                        editeurName: 'Social media maverick',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Yoshi',
-                        editeurName: 'Sales guru',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
+                        src: "https://image.freepik.com/free-psd/course-banner_56173-54.jpg"
                     }
                 ]
             }
@@ -163,7 +140,10 @@
         mounted(){
             axios.get(`/portal/rest/cours/allOtherPublishedCourse/PUBLISHED`)
                 .then(response => {
-                    this.courses = response.data
+                    this.courses = response.data;
+                    if(this.courses.length===0){
+                        this.alt=true;
+                    }
                 })
                 .catch(error => {
                 })

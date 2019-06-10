@@ -13,7 +13,7 @@
                             <v-container>
                                 <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">Choisir Exam</p>
                                 <select v-model="selectedCourse">
-                                    <option value="" >Select Course</option>
+                                    <option value disabled>Select Exam</option>
                                     <option v-for="(option,index) in Exams" :value="option.idExam">
                                         {{ option.nameExam}}
                                     </option>

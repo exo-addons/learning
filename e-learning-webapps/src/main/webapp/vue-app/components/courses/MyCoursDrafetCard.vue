@@ -12,6 +12,9 @@
             <v-flex md12 lg12>
             </v-flex>
           </v-layout>
+            <div v-if="alt" class="alert alert-info">
+                <i class="uiIconInfo"></i>Aucun Cours Crée
+            </div>
           <v-row>
             <v-flex class="md4 lg4"
               v-for="(c,index) in courses"
@@ -19,8 +22,6 @@
 
 
               <v-card flat class="text-xs-center ma-3 elevation-10">
-                <div>
-                </div>
                 <v-card-text>
                   <center>
                     <v-img
@@ -34,26 +35,26 @@
                   </center>
                   <table align="center">
                     <tr>
-                      <td><div class="title-content">Nom de cours:</div></td>
-                      <td><div class="text-content">{{ c.nameCourse }}</div></td>
+                      <td class="title-content-mdrafet">Nom de cours:</td>
+                      <td class="text-content-mdrafet">{{ c.nameCourse }}</td>
                     </tr>
                     <tr>
-                      <td><div class="title-content">Auteur:</div></td>
-                      <td> <div class="text-content">{{ c.userName }}</div></td>
+                      <td class="title-content-mdrafet">Auteur:</td>
+                      <td class="text-content-mdrafet"> {{ c.userName }}</td>
                     </tr>
                     <tr>
-                      <td><div class="title-content">Début:</div></td>
-                      <td> <div class="text-content">{{ c.dateStart }}</div></td>
+                      <td class="title-content-mdrafet">Début:</td>
+                      <td class="text-content-mdrafet"> {{ c.dateStart }}</td>
                     </tr>
                     <tr>
-                      <td><div class="title-content">Fin:</div></td>
-                      <td> <div class="text-content">{{ c.dateEnd }}</div></td>
+                      <td class="title-content-mdrafet">Fin:</td>
+                      <td class="text-content-mdrafet">{{ c.dateEnd }}</td>
                     </tr>
                   </table>
                 </v-card-text>
                 <v-card-actions>
-                  <div class="btn-center">
-                    <div class="btn-qcm-edit">
+                  <div class="btn-center-mdrafet">
+                    <div class="btn-qcm-edit-mdrafet">
                     <Editcourse :course="courses[index]"></Editcourse>
                     </div>
                     <v-btn
@@ -87,13 +88,12 @@
         components: {AppEditCoursTab,Editcourse},
         data() {
             return {
+                alt:false,
                 courses: [],
                 cr: [
                     {
-                        libelle: 'The Net Ninja',
-                        editeurName: 'Web developer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
+
+                        src: "https://image.freepik.com/free-psd/course-banner_56173-54.jpg"
                     },
                 ]
             }
@@ -102,11 +102,18 @@
             axios.get(`/portal/rest/cours/allDrafetByUser/DRAFET`)
                 .then(response => {
                     this.courses = response.data
+                    if(this.courses.length===0){
+                        this.alt=true;
+                    }
+
                 })
                 .catch(error => {
                 })
         },
         methods:{
+            DontShow() {
+                this.alt = false;
+            },
             deleteCourse: function(event)
             {
                 axios.delete('/portal/rest/cours/delete/'+event, {
@@ -121,7 +128,7 @@
     }
 </script>
 <style>
-  .text-content {
+  .text-content-mdrafet {
     text-align: left;
     margin: 0;
     font-family: roberto sans-serif !important;
@@ -130,7 +137,7 @@
     color: #333333;
   }
 
-  .title-content {
+  .title-content-mdrafet {
     margin: 0;
     font-family: roberto sans-serif !important;
     font-size: 14px;
@@ -140,7 +147,7 @@
     float: left;
 
   }
-   .btn-qcm-edit{
+   .btn-qcm-edit-mdrafet{
      margin-left: -147%;
      margin-bottom: -100.2%;
    }
@@ -149,13 +156,13 @@
     display: inline-block;
 
   }
-  .title-content {
+  .title-content-mdrafet {
   }
   table {
     width: 100%;
     margin-top: 22px;
   }
-  .btn-center {
+  .btn-center-mdrafet {
     margin-left: 49%!important;
   }
 

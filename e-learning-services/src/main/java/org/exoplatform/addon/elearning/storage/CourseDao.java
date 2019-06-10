@@ -52,6 +52,5 @@ public class CourseDao extends GenericDAOJPAImpl<CourseEntity,Long> {
                              .executeUpdate();
 
   }
-
   }
 

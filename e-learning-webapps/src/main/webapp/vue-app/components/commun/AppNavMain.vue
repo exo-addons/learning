@@ -28,17 +28,7 @@
             <span class="title text-sm-left">Créer Cours</span>
           </v-btn>
         </v-flex>
-        <!--
-        <v-flex>
-          <v-btn
-                  flat
-                  class="depressed white large blue--text"
-                  @click="toCreateExam">
-            <i class="fas fa-plus"></i>
-            <span class="title text-sm-left">Créer Examen</span>
-          </v-btn>
-        </v-flex>
-                  -->
+
       </v-layout>
     </v-container>
   </div>
@@ -55,9 +45,6 @@
             toCreateCourse:function() {
                 this.$router.push('/createCours')
             },
-            toCreateExam:function() {
-                this.$router.push('/createExam')
-            }
         }
     }
 

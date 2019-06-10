@@ -141,7 +141,6 @@
   <component>
     <type>org.exoplatform.addon.elearning.service.mapper.ExamRegistrationMapper</type>
   </component>
-
   <external-component-plugins>
     <target-component>org.exoplatform.commons.api.persistence.DataInitializer</target-component>
     <component-plugin>
@@ -173,5 +172,4 @@
       </init-params>
     </component-plugin>
   </external-component-plugins>
-
 </configuration>

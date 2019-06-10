@@ -19,6 +19,7 @@ import ChooseExam from '../components/exam/ChooseExam.vue'
 import EditCourse from '../components/courses/editCourse.vue'
 import EditLesson from '../components/courses/editLesson.vue'
 import GestionLesson from '../components/courses/GestionLesson.vue'
+import CreateLesson from '../components/courses/createLessonMain.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -119,6 +120,11 @@ export default new Router({
           path: '/editLesson',
           name: 'EditLesson',
           component: EditLesson
+      },
+      {
+          path: '/createLesson',
+          name: 'CreateLesson',
+          component: CreateLesson
       }
 
   ]

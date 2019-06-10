@@ -17,6 +17,25 @@
             :rules="inputRules" />
         </v-flex>
         <v-flex md10>
+          <v-text-field
+                  v-model="lessonTitle"
+                  label="Titre de Leçon"
+                  prepend-icon="folder"
+                  :rules="inputRules" />
+        </v-flex>
+
+        <v-flex md10>
+          <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">libellé Cours</p>
+          <select
+                  v-model="selectedCourse"
+                  class="select_style">
+            <option value disabled>Select Course</option>
+            <option v-for="option in courses" :value="option.idCourse">
+              {{ option.nameCourse }}
+            </option>
+          </select>
+        </v-flex>
+        <v-flex md10>
           <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du cours</p>
         </v-flex>
         <v-flex md10>
@@ -26,24 +45,7 @@
             prepend-icon="folder"
             :rules="inputRules" />
         </v-flex>
-        <v-flex md10>
-          <v-text-field
-                  v-model="lessonTitle"
-                  label="Titre de Leçon"
-                  prepend-icon="folder"
-                  :rules="inputRules" />
-        </v-flex>
-        <v-flex md10>
-          <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">libellé Cours</p>
-          <select
-                  v-model="selectedCourse"
-                  class="select_style">
-            <option value="" >Select Course</option>
-            <option v-for="option in courses" :value="option.idCourse">
-              {{ option.nameCourse }}
-            </option>
-          </select>
-        </v-flex>
+
         <v-layout>
         <v-flex>
           <button

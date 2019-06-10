@@ -50,7 +50,6 @@
             </column>
             <column name="NAME_CATEGORY" type="VARCHAR(250)"/>
             <column name="USERNAME_CATEGORY" type="NVARCHAR(20)"/>
-
         </createTable>
         <addColumn tableName="ELEARNING_COURSE">
             <column name="CATEGORY_ID" type="BIGINT">
@@ -142,11 +141,11 @@
             <column name="EXAMDAT_REGISTRATION" type="DATE"/>
             <column name="NOTE_EXAM" type="INT"/>
             <column name="USERNAME_EXAM_REGISTRATION" type="NVARCHAR(20)"/>
-
         </createTable>
         <addColumn tableName="ELEARNING_EXAM_REGISTRATION">
             <column name="WORKER_ID" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_WORKER_ATTACHMENTS"
+                             references="ELEARNING_WORKER(ID_WORKER)"/>
                              references="ELEARNING_WORKER(ID_WORKER)" deleteCascade="true"/>
             </column>
         </addColumn>

@@ -59,7 +59,7 @@
                 <v-btn flat icon color="#578dc9">
                 <i
                         class="fas fa-backward fa-3x"
-                        style="color:#1867c0;"
+                        style="color:#578dc9;"
                         @click.prevent="e1 = 1"></i>
                 </v-btn>
               </v-flex>

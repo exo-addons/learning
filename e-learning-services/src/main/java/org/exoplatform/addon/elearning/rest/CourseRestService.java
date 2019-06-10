@@ -1,22 +1,28 @@
 package org.exoplatform.addon.elearning.rest;
 
+import java.util.List;
+
+
+import javax.inject.Inject;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.HEAD;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.exoplatform.addon.elearning.entities.CourseEntity;
-import org.exoplatform.addon.elearning.service.dto.CourseDTO;
 import org.exoplatform.addon.elearning.service.configuration.CourseService;
-import org.exoplatform.commons.file.model.FileInfo;
-import org.exoplatform.commons.file.services.FileStorageException;
+import org.exoplatform.addon.elearning.service.dto.CourseDTO;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.manager.IdentityManager;
-
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-
-import java.util.List;
 
   @Path("cours")
   @Produces(MediaType.APPLICATION_JSON)

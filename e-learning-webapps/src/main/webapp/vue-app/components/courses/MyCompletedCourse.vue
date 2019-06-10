@@ -6,6 +6,9 @@
           <app-edit-cours-tab />
         </v-flex>
       </v-layout>
+      <div v-if="alt" class="alert alert-info">
+        <i class="uiIconInfo"></i>Aucun Cours Archivé
+      </div>
       <v-layout>
         <v-flex md12>
           <v-expansion-panel>
@@ -19,7 +22,7 @@
                       <div class="font-weight-bold">Date Fin:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ c.dateEnd }}</div>
                     </v-flex>
                     <v-flex>
-                      <div class="btn-complet-edit">
+                      <div class="btn-complet-edit-mcompleted">
                       <v-btn
                         fab
                         dark
@@ -48,6 +51,7 @@ export default {
   components:{AppEditCoursTab},
   data() {
     return {
+        alt:false,
       courses:[],
     }
   },
@@ -67,6 +71,9 @@ export default {
             {
                 axios.get('/portal/rest/cours/allPublishedByUser/COMPLETED').then((response) => {
                     this.courses = response.data;
+                    if(this.courses.length===0){
+                        this.alt=true;
+                    }
                 }).catch(error => {
                     this.errored = true
                 })
@@ -86,7 +93,7 @@ export default {
 }
 </script>
 <style>
-  .btn-complet-edit{
+  .btn-complet-edit-mcompleted{
     margin-left: 59%;
   }
 </style>

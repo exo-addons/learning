@@ -44,7 +44,6 @@ public class CategoryEntity {
   public void setNameCategory(String nameCategory) {
     this.nameCategory = nameCategory;
   }
-
   public String getUserName() {
     return userName;
   }
