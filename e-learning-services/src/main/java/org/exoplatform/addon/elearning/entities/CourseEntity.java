@@ -44,8 +44,8 @@ import java.util.Date;
 public class CourseEntity {
 
   public enum Status{
-    DRAFET,
-    COMPLETED,
+    DRAFT,
+    ARCHIVED,
     PUBLISHED,
   }
 

@@ -46,11 +46,5 @@ public class CourseDao extends GenericDAOJPAImpl<CourseEntity,Long> {
     return query.getResultList();
   }
 
-  public int deleteCourseById(Long courseId) throws PersistenceException {
-    return getEntityManager().createNamedQuery("ELearningCourse.deleteCourseById")
-                             .setParameter("courseId", courseId)
-                             .executeUpdate();
-
-  }
   }
 

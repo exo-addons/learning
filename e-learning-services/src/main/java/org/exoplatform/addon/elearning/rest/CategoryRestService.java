@@ -40,10 +40,10 @@ public class CategoryRestService implements ResourceContainer {
 
     } catch (Exception e) {
 
-      LOG.error("Error listing all GamificationInformationsPortlet ", e);
+      LOG.error("Error listing all categories ", e);
 
       return Response.serverError()
-                     .entity("Error listing all GamificationInformationsPortlet")
+                     .entity("Error listing all categories")
                      .build();
     }
 

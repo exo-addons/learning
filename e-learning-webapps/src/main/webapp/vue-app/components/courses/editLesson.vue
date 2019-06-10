@@ -4,8 +4,6 @@
             <v-card
                     class="mb-5"
                     height="650px">
-                <notification v-bind:notifications="notifications" >
-                </notification>
                 <app-edit-cours-tab />
 
                 <v-form ref="form" class="px-3">
@@ -61,10 +59,9 @@
 <script>
     import axios from 'axios'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
-    import Notification from '../commun/notifications.vue';
     export default {
         components: {
-            Notification, AppEditCoursTab
+            AppEditCoursTab
         },
         data: function () {
             return {

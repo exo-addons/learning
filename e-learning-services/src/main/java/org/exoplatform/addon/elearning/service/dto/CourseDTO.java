@@ -51,7 +51,8 @@ public class CourseDTO implements Serializable {
   public void setNameCourse(String nameCourse) {
     NameCourse = nameCourse;
   }
-  
+
+
   public String getDateStart() {
     return dateStart;
   }
@@ -108,4 +109,5 @@ public class CourseDTO implements Serializable {
   public void setUserName(String userName) {
     this.userName = userName;
   }
+
 }

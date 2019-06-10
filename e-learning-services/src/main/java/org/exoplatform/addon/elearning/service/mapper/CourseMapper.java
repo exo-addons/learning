@@ -1,16 +1,15 @@
 package org.exoplatform.addon.elearning.service.mapper;
+import org.exoplatform.addon.elearning.entities.CategoryEntity;
+import org.exoplatform.addon.elearning.entities.CourseEntity;
+import org.exoplatform.addon.elearning.service.dto.CategoryDTO;
+import org.exoplatform.addon.elearning.service.dto.CourseDTO;
+import org.exoplatform.services.security.ConversationState;
+import org.exoplatform.social.core.manager.IdentityManager;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-
-import org.exoplatform.addon.elearning.entities.CategoryEntity;
-import org.exoplatform.addon.elearning.entities.CourseEntity;
-import org.exoplatform.addon.elearning.service.dto.CourseDTO;
-import org.exoplatform.services.security.ConversationState;
-import org.exoplatform.social.core.manager.IdentityManager;
 
 public class CourseMapper {
   protected      IdentityManager  identityManager = null;

@@ -27,7 +27,6 @@
 
           <v-stepper-content step="1">
             <!-- create course-->
-            <notification :notifications="notifications" />
               <v-layout>
                   <v-flex>
               <app-create-course :course="courseInForm"
@@ -75,7 +74,6 @@
     import AppCreateCourse from './AppCreateCourse.vue'
     import AppCreateLesson from './AppCreateLesson.vue'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
-    import Notification from '../commun/notifications.vue';
 
 
 
@@ -101,7 +99,7 @@
         }
     }
     export default {
-        components:{AppEditCoursTab,AppCreateCourse,AppCreateLesson,'notification' : Notification},
+        components:{AppEditCoursTab,AppCreateCourse,AppCreateLesson},
         data: initialData,
         methods: {
             quitter:function() {

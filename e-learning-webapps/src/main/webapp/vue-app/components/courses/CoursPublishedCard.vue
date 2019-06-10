@@ -7,7 +7,7 @@
         </v-flex>
       </v-layout>
         <div v-if="alt" class="alert alert-info">
-            <i class="uiIconInfo"></i>Aucun Cours Crée
+            <i class="uiIconInfo"></i>Aucun Cours Disponible
         </div>
       <v-layout>
         <v-flex md12 lg12>

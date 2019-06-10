@@ -36,6 +36,17 @@ public class LessonService {
     return null;
 
   }
+  public LessonDTO getLesson(Long id) {
+    try {
+      LessonEntity lesson = lessonDao.find(id);
+      if (lesson != null) {
+        return lessonMapper.lessonToLessonDTO(lesson);
+      }
+    } catch (Exception e) {
+      LOG.error("Error to find Lesson by id", e.getMessage());
+    }
+    return null;
+  }
   @ExoTransactional
   public LessonDTO addLesson (LessonDTO lessonDTO) {
 

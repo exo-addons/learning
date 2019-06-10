@@ -120,13 +120,16 @@ public class CourseService {
     return null;
   }
   @ExoTransactional
-  public void deleteCourseById (Long courseId) {
-    CourseEntity c=courseDao.find(courseId);
+  public void deleteCourseById (Long id) {
+    CourseEntity course=courseDao.find(id);
+    if(course!=null) {
+      try {
 
-    try {
-      courseDao.deleteCourseById(courseId);
-    } catch (Exception e) {
-      LOG.error("Error to delete course with title {}",c.getNameCourse(), e);
+        courseDao.delete(course);
+
+      } catch (Exception e) {
+        LOG.error("Error to delete Course with id {}", id, e);
+      }
     }
   }
 
@@ -146,4 +149,4 @@ public class CourseService {
     }
     return null;
   }
-}
+  }
