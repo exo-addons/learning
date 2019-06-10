@@ -16,9 +16,9 @@ import java.util.Date;
         query = "SELECT course FROM ELearningCourse course where course.NameCourse LIKE :courseName"
     ),
     @NamedQuery(
-        //the list of the user completed courses
-        name = "ELearningCourse.getCompletedCourseByUser",
-        query = "SELECT course FROM ELearningCourse course where course.status = :COMPLETED and course.userName=:user"
+        //the list of the user archived courses
+        name = "ELearningCourse.getArchivedCourseByUser",
+        query = "SELECT course FROM ELearningCourse course where course.status = :ARCHIVED and course.userName=:user"
     ),
     @NamedQuery(
         //the list of the user published courses but he can improve his content
@@ -26,9 +26,9 @@ import java.util.Date;
         query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName=:user"
     ),
     @NamedQuery(
-        //the list of the user where created courses in progress
-        name = "ELearningCourse.getDrafetCourseByUser",
-        query = "SELECT course FROM ELearningCourse course where course.status = :DRAFET and course.userName=:user"
+        //the list of the user where drafted courses in progress
+        name = "ELearningCourse.getDraftCourseByUser",
+        query = "SELECT course FROM ELearningCourse course where course.status = :DRAFT and course.userName=:user"
     ),
     @NamedQuery(
         //list of published courses of the others users(not the user connected in the current session)

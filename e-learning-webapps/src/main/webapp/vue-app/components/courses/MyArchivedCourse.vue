@@ -69,7 +69,7 @@ export default {
   methods:{
        getAllCourses: function()
             {
-                axios.get('/portal/rest/cours/allPublishedByUser/COMPLETED').then((response) => {
+                axios.get('/portal/rest/cours/allPublishedByUser/ARCHIVED').then((response) => {
                     this.courses = response.data;
                     if(this.courses.length===0){
                         this.alt=true;

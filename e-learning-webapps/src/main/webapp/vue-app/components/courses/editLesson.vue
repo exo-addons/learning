@@ -67,6 +67,7 @@
             return {
                 idc: this.$route.query.id,
                 alt: false,
+
                 lessonsupdate:
                     {
                         idLesson:null,

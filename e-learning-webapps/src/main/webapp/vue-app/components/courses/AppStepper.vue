@@ -84,7 +84,7 @@
                 idCategory:null,
                 nameCourse:'',
                 visibilityCourse:false,
-                status:'COMPLETED',
+                status:'ARCHIVED',
                 dateStart:null,
                 dateEnd:null,
                 rewardCourse:'',

@@ -75,7 +75,7 @@
       </v-layout>
     </v-container>
   </div>
-</template>
+</template>MyCoursDrafetCard
 
 <script>
     import axios from 'axios'
@@ -99,7 +99,7 @@
             }
         },
         mounted(){
-            axios.get(`/portal/rest/cours/allDrafetByUser/DRAFET`)
+            axios.get(`/portal/rest/cours/allDraftByUser/DRAFT`)
                 .then(response => {
                     this.courses = response.data
                     if(this.courses.length===0){

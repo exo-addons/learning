@@ -47,13 +47,13 @@
                         </v-flex>
                         <v-radio-group v-model="courseStatus" row>
                             <v-radio
-                                    label="Drafet"
+                                    label="Draft"
                                     color="blue"
-                                    value="DRAFET" />
+                                    value="DRAFT" />
                             <v-radio
-                                    label="Completed"
+                                    label="Archived"
                                     color="blue"
-                                    value="COMPLETED" />
+                                    value="ARCHIVED" />
                             <v-radio
                                     label="Published"
                                     color="blue"
@@ -82,7 +82,7 @@
         props:['course'],
         data: function () {
             return {
-                courseStatus: 'DRAFET',
+                courseStatus: 'DRAFT',
                 dialog:false,
                 currentcourse:{
                     idCourse:null,

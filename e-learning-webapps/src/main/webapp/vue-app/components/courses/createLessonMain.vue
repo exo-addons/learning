@@ -133,25 +133,26 @@
             quitter: function () {
                 this.$router.push('/gestionLesson')
             },
-            addLesson: function () {
-                if (this.lessonContent === '' || this.lessonGeneral === '' || this.lessonTitle) {
-                    this.alt = true;
+            addLesson: function() {
+                this.lesson.idCourse = this.selectedCourse;
+                this.lesson.contentLesson = this.lessonContent;
+                this.lesson.descriptionLesson = this.lessonGeneral;
+                this.lesson.titleLesson = this.lessonTitle;
+                if(this.lessonContent===''||this.lessonGeneral===''||this.lessonTitle===''){
+                    this.alt=false;
                 }
                 if (this.alt === false) {
-                    this.lesson.idCourse = this.selectedCourse;
-                    this.lesson.contentLesson = this.lessonContent;
-                    this.lesson.descriptionLesson = this.lessonGeneral;
-                    this.lesson.titleLesson = this.lessonTitle;
+
                     axios.post('/portal/rest/lesson/add', this.lesson, {
                         headers: {
                             'Content-Type': 'application/json'
                         }
                     }).then(() => {
-                            this.lessonContent = '';
-                            this.lessonGeneral = '';
-                            this.lessonTitle = '';
+                        this.lessonContent = '';
+                        this.lessonGeneral = '';
+                        this.lessonTitle = '';
 
-                        });
+                    });
                 }
             }
         }
