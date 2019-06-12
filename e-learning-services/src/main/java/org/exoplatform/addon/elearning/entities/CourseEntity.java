@@ -35,10 +35,6 @@ import java.util.Date;
         name = "ELearningCourse.getOtherPublishedCourse",
         query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName <>:user"
     ),
-    @NamedQuery(
-        name = "ELearningCourse.deleteCourseById",
-        query = "DELETE FROM ELearningCourse course WHERE course.idCourse = :courseId "
-    )
 })
 
 public class CourseEntity {
