@@ -44,7 +44,6 @@ public class ExerciseEntity {
   private String userName;
 
 
-
   public ExerciseEntity() {
   }
 

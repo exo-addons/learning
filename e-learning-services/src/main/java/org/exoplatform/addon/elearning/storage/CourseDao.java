@@ -46,5 +46,6 @@ public class CourseDao extends GenericDAOJPAImpl<CourseEntity,Long> {
     return query.getResultList();
   }
 
+
   }
 

@@ -9,8 +9,6 @@
 
     import AppNavMain from './components/commun/AppNavMain.vue'
 
-
-
     export default {
         components:{AppNavMain},
     }
