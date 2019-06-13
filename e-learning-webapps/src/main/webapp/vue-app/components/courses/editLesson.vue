@@ -66,8 +66,6 @@
         data: function () {
             return {
                 idc: this.$route.query.id,
-                alt: false,
-
                 lessonsupdate:
                     {
                         idLesson:null,
@@ -90,9 +88,6 @@
                 .then(response => {
                     this.lessons.push(response.data);
                     console.log(this.lessons)
-                    if (this.lessons.length !== 0) {
-                        this.alt = true;
-                    }
                 })
         },
         methods: {

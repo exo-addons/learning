@@ -75,7 +75,7 @@
       </v-layout>
     </v-container>
   </div>
-</template>MyCoursDrafetCard
+</template>
 
 <script>
     import axios from 'axios'
@@ -84,7 +84,6 @@
 
 
     export default {
-        name: 'App',
         components: {AppEditCoursTab,Editcourse},
         data() {
             return {

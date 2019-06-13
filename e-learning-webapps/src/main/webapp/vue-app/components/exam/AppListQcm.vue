@@ -6,6 +6,9 @@
                     <app-edit-cours-tab />
                 </v-flex>
             </v-layout>
+            <div v-if="alt" class="alert alert-info">
+                <i class="uiIconInfo"></i>Veuillez créer des exercises dans cet examen
+            </div>
             <v-layout>
                 <v-flex md12>
                     <v-expansion-panel>
@@ -102,14 +105,19 @@
         components: {AppEditCoursTab,AppEditQcm},
         data() {
             return {
+                alt:false,
                 idC:this.$route.query.idc,
                 idE:this.$route.query.ide,
                 exercises: []
             }
         },
         mounted() {
-                axios.get(`/portal/rest/exercise/getExercisesByCourseExamId/` + this.idC+`/`+this.idE).then((response) => {
+                axios.get(`/portal/rest/exercise/getExercisesByCourseExamId/` + this.idC+`/`+this.idE)
+                    .then((response) => {
                     this.exercises = response.data;
+                        if(this.exercises.length===0){
+                            this.alt=true;
+                        }
                 }).catch(error => {
                 })
         },

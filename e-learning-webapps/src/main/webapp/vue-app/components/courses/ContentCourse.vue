@@ -35,7 +35,7 @@
                                 </td>
                                 <td>
                                 <center>
-                                <video width="450" controls :src="d.contentLesson"></video>
+                                <video width="450" controls :src="video"></video>
                                 </center>
                                 </td>
                             </tr>
@@ -59,7 +59,7 @@
         components:{AppEditCoursTab},
         data(){
             return{
-                video: "https://www.w3schools.com/tags/movie.mp4",
+                video: "https://www.dev2qa.com/wp-content/uploads/2018/11/spring-boot-web-mvc-with-h2-database-example-demo.mp4",
                 alt:false,
                 lessons:[]
             }
