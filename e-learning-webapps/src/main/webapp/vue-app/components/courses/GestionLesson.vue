@@ -28,10 +28,10 @@
                                 <table class="uiGrid table table-hover table-striped" v-if="alt">
                                     <thead>
                                     <tr>
-                                        <th >Lesson Title</th>
+                                        <th >Titre de Leçon</th>
 
 
-                                        <th >Lesson Description</th>
+                                        <th >Description de Leçon</th>
 
 
                                         <th >Actions</th>

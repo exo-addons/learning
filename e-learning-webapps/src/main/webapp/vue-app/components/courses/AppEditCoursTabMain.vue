@@ -37,7 +37,7 @@
         <router-link to="/gestionLesson">
           <div class="link-text">
             <i class="fas fa-cog" slot="activator"></i>
-            Configuration Lesson</div>
+            Configuration Leçon</div>
         </router-link>
       </li>
     </ul>

@@ -59,14 +59,15 @@
         components:{AppEditCoursTab},
         data(){
             return{
+                link:this.$route.query.id,
                 video: "https://www.dev2qa.com/wp-content/uploads/2018/11/spring-boot-web-mvc-with-h2-database-example-demo.mp4",
                 alt:false,
                 lessons:[]
             }
         },
         mounted(){
-            axios
-                .get('/portal/rest/lesson/all')
+            console.log("effrfrfrff",this.link)
+            axios.get('/portal/rest/lesson/getLessonsByIdCourse/'+this.link)
                 .then(response => { this.lessons=response.data;
                     if(this.lessons.length===0){
                         this.alt=true;

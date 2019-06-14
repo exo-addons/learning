@@ -100,6 +100,7 @@
         components: {AppEditCoursTab},
         data() {
             return {
+                li:null,
                 alt:false,
                 count:null,
                 counterWorker:0,
@@ -162,7 +163,7 @@
                     })
             },
             passCourse(el) {
-                console.log("course id", el.idCourse)
+                this.li=el.idCourse;
                         axios.post(`/portal/rest/worker/addNewUser`, this.datajson)
                             .then(response => {
                                 this.datajsonfor.idCourse = el.idCourse;
@@ -170,18 +171,19 @@
                                 axios.get(`/portal/rest/cregistration/countNumberWorker/` + this.datajsonfor.idWorker)
                                     .then(response => {
                                         this.count = response.data
-                                        if (this.count.counter_worker<1) {
+                                   //     if (this.count.counter_worker<1) {
                                             axios.get(`/portal/rest/cregistration/countNumberWorker/` + this.datajsonfor.idWorker)
                                                 .then(response => {
                                                     this.counterWorker = this.data
                                                     axios.post(`/portal/rest/cregistration/add`, this.datajsonfor)
                                                         .then(
-                                                    this.$router.push('/contentCourse'))
+                                                    this.$router.push('/contentCourse?id='+ this.li))
+                                                    console.log(el.idCourse)
                                                 })
-                                        }else{
+                                      /*  }else{
                                             this.$router.push('/contentCourse')
 
-                                        }
+                                        } */
                                     })
                     });
             },
