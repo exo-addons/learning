@@ -18,15 +18,20 @@
                                         {{ option.nameCourse }}
                                     </option>
                                 </select>
-                                    <button class="btn btn-primary" type="button" @click.prevent="selectSearchLesson">Afficher</button>
+                                <v-btn color="#578dc9"  @click.prevent="selectSearchLesson">
+                                    <i class="fas fa-search fa-2x" style="color: #ffffff"></i>
+                                </v-btn>
+                                <v-btn color="#BDBDBD"  @click.prevent="addLesson">
+                                    <i class="fas fa-plus fa-2x" style="color: #ffffff"></i>
+                                </v-btn>
                                 <div class="tabEdit">
                                 <table class="uiGrid table table-hover table-striped" v-if="alt">
                                     <thead>
                                     <tr>
-                                        <th >Lesson Title</th>
+                                        <th >Titre de Leçon</th>
 
 
-                                        <th >Lesson Description</th>
+                                        <th >Description de Leçon</th>
 
 
                                         <th >Actions</th>
@@ -37,7 +42,7 @@
                                         <td>{{c.titleLesson}}</td>
                                         <td>{{c.descriptionLesson}}</td>
                                         <td class="center actionContainer">
-                                            <a data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Edit" @click="editLesson">
+                                            <a data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Edit" @click="editLesson(c.idLesson)">
                                                 <i class="uiIconViewUserInfo uiIconLightGray"></i>
                                             </a>
 
@@ -95,9 +100,12 @@
                     })
 
             },
-            editLesson(){
+            addLesson(){
+                this.$router.push('/createLesson');
 
-                this.$router.push('/editLesson?id='+this.selectedCourse);
+            },
+            editLesson(event){
+                this.$router.push('/editLesson?id='+event);
             },
             deleteLesson(event){
                 {

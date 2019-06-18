@@ -12,6 +12,9 @@
             <v-flex md12 lg12>
             </v-flex>
           </v-layout>
+          <div v-if="alt" class="alert alert-info">
+            <i class="uiIconInfo"></i>Aucun Cours Publié
+          </div>
             <v-row>
             <v-flex
                     v-for="(c,index) in courses"
@@ -26,7 +29,7 @@
                     <v-img
                             height="100px"
                             width="100px"
-                            :src="course[0]"
+                            :src="cr[0]"
                             aspect-ratio="1"
                             md4
                             lg4
@@ -34,20 +37,20 @@
                   </center>
                   <table align="center">
                     <tr>
-                      <td><div class="title-content-mpublished">Nom de cours:</div></td>
-                      <td><div class="text-content-mpublished">{{ c.nameCourse }}</div></td>
+                      <td class="title-content-mpublished">Nom de cours:</td>
+                      <td class="text-content-mpublished">{{ c.nameCourse }}</td>
                     </tr>
                     <tr>
-                      <td><div class="title-content-mpublished">Auteur:</div></td>
-                      <td> <div class="text-content-mpublished">{{ c.userName }}</div></td>
+                      <td class="title-content-mpublished">Auteur:</td>
+                      <td class="text-content-mpublished">{{ c.userName }}</td>
                     </tr>
                     <tr>
-                      <td><div class="title-content-mpublished">Début:</div></td>
-                      <td> <div class="text-content-mpublished">{{ c.dateStart }}</div></td>
+                      <td class="title-content-mpublished">Début:</td>
+                      <td class="text-content-mpublished">{{ c.dateStart }}</td>
                     </tr>
                     <tr>
-                      <td><div class="title-content-mpublished">Fin:</div></td>
-                      <td> <div class="text-content-mpublished">{{ c.dateEnd }}</div></td>
+                      <td class="title-content-mpublished">Fin:</td>
+                      <td class="text-content-mpublished">{{ c.dateEnd }}</td>
                     </tr>
                   </table>
                 </v-card-text>
@@ -83,19 +86,18 @@
 
 
 
+
     export default {
         name: 'App',
         components: {AppEditCoursTab,Editcourse},
         data() {
             return {
+                alt:false,
                 exercises:[],
                 courses: [],
-                course: [
+                cr: [
                     {
-                        libelle: 'The Net Ninja',
-                        editeurName: 'Web developer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
+                        src: "https://image.freepik.com/free-psd/course-banner_56173-54.jpg"
                     }
                 ]
             }
@@ -103,7 +105,10 @@
         mounted(){
             axios.get(`/portal/rest/cours/allPublishedByUser/PUBLISHED`)
                 .then(response => {
-                    this.courses = response.data
+                    this.courses = response.data;
+                    if(this.courses.length===0){
+                        this.alt=true;
+                    }
                 })
                 .catch(error => {
                 })

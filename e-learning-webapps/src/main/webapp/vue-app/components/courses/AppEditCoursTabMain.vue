@@ -18,7 +18,7 @@
       </li>
       <li class="item">
         <router-link to="/CoursTabform">
-          <div class="link-text">Mes Cours Completés</div>
+          <div class="link-text">Mes Cours Archivés</div>
         </router-link>
       </li>
       <li class="item">
@@ -37,7 +37,7 @@
         <router-link to="/gestionLesson">
           <div class="link-text">
             <i class="fas fa-cog" slot="activator"></i>
-            Configuration Lesson</div>
+            Configuration Leçon</div>
         </router-link>
       </li>
     </ul>

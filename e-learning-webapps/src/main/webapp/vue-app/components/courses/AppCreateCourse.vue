@@ -1,19 +1,13 @@
 <template>
     <v-card
       class="mb-5"
-      height="750px">
+      height="600px">
       <v-card-text>
         <v-form ref="form" class="px-3">
             <div>
                 <div v-if="alt" class="alert alert-error" style="    margin-left: 11%;
     width: 74%;">
                     <i class="uiIconClose" @click="DontShow"></i>Remplire tout les champs
-                </div>
-                <div
-                        v-if="alt"
-                        class="UIPopupWindow uiPopup UIDragObject NormalStyle"
-                        style="width: 785px; position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;"
-                >
                 </div>
             </div>
           <v-container>
@@ -35,19 +29,20 @@
                 <select
                   v-model="selectedCategory"
                   class="select_style">
-                  <option value>select category</option>
+                  <option value disabled>select category</option>
                   <option v-for="option in category"  :value="option.idCategory">
                     {{ option.nameCategory }}
                   </option>
                 </select>
               </v-flex>
             </v-layout>
+              <!-- pop up -->
               <v-dialog v-model="dialogs" width="600px">
                   <v-btn
                           slot="activator"
                           fab
                           dark
-                          color="blue darken-3"
+                          color="#578dc9"
                           small>
                       <v-icon dark>add</v-icon>
                   </v-btn>
@@ -57,45 +52,39 @@
                       </v-card-title>
                       <v-card-text>
                           <v-form ref="form" class="px-3">
-                              <div>
                                   <v-text-field
                                           v-model="nameCategory"
                                           label="libellé Categorie"
                                           prepend-icon="folder"
                                           :rules="inputRules" />
                                   <v-spacer />
-                                  <v-btn
-                                          small
-                                          dark
-                                          color="blue darken-3"
-                                          class="mx-0 mt-3"
+                                  <button
+                                          type="button"
+                                          class="btn btn-primary"
                                   @click="saveCategory">
                                       Ajouter
-                                  </v-btn>
-                                  <v-btn
-                                          outline
-                                          small
-                                          color="blue darken-3"
-                                          class="mx-0 mt-3"
+                                  </button>
+                                  <button
+                                          class="btn"
                                   @click="cancel">
                                       Quitter
-                                  </v-btn>
-                              </div>
+                                  </button>
                           </v-form>
                       </v-card-text>
                   </v-card>
               </v-dialog>
+             <!-- end popup -->
 
             <v-layout>
               <v-radio-group v-model="courseStatus" row>
                 <v-radio
-                  label="DRAFET"
+                  label="Draft"
                   color="blue"
-                  value="DRAFET" />
+                  value="DRAFT" />
                 <v-radio
-                  label="Completed"
+                  label="Archived"
                   color="blue"
-                  value="COMPLETED" />
+                  value="ARCHIVED" />
                 <v-radio
                   label="Published"
                   color="blue"
@@ -219,7 +208,7 @@
                 nameCategory: '',
                 e1: 0,
                 nameCourse: '',
-                courseStatus: 'DRAFET',
+                courseStatus: 'DRAFT',
                 rewardCourse: '',
                 dateStart: '',
                 dateEnd: '',
@@ -255,9 +244,6 @@
         methods: {
             DontShow() {
                 this.alt = false;
-            },
-            ShowDialogs() {
-                this.dialogs = true;
             },
             quitter: function () {
                 this.$router.push('/createCours')
@@ -305,4 +291,10 @@
         }
     }
 </script>
+<style>
+    .v-dialog__activator {
+        margin-left: 417%;
+        margin-top: -130%;
+    }
+</style>
 

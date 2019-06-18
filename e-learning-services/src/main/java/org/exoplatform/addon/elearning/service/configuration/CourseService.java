@@ -67,29 +67,29 @@ public class CourseService {
 
   }
 
-  public List<CourseDTO> getCompletedCourseByUser(CourseEntity.Status COMPLETED, String user){
+  public List<CourseDTO> getArchivedCourseByUser(CourseEntity.Status ARCHIVED, String user){
     try {
-      List<CourseEntity> course = courseDao.getCompletedCourseByUser(COMPLETED,user);
+      List<CourseEntity> course = courseDao.getArchivedCourseByUser(ARCHIVED,user);
       if (course != null) {
         return courseMapper.coursesToCourseDTOs(course);
       }
 
     } catch (Exception e) {
-      LOG.error("Error to find completed course", e.getMessage());
+      LOG.error("Error to find archived course", e.getMessage());
     }
     return null;
 
   }
 
-  public List<CourseDTO> getDrafetCourseByUser(CourseEntity.Status DRAFET, String user){
+  public List<CourseDTO> getDraftCourseByUser(CourseEntity.Status DRAFT, String user){
     try {
-      List<CourseEntity> course = courseDao.getDrafetCourseByUser(DRAFET,user);
+      List<CourseEntity> course = courseDao.getDraftCourseByUser(DRAFT,user);
       if (course != null) {
         return courseMapper.coursesToCourseDTOs(course);
       }
 
     } catch (Exception e) {
-      LOG.error("Error to find completed course", e.getMessage());
+      LOG.error("Error to find drafted course", e.getMessage());
     }
     return null;
 
@@ -120,13 +120,16 @@ public class CourseService {
     return null;
   }
   @ExoTransactional
-  public void deleteCourseById (Long courseId) {
-    CourseEntity c=courseDao.find(courseId);
+  public void deleteCourseById (Long id) {
+    CourseEntity course=courseDao.find(id);
+    if(course!=null) {
+      try {
 
-    try {
-      courseDao.deleteCourseById(courseId);
-    } catch (Exception e) {
-      LOG.error("Error to delete course with title {}",c.getNameCourse(), e);
+        courseDao.delete(course);
+
+      } catch (Exception e) {
+        LOG.error("Error to delete Course with id {}", id, e);
+      }
     }
   }
 

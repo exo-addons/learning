@@ -6,6 +6,9 @@
           <app-edit-cours-tab />
         </v-flex>
       </v-layout>
+        <div v-if="alt" class="alert alert-info">
+            <i class="uiIconInfo"></i>Aucun Cours Disponible
+        </div>
       <v-layout>
         <v-flex md12 lg12>
           <v-layout>
@@ -97,6 +100,8 @@
         components: {AppEditCoursTab},
         data() {
             return {
+                li:null,
+                alt:false,
                 count:null,
                 counterWorker:0,
                 allworkers:[],
@@ -128,34 +133,7 @@
                 },
                 cr: [
                     {
-                        libelle: 'The Net Ninja',
-                        editeurName: 'Web developer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Ryu',
-                        editeurName: 'Graphic designer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Chun Li',
-                        editeurName: 'Web developer',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Gouken',
-                        editeurName: 'Social media maverick',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
-                    },
-                    {
-                        libelle: 'Yoshi',
-                        editeurName: 'Sales guru',
-                        etat: "disponible",
-                        src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg'
+                        src: "https://image.freepik.com/free-psd/course-banner_56173-54.jpg"
                     }
                 ]
             }
@@ -163,7 +141,10 @@
         mounted(){
             axios.get(`/portal/rest/cours/allOtherPublishedCourse/PUBLISHED`)
                 .then(response => {
-                    this.courses = response.data
+                    this.courses = response.data;
+                    if(this.courses.length===0){
+                        this.alt=true;
+                    }
                 })
                 .catch(error => {
                 })
@@ -182,7 +163,7 @@
                     })
             },
             passCourse(el) {
-                console.log("course id", el.idCourse)
+                this.li=el.idCourse;
                         axios.post(`/portal/rest/worker/addNewUser`, this.datajson)
                             .then(response => {
                                 this.datajsonfor.idCourse = el.idCourse;
@@ -190,18 +171,19 @@
                                 axios.get(`/portal/rest/cregistration/countNumberWorker/` + this.datajsonfor.idWorker)
                                     .then(response => {
                                         this.count = response.data
-                                        if (this.count.counter_worker<1) {
+                                   //     if (this.count.counter_worker<1) {
                                             axios.get(`/portal/rest/cregistration/countNumberWorker/` + this.datajsonfor.idWorker)
                                                 .then(response => {
                                                     this.counterWorker = this.data
                                                     axios.post(`/portal/rest/cregistration/add`, this.datajsonfor)
                                                         .then(
-                                                    this.$router.push('/contentCourse'))
+                                                    this.$router.push('/contentCourse?id='+ this.li))
+                                                    console.log(el.idCourse)
                                                 })
-                                        }else{
+                                      /*  }else{
                                             this.$router.push('/contentCourse')
 
-                                        }
+                                        } */
                                     })
                     });
             },

@@ -45,6 +45,24 @@ public class LessonRestService implements ResourceContainer {
                      .build();
     }
   }
+
+  @GET
+  @Path("/getLessonbyId/{id}")
+  public Response getLesson(@PathParam("id") Long id) {
+    try {
+      LessonDTO lesson = lessonService.getLesson(id);
+      return Response.ok(lesson, MediaType.APPLICATION_JSON).build();
+
+    } catch (Exception e) {
+
+      LOG.error("Error listing the lesson by id ", e);
+
+      return Response.serverError()
+                     .entity("Error listing lesson")
+                     .build();
+    }
+  }
+
   @POST
   @Path("/add")
   public Response addLesson(LessonDTO lessonDTO) {

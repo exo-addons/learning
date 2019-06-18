@@ -80,7 +80,13 @@
             }
         },
         mounted(){
-
+            axios.get(`http://127.0.0.1:8080/portal/rest/lesson/getLessonbyId/`+this.selectedCourse)
+                .then(response=>{
+                    this.lessons=response.data;
+                    if(this.lessons.length!==0){
+                        this.alt=true;
+                    }
+                })
         },
         methods:{
             updateQcm:function(question,option1,option2,option3,scale,answer) {

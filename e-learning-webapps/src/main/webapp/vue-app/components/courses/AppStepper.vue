@@ -27,7 +27,6 @@
 
           <v-stepper-content step="1">
             <!-- create course-->
-            <notification :notifications="notifications" />
               <v-layout>
                   <v-flex>
               <app-create-course :course="courseInForm"
@@ -59,7 +58,7 @@
                 <v-btn flat icon color="#578dc9">
                 <i
                         class="fas fa-backward fa-3x"
-                        style="color:#1867c0;"
+                        style="color:#578dc9;"
                         @click.prevent="e1 = 1"></i>
                 </v-btn>
               </v-flex>
@@ -75,7 +74,6 @@
     import AppCreateCourse from './AppCreateCourse.vue'
     import AppCreateLesson from './AppCreateLesson.vue'
     import AppEditCoursTab from './AppEditCoursTabMain.vue'
-    import Notification from '../commun/notifications.vue';
 
 
 
@@ -86,7 +84,7 @@
                 idCategory:null,
                 nameCourse:'',
                 visibilityCourse:false,
-                status:'COMPLETED',
+                status:'ARCHIVED',
                 dateStart:null,
                 dateEnd:null,
                 rewardCourse:'',
@@ -101,7 +99,7 @@
         }
     }
     export default {
-        components:{AppEditCoursTab,AppCreateCourse,AppCreateLesson,'notification' : Notification},
+        components:{AppEditCoursTab,AppCreateCourse,AppCreateLesson},
         data: initialData,
         methods: {
             quitter:function() {

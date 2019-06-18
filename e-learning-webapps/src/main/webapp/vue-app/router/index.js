@@ -3,10 +3,10 @@ import Router from 'vue-router'
 import AppHome from '../components/courses/CoursPublishedCard.vue'
 import AppStepper from '../components/courses/AppStepper.vue'
 import AppCoursPublished from '../components/courses/CoursPublishedCard.vue'
-import MyDrafetCours from '../components/courses/MyCoursDrafetCard.vue'
+import MyDrafetCours from '../components/courses/MyCoursDraftCard.vue'
 import AppEditCards from '../components/courses/MyPublishedCourse.vue'
 import AppEditCoursTab from '../components/courses/AppEditCoursTabMain.vue'
-import AppCoursTabform from '../components/courses/MyCompletedCourse.vue'
+import AppCoursTabform from '../components/courses/MyArchivedCourse.vue'
 import AppStepperExam from '../components/exam/AppStepperExam.vue'
 import AppListQcm from '../components/exam/AppListQcm.vue'
 import AppEditQcm from '../components/exam/AppEditQcm.vue'
@@ -19,6 +19,7 @@ import ChooseExam from '../components/exam/ChooseExam.vue'
 import EditCourse from '../components/courses/editCourse.vue'
 import EditLesson from '../components/courses/editLesson.vue'
 import GestionLesson from '../components/courses/GestionLesson.vue'
+import CreateLesson from '../components/courses/createLessonMain.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -119,6 +120,11 @@ export default new Router({
           path: '/editLesson',
           name: 'EditLesson',
           component: EditLesson
+      },
+      {
+          path: '/createLesson',
+          name: 'CreateLesson',
+          component: CreateLesson
       }
 
   ]

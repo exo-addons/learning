@@ -2,9 +2,13 @@
   <v-card
     class="mb-5"
     height="650px">
-    <notification v-bind:notifications="notifications" >
-    </notification>
     <v-form ref="form" class="px-3">
+      <div>
+        <div v-if="alt" class="alert alert-error" style="    margin-left: 11%;
+    width: 74%;">
+          <i class="uiIconClose" @click="DontShow"></i>Remplire tout les champs
+        </div>
+      </div>
       <v-container>
         <v-flex md12>
           <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 ">Général</p>
@@ -17,6 +21,25 @@
             :rules="inputRules" />
         </v-flex>
         <v-flex md10>
+          <v-text-field
+                  v-model="lessonTitle"
+                  label="Titre de Leçon"
+                  prepend-icon="folder"
+                  :rules="inputRules" />
+        </v-flex>
+
+        <v-flex md10>
+          <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">libellé Cours</p>
+          <select
+                  v-model="selectedCourse"
+                  class="select_style">
+            <option value disabled>Select Course</option>
+            <option v-for="option in courses" :value="option.idCourse">
+              {{ option.nameCourse }}
+            </option>
+          </select>
+        </v-flex>
+        <v-flex md10>
           <p class=" text-md-left headline font-weight-bold blue-grey--text text--darken-1 pa-2">Contenu du cours</p>
         </v-flex>
         <v-flex md10>
@@ -26,24 +49,7 @@
             prepend-icon="folder"
             :rules="inputRules" />
         </v-flex>
-        <v-flex md10>
-          <v-text-field
-                  v-model="lessonTitle"
-                  label="Titre de Leçon"
-                  prepend-icon="folder"
-                  :rules="inputRules" />
-        </v-flex>
-        <v-flex md10>
-          <p class=" text-sm-left subheading  font-weight-light blue-grey--text text--darken-1">libellé Cours</p>
-          <select
-                  v-model="selectedCourse"
-                  class="select_style">
-            <option value="" >Select Course</option>
-            <option v-for="option in courses" :value="option.idCourse">
-              {{ option.nameCourse }}
-            </option>
-          </select>
-        </v-flex>
+
         <v-layout>
         <v-flex>
           <button
@@ -65,14 +71,11 @@
 <script>
     import axios from 'axios'
     import { bus } from '../../main';
-    import Notification from '../commun/notifications.vue';
     export default {
         props:['contentcourse'],
-        components:{
-            Notification
-        },
       data: function () {
             return {
+                alt:false,
                 lessonTitle:'',
                 lessonName:'',
                 lessonGeneral:'',
@@ -113,40 +116,39 @@
                 })
         },
                 methods: {
+                    DontShow() {
+                        this.alt = false;
+                    },
                     cancel(){
                         this.alerte=false;
                     },
                     quitter: function () {
                         this.$router.push('/')
                     },
-                    addLesson: function()
-                    {
-                        this.lesson.idCourse=this.selectedCourse;
-                        this.lesson.contentLesson=this.lessonContent;
-                        this.lesson.descriptionLesson=this.lessonGeneral;
-                        this.lesson.titleLesson=this.lessonTitle;
-                        axios.post('/portal/rest/lesson/add', this.lesson, {
-                            headers : {
-                                'Content-Type' : 'application/json'
+                    addLesson: function() {
+                            this.lesson.idCourse = this.selectedCourse;
+                            this.lesson.contentLesson = this.lessonContent;
+                            this.lesson.descriptionLesson = this.lessonGeneral;
+                            this.lesson.titleLesson = this.lessonTitle;
+                            if(this.lessonContent===''||this.lessonGeneral===''||this.lessonTitle===''){
+                                this.alt=false;
                             }
-                        }).then((response) => {
-                            this.notifications.push({
-                                type: 'success',
-                                message: 'Lesson created successfully'
-                            });
-                                this.lessonContent='';
-                                this.lessonGeneral='';
-                                this.lessonTitle='';
+                        if (this.alt === false) {
 
-                            },
-                            (response) => {
-                            this.notifications.push({
-                                type: 'error',
-                                message: 'Lesson not created'
+                            axios.post('/portal/rest/lesson/add', this.lesson, {
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(() => {
+                                this.lessonContent = '';
+                                this.lessonGeneral = '';
+                                this.lessonTitle = '';
+
                             });
-                        });
+                        }
+                        }
                     }
-                },
+
 }
 </script>
 
