@@ -20,28 +20,16 @@ public class CourseDao extends GenericDAOJPAImpl<CourseEntity,Long> {
     }
 
   }
-  public List<CourseEntity> getArchivedCourseByUser(CourseEntity.Status ARCHIVED,String user){
-    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getArchivedCourseByUser", CourseEntity.class);
-    query.setParameter("ARCHIVED",ARCHIVED);
-    query.setParameter("user", user);
-    return query.getResultList();
-  }
-  public List<CourseEntity> getDraftCourseByUser(CourseEntity.Status DRAFT,String user){
-    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getDraftCourseByUser", CourseEntity.class);
-    query.setParameter("DRAFT",DRAFT);
-    query.setParameter("user", user);
-    return query.getResultList();
-  }
-  public List<CourseEntity> getPublishedCourseByUser(CourseEntity.Status PUBLISHED,String user){
-    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getPublishedCourseByUser", CourseEntity.class);
-    query.setParameter("PUBLISHED",PUBLISHED);
+  public List<CourseEntity> getCourseByUserAndStatus(String status,String user){
+    TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getCourseByUserAndStatus", CourseEntity.class);
+    query.setParameter("status",status);
     query.setParameter("user", user);
     return query.getResultList();
   }
 
-  public List<CourseEntity> getOtherPublishedCourse(CourseEntity.Status PUBLISHED,String user){
+  public List<CourseEntity> getOtherPublishedCourse(String user){
     TypedQuery<CourseEntity> query = getEntityManager().createNamedQuery("ELearningCourse.getOtherPublishedCourse", CourseEntity.class);
-    query.setParameter("PUBLISHED",PUBLISHED);
+    query.setParameter("status","PUBLISHED");
     query.setParameter("user", user);
     return query.getResultList();
   }

@@ -15,7 +15,7 @@ public class CourseDTO implements Serializable {
   private int      nbPerson;
   private String   rewardCourse;
   private Long idCategory;
-  private CourseEntity.Status status;
+  private String status;
   private String userName;
   public CourseDTO() {
   }
@@ -92,11 +92,11 @@ public class CourseDTO implements Serializable {
     this.idCategory = idCategory;
   }
 
-  public CourseEntity.Status getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(CourseEntity.Status status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

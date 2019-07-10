@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright (C) 2003-2018 eXo Platform SAS. This is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
   License for more details. You should have received a copy of the GNU Lesser General Public License along with this software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org. -->
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <!-- Managing both DB that use sequences and db that use auto increment -->
@@ -14,9 +15,9 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LESSON_ID"/>
             </column>
             <column name="DESCRIPTION_LESSON" type="NVARCHAR(2000)"/>
-            <column name="TITLE_LESSON" type="NVARCHAR(20)"/>
+            <column name="TITLE_LESSON" type="NVARCHAR(150)"/>
             <column name="CONTENT_LESSON" type="NVARCHAR(2000)"/>
-            <column name="USERNAME_LESSON" type="NVARCHAR(20)"/>
+            <column name="USERNAME_LESSON" type="NVARCHAR(30)"/>
         </createTable>
     </changeSet>
 
@@ -25,11 +26,11 @@
             <column name="ID_COURSE" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_COURSE_ID"/>
             </column>
-            <column name="NAME_COURSE" type="NVARCHAR(20)"/>
+            <column name="NAME_COURSE" type="NVARCHAR(150)"/>
             <column name="DATE_START" type="DATE"/>
             <column name="DATE_END" type="DATE"/>
-            <column name="USERNAME_COURSE" type="NVARCHAR(20)"/>
-            <column name="STATUS" type="ENUM( 'DRAFT','ARCHIVED','PUBLISHED')"></column>
+            <column name="USERNAME_COURSE" type="NVARCHAR(30)"/>
+            <column name="STATUS" type="NVARCHAR(20)"/>
             <column name="NB_PERSON" type="INT"/>
             <column name="REWARD_COURSE" type="NVARCHAR(20)"/>
         </createTable>
@@ -38,22 +39,22 @@
     <changeSet author="elearning" id="1.0.0-3">
         <addColumn tableName="ELEARNING_LESSON">
             <column name="COURSE_ID" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="FK_LESSON_COURSE_ATTACHMENTS"
+                <constraints nullable="false" foreignKeyName="FK_LESSON_COURSE"
                              references="ELEARNING_COURSE(ID_COURSE)" deleteCascade="true"/>
             </column>
         </addColumn>
     </changeSet>
     <changeSet author="elearning" id="1.0.0-4">
         <createTable tableName="ELEARNING_CATEGORY">
-            <column name="ID_CATEGORY" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+            <column name="CATEGORY_ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CATEGORY_ID"/>
             </column>
-            <column name="NAME_CATEGORY" type="VARCHAR(250)"/>
+            <column name="CATEGORY_NAME" type="NVARCHAR(150)"/>
         </createTable>
         <addColumn tableName="ELEARNING_COURSE">
             <column name="CATEGORY_ID" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="FK_COURS_CATEGORY_ATTACHMENTS"
-                             references="ELEARNING_CATEGORY(ID_CATEGORY)" deleteCascade="true"/>
+                <constraints nullable="false" foreignKeyName="FK_COURSE_CATEGORY"
+                             references="ELEARNING_CATEGORY(CATEGORY_ID)" deleteCascade="true"/>
             </column>
         </addColumn>
     </changeSet>
@@ -61,12 +62,12 @@
     <changeSet author="elearning" id="1.0.0-5">
         <createTable tableName="ELEARNING_EXERCISE">
             <column name="ID_EXERCISE" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CATEGORY_ID"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EXERCISE_ID"/>
             </column>
             <column name="QUESTION_EXERCISE" type="VARCHAR(2000)"/>
             <column name="ANSWER_EXERCISE" type="VARCHAR(2000)"/>
             <column name="SCALE_EXERCISE" type="BIGINT"/>
-            <column name="USERNAME_EXERCISE" type="NVARCHAR(20)"/>
+            <column name="USERNAME_EXERCISE" type="NVARCHAR(30)"/>
             <column name="CHOOSE1_EXERCISE" type="NVARCHAR(20)"/>
             <column name="CHOOSE2_EXERCISE" type="NVARCHAR(20)"/>
             <column name="CHOOSE3_EXERCISE" type="NVARCHAR(20)"/>
@@ -88,7 +89,7 @@
             <column name="DATE_END_EXAM" type="DATE"/>
             <column name="NB_BID_EXAM" type="BIGINT"/>
             <column name="REWARD_EXAM" type="VARCHAR(250)"/>
-            <column name="USERNAME_EXAM" type="NVARCHAR(20)"/>
+            <column name="USERNAME_EXAM" type="NVARCHAR(30)"/>
         </createTable>
         <addColumn tableName="ELEARNING_EXAM">
             <column name="COURSE_ID" type="BIGINT">
@@ -145,7 +146,7 @@
             <column name="WORKER_ID" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="FK_EXAM_REGISTRATION_WORKER_ATTACHMENTS"
                              references="ELEARNING_WORKER(ID_WORKER)"/>
-                             references="ELEARNING_WORKER(ID_WORKER)" deleteCascade="true"/>
+                references="ELEARNING_WORKER(ID_WORKER)" deleteCascade="true"/>
             </column>
         </addColumn>
         <addColumn tableName="ELEARNING_EXAM_REGISTRATION">
@@ -156,14 +157,14 @@
         </addColumn>
     </changeSet>
 
-    <changeSet  author="elearning" id="1.0.0-10">
+    <changeSet author="elearning" id="1.0.0-10">
         <dropForeignKeyConstraint baseTableName="ELEARNING_LESSON"
-                                  constraintName="FK_LESSON_COURSE_ATTACHMENTS"
+                                  constraintName="FK_LESSON_COURSE"
         />
         <addForeignKeyConstraint baseColumnNames="COURSE_ID"
                                  baseTableName="ELEARNING_LESSON"
 
-                                 constraintName="FK_LESSON_COURSE_ATTACHMENTS"
+                                 constraintName="FK_LESSON_COURSE"
 
                                  onDelete="CASCADE"
 
@@ -174,27 +175,27 @@
                                  referencedTableName="ELEARNING_COURSE"/>
     </changeSet>
 
-    <changeSet  author="elearning" id="1.0.0-11">
-        <dropForeignKeyConstraint   baseTableName="ELEARNING_COURSE"
+    <changeSet author="elearning" id="1.0.0-11">
+        <dropForeignKeyConstraint baseTableName="ELEARNING_COURSE"
 
-                                    constraintName="FK_COURS_CATEGORY_ATTACHMENTS"
+                                  constraintName="FK_COURSE_CATEGORY"
         />
-        <addForeignKeyConstraint baseColumnNames="CATEGORY_ID"
+        <addForeignKeyConstraint baseColumnNames="ID_COURSE"
                                  baseTableName="ELEARNING_COURSE"
 
-                                 constraintName="FK_COURS_CATEGORY_ATTACHMENTS"
+                                 constraintName="FK_COURSE_CATEGORY"
 
                                  onDelete="CASCADE"
 
                                  onUpdate="CASCADE"
 
-                                 referencedColumnNames="ID_CATEGORY"
+                                 referencedColumnNames="CATEGORY_ID"
 
                                  referencedTableName="ELEARNING_CATEGORY"/>
     </changeSet>
 
 
-    <changeSet  author="elearning" id="1.0.0-12">
+    <changeSet author="elearning" id="1.0.0-12">
         <dropForeignKeyConstraint baseTableName="ELEARNING_EXERCISE"
                                   constraintName="FK_EXERCISE_COURSE_ATTACHMENTS"
         />
@@ -213,9 +214,9 @@
     </changeSet>
 
 
-    <changeSet  author="elearning" id="1.0.0-13">
-        <dropForeignKeyConstraint   baseTableName="ELEARNING_EXERCISE"
-                                    constraintName="FK_EXERCISE_EXAM_ATTACHMENTS"
+    <changeSet author="elearning" id="1.0.0-13">
+        <dropForeignKeyConstraint baseTableName="ELEARNING_EXERCISE"
+                                  constraintName="FK_EXERCISE_EXAM_ATTACHMENTS"
         />
         <addForeignKeyConstraint
                 baseColumnNames="EXAM_ID"
@@ -231,9 +232,9 @@
                 referencedTableName="ELEARNING_EXAM"/>
     </changeSet>
 
-    <changeSet  author="elearning" id="1.0.0-14">
-        <dropForeignKeyConstraint       baseTableName="ELEARNING_COURSE_REGISTRATION"
-                                        constraintName="FK_REGISTRATION_COURSE_ATTACHMENTS"
+    <changeSet author="elearning" id="1.0.0-14">
+        <dropForeignKeyConstraint baseTableName="ELEARNING_COURSE_REGISTRATION"
+                                  constraintName="FK_REGISTRATION_COURSE_ATTACHMENTS"
         />
         <addForeignKeyConstraint
                 baseColumnNames="COURSE_ID"
@@ -249,7 +250,7 @@
                 referencedTableName="ELEARNING_COURSE"/>
     </changeSet>
 
-    <changeSet  author="elearning" id="1.0.0-15">
+    <changeSet author="elearning" id="1.0.0-15">
         <dropForeignKeyConstraint baseTableName="ELEARNING_EXAM_REGISTRATION"
                                   constraintName="FK_EXAM_REGISTRATION_WORKER_ATTACHMENTS"
         />
@@ -267,7 +268,7 @@
                 referencedTableName="ELEARNING_WORKER"/>
     </changeSet>
 
-    <changeSet  author="elearning" id="1.0.0-16">
+    <changeSet author="elearning" id="1.0.0-16">
         <dropForeignKeyConstraint baseTableName="ELEARNING_EXAM_REGISTRATION"
                                   constraintName="FK_EXAM_REGISTRATION_EXAM_ATTACHMENTS"
         />
@@ -284,7 +285,7 @@
 
                 referencedTableName="ELEARNING_EXAM"/>
     </changeSet>
-    <changeSet  author="elearning" id="1.0.0-17">
+    <changeSet author="elearning" id="1.0.0-17">
         <dropForeignKeyConstraint baseTableName="ELEARNING_EXAM"
                                   constraintName="FK_COURSE_EXAM_ATTACHMENTS"
         />

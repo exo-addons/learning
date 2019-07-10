@@ -29,7 +29,7 @@ pom.xml.versionsBackup
 *.iws
 *.ipr
 .idea/
-
+*.iml
 #log file
 *.log
 

@@ -17,23 +17,13 @@ import java.util.Date;
     ),
     @NamedQuery(
         //the list of the user archived courses
-        name = "ELearningCourse.getArchivedCourseByUser",
-        query = "SELECT course FROM ELearningCourse course where course.status = :ARCHIVED and course.userName=:user"
-    ),
-    @NamedQuery(
-        //the list of the user published courses but he can improve his content
-        name = "ELearningCourse.getPublishedCourseByUser",
-        query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName=:user"
-    ),
-    @NamedQuery(
-        //the list of the user where drafted courses in progress
-        name = "ELearningCourse.getDraftCourseByUser",
-        query = "SELECT course FROM ELearningCourse course where course.status = :DRAFT and course.userName=:user"
+        name = "ELearningCourse.getCourseByUserAndStatus",
+        query = "SELECT course FROM ELearningCourse course where course.status = :status and course.userName=:user"
     ),
     @NamedQuery(
         //list of published courses of the others users(not the user connected in the current session)
         name = "ELearningCourse.getOtherPublishedCourse",
-        query = "SELECT course FROM ELearningCourse course where course.status = :PUBLISHED and course.userName <>:user"
+        query = "SELECT course FROM ELearningCourse course where course.status = :status and course.userName <>:user"
     ),
 })
 
@@ -64,8 +54,8 @@ public class CourseEntity {
   @ManyToOne
   @JoinColumn(name = "CATEGORY_ID")
   private CategoryEntity           category;
-  @Enumerated(EnumType.STRING)
-  private Status                   status;
+  @Column (name="STATUS")
+  private String                   status;
   @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH} )
   private Collection<CourseRegistrationEntity> coursesRegistrations;
   @OneToMany(mappedBy="course",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
@@ -84,7 +74,7 @@ public class CourseEntity {
                       String rewardCourse,
                       String userName,
                       CategoryEntity category,
-                      Status status, long iconFileId) {
+                      String status, long iconFileId) {
     NameCourse = nameCourse;
     this.dateStart = dateStart;
     this.dateEnd = dateEnd;
@@ -150,11 +140,11 @@ public class CourseEntity {
     this.category = category;
   }
 
-  public Status getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Status status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

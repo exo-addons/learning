@@ -12,9 +12,9 @@ public class CategoryEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "ID_CATEGORY")
+  @Column(name = "CATEGORY_ID")
   private Long         idCategory;
-  @Column(name = "NAME_CATEGORY")
+  @Column(name = "CATEGORY_NAME")
   private String       nameCategory;
   @OneToMany(mappedBy="category",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
   private Collection<CourseEntity> courses;

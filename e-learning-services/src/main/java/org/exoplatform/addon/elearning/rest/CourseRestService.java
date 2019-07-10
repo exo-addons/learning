@@ -79,11 +79,11 @@ import org.exoplatform.social.core.manager.IdentityManager;
     }
 
     @GET
-    @Path("/allOtherPublishedCourse/{PUBLISHED}")
-    public Response getOtherPublishedCourse(@PathParam("PUBLISHED") CourseEntity.Status PUBLISHED) {
+    @Path("/allOtherPublishedCourse")
+    public Response getOtherPublishedCourse() {
       try {
         String user = ConversationState.getCurrent().getIdentity().getUserId();
-        List<CourseDTO> allOtherPublishedCourse = courseService.getOtherPublishedCourse(PUBLISHED, user);
+        List<CourseDTO> allOtherPublishedCourse = courseService.getOtherPublishedCourse(user);
         return Response.ok(allOtherPublishedCourse, MediaType.APPLICATION_JSON).build();
 
       } catch (Exception e) {
@@ -97,11 +97,11 @@ import org.exoplatform.social.core.manager.IdentityManager;
     }
 
     @GET
-    @Path("/allArchivedByUser/{ARCHIVED}")
-    public Response getArchivedCourseByUser(@PathParam("ARCHIVED") CourseEntity.Status ARCHIVED) {
+    @Path("/allArchivedByUser")
+    public Response getArchivedCourseByUser() {
       try {
         String user = ConversationState.getCurrent().getIdentity().getUserId();
-        List<CourseDTO> allCourseCompletedByUser = courseService.getArchivedCourseByUser(ARCHIVED, user);
+        List<CourseDTO> allCourseCompletedByUser = courseService.getCourseByUserAndStatus(CourseEntity.Status.ARCHIVED.name(), user);
         return Response.ok(allCourseCompletedByUser, MediaType.APPLICATION_JSON).build();
 
       } catch (Exception e) {
@@ -115,11 +115,11 @@ import org.exoplatform.social.core.manager.IdentityManager;
     }
 
     @GET
-    @Path("/allPublishedByUser/{PUBLISHED}")
-    public Response getPublishedCourseByUser(@PathParam("PUBLISHED") CourseEntity.Status PUBLISHED) {
+    @Path("/allPublishedByUser")
+    public Response getPublishedCourseByUser() {
       try {
         String user = ConversationState.getCurrent().getIdentity().getUserId();
-        List<CourseDTO> allCoursePublishedByUser = courseService.getPublishedCourseByUser(PUBLISHED, user);
+        List<CourseDTO> allCoursePublishedByUser = courseService.getCourseByUserAndStatus(CourseEntity.Status.PUBLISHED.name(), user);
         return Response.ok(allCoursePublishedByUser, MediaType.APPLICATION_JSON).build();
 
       } catch (Exception e) {
@@ -133,11 +133,11 @@ import org.exoplatform.social.core.manager.IdentityManager;
     }
 
     @GET
-    @Path("/allDraftByUser/{DRAFT}")
-    public Response getDraftCourseByUser(@PathParam("DRAFT") CourseEntity.Status DRAFT) {
+    @Path("/allDraftByUser")
+    public Response getDraftCourseByUser() {
       try {
         String user = ConversationState.getCurrent().getIdentity().getUserId();
-        List<CourseDTO> allCourseDrafetByUser = courseService.getDraftCourseByUser(DRAFT, user);
+        List<CourseDTO> allCourseDrafetByUser = courseService.getCourseByUserAndStatus(CourseEntity.Status.DRAFT.name(), user);
         return Response.ok(allCourseDrafetByUser, MediaType.APPLICATION_JSON).build();
 
       } catch (Exception e) {
