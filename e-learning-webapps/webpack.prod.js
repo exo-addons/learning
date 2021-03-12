@@ -2,33 +2,12 @@ const path = require('path');
 const merge = require('webpack-merge');
 const webpackCommonConfig = require('./webpack.common.js');
 
+// the display name of the war
+const app = 'vuetify-webpack-sample';
+
 const config = merge(webpackCommonConfig, {
-  mode: 'production',
-  module: {
-    rules: [
-      {
-        test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "/exo-elearning/fonts/[name].[ext]",
-            emitFile: false
-          }
-        }
-      }
-    ]
-  },
-  entry: {
-    elearning: './src/main/webapp/vue-app/main.js',
-  },
   output: {
-    path: path.join(__dirname, 'target/exo-elearning/'),
-    filename: 'js/[name].bundle.js'
-  },
-  externals: {
-    vue: 'Vue',
-    vuetify: 'Vuetify',
-    jquery: '$'
+    path: path.resolve(__dirname, `./target/${app}/`)
   }
 });
 

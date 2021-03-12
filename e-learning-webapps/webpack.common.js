@@ -1,8 +1,17 @@
 const path = require('path');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
-const config = {
+let config = {
   context: path.resolve(__dirname, '.'),
+  // set the entry point of the application
+  // can use multiple entry
+  entry: {
+    elearning: './src/main/webapp/vue-app/main.js'
+  },
+  output: {
+    filename: 'js/[name].bundle.js',
+    libraryTarget: 'amd'
+  },
   module: {
     rules: [
       {
@@ -17,15 +26,13 @@ const config = {
             {
               loader: 'css-loader',
               options: {
-                sourceMap: true,
-                minimize: true
+                sourceMap: true
               }
             },
             {
               loader: 'less-loader',
               options: {
-                sourceMap: true,
-                minimize: true
+                sourceMap: true
               }
             }
           ]
@@ -36,26 +43,25 @@ const config = {
         exclude: /node_modules/,
         use: [
           'babel-loader',
-          'eslint-loader',
+          'eslint-loader'
         ]
       },
       {
         test: /\.vue$/,
         use: [
           'vue-loader',
-
+          'eslint-loader'
         ]
       }
     ]
   },
-
   externals: {
     vue: 'Vue',
     vuetify: 'Vuetify',
-    jquery: '$',
   },
   plugins: [
-    new ExtractTextWebpackPlugin('css/elearning-v1.0.0-M01.css')
+    // we use ExtractTextWebpackPlugin to extract the css code on a css file
+    new ExtractTextWebpackPlugin('css/[name].css')
   ]
 };
 
