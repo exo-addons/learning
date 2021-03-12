@@ -39,9 +39,6 @@ pom.xml.versionsBackup
 .project
 .factorypath
 
-# Log
-*.log
-
 # OS
 .DS_Store
 

@@ -27,9 +27,10 @@
   </scm>
   <properties>
     <!-- 3rd party libraries versions -->
-    <org.exoplatform.commons.version>6.2.x-SNAPSHOT</org.exoplatform.commons.version>
-    <org.exoplatform.social.version>6.2.x-SNAPSHOT</org.exoplatform.social.version>
+    <org.exoplatform.commons.version>6.1.0</org.exoplatform.commons.version>
+    <org.exoplatform.social.version>6.1.0</org.exoplatform.social.version>
     <org.lombok.version>1.18.2</org.lombok.version>
+    <org.lombok.plugin.version>1.18.18.0</org.lombok.plugin.version>
     <org.jackson.version>2.4.2</org.jackson.version>
 
     <!-- Maven Plugin for JS and CSS bundling and Unit Test execution -->
@@ -41,6 +42,20 @@
   </properties>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.exoplatform.commons</groupId>
+        <artifactId>commons-component-common</artifactId>
+        <version>${org.exoplatform.commons.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.exoplatform.social</groupId>
+        <artifactId>social-component-core</artifactId>
+        <version>${org.exoplatform.social.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
 
       <!-- Current project artifacts -->
       <dependency>
