@@ -3,6 +3,22 @@
   for more details. You should have received a copy of the GNU Lesser General Public License along with this software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org. -->
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd" xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
 
+  <component>
+	<type>org.exoplatform.addon.elearning.service.configuration.CourseService</type>
+  </component>
+  
+  <component>
+	<type>org.exoplatform.addon.elearning.entities.CourseEntity</type>
+  </component>
+  
+  <component>
+	<type>org.exoplatform.addon.elearning.storage.CourseDao</type>
+  </component>
+  
+  <component>
+	<type>org.exoplatform.addon.elearning.service.dto.CourseDTO</type>
+  </component>
+	
   <external-component-plugins>
     <target-component>org.exoplatform.commons.api.persistence.DataInitializer</target-component>
     <component-plugin>
