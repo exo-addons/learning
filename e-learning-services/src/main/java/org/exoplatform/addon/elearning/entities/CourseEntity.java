@@ -11,12 +11,10 @@ import javax.persistence.Table;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
-import lombok.Data;
-
-@Entity(name = "COURSE")
+@Entity
 @ExoEntity
-@Table(name = "COURSE_TABLE")
-public @Data class CourseEntity {
+@Table(name = "COURSE")
+public class CourseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,6 +55,109 @@ public @Data class CourseEntity {
 
   public CourseEntity() {
     super();
+  }
+
+  public CourseEntity(Long courseId,
+                      String courseTitle,
+                      String courseDescription,
+                      Long courseAuthor,
+                      Timestamp createdDate,
+                      Timestamp modifiedDate,
+                      Timestamp lastModifiedDate,
+                      Long courseIllustration,
+                      String courseMediaType,
+                      String courseDuration) {
+    super();
+    this.courseId = courseId;
+    this.courseTitle = courseTitle;
+    this.courseDescription = courseDescription;
+    this.courseAuthor = courseAuthor;
+    this.createdDate = createdDate;
+    this.modifiedDate = modifiedDate;
+    this.lastModifiedDate = lastModifiedDate;
+    this.courseIllustration = courseIllustration;
+    this.courseMediaType = courseMediaType;
+    this.courseDuration = courseDuration;
+  }
+
+  public Long getCourseId() {
+    return courseId;
+  }
+
+  public void setCourseId(Long courseId) {
+    this.courseId = courseId;
+  }
+
+  public String getCourseTitle() {
+    return courseTitle;
+  }
+
+  public void setCourseTitle(String courseTitle) {
+    this.courseTitle = courseTitle;
+  }
+
+  public String getCourseDescription() {
+    return courseDescription;
+  }
+
+  public void setCourseDescription(String courseDescription) {
+    this.courseDescription = courseDescription;
+  }
+
+  public Long getCourseAuthor() {
+    return courseAuthor;
+  }
+
+  public void setCourseAuthor(Long courseAuthor) {
+    this.courseAuthor = courseAuthor;
+  }
+
+  public Timestamp getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(Timestamp createdDate) {
+    this.createdDate = createdDate;
+  }
+
+  public Timestamp getModifiedDate() {
+    return modifiedDate;
+  }
+
+  public void setModifiedDate(Timestamp modifiedDate) {
+    this.modifiedDate = modifiedDate;
+  }
+
+  public Timestamp getLastModifiedDate() {
+    return lastModifiedDate;
+  }
+
+  public void setLastModifiedDate(Timestamp lastModifiedDate) {
+    this.lastModifiedDate = lastModifiedDate;
+  }
+
+  public Long getCourseIllustration() {
+    return courseIllustration;
+  }
+
+  public void setCourseIllustration(Long courseIllustration) {
+    this.courseIllustration = courseIllustration;
+  }
+
+  public String getCourseMediaType() {
+    return courseMediaType;
+  }
+
+  public void setCourseMediaType(String courseMediaType) {
+    this.courseMediaType = courseMediaType;
+  }
+
+  public String getCourseDuration() {
+    return courseDuration;
+  }
+
+  public void setCourseDuration(String courseDuration) {
+    this.courseDuration = courseDuration;
   }
 
   public enum CourseMediaType {
