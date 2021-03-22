@@ -20,26 +20,18 @@ import org.json.JSONObject;
 
 import org.exoplatform.addon.elearning.entities.CourseEntity;
 import org.exoplatform.addon.elearning.storage.CourseDao;
-import org.exoplatform.container.PortalContainer;
 import org.exoplatform.services.rest.resource.ResourceContainer;
-
 
 @Path("course")
 @Produces("application/json")
 public class CourseService implements ResourceContainer {
-  
-  
-  private PortalContainer container = PortalContainer.getInstance();
-  private CourseDao courseDao = (CourseDao)container.getComponentInstanceOfType(CourseDao.class);
-  
-  
-  //private CourseDao courseDao;
-  
+
+  private CourseDao courseDao;
+
   public CourseService(CourseDao courseDao) {
     this.courseDao = courseDao;
   }
-  
-  
+
   @GET
   @Path("/test")
   public String hello() {

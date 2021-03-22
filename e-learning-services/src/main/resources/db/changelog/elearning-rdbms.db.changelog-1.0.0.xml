@@ -12,6 +12,8 @@
 		dbms="oracle,postgresql" />
 
 	<changeSet author="elearning" id="1.0.0-1">
+	
+	
 		<createTable tableName="COURSE">
 			<column name="COURSE_ID" type="BIGINT"
 				autoIncrement="${autoIncrement}" startWith="1">
@@ -20,6 +22,7 @@
 			</column>
 			<column name="COURSE_TITLE" type="NVARCHAR(255)" />
 			<column name="COURSE_DESCRIPTION" type="NVARCHAR(2000)" />
+
 		</createTable>
 
 
