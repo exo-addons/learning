@@ -1,0 +1,23 @@
+name: ci_build
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: maven-settings-xml-action
+      uses: whelk-io/maven-settings-xml-action@v14
+      with:
+        servers: '[{ "id": "repository.exoplatform.org", "username": "", "password": "" }]'
+    - uses: actions/checkout@v2
+    - name: Setup Environment
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build Project
+      run: mvn clean install        
