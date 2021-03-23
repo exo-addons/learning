@@ -16,11 +16,11 @@
 	xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
 
 	<component>
-		<type>org.exoplatform.addon.elearning.service.configuration.CourseService</type>
+		<type>org.exoplatform.addon.elearning.service.configuration.TutorialService</type>
 	</component>
 
 	<component>
-		<type>org.exoplatform.addon.elearning.storage.CourseDao</type>
+		<type>org.exoplatform.addon.elearning.storage.TutorialDao</type>
 	</component>
 
 

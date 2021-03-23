@@ -1,6 +1,7 @@
 package org.exoplatform.addon.elearning.service.configuration;
 
 import java.util.List;
+import java.sql.Timestamp;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,18 +19,18 @@ import javax.ws.rs.core.UriInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.exoplatform.addon.elearning.entities.CourseEntity;
-import org.exoplatform.addon.elearning.storage.CourseDao;
+
+import org.exoplatform.addon.elearning.storage.TutorialDao;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 
-@Path("course")
-@Produces("application/json")
-public class CourseService implements ResourceContainer {
+@Path("tuto")
+@Produces(MediaType.APPLICATION_JSON)
+public class TutorialService implements ResourceContainer {
 
-  private CourseDao courseDao;
+  private TutorialDao tutorialDao;
 
-  public CourseService(CourseDao courseDao) {
-    this.courseDao = courseDao;
+  public TutorialService(TutorialDao tutorialDao) {
+    this.tutorialDao = tutorialDao;
   }
 
   @GET
@@ -37,18 +38,44 @@ public class CourseService implements ResourceContainer {
   public String hello() {
     return "Hello";
   }
-
+ /*
   @POST
   @Path("/addCourse")
   public Response addCourse(@Context UriInfo uriInfo,
                             @QueryParam("courseTitle") String courseTitle,
-                            @QueryParam("courseDescription") String courseDescription) throws Exception {
-    CourseEntity course = new CourseEntity(courseTitle, courseDescription);
+                            @QueryParam("courseDescription") String courseDescription,
+                            @QueryParam("courseAuthor") Long courseAuthor,
+                            @QueryParam("modifiedDate") Timestamp modifiedDate,
+                            @QueryParam("lastModifiedDate") Timestamp lastModifiedDate,
+                            @QueryParam("courseIllustration") Long courseIllustration,
+                            @QueryParam("courseMediaType") String courseMediaType,
+                            @QueryParam("courseLevel") String courseLevel,
+                            @QueryParam("courseDuration") String courseDuration,
+                            @QueryParam("courseStatus") String courseStatus) throws Exception {
+    CourseEntity course = new CourseEntity(courseTitle,
+                                           courseDescription,
+                                           courseAuthor,
+                                           modifiedDate,
+                                           lastModifiedDate,
+                                           courseIllustration,
+                                           courseMediaType,
+                                           courseLevel,
+                                           courseDuration,
+                                           courseStatus);
     courseDao.create(course);
     JSONObject courseJson = new JSONObject();
     courseJson.put("id", course.getCourseId());
     courseJson.put("title", course.getCourseTitle());
     courseJson.put("description", course.getCourseDescription());
+    courseJson.put("author", course.getCourseAuthor());
+    courseJson.put("crDate", course.getCreatedDate());
+    courseJson.put("moDate", course.getModifiedDate());
+    courseJson.put("lmoDate", course.getLastModifiedDate());
+    courseJson.put("illustration", course.getCourseIllustration());
+    courseJson.put("media", course.getCourseMediaType());
+    courseJson.put("level", course.getCourseLevel());
+    courseJson.put("duration", course.getCourseDuration());
+    courseJson.put("status", course.getCourseStatus());
 
     return Response.created(uriInfo.getAbsolutePath())
                    .entity(courseJson.toString())
@@ -148,5 +175,5 @@ public class CourseService implements ResourceContainer {
                    .status(Response.Status.NOT_FOUND)
                    .build();
   }
-
+*/
 }

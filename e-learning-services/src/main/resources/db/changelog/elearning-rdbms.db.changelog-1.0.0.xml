@@ -12,17 +12,65 @@
 		dbms="oracle,postgresql" />
 
 	<changeSet author="elearning" id="1.0.0-1">
-	
-	
-		<createTable tableName="COURSE">
-			<column name="COURSE_ID" type="BIGINT"
+
+
+		<createTable tableName="ADDON_E_LEARNING_TUTO">
+			<column name="ID" type="BIGINT"
 				autoIncrement="${autoIncrement}" startWith="1">
 				<constraints nullable="false" primaryKey="true"
-					primaryKeyName="PK_COURSE_COURSE_ID" />
+					primaryKeyName="PK_TUTORIAL_ID" />
 			</column>
-			<column name="COURSE_TITLE" type="NVARCHAR(255)" />
-			<column name="COURSE_DESCRIPTION" type="NVARCHAR(2000)" />
+			<column name="TITLE" type="NVARCHAR(255)" />
+			<column name="DESCRIPTION" type="NVARCHAR(2000)" />
+			<column name="AUTHOR_ID" type="BIGINT" />
+			<column defaultValueComputed="CURRENT_TIMESTAMP"
+				name="CREATED_DATE" type="TIMESTAMP" />
+			<column name="STATUS" type="NVARCHAR(255)" />
 
+		</createTable>
+
+
+		<modifySql dbms="mysql">
+			<append
+				value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci" />
+		</modifySql>
+
+
+	</changeSet>
+
+	<changeSet author="elearning" id="1.0.0-2">
+
+
+		<createTable tableName="ADDON_E_LEARNING_STEP">
+			<column name="ID" type="BIGINT"
+				autoIncrement="${autoIncrement}" startWith="1">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="PK_STEP_ID" />
+			</column>
+
+			<column name="MEDIA" type="BIGINT" />
+		</createTable>
+
+
+		<modifySql dbms="mysql">
+			<append
+				value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci" />
+		</modifySql>
+
+
+	</changeSet>
+
+	<changeSet author="elearning" id="1.0.0-3">
+
+
+		<createTable tableName="ADDON_E_LEARNING_THEME">
+			<column name="ID" type="BIGINT"
+				autoIncrement="${autoIncrement}" startWith="1">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="PK_THEME_ID" />
+			</column>
+
+			<column name="NAME" type="NVARCHAR(255)" />
 		</createTable>
 
 

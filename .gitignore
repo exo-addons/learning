@@ -53,3 +53,5 @@ target
 release.properties
 *.releaseBackup
 .metadata
+
+e-learning-webapps/.tern-project
