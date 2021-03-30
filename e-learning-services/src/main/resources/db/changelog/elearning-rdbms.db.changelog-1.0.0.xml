@@ -23,8 +23,7 @@
 			<column name="TITLE" type="NVARCHAR(255)" />
 			<column name="DESCRIPTION" type="NVARCHAR(2000)" />
 			<column name="AUTHOR_ID" type="BIGINT" />
-			<column defaultValueComputed="CURRENT_TIMESTAMP"
-				name="CREATED_DATE" type="TIMESTAMP" />
+			<column name="CREATED_DATE" type="TIMESTAMP" />
 			<column name="STATUS" type="NVARCHAR(255)" />
 
 		</createTable>
@@ -49,6 +48,10 @@
 			</column>
 
 			<column name="MEDIA" type="BIGINT" />
+			<column name="TUTO_ID" type="BIGINT" >
+				<constraints nullable="false" foreignKeyName="FK_TUTO_STEP"
+                             references="ADDON_E_LEARNING_TUTO(ID)" deleteCascade="true"/>
+			</column>
 		</createTable>
 
 
@@ -81,5 +84,33 @@
 
 
 	</changeSet>
+
+	<changeSet author="elearning" id="1.0.0-4">
+
+
+		<createTable tableName="ADDON_E_LEARNING_TUTO_THEME">
+
+			<column name="THEME_ID" type="BIGINT" >
+				<constraints nullable="true" foreignKeyName="FK_THEME_ID"
+                             references="ADDON_E_LEARNING_THEME(ID)" deleteCascade="true"/>
+			</column>
+			<column name="TUTO_ID" type="BIGINT" >
+				<constraints nullable="true" foreignKeyName="FK_TUTO_ID"
+                             references="ADDON_E_LEARNING_STEP(ID)" deleteCascade="true"/>
+			</column>
+		</createTable>
+
+
+		<modifySql dbms="mysql">
+			<append
+				value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci" />
+		</modifySql>
+
+
+	</changeSet>
+	
+
+	
+	
 
 </databaseChangeLog>

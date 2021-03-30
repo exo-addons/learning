@@ -1,10 +1,15 @@
 package org.exoplatform.addon.elearning.entities;
 
 import java.sql.Timestamp;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +17,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+
+import com.google.api.client.util.DateTime;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
@@ -38,11 +46,11 @@ public class TutorialEntity {
   @Column(name = "CREATED_DATE")
   private Timestamp               createdDate;
 
-  @ManyToMany
-  @JoinTable(name = "tuto_theme", joinColumns = @JoinColumn(name = "tuto_id"), inverseJoinColumns = @JoinColumn(name = "theme_id"))
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(name = "ADDON_E_LEARNING_TUTO_THEME", joinColumns = @JoinColumn(name = "tuto_id"), inverseJoinColumns = @JoinColumn(name = "theme_id"))
   private Collection<ThemeEntity> theme;
 
-  @OneToMany(mappedBy = "tuto")
+  @OneToMany(mappedBy = "tuto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Collection<StepEntity>  steps;
 
   @Column(name = "STATUS")
@@ -67,6 +75,14 @@ public class TutorialEntity {
     this.createdDate = createdDate;
     this.theme = theme;
     this.steps = steps;
+    this.status = status;
+  }
+
+  public TutorialEntity(String title, String description, Long authorId, Timestamp createdDate, String status) {
+    this.title = title;
+    this.description = description;
+    this.authorId = authorId;
+    this.createdDate = createdDate;
     this.status = status;
   }
 
