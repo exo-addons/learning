@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -65,82 +66,148 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+=======
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>addons-parent-pom</artifactId>
+		<groupId>org.exoplatform.addons</groupId>
+		<version>13</version>
+		<relativePath />
+	</parent>
+	<groupId>org.exoplatform.addons.elearning</groupId>
+	<artifactId>exo-elearning-parent</artifactId>
+	<version>2.0.x-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>eXo Add-on:: eXo E-Learning - Parent POM</name>
+	<description>eXo E-Learning Addon</description>
+	<modules>
+		<module>e-learning-services</module>
+		<module>e-learning-webapps</module>
+		<module>e-learning-packaging</module>
+	</modules>
+	<scm>
+		<connection>scm:git:git://github.com/exo-addons/learning.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/exo-addons/learning.git</developerConnection>
+		<url>https://github.com/exo-addons/learning</url>
+		<tag>HEAD</tag>
+	</scm>
+	<properties>
+		<!-- 3rd party libraries versions -->
+		<org.exoplatform.commons.version>6.1.0</org.exoplatform.commons.version>
+		<org.exoplatform.social.version>6.1.0</org.exoplatform.social.version>
+		<org.lombok.version>1.18.2</org.lombok.version>
+		<org.lombok.plugin.version>1.18.18.0</org.lombok.plugin.version>
+		<org.jackson.version>2.4.2</org.jackson.version>
 
-      <!-- Current project artifacts -->
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>exo-elearning-services</artifactId>
-        <version>${project.version}</version>
-        <scope>provided</scope>
-      </dependency>
+		<!-- Maven Plugin for JS and CSS bundling and Unit Test execution -->
+		<com.github.eirslett.frontend.version>1.6</com.github.eirslett.frontend.version>
+		<!-- **************************************** -->
+		<!-- Jenkins Settings -->
+		<jenkins.job.name>addon-learning-master-ci</jenkins.job.name>
+		<!-- **************************************** -->
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.exoplatform.commons</groupId>
+				<artifactId>commons-component-common</artifactId>
+				<version>${org.exoplatform.commons.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.exoplatform.social</groupId>
+				<artifactId>social-component-core</artifactId>
+				<version>${org.exoplatform.social.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+>>>>>>> first-user-story
 
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>exo-elearning-webapps</artifactId>
-        <version>${project.version}</version>
-        <scope>provided</scope>
-        <type>war</type>
-      </dependency>
+			<!-- Current project artifacts -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>exo-elearning-services</artifactId>
+				<version>${project.version}</version>
+				<scope>provided</scope>
+			</dependency>
 
-      <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>${org.lombok.version}</version>
-        <scope>provided</scope>
-      </dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>exo-elearning-webapps</artifactId>
+				<version>${project.version}</version>
+				<scope>provided</scope>
+				<type>war</type>
+			</dependency>
 
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>${org.jackson.version}</version>
-        <scope>provided</scope>
-      </dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${org.lombok.version}</version>
+				<scope>provided</scope>
+			</dependency>
 
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-jdk15on</artifactId>
-        <version>${org.bouncycastle.version}</version>
-      </dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>5.2.10.Final</version>
+			</dependency>
 
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>${org.jackson.version}</version>
-        <scope>provided</scope>
-      </dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${org.jackson.version}</version>
+				<scope>provided</scope>
+			</dependency>
 
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>${org.jackson.version}</version>
-        <scope>provided</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  <build>
-    <pluginManagement>
-      <plugins>
-        <!-- Maven Plugin for JS and CSS bundling and Unit Test execution -->
-        <plugin>
-          <groupId>com.github.eirslett</groupId>
-          <artifactId>frontend-maven-plugin</artifactId>
-          <version>${com.github.eirslett.frontend.version}</version>
-        </plugin>
-        <!-- Maven Plugin for generating contracts JAVA sources -->
-        <plugin>
-          <groupId>org.projectlombok</groupId>
-          <artifactId>lombok-maven-plugin</artifactId>
-          <version>${org.lombok.plugin.version}</version>
-          <executions>
-            <execution>
-              <phase>generate-sources</phase>
-              <goals>
-                <goal>delombok</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bcprov-jdk15on</artifactId>
+				<version>${org.bouncycastle.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${org.jackson.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${org.jackson.version}</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Maven Plugin for JS and CSS bundling and Unit Test execution -->
+				<plugin>
+					<groupId>com.github.eirslett</groupId>
+					<artifactId>frontend-maven-plugin</artifactId>
+					<version>${com.github.eirslett.frontend.version}</version>
+				</plugin>
+				<!-- Maven Plugin for generating contracts JAVA sources -->
+				<plugin>
+					<groupId>org.projectlombok</groupId>
+					<artifactId>lombok-maven-plugin</artifactId>
+					<version>${org.lombok.plugin.version}</version>
+					<executions>
+						<execution>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>delombok</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
