@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.gatein.org/xml/ns/gatein_objects_1_6 http://www.gatein.org/xml/ns/gatein_objects_1_6"
         xmlns="http://www.gatein.org/xml/ns/gatein_objects_1_6">
   <page>
-    <name>vuetifySampleAppPage</name>
+    <name>elearning</name>
     <title>Sample App</title>
     <access-permissions>*:/platform/users</access-permissions>
     <edit-permission>*:/platform/administrators</edit-permission>
@@ -12,10 +12,10 @@
       <access-permissions>*:/platform/users</access-permissions>
       <portlet-application>
         <portlet>
-          <application-ref>vuetify-webpack-sample</application-ref>
-          <portlet-ref>vuetifyWebpackSample</portlet-ref>
+          <application-ref>elearning</application-ref>
+          <portlet-ref>Elearning</portlet-ref>
         </portlet>
-        <title>Vuetify Webpack Sample</title>
+        <title>Elearning Addon</title>
         <access-permissions>*:/platform/users</access-permissions>
         <show-info-bar>false</show-info-bar>
       </portlet-application>

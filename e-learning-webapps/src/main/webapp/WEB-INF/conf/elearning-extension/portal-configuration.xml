@@ -34,7 +34,7 @@
               </collection>
             </field>
             <field name="location">
-              <string>war:/conf/custom-vuetify-extension/portal</string>
+              <string>war:/conf/elearning-extension/portal</string>
             </field>
           </object>
         </object-param>
