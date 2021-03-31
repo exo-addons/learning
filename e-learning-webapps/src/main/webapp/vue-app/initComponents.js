@@ -1,7 +1,9 @@
 import App from './components/app.vue';
+import ElearningDashboard from './components/ElearningDashboard.vue';
 
 const components = {
   'app': App,
+  'elearning-dashboard': ElearningDashboard
 };
 
 for (const key in components) {

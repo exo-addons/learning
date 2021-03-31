@@ -6,7 +6,7 @@ const webpackCommonConfig = require('./webpack.common.js');
 const app = 'elearning';
 
 // add the server path to your server location path
-const exoServerPath = "/home/exo/Desktop/platform-6.2.x-SNAPSHOT";
+const exoServerPath = "/exo-server";
 
 let config = merge(webpackCommonConfig, {
   output: {
