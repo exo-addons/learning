@@ -45,7 +45,7 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-      <elearning-dashboard/>
+      <elearning-dashboard />
     </main>
   </v-app>
 </template>
