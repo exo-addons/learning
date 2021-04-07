@@ -1,9 +1,117 @@
 <template>
-  <p>test</p>
+  <v-app
+    id="vuetify_webpack_sample_Portlet"
+    color="transaprent"
+    class="VuetifyApp"
+    flat>
+    <main>
+      <v-row>
+        <v-col
+          align-self="stretch"
+          cols="12"
+          sm="3"
+          md="3"
+          v-for="tuto in tutoList"
+          :key="tuto.id">
+          <v-card
+            id="vuetify_webpack_sample"
+            max-width="344"
+            @click="display(tuto.id)">
+            <v-list-item>
+              <v-list-item-avatar v-if="tuto.status== 'Draft'" color="orange" />
+              <v-list-item-avatar v-else-if="tuto.status== 'PUBLISHED'" color="green" />
+              <v-list-item-avatar v-else color="grey" />
+              <v-list-item-content>
+                <v-list-item-title class="headline">{{ tuto.title }}</v-list-item-title>
+                <v-list-item-subtitle>{{ tuto.status }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+    
+            <!--
+          <v-img
+            src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
+            height="194" />
+          -->
+            <v-card-text>
+              {{ tuto.description }}
+            </v-card-text>
+          
+            <v-card-actions>
+              <v-btn
+                text
+                color="deep-purple accent-4"
+                @click="update(tuto.id)">
+                Update
+              </v-btn>
+              <v-btn
+                text
+                color="deep-purple accent-4"
+                @click="deleteTuto(tuto.id)">
+                Delete
+              </v-btn>
+            <!--
+            <div class="flex-grow-1"></div>
+            <v-btn icon>
+              <v-icon>mdi-heart</v-icon>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>mdi-share-variant</v-icon>
+            </v-btn>
+            -->
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </main>
+  </v-app>
 </template>
+
 <script>
+import axios from 'axios';
+import { EventBus } from '../main';
 export default {
+  name: 'TutoList',
   
+  data() {
+    return {
+      tutoList: [],
+      errors: [],
+    };
+  },
+
+  created() {
+    this.getTutos();
+  },
+
+  methods: {
+    getTutos() {
+      const tutoListUrl = 'http://localhost:8080/portal/rest/tuto/getAllTutos';
+      axios
+        .get(tutoListUrl)
+        .then((response) => (this.tutoList = response.data))
+        .catch((e) => this.errors.push(e));
+    },
+    deleteTuto(id) {
+      axios
+        .delete(`http://localhost:8080/portal/rest/tuto/deleteTuto/${id}`)
+        .then(() => {this.getTutos();})
+        .catch((e) => this.errors.push(e));
+    },
+    update(id){
+      EventBus.$emit('updateTuto', id);
+    },
+    display(id){
+      EventBus.$emit('displayTuto', id);
+    }
+  },
+  mounted() {
+    this.getTutos();
+    EventBus.$on('createTuto', () => {
+      this.getTutos();
+    });
+    EventBus.$on('updateTuto', () => {
+      this.getTutos();
+    });
+  }
 };
 </script>
-

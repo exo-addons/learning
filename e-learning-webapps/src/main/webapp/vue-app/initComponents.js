@@ -1,9 +1,15 @@
 import App from './components/app.vue';
 import ElearningDashboard from './components/ElearningDashboard.vue';
+import ElearningManagement from './components/ElearningManagement.vue';
+import ElearningUpdate from './components/ElearningUpdate.vue';
+import ElearningDisplay from './components/ElearningDisplay.vue';
 
 const components = {
   'app': App,
-  'elearning-dashboard': ElearningDashboard
+  'elearning-dashboard': ElearningDashboard,
+  'elearning-management': ElearningManagement,
+  'elearning-update': ElearningUpdate,
+  'elearning-display': ElearningDisplay
 };
 
 for (const key in components) {
