@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isHidden">
+  <div v-if="isHidden || tuto">
     <v-card
       id="vuetify_webpack_sample"
       max-width="344">
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { EventBus } from '../main';
 export default {
   name: 'TutoDisplay',
@@ -34,7 +33,7 @@ export default {
       tutoId: null,
       isHidden: false,
       errors: [],
-      tuto: {}
+      tuto: null
     };
   },
   created (){
@@ -52,9 +51,9 @@ export default {
       this.isHidden = false;
     },  
     getTuto() {
-      axios
-        .get(`http://localhost:8080/portal/rest/tuto/getTutoById/${this.tutoId}`)
-        .then((response) => (this.tuto = response.data))
+      fetch(`/portal/rest/tuto/getTutoById/${this.tutoId}`)
+        .then((response) => response.json())
+        .then((data) => (this.tuto = data))
         .catch((e) => this.errors.push(e));
     }
   }

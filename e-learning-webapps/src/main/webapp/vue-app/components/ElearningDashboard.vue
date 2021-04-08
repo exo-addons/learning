@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { EventBus } from '../main';
 export default {
   name: 'TutoList',
@@ -79,21 +78,28 @@ export default {
     };
   },
 
-  created() {
+  mounted() {
     this.getTutos();
+    EventBus.$on('createTuto', () => {
+      this.getTutos();
+    });
+    EventBus.$on('updateTuto', () => {
+      this.getTutos();
+    });
+
   },
 
   methods: {
     getTutos() {
-      const tutoListUrl = 'http://localhost:8080/portal/rest/tuto/getAllTutos';
-      axios
-        .get(tutoListUrl)
-        .then((response) => (this.tutoList = response.data))
+      fetch('/portal/rest/tuto/getAllTutos')
+        .then((response) => response.json())
+        .then((data) => (this.tutoList = data))
         .catch((e) => this.errors.push(e));
     },
     deleteTuto(id) {
-      axios
-        .delete(`http://localhost:8080/portal/rest/tuto/deleteTuto/${id}`)
+      return fetch(`/portal/rest/tuto/deleteTuto/${id}`, {
+        method: 'DELETE'
+      })
         .then(() => {this.getTutos();})
         .catch((e) => this.errors.push(e));
     },
@@ -103,15 +109,6 @@ export default {
     display(id){
       EventBus.$emit('displayTuto', id);
     }
-  },
-  mounted() {
-    this.getTutos();
-    EventBus.$on('createTuto', () => {
-      this.getTutos();
-    });
-    EventBus.$on('updateTuto', () => {
-      this.getTutos();
-    });
-  }
+  }  
 };
 </script>

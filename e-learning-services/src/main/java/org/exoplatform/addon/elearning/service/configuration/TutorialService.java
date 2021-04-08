@@ -34,12 +34,6 @@ public class TutorialService implements ResourceContainer {
     this.tutorialDao = tutorialDao;
   }
 
-  @GET
-  @Path("/test")
-  public String hello() {
-    return "Hello";
-  }
-
   @POST
   @Path("/addTuto")
   public Response addTutorial(/* @Context UriInfo uriInfo, */

@@ -51,7 +51,6 @@
 
 
 <script>
-import axios from 'axios';
 import { EventBus } from '../main';
 const querystring = require('querystring');
 export default {
@@ -87,17 +86,18 @@ export default {
     },
 
     tutoPatch(ep) {
-      axios
-        .put(`http://localhost:8080/portal/rest/tuto/updateTuto/${this.tutoId}`, querystring.stringify({
+      fetch(`/portal/rest/tuto/updateTuto/${this.tutoId}`,{
+        method: 'PUT',
+        body: querystring.stringify({
           title: this.tuto.title, 
           description: this.tuto.description,
           authorId: parseInt(this.tuto.authorId),
           status: this.tuto.status
-        }), {
-          headers: { 
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
+        }), 
+        headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }}
+      )
         .then((response) => {EventBus.$emit('updateTuto', ep, response);
           this.isHidden=false;})
         .catch((e) => this.errors.push(e));
