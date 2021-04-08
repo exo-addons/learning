@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      <v-btn @click="showForm">Create Tutorial </v-btn>
-      <v-btn @click="hideForm" v-if="isHidden">Collapse </v-btn>
+      <v-btn @click="showForm">{{ $t('addon.elearning.tutorial.create') }}</v-btn>
+      <v-btn @click="hideForm" v-if="isHidden">Collapse</v-btn>
     </div>
     <div v-if="isHidden">
       <div>
@@ -26,9 +26,9 @@
             v-model="tuto.description">
         </div>
         <div class="form-group">
-          <label for="description">AuthorID</label>
+          <label for="authorId">AuthorID</label>
           <input
-            id="description" 
+            id="authorId"
             type="number" 
             name="authorId"
             v-model.number="tuto.authorId">
