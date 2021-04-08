@@ -54,4 +54,3 @@ release.properties
 *.releaseBackup
 .metadata
 
-e-learning-webapps/webpack.dev.js

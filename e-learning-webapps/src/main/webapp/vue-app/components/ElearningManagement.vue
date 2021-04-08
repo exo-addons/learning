@@ -5,6 +5,9 @@
       <v-btn @click="hideForm" v-if="isHidden">Collapse </v-btn>
     </div>
     <div v-if="isHidden">
+      <div>
+        <h1>Creating Tuto</h1>
+      </div>
       <v-form @submit="tutoPost" method="post">
         <div class="form-group">
           <label for="title">Title</label>

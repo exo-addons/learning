@@ -1,5 +1,8 @@
 <template>
   <div v-if="isHidden || tuto">
+    <div>
+      <h1>Displaying Tuto</h1>
+    </div>
     <v-card
       id="vuetify_webpack_sample"
       max-width="344">
@@ -49,6 +52,7 @@ export default {
 
     hideTuto() {
       this.isHidden = false;
+      this.tuto = null;
     },  
     getTuto() {
       fetch(`/portal/rest/tuto/getTutoById/${this.tutoId}`)
