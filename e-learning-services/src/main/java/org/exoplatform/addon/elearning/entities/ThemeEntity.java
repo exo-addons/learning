@@ -28,6 +28,7 @@ public class ThemeEntity {
   @ManyToMany(mappedBy = "theme")
   private Collection<TutorialEntity> tuto;
 
+  //TODO add relation between themes : parent-> children
   /*
    * private Collection<ThemeEntity> subTheme;
    */

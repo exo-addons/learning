@@ -41,7 +41,7 @@ public class TutorialEntity {
   private String                  description;
 
   @Column(name = "AUTHOR_ID")
-  private Long                    authorId;
+  private Long                    authorId; //TODO convert it to String to save the username
 
   @Column(name = "CREATED_DATE")
   private Timestamp               createdDate;
