@@ -28,8 +28,11 @@ public class StepEntity {
 
   @Column(name = "MEDIA")
   private Long           media;
-  //TODO add step order
-
+  
+  //TODO add step order in changelog
+  @Column(name = "ORDER")
+  private Long order;
+  
   public StepEntity() {
   }
 

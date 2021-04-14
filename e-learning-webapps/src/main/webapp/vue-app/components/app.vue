@@ -5,10 +5,13 @@
     class="VuetifyApp"
     flat>
     <main>
+      <!--
       <elearning-dashboard />
       <elearning-management />
       <elearning-update />
       <elearning-display />
+      -->
+      test
     </main>
   </v-app>
 </template>

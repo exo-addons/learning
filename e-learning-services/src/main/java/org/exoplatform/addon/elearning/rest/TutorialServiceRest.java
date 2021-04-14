@@ -16,7 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.logging.Logger;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,10 +39,25 @@ public class TutorialServiceRest implements ResourceContainer {
     public TutorialServiceRest(TutorialService tutorialService) {
         this.tutorialService = tutorialService;
     }
+    
+    
+  @POST
+  @Path("/addTuto")
+  public Response addTutorial(Tutorial tuto) throws Exception {
+    try {
+      tuto = tutorialService.createTutorial(tuto);
+      return Response.status(Response.Status.OK).entity(tuto).build();
+    } catch (Exception e) {
+      Logger LOGGER = Logger.getLogger("LOG");
+      LOGGER.info("Could not create Tutorial ERROR - " + e);
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Could not create Tutorial").build();
+    }
 
+  }
+    /*
     @POST
     @Path("/addTuto")
-    public Response addTutorial(/* @Context UriInfo uriInfo, */
+    public Response addTutorial(
             @FormParam("title") String title,
             @FormParam("description") String description,
             @FormParam("authorId") Long authorId,
@@ -97,7 +112,7 @@ public class TutorialServiceRest implements ResourceContainer {
 
     @GET
     @Path("/getAllTutos")
-    public Response getAllTutos(/* @Context UriInfo uriInfo */) throws Exception {
+    public Response getAllTutos() throws Exception {
         List<TutorialEntity> tutos = tutorialDao.findAll();
         JSONArray response = new JSONArray();
         for (TutorialEntity tuto : tutos) {
@@ -129,5 +144,5 @@ public class TutorialServiceRest implements ResourceContainer {
         }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("No Tutorial found with id " + id).build();
     }
-
+*/
 }
