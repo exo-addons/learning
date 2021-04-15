@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isHidden || tuto">
+  <div v-if="tuto">
     <div>
       <h1>Displaying Tuto</h1>
     </div>
@@ -13,6 +13,7 @@
         <v-list-item-content>
           <v-list-item-title class="headline">{{ tuto.title }}</v-list-item-title>
           <v-list-item-subtitle>{{ tuto.status }}</v-list-item-subtitle>
+          <v-list-item-subtitle>By {{ tuto.author }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -27,22 +28,23 @@
 </template>
 
 <script>
-import { EventBus } from '../main';
+import { tutorialsApp } from '../main';
 export default {
   name: 'TutoDisplay',
     
   data() {
     return { 
       tutoId: null,
-      isHidden: false,
       errors: [],
       tuto: null
     };
   },
   created (){
-    EventBus.$on('displayTuto', (id) => {
+    tutorialsApp.$on('displayTuto', (id) => {
       this.tutoId=id;
-      this.isHidden=true;
+      this.getTuto();
+    });
+    tutorialsApp.$on('updateTuto', () => {
       this.getTuto();
     });
     
@@ -51,7 +53,6 @@ export default {
   methods: {
 
     hideTuto() {
-      this.isHidden = false;
       this.tuto = null;
     },  
     getTuto() {

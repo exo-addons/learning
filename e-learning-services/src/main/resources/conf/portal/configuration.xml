@@ -27,10 +27,6 @@
 		<type>org.exoplatform.addon.elearning.storage.TutorialDao</type>
 	</component>
 
-	<component>
-		<type>org.exoplatform.addon.elearning.service.mapper.TutorialMapper</type>
-	</component>
-
 	<external-component-plugins>
 		<target-component>org.exoplatform.commons.api.persistence.DataInitializer</target-component>
 		<component-plugin>

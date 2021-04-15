@@ -1,10 +1,7 @@
 package org.exoplatform.addon.elearning.entities;
 
 import java.sql.Timestamp;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,14 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
-
-import com.google.api.client.util.DateTime;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
@@ -40,8 +34,8 @@ public class TutorialEntity {
   @Column(name = "DESCRIPTION")
   private String                  description;
 
-  @Column(name = "AUTHOR_ID")
-  private Long                    authorId; //TODO convert it to String to save the username
+  @Column(name = "AUTHOR")
+  private String                  author;
 
   @Column(name = "CREATED_DATE")
   private Timestamp               createdDate;
@@ -62,7 +56,7 @@ public class TutorialEntity {
   public TutorialEntity(Long id,
                         String title,
                         String description,
-                        Long authorId,
+                        String author,
                         Timestamp createdDate,
                         Collection<ThemeEntity> theme,
                         Collection<StepEntity> steps,
@@ -71,17 +65,17 @@ public class TutorialEntity {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.authorId = authorId;
+    this.author = author;
     this.createdDate = createdDate;
     this.theme = theme;
     this.steps = steps;
     this.status = status;
   }
 
-  public TutorialEntity(String title, String description, Long authorId, Timestamp createdDate, String status) {
+  public TutorialEntity(String title, String description, String author, Timestamp createdDate, String status) {
     this.title = title;
     this.description = description;
-    this.authorId = authorId;
+    this.author = author;
     this.createdDate = createdDate;
     this.status = status;
   }
@@ -110,12 +104,12 @@ public class TutorialEntity {
     this.description = description;
   }
 
-  public Long getAuthorId() {
-    return authorId;
+  public String getAuthor() {
+    return author;
   }
 
-  public void setAuthorId(Long authorId) {
-    this.authorId = authorId;
+  public void setAuthor(String author) {
+    this.author = author;
   }
 
   public Timestamp getCreatedDate() {

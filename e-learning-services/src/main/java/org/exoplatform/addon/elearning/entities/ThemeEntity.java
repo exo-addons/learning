@@ -2,12 +2,16 @@ package org.exoplatform.addon.elearning.entities;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
@@ -28,18 +32,26 @@ public class ThemeEntity {
   @ManyToMany(mappedBy = "theme")
   private Collection<TutorialEntity> tuto;
 
-  //TODO add relation between themes : parent-> children
-  /*
-   * private Collection<ThemeEntity> subTheme;
-   */
+  @ManyToOne
+  @JoinColumn(name = "PARENT_THEME")
+  private ThemeEntity                themeP;
+
+  @OneToMany(mappedBy = "themeP", cascade = CascadeType.ALL)
+  private Collection<ThemeEntity>    subTheme;
+
   public ThemeEntity() {
   }
 
-  public ThemeEntity(Long id, String name, Collection<TutorialEntity> tuto) {
-
+  public ThemeEntity(Long id,
+                     String name,
+                     Collection<TutorialEntity> tuto,
+                     ThemeEntity themeP,
+                     Collection<ThemeEntity> subTheme) {
     this.id = id;
     this.name = name;
     this.tuto = tuto;
+    this.themeP = themeP;
+    this.subTheme = subTheme;
   }
 
   public Long getId() {
@@ -64,6 +76,22 @@ public class ThemeEntity {
 
   public void setTuto(Collection<TutorialEntity> tuto) {
     this.tuto = tuto;
+  }
+
+  public ThemeEntity getThemeP() {
+    return themeP;
+  }
+
+  public void setThemeP(ThemeEntity themeP) {
+    this.themeP = themeP;
+  }
+
+  public Collection<ThemeEntity> getSubTheme() {
+    return subTheme;
+  }
+
+  public void setSubTheme(Collection<ThemeEntity> subTheme) {
+    this.subTheme = subTheme;
   }
 
 }

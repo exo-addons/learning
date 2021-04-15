@@ -26,12 +26,12 @@
             v-model="tuto.description">
         </div>
         <div class="form-group">
-          <label for="authorId">AuthorID</label>
+          <label for="author">Author</label>
           <input
-            id="authorId"
-            type="number" 
-            name="authorId"
-            v-model.number="tuto.authorId">
+            id="author"
+            type="text" 
+            name="author"
+            v-model="tuto.author">
         </div>
         <div class="form-group">
           <label for="status">Status</label>
@@ -52,8 +52,7 @@
 
 
 <script>
-import { EventBus } from '../main';
-const querystring = require('querystring');
+import { tutorialsApp } from '../main';
 export default {
   
   name: 'PostTuto',
@@ -64,7 +63,7 @@ export default {
       tuto: {
         title: null,
         description: null,
-        authorId: 0,
+        author: null,
         status: null
       }
     };
@@ -85,29 +84,29 @@ export default {
     tutoPost(ep) {
       fetch('/portal/rest/tuto/addTuto', {
         method: 'POST',
-        body: querystring.stringify({
+        body: JSON.stringify({
           title: this.tuto.title, 
           description: this.tuto.description,
-          authorId: parseInt(this.tuto.authorId),
+          author: this.tuto.author,
           status: this.tuto.status
         }),     
         headers: { 
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }
       })
-        .then((response) => {EventBus.$emit('createTuto', ep, response);})
+        .then((response) => {tutorialsApp.$emit('createTuto', ep, response);})
         .catch((e) => this.errors.push(e));
       ep.preventDefault();
       this.tuto.title = '';
       this.tuto.description = '';
-      this.tuto.authorId = 0;
+      this.tuto.author = '';
       this.tuto.status = '';
     },
 
     clearForm(){
       this.tuto.title = '';
       this.tuto.description = '';
-      this.tuto.authorId = 0;
+      this.tuto.author = '';
       this.tuto.status = '';
     }
   },

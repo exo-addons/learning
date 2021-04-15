@@ -25,12 +25,12 @@
             v-model="tuto.description">
         </div>
         <div class="form-group">
-          <label for="description">AuthorID</label>
+          <label for="description">Author</label>
           <input
             id="description" 
-            type="number" 
-            name="authorId"
-            v-model.number="tuto.authorId">
+            type="text" 
+            name="author"
+            v-model="tuto.author">
         </div>
         <div class="form-group">
           <label for="status">Status</label>
@@ -51,8 +51,7 @@
 
 
 <script>
-import { EventBus } from '../main';
-const querystring = require('querystring');
+import { tutorialsApp } from '../main';
 export default {
   
   name: 'PostTuto',
@@ -62,16 +61,17 @@ export default {
       tutoId: null,
       errors: [],
       tuto: {
+        id: 0,
         title: null,
         description: null,
-        authorId: 0,
+        author: null,
         status: null
       }
     };
   },
 
   created (){
-    EventBus.$on('updateTuto', (id) => {
+    tutorialsApp.$on('updateTuto', (id) => {
       this.tutoId=id;
       this.isHidden=true;
     });
@@ -86,25 +86,27 @@ export default {
     },
 
     tutoPatch(ep) {
-      fetch(`/portal/rest/tuto/updateTuto/${this.tutoId}`,{
+      fetch('/portal/rest/tuto/updateTuto',{
         method: 'PUT',
-        body: querystring.stringify({
+        body: JSON.stringify({
+          id: this.tutoId,
           title: this.tuto.title, 
           description: this.tuto.description,
-          authorId: parseInt(this.tuto.authorId),
+          author: this.tuto.author,
           status: this.tuto.status
         }), 
         headers: { 
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }}
       )
-        .then((response) => {EventBus.$emit('updateTuto', ep, response);
+        .then((response) => {tutorialsApp.$emit('updateTuto', ep, response);
           this.isHidden=false;})
         .catch((e) => this.errors.push(e));
       ep.preventDefault();
+      this.tuto.id = 0;
       this.tuto.title = '';
       this.tuto.description = '';
-      this.tuto.authorId = 0;
+      this.tuto.author = '';
       this.tuto.status = '';
       
     },
@@ -112,7 +114,7 @@ export default {
     clearForm(){
       this.tuto.title = '';
       this.tuto.description = '';
-      this.tuto.authorId = 0;
+      this.tuto.author = '';
       this.tuto.status = '';
     }
   },

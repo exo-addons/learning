@@ -12,18 +12,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tutorial implements Serializable {
-  private Long authorId;
-  private Date createdDate;
-  private Long id;
-  private String status;
-  private String description;
-  private String title;
+  private String     author;
+
+  private Date       createdDate;
+
+  private Long       id;
+
+  private String     status;
+
+  private String     description;
+
+  private String     title;
+
   private List<Step> steps;
 
-  public Tutorial(String title, String description, Long authorId, String status) {
+  public Tutorial(String title, String description, String author, String status) {
     this.title = title;
     this.description = description;
-    this.authorId = authorId;
+    this.author = author;
     this.status = status;
   }
 }

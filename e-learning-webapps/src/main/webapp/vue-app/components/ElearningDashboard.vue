@@ -24,6 +24,7 @@
               <v-list-item-content>
                 <v-list-item-title class="headline">{{ tuto.title }}</v-list-item-title>
                 <v-list-item-subtitle>{{ tuto.status }}</v-list-item-subtitle>
+                <v-list-item-subtitle>By {{ tuto.author }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
     
@@ -67,7 +68,7 @@
 </template>
 
 <script>
-import { EventBus } from '../main';
+import { tutorialsApp } from '../main';
 export default {
   name: 'TutoList',
   
@@ -80,10 +81,10 @@ export default {
 
   mounted() {
     this.getTutos();
-    EventBus.$on('createTuto', () => {
+    tutorialsApp.$on('createTuto', () => {
       this.getTutos();
     });
-    EventBus.$on('updateTuto', () => {
+    tutorialsApp.$on('updateTuto', () => {
       this.getTutos();
     });
 
@@ -104,10 +105,10 @@ export default {
         .catch((e) => this.errors.push(e));
     },
     update(id){
-      EventBus.$emit('updateTuto', id);
+      tutorialsApp.$emit('updateTuto', id);
     },
     display(id){
-      EventBus.$emit('displayTuto', id);
+      tutorialsApp.$emit('displayTuto', id);
     }
   }  
 };

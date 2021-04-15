@@ -22,17 +22,16 @@ public class StepEntity {
   @Column(name = "ID")
   private Long           id;
 
-  @ManyToOne (fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "tuto_id")
   private TutorialEntity tuto;
 
   @Column(name = "MEDIA")
   private Long           media;
-  
-  //TODO add step order in changelog
+
   @Column(name = "ORDER")
-  private Long order;
-  
+  private int            order;
+
   public StepEntity() {
   }
 
