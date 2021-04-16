@@ -10,14 +10,14 @@
           align-self="stretch"
           cols="12"
           sm="3"
-          md="3"
+          md="2"
           v-for="tuto in tutoList"
           :key="tuto.id">
           <v-card
             id="vuetify_webpack_sample"
-            max-width="344"
-            @click="display(tuto.id)">
-            <v-list-item>
+            max-width="344">
+            <v-list-item 
+              @click="display(tuto.id)">
               <v-list-item-avatar v-if="tuto.status== 'Draft'" color="orange" />
               <v-list-item-avatar v-else-if="tuto.status== 'PUBLISHED'" color="green" />
               <v-list-item-avatar v-else color="grey" />
@@ -27,14 +27,10 @@
                 <v-list-item-subtitle>By {{ tuto.author }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-    
-            <!--
-          <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
-            height="194" />
-          -->
             <v-card-text>
-              {{ tuto.description }}
+              <div>
+                {{ tuto.description }}
+              </div>              
             </v-card-text>
           
             <v-card-actions>
@@ -42,28 +38,20 @@
                 text
                 color="deep-purple accent-4"
                 @click="update(tuto.id)">
-                Update
+                {{ $t('addon.elearning.tutorial.update') }}
               </v-btn>
               <v-btn
                 text
                 color="deep-purple accent-4"
                 @click="deleteTuto(tuto.id)">
-                Delete
+                {{ $t('addon.elearning.tutorial.delete') }}
               </v-btn>
-            <!--
-            <div class="flex-grow-1"></div>
-            <v-btn icon>
-              <v-icon>mdi-heart</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi-share-variant</v-icon>
-            </v-btn>
-            -->
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
     </main>
+    <v-btn @click="createTuto">{{ $t('addon.elearning.tutorial.create') }}</v-btn>
   </v-app>
 </template>
 
@@ -84,7 +72,7 @@ export default {
     tutorialsApp.$on('createTuto', () => {
       this.getTutos();
     });
-    tutorialsApp.$on('updateTuto', () => {
+    tutorialsApp.$on('tutoUpdated', () => {
       this.getTutos();
     });
 
@@ -101,7 +89,8 @@ export default {
       return fetch(`/portal/rest/tuto/deleteTuto/${id}`, {
         method: 'DELETE'
       })
-        .then(() => {this.getTutos();})
+        .then(() => {this.getTutos();
+          tutorialsApp.$emit('deleteTuto');})
         .catch((e) => this.errors.push(e));
     },
     update(id){
@@ -109,6 +98,9 @@ export default {
     },
     display(id){
       tutorialsApp.$emit('displayTuto', id);
+    },
+    createTuto(){
+      tutorialsApp.$emit('addTuto');
     }
   }  
 };

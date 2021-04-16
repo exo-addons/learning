@@ -1,15 +1,15 @@
 import App from './components/app.vue';
 import ElearningDashboard from './components/ElearningDashboard.vue';
-import ElearningManagement from './components/ElearningManagement.vue';
-import ElearningUpdate from './components/ElearningUpdate.vue';
-import ElearningDisplay from './components/ElearningDisplay.vue';
+import ElearningUpdateDrawer from './components/ElearningUpdateDrawer.vue';
+import ElearningDisplayDrawer from './components/ElearningDisplayDrawer.vue';
+import ElearningManagementDrawer from './components/ElearningManagementDrawer.vue';
 
 const components = {
   'app': App,
   'elearning-dashboard': ElearningDashboard,
-  'elearning-management': ElearningManagement,
-  'elearning-update': ElearningUpdate,
-  'elearning-display': ElearningDisplay
+  'elearning-update-drawer': ElearningUpdateDrawer,
+  'elearning-display-drawer': ElearningDisplayDrawer,
+  'elearning-management-drawer': ElearningManagementDrawer
 };
 
 for (const key in components) {

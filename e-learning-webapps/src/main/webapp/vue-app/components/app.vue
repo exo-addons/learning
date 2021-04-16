@@ -6,9 +6,9 @@
     flat>
     <main>
       <elearning-dashboard />
-      <elearning-management />
-      <elearning-update />
-      <elearning-display />
+      <elearning-update-drawer />
+      <elearning-management-drawer />
+      <elearning-display-drawer />
     </main>
   </v-app>
 </template>

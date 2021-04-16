@@ -89,5 +89,6 @@
       }
     ],
     "coverageDirectory": "<rootDir>/target/jest/coverage"
-  }
+  },
+  "dependencies": {}
 }

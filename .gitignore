@@ -54,3 +54,5 @@ release.properties
 *.releaseBackup
 .metadata
 
+
+e-learning-webapps/.vscode/settings.json
