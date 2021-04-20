@@ -44,11 +44,11 @@
 <script>
 import { tutorialsApp } from '../main';
 export default {
-  name: 'PostTuto',
+  
   data () {
     return {
       errors: [],
-      status: ['Draft','PUBLISHED','ARCHIVED'],
+      status: ['DRAFT','PUBLISHED','ARCHIVED'],
       tuto: {
         title: null,
         description: null,
@@ -84,14 +84,14 @@ export default {
       this.tuto.title = '';
       this.tuto.description = '';
       this.tuto.author = '';
-      this.tuto.status = 'Draft';
+      this.tuto.status= '';
     },
 
     clearForm(){
       this.tuto.title = '';
       this.tuto.description = '';
       this.tuto.author = '';
-      this.tuto.status = '';
+      this.tuto.status= '';
     }
   }
 };

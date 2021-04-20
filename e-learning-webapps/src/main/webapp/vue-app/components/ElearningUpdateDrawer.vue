@@ -44,12 +44,12 @@
 <script>
 import { tutorialsApp } from '../main';
 export default {
-  name: 'PutTuto',
+  
   data() {
     return {
       tutoId: null,
       tutoU: null,
-      status: ['Draft','PUBLISHED','ARCHIVED'],
+      status: ['DRAFT','PUBLISHED','ARCHIVED'],
       errors: [],
       tuto: {
         id: 0,

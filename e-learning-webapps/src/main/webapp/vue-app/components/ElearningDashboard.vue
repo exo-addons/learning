@@ -4,6 +4,7 @@
     color="transaprent"
     class="VuetifyApp"
     flat>
+    <v-btn @click="createTuto">{{ $t('addon.elearning.tutorial.create') }}</v-btn>
     <main>
       <v-row>
         <v-col
@@ -18,7 +19,7 @@
             max-width="344">
             <v-list-item 
               @click="display(tuto.id)">
-              <v-list-item-avatar v-if="tuto.status== 'Draft'" color="orange" />
+              <v-list-item-avatar v-if="tuto.status== 'DRAFT'" color="orange" />
               <v-list-item-avatar v-else-if="tuto.status== 'PUBLISHED'" color="green" />
               <v-list-item-avatar v-else color="grey" />
               <v-list-item-content>
@@ -43,7 +44,7 @@
               <v-btn
                 text
                 color="deep-purple accent-4"
-                @click="deleteTuto(tuto.id)">
+                @click="prepareDelete(tuto.id)">
                 {{ $t('addon.elearning.tutorial.delete') }}
               </v-btn>
             </v-card-actions>
@@ -51,17 +52,71 @@
         </v-col>
       </v-row>
     </main>
-    <v-btn @click="createTuto">{{ $t('addon.elearning.tutorial.create') }}</v-btn>
+    <template>
+      <v-row justify="center">
+        <v-dialog
+          v-model="confirmDialog"
+          persistent
+          max-width="290">
+          <v-card>
+            <v-card-title class="headline">
+              Confirm Delete
+            </v-card-title>
+            <v-card-text><h4>Are you sure you want to delete this Tutorial? </h4></v-card-text>
+            <v-card-text><h4>This action <b>Cannot</b> be <b>Undone!</b></h4></v-card-text>
+            <v-card-text><h5>Press <i>"Cancel"</i> to go back or <i>"Confirm"</i> to proceed</h5></v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                color="red darken-1"
+                text
+                @click="confirmDialog = false">
+                Cancel
+              </v-btn>
+              <v-btn
+                color="green darken-1"
+                text
+                @click="deleteTuto()">
+                Confirm
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </template>
+    <template>
+      <div class="text-center">
+        <v-snackbar
+          v-model="successBar"
+          timeout="2000"
+          :color="this.color">
+          {{ text }}
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="black"
+              text
+              v-bind="attrs"
+              @click="successBar = false">
+              Dismiss
+            </v-btn>
+          </template>
+        </v-snackbar>
+      </div>
+    </template>   
   </v-app>
 </template>
 
 <script>
 import { tutorialsApp } from '../main';
 export default {
-  name: 'TutoList',
   
   data() {
     return {
+      confirmDialog: false,
+      successBar: false,
+      text: '',
+      color: 'success',
+      deleteId: null,
       tutoList: [],
       errors: [],
     };
@@ -70,9 +125,13 @@ export default {
   mounted() {
     this.getTutos();
     tutorialsApp.$on('createTuto', () => {
+      this.successBar=true;
+      this.text='Tutorial successfully added!';
       this.getTutos();
     });
     tutorialsApp.$on('tutoUpdated', () => {
+      this.successBar=true;
+      this.text='Tutorial successfully updated!';
       this.getTutos();
     });
 
@@ -85,12 +144,18 @@ export default {
         .then((data) => (this.tutoList = data))
         .catch((e) => this.errors.push(e));
     },
-    deleteTuto(id) {
-      return fetch(`/portal/rest/tuto/deleteTuto/${id}`, {
+    prepareDelete(id){
+      this.deleteId=id;
+      this.confirmDialog=true;
+    },
+    deleteTuto() {
+      return fetch(`/portal/rest/tuto/deleteTuto/${this.deleteId}`, {
         method: 'DELETE'
       })
         .then(() => {this.getTutos();
-          tutorialsApp.$emit('deleteTuto');})
+          this.confirmDialog=false;
+          this.successBar=true;
+          this.text='Tutorial successfully deleted!';})
         .catch((e) => this.errors.push(e));
     },
     update(id){
