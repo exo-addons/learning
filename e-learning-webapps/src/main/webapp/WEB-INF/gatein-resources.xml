@@ -3,7 +3,7 @@
                   xmlns="http://www.exoplatform.org/xml/ns/gatein_resources_1_4">
 
   <portlet-skin>
-    <application-name>elearning</application-name>
+    <application-name>exo-elearning</application-name>
     <portlet-name>Elearning</portlet-name>
     <skin-name>Enterprise</skin-name>
     <css-path>/skin/css/elearning.css</css-path>
