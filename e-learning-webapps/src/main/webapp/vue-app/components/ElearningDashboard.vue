@@ -1,66 +1,122 @@
 <template>
   <v-app
-    id="vuetify_webpack_sample_Portlet"
-    color="transaprent"
-    class="VuetifyApp"
+    id="vuetify_webpack_sample"
     flat>
-    <v-btn @click="createTuto">{{ $t('addon.elearning.tutorial.create') }}</v-btn>
-    <main>
-      <v-row>
-        <v-col
-          align-self="stretch"
-          cols="12"
-          sm="3"
-          md="2"
-          v-for="tuto in tutoList"
-          :key="tuto.id">
-          <v-card
-            id="vuetify_webpack_sample"
-            max-width="344">
-            <v-list-item 
-              @click="display(tuto.id)">
-              <v-list-item-avatar v-if="tuto.status== 'DRAFT'" color="orange" />
-              <v-list-item-avatar v-else-if="tuto.status== 'PUBLISHED'" color="green" />
-              <v-list-item-avatar v-else color="grey" />
-              <v-list-item-content>
-                <v-list-item-title class="headline">{{ tuto.title }}</v-list-item-title>
-                <v-list-item-subtitle>{{ tuto.status }}</v-list-item-subtitle>
-                <v-list-item-subtitle>By {{ tuto.author }}</v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-            <v-card-text>
-              <div>
-                {{ tuto.description }}
-              </div>              
-            </v-card-text>
-          
-            <v-card-actions>
-              <v-btn
-                text
-                color="deep-purple accent-4"
-                @click="update(tuto.id)">
-                {{ $t('addon.elearning.tutorial.update') }}
-              </v-btn>
-              <v-btn
-                text
-                color="deep-purple accent-4"
-                @click="prepareDelete(tuto.id)">
-                {{ $t('addon.elearning.tutorial.delete') }}
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
-    </main>
+    <template>
+      <v-container class="tuto_items_grid">
+        <v-row>
+          <v-col
+            cols="12"
+            sm="3"
+            md="2">
+            <v-btn
+              class="exo_btn_primary"
+              width="100%"
+              @click="createTuto">
+              {{ $t('addon.elearning.tutorial.create') }}
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            cols="12"
+            sm="3"
+            md="2"
+            v-for="tuto in tutoList"
+            :key="tuto.id">
+            <v-hover v-slot="{ hover }">
+              <v-card
+                class="tuto_items">
+                <v-card-title>
+                  <v-list-item-avatar v-if="tuto.status== 'DRAFT'" color="orange" />
+                  <v-list-item-avatar v-else-if="tuto.status== 'PUBLISHED'" color="green" />
+                  <v-list-item-avatar v-else color="grey" />
+                  <span class="headline">{{ tuto.title }}</span>
+                </v-card-title>
+              
+                <v-img
+                  src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+                  height="150px">
+                  <v-expand-transition>
+                    <div
+                      v-if="hover"
+                      class="d-flex transition-fast-in-fast-out v-card--reveal display-3 white--text"
+                      style="height: 100%;">
+                      <v-list
+                        color="rgba(0, 0, 0, 0.7)"
+                        width="100%"
+                        nav
+                        dense>
+                        <v-list-item link>
+                          <v-btn
+                            text
+                            color="blue"
+                            @click="update(tuto.id)">
+                            <v-icon>mdi-pencil</v-icon>
+                            <div class="mx-1"></div>
+                            {{ $t('addon.elearning.tutorial.update') }}
+                          </v-btn>
+                        </v-list-item>
+                        <v-list-item link>
+                          <v-btn
+                            text
+                            color="blue"
+                            @click="display(tuto.id)">
+                            <v-icon>mdi-eye</v-icon>
+                            <div class="mx-1"></div>
+                            {{ $t('addon.elearning.tutorial.display') }}
+                          </v-btn>
+                        </v-list-item>
+                        <v-list-item link>
+                          <v-btn
+                            text
+                            color="red"
+                            @click="prepareDelete(tuto.id)">
+                            <v-icon>mdi-delete</v-icon>
+                            <div class="mx-1"></div>
+                            {{ $t('addon.elearning.tutorial.delete') }}
+                          </v-btn>
+                        </v-list-item>
+                      </v-list>
+                    </div>
+                  </v-expand-transition>
+                </v-img>
+                <v-list>
+                  <v-list-item>
+                    <v-icon>mdi-account</v-icon>
+                    <div class="mx-1"></div>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ tuto.author }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-divider inset />
+                  <v-list-item>
+                    <v-icon>mdi-calendar</v-icon>
+                    <div class="mx-1"></div>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <div class="tuto_added_date">
+                          <date-format :value="tuto.createdDate.time" :format="dateTimeFormat" />
+                        </div>
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-card>
+            </v-hover>
+          </v-col>
+        </v-row>
+      </v-container>
+    </template>
     <template>
       <v-row justify="center">
         <v-dialog
           v-model="confirmDialog"
           persistent
-          max-width="290">
+          width="30%">
           <v-card>
             <v-card-title class="headline">
-              Confirm Delete
+              {{ $t('addon.elearning.tutorial.confirmD') }}
             </v-card-title>
             <v-card-text><h4>Are you sure you want to delete this Tutorial? </h4></v-card-text>
             <v-card-text><h4>This action <b>Cannot</b> be <b>Undone!</b></h4></v-card-text>
@@ -71,13 +127,13 @@
                 color="red darken-1"
                 text
                 @click="confirmDialog = false">
-                Cancel
+                {{ $t('addon.elearning.tutorial.cancel') }}
               </v-btn>
               <v-btn
                 color="green darken-1"
                 text
                 @click="deleteTuto()">
-                Confirm
+                {{ $t('addon.elearning.tutorial.confirm') }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -97,7 +153,7 @@
               text
               v-bind="attrs"
               @click="successBar = false">
-              Dismiss
+              {{ $t('addon.elearning.tutorial.dismiss') }}
             </v-btn>
           </template>
         </v-snackbar>
@@ -118,7 +174,13 @@ export default {
       color: 'success',
       deleteId: null,
       tutoList: [],
+      createdate: [],
       errors: [],
+      dateTimeFormat: {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',       
+      },
     };
   },
 
@@ -139,9 +201,8 @@ export default {
 
   methods: {
     getTutos() {
-      fetch('/portal/rest/tuto/getAllTutos')
-        .then((response) => response.json())
-        .then((data) => (this.tutoList = data))
+      return this.$tutoService.getTutos()
+        .then((data) => {(this.tutoList = data);})
         .catch((e) => this.errors.push(e));
     },
     prepareDelete(id){
@@ -149,9 +210,7 @@ export default {
       this.confirmDialog=true;
     },
     deleteTuto() {
-      return fetch(`/portal/rest/tuto/deleteTuto/${this.deleteId}`, {
-        method: 'DELETE'
-      })
+      return this.$tutoService.deleteTuto(this.deleteId)
         .then(() => {this.getTutos();
           this.confirmDialog=false;
           this.successBar=true;

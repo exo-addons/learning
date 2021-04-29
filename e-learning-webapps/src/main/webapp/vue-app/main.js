@@ -1,5 +1,6 @@
 import './initComponents.js';
 
+import * as tutoService from './js/tutoService';
 
 Vue.use(Vuetify);
 const vuetify = new Vuetify({
@@ -25,3 +26,7 @@ export function init() {
       }).$mount('#vuetify_webpack_sample');
     });
 }
+
+window.Object.defineProperty(Vue.prototype, '$tutoService', {
+  value: tutoService,
+});

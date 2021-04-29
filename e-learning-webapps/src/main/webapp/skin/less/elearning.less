@@ -1,10 +1,19 @@
 @import "./variables.less";
+@import "./mixins.less";
 #vuetify_webpack_sample {
-  background: transparent;
+  background: @baseBackgroundDark;
   .controls {
     position: relative;
   }
 }
-#btn-next {
-  background-color: #9e2929;
+
+.tuto_items_grid {
+  background: @baseBackground;
+  .controls {
+    position: relative;
+  }
+}
+
+.exo_btn_primary {
+  background: @btnPrimaryBackground;
 }

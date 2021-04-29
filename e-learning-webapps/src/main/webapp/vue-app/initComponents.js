@@ -1,13 +1,11 @@
 import App from './components/app.vue';
 import ElearningDashboard from './components/ElearningDashboard.vue';
-import ElearningUpdateDrawer from './components/ElearningUpdateDrawer.vue';
 import ElearningDisplayDrawer from './components/ElearningDisplayDrawer.vue';
 import ElearningManagementDrawer from './components/ElearningManagementDrawer.vue';
 
 const components = {
   'app': App,
   'elearning-dashboard': ElearningDashboard,
-  'elearning-update-drawer': ElearningUpdateDrawer,
   'elearning-display-drawer': ElearningDisplayDrawer,
   'elearning-management-drawer': ElearningManagementDrawer
 };

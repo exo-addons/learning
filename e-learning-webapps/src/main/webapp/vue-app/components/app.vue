@@ -1,12 +1,7 @@
 <template>
-  <v-app
-    id="vuetify_webpack_sample_Portlet"
-    color="transaprent"
-    class="VuetifyApp"
-    flat>
+  <v-app>
     <main>
       <elearning-dashboard />
-      <elearning-update-drawer />
       <elearning-management-drawer />
       <elearning-display-drawer />
     </main>
