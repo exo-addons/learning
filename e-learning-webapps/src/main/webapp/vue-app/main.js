@@ -13,7 +13,6 @@ const lang = eXo && eXo.env && eXo.env.portal && eXo.env.portal.language || 'en'
 
 const url = `${eXo.env.portal.context}/${eXo.env.portal.rest}/i18n/bundle/locale.addon.elearning-${lang}.json`;
 
-export const tutorialsApp = new Vue();
 // getting locale ressources
 export function init() {
   exoi18n.loadLanguageAsync(lang, url)
@@ -23,7 +22,7 @@ export function init() {
         template: '<app></app>',
         i18n,
         vuetify,
-      }).$mount('#vuetify_webpack_sample');
+      }).$mount('#elearning_app');
     });
 }
 

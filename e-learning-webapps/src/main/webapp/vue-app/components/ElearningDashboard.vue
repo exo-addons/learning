@@ -1,6 +1,6 @@
 <template>
   <v-app
-    id="vuetify_webpack_sample"
+    id="elearning_app"
     flat>
     <template>
       <v-container class="tuto_items_grid">
@@ -10,8 +10,7 @@
             sm="3"
             md="2">
             <v-btn
-              class="exo_btn_primary"
-              width="100%"
+              class="btn btn-primary"
               @click="createTuto">
               {{ $t('addon.elearning.tutorial.create') }}
             </v-btn>
@@ -34,9 +33,9 @@
                   <span class="headline">{{ tuto.title }}</span>
                 </v-card-title>
               
-                <v-img
-                  src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-                  height="150px">
+                <v-img 
+                  class="tuto_list_img"
+                  src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg">
                   <v-expand-transition>
                     <div
                       v-if="hover"
@@ -89,13 +88,13 @@
                       <v-list-item-title>{{ tuto.author }}</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-divider inset />
+                  <v-divider inset />                  
                   <v-list-item>
                     <v-icon>mdi-calendar</v-icon>
                     <div class="mx-1"></div>
                     <v-list-item-content>
                       <v-list-item-title>
-                        <div class="tuto_added_date">
+                        <div>
                           <date-format :value="tuto.createdDate.time" :format="dateTimeFormat" />
                         </div>
                       </v-list-item-title>
@@ -108,38 +107,13 @@
         </v-row>
       </v-container>
     </template>
-    <template>
-      <v-row justify="center">
-        <v-dialog
-          v-model="confirmDialog"
-          persistent
-          width="30%">
-          <v-card>
-            <v-card-title class="headline">
-              {{ $t('addon.elearning.tutorial.confirmD') }}
-            </v-card-title>
-            <v-card-text><h4>Are you sure you want to delete this Tutorial? </h4></v-card-text>
-            <v-card-text><h4>This action <b>Cannot</b> be <b>Undone!</b></h4></v-card-text>
-            <v-card-text><h5>Press <i>"Cancel"</i> to go back or <i>"Confirm"</i> to proceed</h5></v-card-text>
-            <v-card-actions>
-              <v-spacer />
-              <v-btn
-                color="red darken-1"
-                text
-                @click="confirmDialog = false">
-                {{ $t('addon.elearning.tutorial.cancel') }}
-              </v-btn>
-              <v-btn
-                color="green darken-1"
-                text
-                @click="deleteTuto()">
-                {{ $t('addon.elearning.tutorial.confirm') }}
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
-    </template>
+    <exo-confirm-dialog
+      ref="confirmDialog"
+      :message="$t('addon.elearning.tutorial.deleteConf')"
+      :title="$t('addon.elearning.tutorial.confirmD')"
+      :ok-label="$t('addon.elearning.tutorial.confirm')"
+      :cancel-label="$t('addon.elearning.tutorial.cancel')"
+      @ok="deleteTuto()" />
     <template>
       <div class="text-center">
         <v-snackbar
@@ -148,8 +122,8 @@
           :color="this.color">
           {{ text }}
           <template v-slot:action="{ attrs }">
-            <v-btn
-              color="black"
+            <v-btn 
+              class="snackbar_btn"
               text
               v-bind="attrs"
               @click="successBar = false">
@@ -163,12 +137,10 @@
 </template>
 
 <script>
-import { tutorialsApp } from '../main';
 export default {
   
   data() {
     return {
-      confirmDialog: false,
       successBar: false,
       text: '',
       color: 'success',
@@ -186,14 +158,14 @@ export default {
 
   mounted() {
     this.getTutos();
-    tutorialsApp.$on('createTuto', () => {
+    this.$root.$on('createTuto', () => {
       this.successBar=true;
-      this.text='Tutorial successfully added!';
+      this.text=this.$t('addon.elearning.tutorial.created');
       this.getTutos();
     });
-    tutorialsApp.$on('tutoUpdated', () => {
+    this.$root.$on('tutoUpdated', () => {
       this.successBar=true;
-      this.text='Tutorial successfully updated!';
+      this.text=this.$t('addon.elearning.tutorial.updated');
       this.getTutos();
     });
 
@@ -207,24 +179,24 @@ export default {
     },
     prepareDelete(id){
       this.deleteId=id;
-      this.confirmDialog=true;
+      this.$refs.confirmDialog.open();
     },
     deleteTuto() {
       return this.$tutoService.deleteTuto(this.deleteId)
         .then(() => {this.getTutos();
           this.confirmDialog=false;
           this.successBar=true;
-          this.text='Tutorial successfully deleted!';})
+          this.text=this.$t('addon.elearning.tutorial.deleted');})
         .catch((e) => this.errors.push(e));
     },
     update(id){
-      tutorialsApp.$emit('updateTuto', id);
+      this.$root.$emit('updateTuto', id);
     },
     display(id){
-      tutorialsApp.$emit('displayTuto', id);
+      this.$root.$emit('displayTuto', id);
     },
     createTuto(){
-      tutorialsApp.$emit('addTuto');
+      this.$root.$emit('addTuto');
     }
   }  
 };

@@ -1,6 +1,6 @@
 <template>
   <v-app
-    id="vuetify_webpack_sample"
+    id="elearning_app"
     flat>
     <exo-drawer ref="elearningManagementDrawer" right>
       <template v-if="this.title" slot="title">
@@ -13,20 +13,22 @@
         <div>
           <h2> {{ $t('addon.elearning.tutorial.details') }}  </h2>
         </div>
-        <div>
+        <v-form ref="form" v-model="form">
           <v-text-field
             v-if="this.title"
             outlined
             clearable
-            label="Tutorial Title"
+            :label="$t('addon.elearning.tutorial.label.title')"
             name="title"
+            :rules="[validators.required, validators.length(10)]"
             v-model="tutoA.title" />
           <v-text-field
             v-else
             outlined
             clearable
-            label="Tutorial Title"
+            :label="$t('addon.elearning.tutorial.label.title')"
             name="title"
+            :rules="[validators.required, validators.length(10)]"
             v-model="tutoUp.title" />
           <v-textarea
             v-if="this.title"
@@ -34,8 +36,9 @@
             clearable
             auto-grow
             rows="3"
-            label="Description"
-            name="description"          
+            :label="$t('addon.elearning.tutorial.label.description')"
+            name="description"
+            :rules="[validators.required, validators.length(25)]"          
             v-model="tutoA.description" />
           <v-textarea
             v-else
@@ -43,59 +46,65 @@
             clearable
             auto-grow
             rows="3"
-            label="Description"
-            name="description"          
+            :label="$t('addon.elearning.tutorial.label.description')"
+            name="description"
+            :rules="[validators.required, validators.length(25)]"          
             v-model="tutoUp.description" />
           <v-text-field
             v-if="this.title"
             outlined
             clearable
-            label="Author"
+            :label="$t('addon.elearning.tutorial.label.author')"
             name="author"
+            :rules="[validators.required]"
             v-model="tutoA.author" />
           <v-text-field
             v-else
             outlined
             clearable
-            label="Author"
+            :label="$t('addon.elearning.tutorial.label.author')"
             name="author"
+            :rules="[validators.required]"
             v-model="tutoUp.author" />
           <v-select
             v-if="this.title"
             outlined
             :items="status"
+            :rules="[validators.required]"
             v-model="tutoA.status"
-            label="Pick Status"
+            :label="$t('addon.elearning.tutorial.label.status')"
             name="status" />
           <v-select
             v-else
             outlined
             :items="status"
+            :rules="[validators.required]"
             v-model="tutoUp.status"
-            label="Pick Status"
+            :label="$t('addon.elearning.tutorial.label.status')"
             name="status" />
-        </div>
+        </v-form>
       </template>
       <template slot="footer">
         <v-btn
+          :disabled="!form"
           class="btn btn-primary"
           v-if="this.title"
           @click="tutoPost">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
         <v-btn
+          :disabled="!form"
           class="btn btn-primary"
           v-else
           @click="tutoUpdate">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
-        <v-btn class="btn mr-2" @click="clearForm">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
+        <v-btn class="btn mr-2" @click="$refs.form.reset()">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
       </template>
     </exo-drawer>
   </v-app>
 </template>
 <script>
-import { tutorialsApp } from '../main';
 export default {
   
   data () {
@@ -118,31 +127,35 @@ export default {
         author: null,
         status: null
       },
+      validators: {
+        required: v => !!v || 'This field is required',
+        length: len => v => (v || '').length >= len || `Invalid length, required ${len}`,
+      },
+      form: false,
     };
   },
   
   created() {
-    tutorialsApp.$on('addTuto', () => {
+    this.$root.$on('addTuto', () => {
       this.title = true;
       this.$refs.elearningManagementDrawer.open();
+      this.$refs.form.reset();
     });
-    tutorialsApp.$on('updateTuto', (id) => {
+    this.$root.$on('updateTuto', (id) => {
       this.title = false;
-      this.tutoId=id;
       this.$refs.elearningManagementDrawer.open();
-      this.getTutoU();
+      this.tutoId=id;
+      this.getTutoU(id);
     });
   },
 
   methods: {
     tutoPost() {
       return this.$tutoService.tutoPost(this.tutoA)
-        .then(() => {tutorialsApp.$emit('createTuto');})
-        .then(() =>{ this.$refs.elearningManagementDrawer.close();
-          this.tutoA.title = '';
-          this.tutoA.description = '';
-          this.tutoA.author = '';
-          this.tutoA.status= ''; })
+        .then(() => {this.$root.$emit('createTuto');})
+        .then(() =>{ 
+          this.$refs.form.reset();
+          this.$refs.elearningManagementDrawer.close(); })
         .catch((e) => this.errors.push(e));
       
     },
@@ -150,18 +163,16 @@ export default {
     tutoUpdate() {
       this.tutoUp.id=this.tutoId;
       return this.$tutoService.tutoUpdate(this.tutoUp)
-        .then(() => {tutorialsApp.$emit('tutoUpdated');})
-        .then(() => {this.$refs.elearningManagementDrawer.close();
+        .then(() => {this.$root.$emit('tutoUpdated');})
+        .then(() => {
           this.tutoUp.id = 0;
-          this.tutoUp.title = '';
-          this.tutoUp.description = '';
-          this.tutoUp.author = '';
-          this.tutoUp.status = '';})
+          this.$refs.form.reset();
+          this.$refs.elearningManagementDrawer.close();})
         .catch((e) => this.errors.push(e));      
     },
 
-    getTutoU() {
-      return this.$tutoService.getTuto(this.tutoId)
+    getTutoU(id) {
+      return this.$tutoService.getTuto(id)
         .then((data) => {this.tutoU = data;
           this.tutoUp.title = this.tutoU.title;
           this.tutoUp.description = this.tutoU.description;
@@ -169,19 +180,6 @@ export default {
           this.tutoUp.status = this.tutoU.status;})
         .catch((e) => this.errors.push(e));
     },
-
-    clearForm(){
-      if (this.title) {
-        this.tutoA.title = '';
-        this.tutoA.description = '';
-        this.tutoA.author = '';
-        this.tutoA.status= '';
-      }
-      else { this.tutoUp.title = '';
-        this.tutoUp.description = '';
-        this.tutoUp.author = '';
-        this.tutoUp.status= '';}
-    }
   }
 };
 

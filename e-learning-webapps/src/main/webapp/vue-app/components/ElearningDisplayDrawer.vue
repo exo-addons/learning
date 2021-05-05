@@ -1,6 +1,6 @@
 <template>
   <v-app
-    id="vuetify_webpack_sample"
+    id="elearning_app"
     flat>
     <exo-drawer
       ref="elearningDisplayDrawer"
@@ -24,8 +24,8 @@
               </v-list-item-content>
             </v-list-item>
             <v-img
-              src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-              height="150px" />
+              class="tuto_img"
+              src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg" />
 
             <v-card-text>
               {{ tuto.description }}
@@ -37,12 +37,10 @@
   </v-app>
 </template>
 <script>
-import { tutorialsApp } from '../main';
 export default {
     
   data() {
     return {
-      tutoId: null,
       errors: [],
       tuto: null,
       dateTimeFormat: {
@@ -55,16 +53,15 @@ export default {
     };
   },
   created (){
-    tutorialsApp.$on('displayTuto', (id) => {
-      this.tutoId=id;
-      this.getTuto();            
+    this.$root.$on('displayTuto', (id) => {
+      this.getTuto(id);            
       this.$refs.elearningDisplayDrawer.open();      
     });      
   },
   methods: {
 
-    getTuto() {
-      return this.$tutoService.getTuto(this.tutoId)
+    getTuto(id) {
+      return this.$tutoService.getTuto(id)
         .then((data) => {this.tuto = data;})
         .catch((e) => this.errors.push(e));
     }
