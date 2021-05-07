@@ -1,9 +1,9 @@
 <template>
   <v-app
-    id="elearning_app"
+    id="tutorial_display"
     flat>
     <exo-drawer
-      ref="elearningDisplayDrawer"
+      ref="tutorialDisplayDrawer"
       right>
       <template slot="title">
         {{ $t('addon.elearning.tutorial.details') }}  
@@ -55,7 +55,7 @@ export default {
   created (){
     this.$root.$on('displayTuto', (id) => {
       this.getTuto(id);            
-      this.$refs.elearningDisplayDrawer.open();      
+      this.$refs.tutorialDisplayDrawer.open();      
     });      
   },
   methods: {

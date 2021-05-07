@@ -2,19 +2,35 @@ export function getTutos() {
   return fetch('/portal/rest/tuto/getAllTutos', {
     method: 'GET'
   })
-    .then((response) => response.json());
+    .then((response) => {
+      if (!response || !response.ok) {
+        throw new Error('Response code indicates a server error', response);
+      } else {
+        return response.json();
+      }
+    });
 }
 
 export function getTuto(tutoId) {
   return fetch(`/portal/rest/tuto/getTutoById/${tutoId}`, {
     method: 'GET'
   })
-    .then((response) => response.json());
+    .then((response) => {
+      if (!response || !response.ok) {
+        throw new Error('Response code indicates a server error', response);
+      } else {
+        return response.json();
+      }
+    });
 }
 
 export function deleteTuto(deleteId) {
   return fetch(`/portal/rest/tuto/deleteTuto/${deleteId}`, {
     method: 'DELETE'
+  }).then(response => {
+    if (!response || !response.ok) {
+      throw new Error('Response code indicates a server error', response);
+    }
   });
 }
 
@@ -24,6 +40,10 @@ export function tutoPost(tuto) {
     body: JSON.stringify(tuto),
     headers: {
       'Content-Type': 'application/json'
+    }
+  }).then(response => {
+    if (!response || !response.ok) {
+      throw new Error('Response code indicates a server error', response);
     }
   });
 }
@@ -35,6 +55,9 @@ export function tutoUpdate(tuto) {
     headers: {
       'Content-Type': 'application/json'
     }
-  }
-  );
+  }).then(response => {
+    if (!response || !response.ok) {
+      throw new Error('Response code indicates a server error', response);
+    }
+  });
 }

@@ -1,6 +1,6 @@
 <template>
   <v-app
-    id="elearning_app"
+    id="tutorials_display"
     flat>
     <template>
       <v-container class="tuto_items_grid">
@@ -10,7 +10,7 @@
             sm="3"
             md="2">
             <v-btn
-              class="btn btn-primary"
+              class="exo_primary_btn"
               @click="createTuto">
               {{ $t('addon.elearning.tutorial.create') }}
             </v-btn>
@@ -185,6 +185,7 @@ export default {
       return this.$tutoService.deleteTuto(this.deleteId)
         .then(() => {this.getTutos();
           this.confirmDialog=false;
+          
           this.successBar=true;
           this.text=this.$t('addon.elearning.tutorial.deleted');})
         .catch((e) => this.errors.push(e));
