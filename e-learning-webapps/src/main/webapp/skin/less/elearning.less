@@ -1,8 +1,52 @@
 @import "./variables.less";
-#vuetify_webpack_sample {
-  background: transparent;
-
+@import "./mixins.less";
+#elearning_app {
+  background: @baseBackgroundDark !important;;
   .controls {
     position: relative;
   }
+
+  .tuto_items_grid.v-container {
+    background: @baseBackground !important;
+    .controls {
+      position: relative;
+    }
+  }
+
+  .exo_primary_btn.v-btn {
+    color: @btnPrimaryColor !important;
+    background: @btnPrimaryBackground !important;
+    
+    .controls {
+      position: relative;
+    }
+  }
+
+  .exo_primary_btn.v-btn:disabled {
+    color: @btnDisableColor !important;
+    background: @btnDisableBackground !important;
+    
+    .controls {
+      position: relative;
+    }
+  }
+
+  .snackbar_btn.v-btn { 
+    color: @secondaryColor !important;
+    background: transparent !important;
+  }
+
+  .exo_cancel_btn.v-btn {
+    background: transparent !important;
+  }
+  
+  .tuto_list_img {
+    height: 150px;
+  }
+  
+  .tuto_img {
+    height: 150px;
+    filter: blur(5px);
+  }
+
 }
