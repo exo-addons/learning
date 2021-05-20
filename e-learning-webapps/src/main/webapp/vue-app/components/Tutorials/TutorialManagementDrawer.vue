@@ -74,14 +74,12 @@
       </template>
       <template slot="footer">
         <v-btn
-          :disabled="!form"
           class="exo_primary_btn"
           v-if="this.title"
           @click="tutoPost">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
         <v-btn
-          :disabled="!form"
           class="exo_primary_btn"
           v-else
           @click="tutoUpdate">

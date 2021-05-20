@@ -29,7 +29,7 @@ public class ThemeEntity {
   @Column(name = "NAME")
   private String                     name;
 
-  @ManyToMany(mappedBy = "theme")
+  @ManyToMany(mappedBy = "theme", cascade = CascadeType.ALL)
   private Collection<TutorialEntity> tuto;
 
   @ManyToOne

@@ -146,7 +146,6 @@ export default {
       color: 'success',
       deleteId: null,
       tutoList: [],
-      createdate: [],
       errors: [],
       dateTimeFormat: {
         day: 'numeric',
