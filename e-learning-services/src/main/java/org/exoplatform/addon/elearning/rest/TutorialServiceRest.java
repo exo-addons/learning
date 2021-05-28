@@ -96,4 +96,18 @@ public class TutorialServiceRest implements ResourceContainer {
 
   }
 
+  @GET
+  @Path("/getAllTutosByTheme/{id}")
+  public Response getAllTutosByTheme(@PathParam("id") Long id) {
+    List<Tutorial> tutos = new ArrayList<Tutorial>();
+    try {
+      tutos = tutorialService.getAllTutosByTheme(id);
+
+    } catch (Exception e) {
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Could not get all Tutorials by Theme").build();
+    }
+    return Response.ok(tutos, MediaType.APPLICATION_JSON).build();
+
+  }
+
 }

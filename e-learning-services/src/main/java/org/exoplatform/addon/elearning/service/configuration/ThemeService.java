@@ -14,11 +14,11 @@ import org.exoplatform.services.rest.resource.ResourceContainer;
 public class ThemeService implements ResourceContainer {
 
   private ThemeDao themeDao;
-  
+
   public ThemeService(ThemeDao themeDao) {
     this.themeDao = themeDao;
   }
-  
+
   @ExoTransactional
   public Theme createTheme(Theme theme) {
     ThemeEntity themeEntity = new ThemeEntity();
@@ -30,7 +30,7 @@ public class ThemeService implements ResourceContainer {
     }
     return ThemeMapper.convertThemeToDTO(themeEntity);
   }
-  
+
   @ExoTransactional
   public void deleteTheme(Long id) {
     ThemeEntity theme = new ThemeEntity();
@@ -43,7 +43,7 @@ public class ThemeService implements ResourceContainer {
     }
     themeDao.delete(theme);
   }
-  
+
   @ExoTransactional
   public Theme updateTheme(Theme theme) {
     ThemeEntity themeEntity = new ThemeEntity();
@@ -57,7 +57,7 @@ public class ThemeService implements ResourceContainer {
     }
     return ThemeMapper.convertThemeToDTO(themeEntity);
   }
-  
+
   public List<Theme> getAllThemes() {
     List<ThemeEntity> themes = new ArrayList<ThemeEntity>();
 
@@ -70,7 +70,7 @@ public class ThemeService implements ResourceContainer {
     }
     return ThemeMapper.convertThemesToDTOs(themes);
   }
-  
+
   public Theme getThemeById(Long id) {
     ThemeEntity theme = new ThemeEntity();
     try {
@@ -81,5 +81,18 @@ public class ThemeService implements ResourceContainer {
       LOGGER.info("Could not get Theme with id " + id + " ERROR - " + e);
     }
     return ThemeMapper.convertThemeToDTO(theme);
+  }
+
+  public List<String> getAllThemeNames() {
+    List<String> themes = new ArrayList<String>();
+
+    try {
+      themes = themeDao.getAllThemeNames();
+
+    } catch (Exception e) {
+      Logger LOGGER = Logger.getLogger("LOG");
+      LOGGER.info("Could not get all Theme Names ERROR - " + e);
+    }
+    return themes;
   }
 }

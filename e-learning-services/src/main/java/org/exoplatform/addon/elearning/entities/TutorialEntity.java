@@ -4,15 +4,17 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,34 +23,37 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 @Entity
 @ExoEntity
 @Table(name = "ADDON_E_LEARNING_TUTO")
+@NamedQueries({
+    @NamedQuery(name = "TutorialEntity.getAllTutosByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id") })
 public class TutorialEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "ID")
-  private Long                    id;
+  private Long                   id;
 
   @Column(name = "TITLE")
-  private String                  title;
+  private String                 title;
 
   @Column(name = "DESCRIPTION")
-  private String                  description;
+  private String                 description;
 
   @Column(name = "AUTHOR")
-  private String                  author;
+  private String                 author;
 
   @Column(name = "CREATED_DATE")
-  private Timestamp               createdDate;
+  private Timestamp              createdDate;
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "ADDON_E_LEARNING_TUTO_THEME", joinColumns = @JoinColumn(name = "tuto_id"), inverseJoinColumns = @JoinColumn(name = "theme_id"))
-  private Collection<ThemeEntity> theme;
+  @ElementCollection
+  @CollectionTable(name = "ADDON_E_LEARNING_TUTO_THEME", joinColumns = @JoinColumn(name = "TUTO_ID"))
+  @Column(name = "THEME_ID")
+  public Collection<Long>        themeIds;
 
   @OneToMany(mappedBy = "tuto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Collection<StepEntity>  steps;
+  private Collection<StepEntity> steps;
 
   @Column(name = "STATUS")
-  private String                  status = "DRAFT";
+  private String                 status;
 
   public TutorialEntity() {
   }
@@ -58,8 +63,7 @@ public class TutorialEntity {
                         String description,
                         String author,
                         Timestamp createdDate,
-                        Collection<ThemeEntity> theme,
-                        Collection<StepEntity> steps,
+                        Collection<Long> themeIds,
                         String status) {
 
     this.id = id;
@@ -67,16 +71,21 @@ public class TutorialEntity {
     this.description = description;
     this.author = author;
     this.createdDate = createdDate;
-    this.theme = theme;
-    this.steps = steps;
+    this.themeIds = themeIds;
     this.status = status;
   }
 
-  public TutorialEntity(String title, String description, String author, Timestamp createdDate, String status) {
+  public TutorialEntity(String title,
+                        String description,
+                        String author,
+                        Timestamp createdDate,
+                        Collection<Long> themeIds,
+                        String status) {
     this.title = title;
     this.description = description;
     this.author = author;
     this.createdDate = createdDate;
+    this.themeIds = themeIds;
     this.status = status;
   }
 
@@ -120,20 +129,12 @@ public class TutorialEntity {
     this.createdDate = createdDate;
   }
 
-  public Collection<ThemeEntity> getTheme() {
-    return theme;
+  public Collection<Long> getThemeIds() {
+    return themeIds;
   }
 
-  public void setTheme(Collection<ThemeEntity> theme) {
-    this.theme = theme;
-  }
-
-  public Collection<StepEntity> getSteps() {
-    return steps;
-  }
-
-  public void setSteps(Collection<StepEntity> steps) {
-    this.steps = steps;
+  public void setThemeIds(Collection<Long> themeIds) {
+    this.themeIds = themeIds;
   }
 
   public String getStatus() {

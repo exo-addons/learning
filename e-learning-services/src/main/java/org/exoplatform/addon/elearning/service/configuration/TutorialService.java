@@ -55,6 +55,7 @@ public class TutorialService implements ResourceContainer {
       tutoEntity.setDescription(tuto.getDescription());
       tutoEntity.setAuthor(tuto.getAuthor());
       tutoEntity.setStatus(tuto.getStatus());
+      tutoEntity.setThemeIds(tuto.getThemeIds());
 
     } catch (Exception e) {
       Logger LOGGER = Logger.getLogger("LOG");
@@ -86,6 +87,19 @@ public class TutorialService implements ResourceContainer {
       LOGGER.info("Could not get Tutorial with id " + id + " ERROR - " + e);
     }
     return TutorialMapper.convertTutorialToDTO(tuto);
+  }
+
+  public List<Tutorial> getAllTutosByTheme(Long id) {
+    List<TutorialEntity> tutos = new ArrayList<TutorialEntity>();
+
+    try {
+      tutos = tutorialDao.getAllTutosByTheme(id);
+
+    } catch (Exception e) {
+      Logger LOGGER = Logger.getLogger("LOG");
+      LOGGER.info("Could not get all Tutorials ERROR - " + e);
+    }
+    return TutorialMapper.convertTutorialsToDTOs(tutos);
   }
 
 }

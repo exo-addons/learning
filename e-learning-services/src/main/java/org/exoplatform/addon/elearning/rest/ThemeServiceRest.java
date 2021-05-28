@@ -20,13 +20,13 @@ import org.exoplatform.services.rest.resource.ResourceContainer;
 @Path("theme")
 @Produces(MediaType.APPLICATION_JSON)
 public class ThemeServiceRest implements ResourceContainer {
-  
+
   private ThemeService themeService;
-  
+
   public ThemeServiceRest(ThemeService themeService) {
-    this.themeService=themeService;
+    this.themeService = themeService;
   }
-  
+
   @POST
   @Path("/addTheme")
   public Response addTheme(Theme theme) {
@@ -39,7 +39,7 @@ public class ThemeServiceRest implements ResourceContainer {
     return Response.status(Response.Status.OK).entity(theme).build();
 
   }
-  
+
   @DELETE
   @Path("/deleteTheme/{id}")
   public Response deleteTheme(@PathParam("id") Long id) {
@@ -52,7 +52,7 @@ public class ThemeServiceRest implements ResourceContainer {
     }
     return Response.status(Response.Status.OK).entity("Theme with id " + id + " Deleted").build();
   }
-  
+
   @PUT
   @Path("/updateTheme")
   public Response updateTheme(Theme theme) {
@@ -66,7 +66,7 @@ public class ThemeServiceRest implements ResourceContainer {
     }
     return Response.status(Response.Status.OK).entity("Theme with id " + theme.getId() + " Updated").build();
   }
-  
+
   @GET
   @Path("/getAllThemes")
   public Response getAllThemes() {
@@ -80,7 +80,7 @@ public class ThemeServiceRest implements ResourceContainer {
     return Response.ok(themes, MediaType.APPLICATION_JSON).build();
 
   }
-  
+
   @GET
   @Path("/getThemeById/{id}")
   public Response getThemeById(@PathParam("id") Long id) {
@@ -93,6 +93,20 @@ public class ThemeServiceRest implements ResourceContainer {
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("No Theme found with id " + id).build();
     }
     return Response.ok(theme, MediaType.APPLICATION_JSON).build();
+
+  }
+
+  @GET
+  @Path("/getAllThemeNames")
+  public Response getAllThemeNames() {
+    List<String> themes = new ArrayList<String>();
+    try {
+      themes = themeService.getAllThemeNames();
+
+    } catch (Exception e) {
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Could not get all Theme Names").build();
+    }
+    return Response.ok(themes, MediaType.APPLICATION_JSON).build();
 
   }
 
