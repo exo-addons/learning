@@ -70,6 +70,26 @@
             v-model="tutoUp.status"
             :label="$t('addon.elearning.tutorial.label.status')"
             name="status" />
+          <v-select
+            v-if="this.title"
+            outlined
+            :items="themes"
+            item-text="name"
+            item-value="id"
+            v-model="tutoA.themeIds"
+            :label="$t('addon.elearning.tutorial.label.theme')"
+            name="theme"
+            multiple />
+          <v-select
+            v-else
+            outlined
+            :items="themes"
+            item-text="name"
+            item-value="id"
+            v-model="tutoUp.themeIds"
+            :label="$t('addon.elearning.tutorial.label.theme')"
+            name="theme"
+            multiple />
         </v-form>
       </template>
       <template slot="footer">
@@ -100,23 +120,27 @@ export default {
       tutoU: null,
       errors: [],
       status: ['DRAFT','PUBLISHED','ARCHIVED'],
+      themes: [],
       tutoA: {
         title: null,
         description: null,
         author: null,
-        status: null
+        status: null,
+        themeIds: []
       },
       tutoUp: {
         id: 0,
         title: null,
         description: null,
         author: null,
-        status: null
+        status: null,
+        themeIds: []
       }
     };
   },
   
   created() {
+    this.getThemes();
     this.$root.$on('addTuto', () => {
       this.title = true;
       this.$refs.tutorialManagementDrawer.open();
@@ -158,6 +182,13 @@ export default {
           this.tutoUp.description = this.tutoU.description;
           this.tutoUp.author = this.tutoU.author;
           this.tutoUp.status = this.tutoU.status;})
+        .catch((e) => this.errors.push(e));
+    },
+
+    
+    getThemes() {
+      return this.$themeService.getThemes()
+        .then((data) => {(this.themes = data);})
         .catch((e) => this.errors.push(e));
     },
   }

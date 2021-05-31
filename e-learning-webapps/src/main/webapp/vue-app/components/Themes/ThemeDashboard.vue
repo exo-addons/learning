@@ -23,48 +23,44 @@
             md="2"
             v-for="theme in themeList"
             :key="theme.id">
-            <v-hover v-slot="{ hover }">
-              <v-card
-                class="theme_items">
-                <v-expand-transition>
-                  <div
-                    v-if="hover"
-                    class="d-flex transition-fast-in-fast-out v-card--reveal display-3 white--text"
-                    style="height: 100%;">
-                    <v-list
-                      color="rgba(0, 0, 0, 0.7)"
-                      width="100%"
-                      nav
-                      dense>
-                      <v-list-item link>
-                        <v-btn
-                          text
-                          color="blue"
-                          @click="update(theme.id)">
-                          <v-icon>mdi-pencil</v-icon>
-                          <div class="mx-1"></div>
-                          {{ $t('addon.elearning.tutorial.update') }}
-                        </v-btn>
-                      </v-list-item>
-                      <v-list-item link>
-                        <v-btn
-                          text
-                          color="red"
-                          @click="prepareDelete(theme.id)">
-                          <v-icon>mdi-delete</v-icon>
-                          <div class="mx-1"></div>
-                          {{ $t('addon.elearning.tutorial.delete') }}
-                        </v-btn>
-                      </v-list-item>
-                    </v-list>
-                  </div>
-                </v-expand-transition>
-
-                <v-card-title>
-                  <span class="headline">{{ theme.name }}</span>
-                </v-card-title>
-              </v-card>
-            </v-hover>
+            <v-card
+              class="theme_items"
+              :id="`theme-${theme.id}`">
+              <v-card-title>
+                <span
+                  class="headline" 
+                  @click="showTutos(theme.id)">{{ theme.name }}</span>              
+                <v-spacer />
+               
+                <i
+                  icon
+                  small
+                  class="uiIconVerticalDots d-flex"
+                  @click="displayActionMenu = true">
+                </i>
+              
+                <v-menu
+                  v-model="displayActionMenu"
+                  :attach="`#theme-${theme.id}`"
+                  transition="slide-x-reverse-transition"
+                  offset-y>
+                  <v-list class="pa-0" dense>
+                    <v-list-item class="menu-list" @click="update(theme.id)">
+                      <v-list-item-title class="subtitle-2">
+                        <v-icon>mdi-pencil</v-icon>
+                        <span>{{ $t('addon.elearning.tutorial.update') }}</span>
+                      </v-list-item-title>
+                    </v-list-item>
+                    <v-list-item class="draftButton" @click="prepareDelete(theme.id)">
+                      <v-list-item-title class="subtitle-2">
+                        <v-icon>mdi-delete</v-icon>
+                        <span>{{ $t('addon.elearning.tutorial.delete') }}</span>
+                      </v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </v-card-title>
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -100,9 +96,10 @@
 
 <script>
 export default {
-  
+
   data() {
     return {
+      displayActionMenu: false,
       successBar: false,
       text: '',
       color: 'success',
@@ -123,6 +120,14 @@ export default {
       this.successBar=true;
       this.text=this.$t('addon.elearning.theme.updated');
       this.getThemes();
+    });
+
+    $(document).on('mousedown', () => {
+      if (this.displayActionMenu) {
+        window.setTimeout(() => {
+          this.displayActionMenu = false;
+        }, 200);
+      }
     });
 
   },
@@ -148,6 +153,9 @@ export default {
     },
     update(id){
       this.$root.$emit('updateTheme', id);
+    },
+    showTutos(id){
+      this.$root.$emit('showTutos', id);
     },
     createTheme(){
       this.$root.$emit('addTheme');
