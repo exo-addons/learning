@@ -1,6 +1,7 @@
 package org.exoplatform.addon.elearning.entities;
 
 import java.sql.Timestamp;
+
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -48,9 +49,11 @@ public class TutorialEntity {
   @CollectionTable(name = "ADDON_E_LEARNING_TUTO_THEME", joinColumns = @JoinColumn(name = "TUTO_ID"))
   @Column(name = "THEME_ID")
   public Collection<Long>        themeIds;
-
+  
+  /*
   @OneToMany(mappedBy = "tuto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Collection<StepEntity> steps;
+  */
 
   @Column(name = "STATUS")
   private String                 status;

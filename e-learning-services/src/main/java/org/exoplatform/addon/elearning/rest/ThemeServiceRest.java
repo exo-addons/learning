@@ -10,17 +10,25 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.exoplatform.addon.elearning.service.configuration.ThemeService;
 import org.exoplatform.addon.elearning.service.dto.Theme;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+
+import io.swagger.annotations.ApiParam;
 
 @Path("theme")
 @Produces(MediaType.APPLICATION_JSON)
+/*@RolesAllowed("users")*/
 public class ThemeServiceRest implements ResourceContainer {
 
+  private static final Log LOG           = ExoLogger.getLogger(ThemeServiceRest.class);
+  
   private ThemeService themeService;
 
   public ThemeServiceRest(ThemeService themeService) {
@@ -29,12 +37,15 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @POST
   @Path("/addTheme")
+  /*@RolesAllowed("users")*/
   public Response addTheme(Theme theme) {
     try {
       theme = themeService.createTheme(theme);
 
     } catch (Exception e) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Could not create Theme").build();
+      
+      LOG.error("Could not create Theme", e);
+      return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.status(Response.Status.OK).entity(theme).build();
 
@@ -42,40 +53,47 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @DELETE
   @Path("/deleteTheme/{id}")
+  /*@RolesAllowed("users")*/
   public Response deleteTheme(@PathParam("id") Long id) {
 
     try {
       themeService.deleteTheme(id);
 
     } catch (Exception e) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Could not delete Theme").build();
+      LOG.error("Could not delete Theme with the Id {}", id, e);
+      return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.status(Response.Status.OK).entity("Theme with id " + id + " Deleted").build();
   }
 
   @PUT
   @Path("/updateTheme")
+  /*@RolesAllowed("users")*/
   public Response updateTheme(Theme theme) {
 
     try {
       theme = themeService.updateTheme(theme);
 
     } catch (Exception e) {
-
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Could not update Theme").build();
+      
+      LOG.error("Could not update Theme", e);
+      return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.status(Response.Status.OK).entity("Theme with id " + theme.getId() + " Updated").build();
   }
 
   @GET
   @Path("/getAllThemes")
-  public Response getAllThemes() {
+  /*@RolesAllowed("users")*/
+  public Response getAllThemes(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
+                               @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
     List<Theme> themes = new ArrayList<Theme>();
     try {
-      themes = themeService.getAllThemes();
+      themes = themeService.getAllThemes(offset,limit);
 
     } catch (Exception e) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Could not get all Themes").build();
+      LOG.error("Could not get all Themes", e);
+      return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.ok(themes, MediaType.APPLICATION_JSON).build();
 
@@ -83,6 +101,7 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @GET
   @Path("/getThemeById/{id}")
+  /*@RolesAllowed("users")*/
   public Response getThemeById(@PathParam("id") Long id) {
     Theme theme = new Theme();
 
@@ -90,7 +109,8 @@ public class ThemeServiceRest implements ResourceContainer {
       theme = themeService.getThemeById(id);
 
     } catch (Exception e) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("No Theme found with id " + id).build();
+      LOG.error("No Theme found with id {}", id, e);
+      return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.ok(theme, MediaType.APPLICATION_JSON).build();
 
@@ -98,13 +118,16 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @GET
   @Path("/getAllThemeNames")
-  public Response getAllThemeNames() {
+  /*@RolesAllowed("users")*/
+  public Response getAllThemeNames(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
+                                   @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
     List<String> themes = new ArrayList<String>();
     try {
-      themes = themeService.getAllThemeNames();
+      themes = themeService.getAllThemeNames(offset,limit);
 
     } catch (Exception e) {
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Could not get all Theme Names").build();
+      LOG.error("Could not get all Theme Names", e);
+      return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.ok(themes, MediaType.APPLICATION_JSON).build();
 

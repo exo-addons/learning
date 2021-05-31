@@ -58,7 +58,7 @@ public class ThemeService implements ResourceContainer {
     return ThemeMapper.convertThemeToDTO(themeEntity);
   }
 
-  public List<Theme> getAllThemes() {
+  public List<Theme> getAllThemes(int offset, int limit) {
     List<ThemeEntity> themes = new ArrayList<ThemeEntity>();
 
     try {
@@ -83,7 +83,7 @@ public class ThemeService implements ResourceContainer {
     return ThemeMapper.convertThemeToDTO(theme);
   }
 
-  public List<String> getAllThemeNames() {
+  public List<String> getAllThemeNames(int offset, int limit) {
     List<String> themes = new ArrayList<String>();
 
     try {

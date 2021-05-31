@@ -64,7 +64,7 @@ public class TutorialService implements ResourceContainer {
     return TutorialMapper.convertTutorialToDTO(tutoEntity);
   }
 
-  public List<Tutorial> getAllTutos() {
+  public List<Tutorial> getAllTutos(int offset, int limit) {
     List<TutorialEntity> tutos = new ArrayList<TutorialEntity>();
 
     try {
@@ -89,7 +89,7 @@ public class TutorialService implements ResourceContainer {
     return TutorialMapper.convertTutorialToDTO(tuto);
   }
 
-  public List<Tutorial> getAllTutosByTheme(Long id) {
+  public List<Tutorial> getAllTutosByTheme(Long id,int offset, int limit) {
     List<TutorialEntity> tutos = new ArrayList<TutorialEntity>();
 
     try {

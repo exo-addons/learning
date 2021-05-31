@@ -22,10 +22,12 @@ public class StepEntity {
   @Column(name = "ID")
   private Long           id;
 
+  /*
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "tuto_id")
   private TutorialEntity tuto;
-
+  */
+  
   @Column(name = "MEDIA")
   private Long           media;
 
@@ -35,9 +37,8 @@ public class StepEntity {
   public StepEntity() {
   }
 
-  public StepEntity(Long id, TutorialEntity tuto, Long media) {
+  public StepEntity(Long id, Long media) {
     this.id = id;
-    this.tuto = tuto;
     this.media = media;
   }
 
@@ -47,14 +48,6 @@ public class StepEntity {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public TutorialEntity getTuto() {
-    return tuto;
-  }
-
-  public void setTuto(TutorialEntity tuto) {
-    this.tuto = tuto;
   }
 
   public Long getMedia() {
