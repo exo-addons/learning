@@ -184,7 +184,6 @@ export default {
           this.tutoUp.status = this.tutoU.status;})
         .catch((e) => this.errors.push(e));
     },
-
     
     getThemes() {
       return this.$themeService.getThemes()

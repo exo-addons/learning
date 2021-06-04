@@ -173,6 +173,15 @@ export default {
       this.getTutosByTheme(this.themeId);
     });
 
+    $(document).on('mousedown', () => {
+      if (this.displayActionMenu) {
+        window.setTimeout(() => {
+          this.displayActionMenu = false;
+        }, 200);
+      }
+    });
+
+
   },
 
   methods: {
