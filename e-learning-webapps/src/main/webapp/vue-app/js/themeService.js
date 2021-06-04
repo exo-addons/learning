@@ -1,5 +1,5 @@
-export function getTutos() {
-  return fetch('/portal/rest/tuto/getAllTutos', {
+export function getThemes() {
+  return fetch('/portal/rest/theme/getAllThemes', {
     method: 'GET'
   })
     .then((response) => {
@@ -11,8 +11,8 @@ export function getTutos() {
     });
 }
 
-export function getTuto(tutoId) {
-  return fetch(`/portal/rest/tuto/getTutoById/${tutoId}`, {
+export function getTheme(themeId) {
+  return fetch(`/portal/rest/theme/getThemeById/${themeId}`, {
     method: 'GET'
   })
     .then((response) => {
@@ -24,8 +24,8 @@ export function getTuto(tutoId) {
     });
 }
 
-export function deleteTuto(deleteId) {
-  return fetch(`/portal/rest/tuto/deleteTuto/${deleteId}`, {
+export function deleteTheme(deleteId) {
+  return fetch(`/portal/rest/theme/deleteTheme/${deleteId}`, {
     method: 'DELETE'
   }).then(response => {
     if (!response || !response.ok) {
@@ -34,10 +34,10 @@ export function deleteTuto(deleteId) {
   });
 }
 
-export function tutoPost(tuto) {
-  return fetch('/portal/rest/tuto/addTuto', {
+export function themePost(theme) {
+  return fetch('/portal/rest/theme/addTheme', {
     method: 'POST',
-    body: JSON.stringify(tuto),
+    body: JSON.stringify(theme),
     headers: {
       'Content-Type': 'application/json'
     }
@@ -48,10 +48,10 @@ export function tutoPost(tuto) {
   });
 }
 
-export function tutoUpdate(tuto) {
-  return fetch('/portal/rest/tuto/updateTuto', {
+export function themeUpdate(theme) {
+  return fetch('/portal/rest/theme/updateTheme', {
     method: 'PUT',
-    body: JSON.stringify(tuto),
+    body: JSON.stringify(theme),
     headers: {
       'Content-Type': 'application/json'
     }
@@ -62,8 +62,8 @@ export function tutoUpdate(tuto) {
   });
 }
 
-export function getAllTutosByTheme(themeId) {
-  return fetch(`/portal/rest/tuto/getAllTutosByTheme/${themeId}`, {
+export function getThemeNames() {
+  return fetch('portal/rest/theme/getAllThemeNames', {
     method: 'GET'
   })
     .then((response) => {

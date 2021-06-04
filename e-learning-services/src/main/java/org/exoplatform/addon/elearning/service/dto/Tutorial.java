@@ -26,10 +26,14 @@ public class Tutorial implements Serializable {
 
   private List<Step> steps;
 
-  public Tutorial(String title, String description, String author, String status) {
+  private List<Long> themeIds;
+
+  public Tutorial(String title, String description, String author, String status, List<Long> themeIds) {
     this.title = title;
     this.description = description;
     this.author = author;
     this.status = status;
+    this.themeIds = themeIds;
   }
+
 }

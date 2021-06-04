@@ -1,6 +1,7 @@
 package org.exoplatform.addon.elearning.service.mapper;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,8 @@ public class TutorialMapper {
     tutorial.setStatus(tutorialEntity.getStatus());
     tutorial.setDescription(tutorialEntity.getDescription());
     tutorial.setTitle(tutorialEntity.getTitle());
+    ArrayList<Long> themeIds = new ArrayList<Long>(tutorialEntity.getThemeIds());
+    tutorial.setThemeIds(themeIds);
     return tutorial;
   }
 
@@ -37,6 +40,7 @@ public class TutorialMapper {
     tutorialEntity.setStatus(tutorial.getStatus());
     tutorialEntity.setDescription(tutorial.getDescription());
     tutorialEntity.setTitle(tutorial.getTitle());
+    tutorialEntity.setThemeIds(tutorial.getThemeIds());
     return tutorialEntity;
   }
 

@@ -7,5 +7,6 @@ import lombok.Data;
 @Data
 public class Step implements Serializable {
   private Long id;
+
   private Long media;
 }

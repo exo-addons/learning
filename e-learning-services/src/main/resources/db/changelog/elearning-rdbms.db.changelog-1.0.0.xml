@@ -76,10 +76,38 @@
 			</column>
 
 			<column name="NAME" type="NVARCHAR(255)" />
-			<column name="PARENT_THEME" type="BIGINT">
+
+			<!-- <column name="PARENT_THEME" type="BIGINT"> <constraints nullable="true" 
+				uniqueConstraintName="KEY_PARENT_THEME" foreignKeyName="FK_PARENT_THEME" 
+				references="ADDON_E_LEARNING_THEME(ID)" /> </column> -->
+
+		</createTable>
+
+
+
+		<modifySql dbms="mysql">
+			<append
+				value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci" />
+		</modifySql>
+
+
+	</changeSet>
+
+
+	<changeSet author="elearning" id="1.0.0-4">
+
+
+		<createTable tableName="ADDON_E_LEARNING_TUTO_THEME">
+
+			<column name="TUTO_ID" type="BIGINT">
+				<constraints nullable="true" foreignKeyName="FK_TUTO_ID"
+					primaryKey="true" primaryKeyName="FK_TUTO_THEME_ID"
+					references="ADDON_E_LEARNING_TUTO(ID)" />
+			</column>
+			<column name="THEME_ID" type="BIGINT">
 				<constraints nullable="true"
-					uniqueConstraintName="KEY_PARENT_THEME"
-					foreignKeyName="FK_PARENT_THEME"
+					foreignKeyName="FK_THEME_ID" primaryKey="true"
+					primaryKeyName="FK_TUTO_THEME_ID"
 					references="ADDON_E_LEARNING_THEME(ID)" />
 			</column>
 		</createTable>
@@ -93,34 +121,5 @@
 
 
 	</changeSet>
-
-	<changeSet author="elearning" id="1.0.0-4">
-
-
-		<createTable tableName="ADDON_E_LEARNING_TUTO_THEME">
-
-			<column name="THEME_ID" type="BIGINT">
-				<constraints nullable="true"
-					foreignKeyName="FK_THEME_ID"
-					references="ADDON_E_LEARNING_THEME(ID)" deleteCascade="true" />
-			</column>
-			<column name="TUTO_ID" type="BIGINT">
-				<constraints nullable="true" foreignKeyName="FK_TUTO_ID"
-					references="ADDON_E_LEARNING_STEP(ID)" deleteCascade="true" />
-			</column>
-		</createTable>
-
-
-		<modifySql dbms="mysql">
-			<append
-				value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci" />
-		</modifySql>
-
-
-	</changeSet>
-
-
-
-
 
 </databaseChangeLog>
