@@ -85,7 +85,7 @@ export default {
   methods: {
     themePost() {
       return this.$themeService.themePost(this.themeA)
-        .then(() => {this.$root.$emit('createTheme');})
+        .then(() => {this.$root.$emit('themeCreated');})
         .then(() =>{ 
           this.$refs.form.reset();
           this.$refs.themeManagementDrawer.close(); })
@@ -105,7 +105,7 @@ export default {
     },
 
     getThemeU(id) {
-      return this.$themeService.getTheme(id)
+      return this.$themeService.getThemeById(id)
         .then((data) => {this.themeU = data;
           this.themeUp.name = this.themeU.name;})
         .catch((e) => this.errors.push(e));

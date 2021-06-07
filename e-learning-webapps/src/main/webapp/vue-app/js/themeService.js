@@ -11,7 +11,7 @@ export function getThemes() {
     });
 }
 
-export function getTheme(themeId) {
+export function getThemeById(themeId) {
   return fetch(`/portal/rest/theme/getThemeById/${themeId}`, {
     method: 'GET'
   })
