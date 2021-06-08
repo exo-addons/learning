@@ -6,13 +6,17 @@
       <v-card
         class="theme_items"
         :id="`theme-${theme.id}`">
-        <v-card-title>
+        <div class="theme_card_toolbar d-flex px-3 align-center font-weight-bold">
           <span
-            class="headline" 
-            @click="showTutos(theme.id)">{{ theme.name }}</span>              
-          <v-spacer />
+            class="d-flex align-center"
+            id="theme_card_title" 
+            @click="showTutos(theme.id)">{{ theme.name }}</span>
+          <div class="spacer d-none d-sm-inline"></div>
+          
           <v-icon @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
+          
           <v-menu
+            id="theme_card_menu"
             v-model="displayActionMenu"
             :attach="`#theme-${theme.id}`"
             transition="slide-x-reverse-transition"
@@ -32,7 +36,15 @@
               </v-list-item>
             </v-list>
           </v-menu>
-        </v-card-title>
+        </div>
+        <v-card-text>
+          <v-avatar size="35">
+            <img
+              src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"> 
+          </v-avatar>
+          Space Name
+        </v-card-text>
+        <div id="theme_card_footer"></div>
       </v-card>
     </template>   
   </v-app>

@@ -3,11 +3,11 @@
     id="themes_card_list"
     flat>
     <template>
-      <v-container class="theme_items_grid">
+      <!--
+      <v-container id="theme_items_grid"> 
         <v-row>
           <v-col
             cols="12"
-            sm="3"
             md="2"
             v-for="theme in themeList"
             :key="theme.id">
@@ -15,11 +15,24 @@
           </v-col>
         </v-row>
       </v-container>
+      -->
+      <div
+        v-for="themes in groupedThemes"
+        class="row theme_cards_container"
+        :key="themes.id">
+        <div
+          v-for="theme in themes"
+          class="col-lg-2"
+          :key="theme.id">
+          <theme-card :theme="theme" />
+        </div>
+      </div>
     </template> 
   </v-app>
 </template>
 
 <script>
+const _ = require('lodash');
 export default {
 
   data() {
@@ -27,6 +40,12 @@ export default {
       themeList: [],
       errors: [],
     };
+  },
+
+  computed: {
+    groupedThemes(){
+      return _.chunk(this.themeList, 5);
+    }
   },
 
   created() {

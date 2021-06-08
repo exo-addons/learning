@@ -1,34 +1,16 @@
 @import "./variables.less";
 @import "./mixins.less";
 #elearning_app {
-  background: @baseBackgroundDark !important;;
+  background: @baseBackgroundDark !important;
   .controls {
     position: relative;
   }
 
-  .tuto_items_grid.v-container {
-    background: @baseBackground !important;
-    .controls {
-      position: relative;
-    }
-  }
-
+  
   .exo_primary_btn.v-btn {
     color: @btnPrimaryColor !important;
     background: @btnPrimaryBackground !important;
-    
-    .controls {
-      position: relative;
-    }
-  }
-
-  .exo_primary_btn.v-btn:disabled {
-    color: @btnDisableColor !important;
-    background: @btnDisableBackground !important;
-    
-    .controls {
-      position: relative;
-    }
+    position: relative;
   }
 
   .snackbar_btn.v-btn { 
@@ -48,4 +30,65 @@
     height: 150px;
     filter: blur(5px);
   }
+  #themes_dashboard{
+    #themes_card_list {
+      .theme_cards_container{
+        position: relative;
+        margin-left: 15px;
+        margin-right: -145px;
+      }
+      margin-top: 5px;
+      margin-left: 25px;
+      margin-right: 25px;
+      position: relative;
+      background: @baseBackgroundDefault !important;   
+      #theme_card {
+        #theme_card_footer {
+          background: @orangeColor;
+          height: 5px;
+          position: relative;
+        }
+        #theme_card_title {
+          text-align:center;
+        }
+        .theme_items{
+          .theme_card_toolbar{
+            position: relative;
+            #theme_card_menu.v-menu{
+              position: relative;
+            }
+          }
+        }
+      }
+        
+    }
+  };
+  #theme_dashboard_toolbar{
+    margin-top: 15px;
+    margin-left: 25px;
+    margin-right: 25px;
+    position: relative;
+    #ThemeDashboardToolbar{
+      #theme_add_btn.v-icon{
+        color: @btnPrimaryBackground !important;
+      }
+      #theme_add_list_btn.v-icon{
+        color: @btnPrimaryBackground !important;
+      }
+    }
+  }
 }
+  /*
+  #tutorials_dashboard{
+    #tutos_card_list{
+      #tutorial_card{
+        .tuto_items{
+          #tuto_card_footer{
+            background: @primaryColor;
+            height: 5px;
+          }
+        }
+      }
+    }
+  }
+  */
