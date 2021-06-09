@@ -145,7 +145,7 @@ export default {
       this.title = true;
       this.$refs.tutorialManagementDrawer.open();
     });
-    this.$root.$on('updateTuto', (id) => {
+    this.$root.$on('makeUpdateTuto', (id) => {
       this.title = false;
       this.$refs.tutorialManagementDrawer.open();
       this.tutoId=id;
@@ -156,7 +156,7 @@ export default {
   methods: {
     tutoPost() {
       return this.$tutoService.tutoPost(this.tutoA)
-        .then(() => {this.$root.$emit('createTuto');})
+        .then(() => {this.$root.$emit('tutoCreated');})
         .then(() =>{ 
           this.$refs.form.reset();
           this.$refs.tutorialManagementDrawer.close(); })
@@ -176,7 +176,7 @@ export default {
     },
 
     getTutoU(id) {
-      return this.$tutoService.getTuto(id)
+      return this.$tutoService.getTutoById(id)
         .then((data) => {this.tutoU = data;
           this.tutoUp.title = this.tutoU.title;
           this.tutoUp.description = this.tutoU.description;

@@ -53,15 +53,15 @@ export default {
     };
   },
   created (){
-    this.$root.$on('displayTuto', (id) => {
-      this.getTuto(id);            
+    this.$root.$on('makeShowTTuto', (id) => {
+      this.getTutoById(id);            
       this.$refs.tutorialDisplayDrawer.open();      
     });      
   },
   methods: {
 
-    getTuto(id) {
-      return this.$tutoService.getTuto(id)
+    getTutoById(id) {
+      return this.$tutoService.getTutoById(id)
         .then((data) => {this.tuto = data;})
         .catch((e) => this.errors.push(e));
     }

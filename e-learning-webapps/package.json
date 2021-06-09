@@ -90,5 +90,7 @@
     ],
     "coverageDirectory": "<rootDir>/target/jest/coverage"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lodash.chunk": "^4.2.0"
+  }
 }
