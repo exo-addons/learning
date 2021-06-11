@@ -16,11 +16,12 @@
           <v-icon @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
           
           <v-menu
-            id="theme_card_menu"
+             content-class="theme_card_menu"
             v-model="displayActionMenu"
             :attach="`#theme-${theme.id}`"
             transition="slide-x-reverse-transition"
-            offset-y>
+            offset-y
+            offset-x>
             <v-list class="pa-0" dense>
               <v-list-item class="menu-list" @click="update(theme.id)">
                 <v-list-item-title class="subtitle-2">

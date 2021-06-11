@@ -8,22 +8,26 @@
       <v-spacer />
 
       <v-scale-transition>
-        <v-icon id="theme_add_btn" @click="displayActionMenu = true">mdi-plus</v-icon>
+        <div class="add_theme_wrapper">
+            <v-icon id="theme_add_btn" @click="displayActionMenu = true">mdi-plus</v-icon>
+            <v-menu
+            v-model="displayActionMenu"
+            attach="#ThemeDashboardToolbar"
+            content-class="theme_Dashboard_menu"
+            transition="slide-x-reverse-transition"
+            offset-y
+            offset-x>
+            <v-list class="pa-0" dense>
+              <v-list-item class="menu-list" @click="createTheme">
+                <v-list-item-title class="subtitle-2">
+                  <v-icon id="theme_add_list_btn">mdi-folder</v-icon>
+                  <span>{{ $t('addon.elearning.theme.create') }}</span>
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
       </v-scale-transition>
-      <v-menu
-        v-model="displayActionMenu"
-        attach="#ThemeDashboardToolbar"
-        transition="slide-x-reverse-transition"
-        offset-y>
-        <v-list class="pa-0" dense>
-          <v-list-item class="menu-list" @click="createTheme">
-            <v-list-item-title class="subtitle-2">
-              <v-icon id="theme_add_list_btn">mdi-folder</v-icon>
-              <span>{{ $t('addon.elearning.theme.create') }}</span>
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
 
       <v-scale-transition>
         <div id="theme_filter_input">
