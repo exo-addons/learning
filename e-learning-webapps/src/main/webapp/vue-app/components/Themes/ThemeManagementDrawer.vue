@@ -10,16 +10,16 @@
         {{ $t('addon.elearning.theme.updateF') }}     
       </template>
       <template slot="content">
-        <div>
-          <h2> {{ $t('addon.elearning.theme.details') }}  </h2>
-        </div>
         <v-form ref="form">
+          <label class="theme_title_label" for="title">
+            {{ $t('addon.elearning.theme.label.title') }}  
+          </label>
           <v-text-field
             v-if="this.title"
             class="primary_theme_input"
             outlined
             clearable
-            :label="$t('addon.elearning.theme.label.title')"
+            :placeholder="$t('addon.elearning.theme.label.placeholder')"
             name="title"
             v-model="themeA.name" />
           <v-text-field
@@ -27,20 +27,20 @@
             class="primary_theme_input"
             outlined
             clearable
-            :label="$t('addon.elearning.theme.label.title')"
+            :placeholder="$t('addon.elearning.theme.label.placeholder')"
             name="title"
             v-model="themeUp.name" />
         </v-form>
       </template>
       <template slot="footer">
         <v-btn
-          class="exo_primary_btn"
+          class="theme_drawer_btn_add"
           v-if="this.title"
           @click="themePost">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
         <v-btn
-          class="exo_primary_btn"
+          class="theme_drawer_btn_add"
           v-else
           @click="themeUpdate">
           {{ $t('addon.elearning.tutorial.confirm') }}

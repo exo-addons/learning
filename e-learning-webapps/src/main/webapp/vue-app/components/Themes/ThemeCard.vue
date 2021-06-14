@@ -13,37 +13,47 @@
             @click="showTutos(theme.id)">{{ theme.name }}</span>
           <div class="spacer d-none d-sm-inline"></div>
           
-          <v-icon @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
+          <v-icon class="theme_card_menu_icon" @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
           
           <v-menu
-             content-class="theme_card_menu"
+            content-class="theme_card_menu"
             v-model="displayActionMenu"
             :attach="`#theme-${theme.id}`"
             transition="slide-x-reverse-transition"
             offset-y
             offset-x>
-            <v-list class="pa-0" dense>
-              <v-list-item class="menu-list" @click="update(theme.id)">
-                <v-list-item-title class="subtitle-2">
-                  <v-icon>mdi-pencil</v-icon>
-                  <span>{{ $t('addon.elearning.tutorial.update') }}</span>
+            <v-list class="card_menu_list" dense>
+              <v-list-item @click="update(theme.id)">
+                <v-list-item-title class="menu_list_items">
+                  <v-icon class="theme_menu_icon">mdi-pencil</v-icon>
+                  <span class="theme_menu_text">{{ $t('addon.elearning.theme.update') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="draftButton" @click="deleteTheme(theme.id)">
-                <v-list-item-title class="subtitle-2">
-                  <v-icon>mdi-delete</v-icon>
-                  <span>{{ $t('addon.elearning.tutorial.delete') }}</span>
+              <v-list-item class="clickable">
+                <v-list-item-title class="menu_list_items">
+                  <v-icon class="theme_menu_icon">mdi-package-down</v-icon>
+                  <span class="theme_menu_text">{{ $t('addon.elearning.theme.archive') }}</span>
                 </v-list-item-title>
               </v-list-item>
+              <v-list-item @click="deleteTheme(theme.id)">
+                <v-list-item-title class="menu_list_items">
+                  <v-icon class="theme_menu_icon">mdi-delete</v-icon>
+                  <span class="theme_menu_text">{{ $t('addon.elearning.theme.delete') }}</span>
+                </v-list-item-title>
+              </v-list-item>              
             </v-list>
           </v-menu>
         </div>
         <v-card-text>
-          <v-avatar size="35">
-            <img
-              src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"> 
-          </v-avatar>
-          Space Name
+          <div class="theme_card_content">
+            <v-avatar size="35" class="theme_card_space_avatar">
+              <img
+                src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"> 
+            </v-avatar>
+            <span class="theme_card_space_name">
+              Space Name
+            </span>
+          </div>
         </v-card-text>
         <div id="theme_card_footer"></div>
       </v-card>

@@ -21,8 +21,8 @@
         class="row theme_cards_container"
         :key="themes.id">
         <div
+          class="col theme_cards"
           v-for="theme in themes"
-          class="col-lg-2"
           :key="theme.id">
           <theme-card :theme="theme" />
         </div>
@@ -44,7 +44,7 @@ export default {
 
   computed: {
     groupedThemes(){
-      return _.chunk(this.themeList, 5);
+      return _.chunk(this.themeList, 4);
     }
   },
 
