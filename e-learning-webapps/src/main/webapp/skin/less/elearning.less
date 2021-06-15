@@ -1,7 +1,7 @@
 @import "./variables.less";
 @import "./mixins.less";
 #elearning_app {
-  background: @baseBackgroundDark !important;
+  background: @primaryBackground !important;
   .controls {
     position: relative;
   }
@@ -24,53 +24,29 @@
     filter: blur(5px);
   }
   #themes_dashboard{
-    height: 550px;
+    max-height: max-content;
     #themes_card_list {
       min-height: 100%;
-      .theme_cards_container{
+      margin-left: 25px;
+      margin-right: 25px;
+      padding-left: 10px;
+      padding-right: 10px;
+      position: relative;
+      background: @baseBackgroundDefault !important; 
+      .container{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+      }
+      .theme_cards_row{
         position: relative;
         display: flex;
         align-items: center;
-        max-height: 150px;
-        .theme_cards{
-          max-width: 305.25px;
-          margin-left: 10px;
-          margin-right: 10px;
-          height: max-content;
-        }
-      }
-      margin-left: 25px;
-      margin-right: 25px;
-      position: relative;
-      background: @baseBackgroundDefault !important;   
-      #theme_card {
-        position: relative;
-        #theme_card_footer {
-          background: @orangeColor;
-          height: 5px;
+        .theme_cards {
           position: relative;
-        }
-        #theme_card_title {
-          width: 200px !important;
-          justify-content: center;
-        }
-        .theme_items{
-          box-shadow: none !important;
-          border-left: .1px solid rgba(87,141,201, .3) !important;
-          border-top: .1px solid rgba(87,141,201, .3) !important;
-          border-right: .1px solid rgba(87,141,201, .3) !important;
-          position: relative;
-          .theme_card_toolbar{
-            margin-top: 10px;
-            position: relative;
-          }
-          .theme_card_menu_icon{
-            color: rgba(87,141,201, .3) !important;
-          }
           .theme_card_menu {
-            right: 27px;
+            right: 40px;
             left: auto!important;
-            top: 25px!important;
+            top: 45px!important;
             .card_menu_list.v-list{
               padding-top: 5px !important;
               padding-bottom: 5px !important;
@@ -92,25 +68,52 @@
               }
             }
           }
+        }
+        #theme_card {
+          position: relative;
           
+          #theme_card_footer {
+            background: @orangeColor;
+            height: 5px;
+            position: relative;
+          }
+          
+          .theme_items{
+            box-shadow: none !important;
+            border-left: .1px solid rgba(87,141,201, .3) !important;
+            border-top: .1px solid rgba(87,141,201, .3) !important;
+            border-right: .1px solid rgba(87,141,201, .3) !important;
+            position: relative;
+            .theme_card_toolbar{
+              margin-top: 10px;
+              position: relative;
+              #theme_card_title {
+                width: 100% !important;
+                justify-content: center;
+              }
+              .theme_card_menu_icon{
+                color: rgba(87,141,201, .3) !important;
+                float: right;
+              }
+              
+            }
             .theme_card_content{
               height: 40px !important;
               display: flex; 
               margin-top: 15px !important;
-                .theme_card_space_avatar.v-avatar{
-                  display: inline-flex;
-                  align-items: center;
-                }
-                .theme_card_space_name{
-                  display: inline-flex;
-                  align-items: center;
-                  margin-left: 10px;
-                }
+              .theme_card_space_avatar.v-avatar{
+                display: inline-flex;
+                align-items: center;
+              }
+              .theme_card_space_name{
+                display: inline-flex;
+                align-items: center;
+                margin-left: 10px;
+              }
             }
-          
+          }
         }
-      }
-        
+      }     
     }
   };
   #theme_dashboard_toolbar{
@@ -164,14 +167,14 @@
       position: relative;
       float: right;
       margin-left: 10px;
+      box-shadow: none !important;
     }
     .exo_cancel_btn{
       position: relative;
       float: right;
+      box-shadow: none !important;
+      border: .1px solid rgba(87,141,201, .3) !important;
     }
-    .theme_drawer_btn_cancel.v-btn {
-      position: relative;
-      float: right;
     }
     .theme_title_label{
       font-weight: 600;
@@ -182,19 +185,4 @@
       width: 75%;
       margin-left: 20px;
     }
-  }
 }
-  /*
-  #tutorials_dashboard{
-    #tutos_card_list{
-      #tutorial_card{
-        .tuto_items{
-          #tuto_card_footer{
-            background: @primaryColor;
-            height: 5px;
-          }
-        }
-      }
-    }
-  }
-  */

@@ -3,36 +3,26 @@
     id="themes_card_list"
     flat>
     <template>
-      <!--
-      <v-container id="theme_items_grid"> 
-        <v-row>
+      <v-container> 
+        <v-row class="theme_cards_row border-box-sizing"> 
           <v-col
+            class="theme_cards"
             cols="12"
-            md="2"
+            md="6"
+            lg="4"
+            xl="3"
             v-for="theme in themeList"
-            :key="theme.id">
+            :key="theme.id"
+            :id="'theme-'+theme.id">
             <theme-card :theme="theme" />
           </v-col>
         </v-row>
-      </v-container>
-      -->
-      <div
-        v-for="themes in groupedThemes"
-        class="row theme_cards_container"
-        :key="themes.id">
-        <div
-          class="col theme_cards"
-          v-for="theme in themes"
-          :key="theme.id">
-          <theme-card :theme="theme" />
-        </div>
-      </div>
+      </v-container>  
     </template> 
   </v-app>
 </template>
 
 <script>
-const _ = require('lodash');
 export default {
 
   data() {
@@ -40,12 +30,6 @@ export default {
       themeList: [],
       errors: [],
     };
-  },
-
-  computed: {
-    groupedThemes(){
-      return _.chunk(this.themeList, 4);
-    }
   },
 
   created() {

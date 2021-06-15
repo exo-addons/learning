@@ -15,7 +15,7 @@
       <div class="text-center">
         <v-snackbar
           v-model="successBar"
-          timeout="2000"
+          :timeout="timeout"
           :color="this.color">
           {{ text }}
           <template v-slot:action="{ attrs }">
@@ -41,6 +41,7 @@ export default {
       successBar: false,
       text: '',
       color: 'success',
+      timeout: 0,
       deleteId: null,
       errors: [],
     };
@@ -79,11 +80,18 @@ export default {
       return this.$themeService.deleteTheme(this.deleteId)
         .then(() => {
           this.confirmDialog=false;
-          
           this.successBar=true;
+          this.color='success';
+          this.timeout=3000;
           this.text=this.$t('addon.elearning.theme.deleted');
-          this.$root.$emit('themeDeleted');})
-        .catch((e) => this.errors.push(e));
+          this.$root.$emit('themeDeleted');
+        })
+        .catch((e) => {console.error('Error deleting theme', e);
+          this.confirmDialog=false;
+          this.successBar=true;
+          this.color='error';
+          this.timeout=5000;
+          this.text=this.$t('addon.elearning.theme.delete.fail');});
     }
   }  
 };

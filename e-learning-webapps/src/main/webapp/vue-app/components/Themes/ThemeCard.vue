@@ -11,7 +11,6 @@
             class="d-flex align-center"
             id="theme_card_title" 
             @click="showTutos(theme.id)">{{ theme.name }}</span>
-          <div class="spacer d-none d-sm-inline"></div>
           
           <v-icon class="theme_card_menu_icon" @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
           
