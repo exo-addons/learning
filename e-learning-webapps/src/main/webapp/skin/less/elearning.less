@@ -1,34 +1,9 @@
 @import "./variables.less";
 @import "./mixins.less";
 #elearning_app {
-  background: @baseBackgroundDark !important;;
+  background: @primaryBackground !important;
   .controls {
     position: relative;
-  }
-
-  .tuto_items_grid.v-container {
-    background: @baseBackground !important;
-    .controls {
-      position: relative;
-    }
-  }
-
-  .exo_primary_btn.v-btn {
-    color: @btnPrimaryColor !important;
-    background: @btnPrimaryBackground !important;
-    
-    .controls {
-      position: relative;
-    }
-  }
-
-  .exo_primary_btn.v-btn:disabled {
-    color: @btnDisableColor !important;
-    background: @btnDisableBackground !important;
-    
-    .controls {
-      position: relative;
-    }
   }
 
   .snackbar_btn.v-btn { 
@@ -48,4 +23,166 @@
     height: 150px;
     filter: blur(5px);
   }
+  #themes_dashboard{
+    max-height: max-content;
+    #themes_card_list {
+      min-height: 100%;
+      margin-left: 25px;
+      margin-right: 25px;
+      padding-left: 10px;
+      padding-right: 10px;
+      position: relative;
+      background: @baseBackgroundDefault !important; 
+      .container{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+      }
+      .theme_cards_row{
+        position: relative;
+        display: flex;
+        align-items: center;
+        .theme_cards {
+          position: relative;
+          .theme_card_menu {
+            right: 40px;
+            left: auto!important;
+            top: 45px!important;
+            .card_menu_list.v-list{
+              padding-top: 5px !important;
+              padding-bottom: 5px !important;
+              .v-list-item{
+                min-height: 5px;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                padding-top: 3px !important;
+                padding-bottom: 3px !important;
+              }
+              .menu_list_items{
+                .theme_menu_icon.v-icon{
+                  color: @primaryColor;
+                  font-size: 20px;
+                }
+                .theme_menu_text{
+                  font-size: 0.769rem !important;
+                }
+              }
+            }
+          }
+        }
+        #theme_card {
+          position: relative;
+          
+          #theme_card_footer {
+            background: @orangeColor;
+            height: 5px;
+            position: relative;
+          }
+          
+          .theme_items{
+            box-shadow: none !important;
+            border-left: .1px solid rgba(87,141,201, .3) !important;
+            border-top: .1px solid rgba(87,141,201, .3) !important;
+            border-right: .1px solid rgba(87,141,201, .3) !important;
+            position: relative;
+            .theme_card_toolbar{
+              margin-top: 10px;
+              position: relative;
+              #theme_card_title {
+                width: 100% !important;
+                justify-content: center;
+              }
+              .theme_card_menu_icon{
+                color: rgba(87,141,201, .3) !important;
+                float: right;
+              }
+              
+            }
+            .theme_card_content{
+              height: 40px !important;
+              display: flex; 
+              margin-top: 15px !important;
+              .theme_card_space_avatar.v-avatar{
+                display: inline-flex;
+                align-items: center;
+              }
+              .theme_card_space_name{
+                display: inline-flex;
+                align-items: center;
+                margin-left: 10px;
+              }
+            }
+          }
+        }
+      }     
+    }
+  };
+  #theme_dashboard_toolbar{
+    margin-top: 15px;
+    margin-left: 25px;
+    margin-right: 25px;
+    position: relative;
+    
+    #ThemeDashboardToolbar{
+      height: 75px !important;
+      #theme_add_btn.v-icon{
+        color: @btnPrimaryBackground !important;
+      }
+      #theme_add_list_btn.v-icon{
+        color: @btnPrimaryBackground !important;
+      }
+      .add_theme_wrapper {
+        position: relative;
+      }
+      .theme_Dashboard_menu {
+        right: 290px;
+        left: auto!important;
+        top: 40px!important;
+        .toolbar_menu_list.v-list{
+          padding-top: 5px !important;
+          padding-bottom: 5px !important;
+          .v-list-item{
+            min-height: 5px;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            padding-top: 3px !important;
+            padding-bottom: 3px !important;
+          }
+          .toolbar_menu_list_items{
+            .toolbar_menu_icon.v-icon{
+              color: @primaryColor;
+              font-size: 20px;
+            }
+            .toolbar_menu_text{
+              font-size: 0.769rem !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  #themes_management{
+    .theme_drawer_btn_add.v-btn {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
+    .exo_cancel_btn{
+      position: relative;
+      float: right;
+      box-shadow: none !important;
+      border: .1px solid rgba(87,141,201, .3) !important;
+    }
+    }
+    .theme_title_label{
+      font-weight: 600;
+      margin-left: 20px;
+      margin-top: 20px;
+    }
+    .primary_theme_input{
+      width: 75%;
+      margin-left: 20px;
+    }
 }

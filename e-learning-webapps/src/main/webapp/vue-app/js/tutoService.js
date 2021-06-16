@@ -11,7 +11,7 @@ export function getTutos() {
     });
 }
 
-export function getTuto(tutoId) {
+export function getTutoById(tutoId) {
   return fetch(`/portal/rest/tuto/getTutoById/${tutoId}`, {
     method: 'GET'
   })
