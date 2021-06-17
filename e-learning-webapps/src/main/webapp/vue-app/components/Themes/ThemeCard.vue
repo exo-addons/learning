@@ -10,7 +10,7 @@
           <span
             class="d-flex align-center"
             id="theme_card_title" 
-            @click="showTutos(theme.id)">{{ theme.name }}</span>
+            @click="showTutos(theme.id)">{{ theme.name }} </span>
           
           <v-icon class="theme_card_menu_icon" @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
           

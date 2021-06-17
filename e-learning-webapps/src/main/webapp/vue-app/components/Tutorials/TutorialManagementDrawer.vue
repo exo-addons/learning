@@ -10,102 +10,158 @@
         {{ $t('addon.elearning.tutorial.updateF') }}     
       </template>
       <template slot="content">
-        <div>
-          <h2> {{ $t('addon.elearning.tutorial.details') }}  </h2>
-        </div>
-        <v-form ref="form">
-          <v-text-field
-            v-if="this.title"
-            class="primary_tutorial_input"
-            outlined
-            clearable
-            :label="$t('addon.elearning.tutorial.label.title')"
-            name="title"
-            v-model="tutoA.title" />
-          <v-text-field
-            v-else
-            class="primary_tutorial_input"
-            outlined
-            clearable
-            :label="$t('addon.elearning.tutorial.label.title')"
-            name="title"
-            v-model="tutoUp.title" />
-          <extended-textarea
-            v-if="this.title"
-            :placeholder="$t('addon.elearning.tutorial.label.description')"
-            :max-length="2000"
-            name="description"
-            v-model="tutoA.description" />
-          <extended-textarea
-            v-else
-            :placeholder="$t('addon.elearning.tutorial.label.description')"
-            :max-length="2000"
-            name="description"
-            v-model="tutoUp.description" />
-          <v-text-field
-            v-if="this.title"
-            outlined
-            clearable
-            :label="$t('addon.elearning.tutorial.label.author')"
-            name="author"
-            v-model="tutoA.author" />
-          <v-text-field
-            v-else
-            outlined
-            clearable
-            :label="$t('addon.elearning.tutorial.label.author')"
-            name="author"
-            v-model="tutoUp.author" />
-          <v-select
-            v-if="this.title"
-            outlined
-            :items="status"
-            v-model="tutoA.status"
-            :label="$t('addon.elearning.tutorial.label.status')"
-            name="status" />
-          <v-select
-            v-else
-            outlined
-            :items="status"
-            v-model="tutoUp.status"
-            :label="$t('addon.elearning.tutorial.label.status')"
-            name="status" />
-          <v-select
-            v-if="this.title"
-            outlined
-            :items="themes"
-            item-text="name"
-            item-value="id"
-            v-model="tutoA.themeIds"
-            :label="$t('addon.elearning.tutorial.label.theme')"
-            name="theme"
-            multiple />
-          <v-select
-            v-else
-            outlined
-            :items="themes"
-            item-text="name"
-            item-value="id"
-            v-model="tutoUp.themeIds"
-            :label="$t('addon.elearning.tutorial.label.theme')"
-            name="theme"
-            multiple />
-        </v-form>
+        <template>
+          <div v-show="this.title">
+            <v-stepper
+              v-model="add_steps"
+              vertical
+              class="tutorial_steps_wrapper">
+              <v-stepper-step
+                :complete="add_steps > 1"
+                step="1">
+                {{ $t('addon.elearning.tutorial.details') }}
+                <small v-show="add_steps === 2 && tutoA.title != null && tutoA.description != null" class="stepper_label">{{ tutoA.title }} : {{ tutoA.description }}</small>
+              </v-stepper-step>
+
+              <v-stepper-content step="1">
+                <label class="tuto_title_label" for="title">
+                  {{ $t('addon.elearning.theme.label.title') }}  
+                </label>
+                <v-text-field
+                  v-if="this.title"
+                  class="primary_tutorial_input"
+                  clearable
+                  :placeholder="$t('addon.elearning.tutorial.label.title')"
+                  name="title"
+                  v-model="tutoA.title" />
+                <label class="tuto_description_label" for="description">
+                  {{ $t('addon.elearning.tutorial.label.description') }}  
+                </label>
+                <extended-textarea
+                  class="primary_text_area_input"
+                  v-if="this.title"
+                  :placeholder="$t('addon.elearning.tutorial.label.description')"
+                  :max-length="255"
+                  name="description"
+                  v-model="tutoA.description" />
+                <v-btn
+                  class="tutorial_stepper_next_btn"
+                  @click="add_steps = 2"
+                  :disabled="!isFirstStepComplete">
+                  {{ $t('addon.elearning.tutorial.stepper.continue') }}
+                  <v-icon class="tutorial_stepper_next_btn_icon">mdi-arrow-right</v-icon>
+                </v-btn>
+              </v-stepper-content>
+
+              <v-stepper-step
+                :complete="add_steps > 2"
+                step="2">
+                {{ $t('addon.elearning.tutorial.stepper.themes') }}
+              </v-stepper-step>
+
+              <v-stepper-content step="2">
+                <template>
+                  <v-container fluid id="themes_checkbox_container">
+                    <v-checkbox
+                      v-for="theme in themes"
+                      v-model="tutoA.themeIds"
+                      :key="theme.id"
+                      :id="'theme-'+theme.id"
+                      :label="theme.name"
+                      :value="theme.id" />
+                  </v-container>
+                </template>
+                <v-btn
+                  class="tutorial_stepper_back_btn"
+                  @click="add_steps = 1">
+                  <v-icon class="tutorial_stepper_back_btn_icon">mdi-arrow-left</v-icon>
+                  {{ $t('addon.elearning.tutorial.stepper.back') }}
+                </v-btn>
+              </v-stepper-content>
+            </v-stepper>
+          </div>
+          <!--
+          <div v-show="!this.title">
+            <v-stepper
+              v-model="up_steps"
+              vertical
+              class="tutorial_steps_wrapper">
+              <v-stepper-step
+                :complete="up_steps > 1"
+                step="1">
+                {{ $t('addon.elearning.tutorial.details') }}
+                <small v-show="up_steps === 2 && tutoUp.title != null && tutoUp.description != null" class="stepper_label">{{ tutoUp.title }} : {{ tutoUp.description }}</small>
+              </v-stepper-step>
+
+              <v-stepper-content step="1">
+                <label class="tuto_title_label" for="title">
+                  {{ $t('addon.elearning.theme.label.title') }}  
+                </label>
+                <v-text-field
+                  v-if="this.title"
+                  class="primary_tutorial_input"
+                  clearable
+                  :placeholder="$t('addon.elearning.tutorial.label.title')"
+                  name="title"
+                  v-model="tutoUp.title" />
+                <label class="tuto_description_label" for="description">
+                  {{ $t('addon.elearning.tutorial.label.description') }}  
+                </label>
+                <extended-textarea
+                  class="primary_text_area_input"
+                  v-if="this.title"
+                  :placeholder="$t('addon.elearning.tutorial.label.description')"
+                  :max-length="255"
+                  name="description"
+                  v-model="tutoUp.description" />
+                <v-btn
+                  class="tutorial_stepper_next_btn"
+                  @click="up_steps = 2"
+                  :disabled="!isFirstStepComplete">
+                  {{ $t('addon.elearning.tutorial.stepper.continue') }}
+                  <v-icon class="tutorial_stepper_next_btn_icon">mdi-arrow-right</v-icon>
+                </v-btn>
+              </v-stepper-content>
+
+              <v-stepper-step
+                :complete="up_steps > 2"
+                step="2">
+                {{ $t('addon.elearning.tutorial.stepper.themes') }}
+              </v-stepper-step>
+
+              <v-stepper-content step="2">
+                <template>
+                  <v-container fluid id="themes_checkbox_container">
+                    <v-checkbox
+                      v-for="theme in themes"
+                      v-model="tutoUp.themeIds"
+                      :key="theme.id"
+                      :id="'theme-'+theme.id"
+                      :label="theme.name"
+                      :value="theme.id" />
+                  </v-container>
+                </template>
+                <v-btn
+                  class="tutorial_stepper_back_btn"
+                  @click="up_steps = 1">
+                  <v-icon class="tutorial_stepper_back_btn_icon">mdi-arrow-left</v-icon>
+                  {{ $t('addon.elearning.tutorial.stepper.back') }}
+                </v-btn>
+              </v-stepper-content>
+            </v-stepper>
+          </div>
+          -->
+        </template>
       </template>
       <template slot="footer">
         <v-btn
-          class="exo_primary_btn"
+          class="tuto_drawer_btn_add"
           v-if="this.title"
-          @click="tutoPost">
+          @click="tutoUpdate"
+          :disabled="!isStepsComplete">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
-        <v-btn
-          class="exo_primary_btn"
-          v-else
-          @click="tutoUpdate">
-          {{ $t('addon.elearning.tutorial.confirm') }}
-        </v-btn>
-        <v-btn class="exo_cancel_btn" @click="$refs.form.reset()">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
+        <v-btn class="exo_cancel_btn" @click="clear">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
       </template>
     </exo-drawer>
   </v-app>
@@ -115,6 +171,8 @@ export default {
   
   data () {
     return {
+      add_steps: 1,
+      up_steps: 1,
       title: false,
       tutoId: null,
       tutoU: null,
@@ -124,19 +182,24 @@ export default {
       tutoA: {
         title: null,
         description: null,
-        author: null,
-        status: null,
         themeIds: []
       },
       tutoUp: {
         id: 0,
         title: null,
         description: null,
-        author: null,
-        status: null,
         themeIds: []
       }
     };
+  },
+
+  computed: {
+    isStepsComplete () {
+      return this.tutoA.title && this.tutoA.description && Object.keys(this.tutoA.themeIds).length > 0;
+    },
+    isFirstStepComplete () {
+      return this.tutoA.title;
+    }
   },
   
   created() {
@@ -146,8 +209,8 @@ export default {
       this.$refs.tutorialManagementDrawer.open();
     });
     this.$root.$on('makeUpdateTuto', (id) => {
-      this.title = false;
       this.$refs.tutorialManagementDrawer.open();
+      this.title = false; 
       this.tutoId=id;
       this.getTutoU(id);
     });
@@ -157,8 +220,8 @@ export default {
     tutoPost() {
       return this.$tutoService.tutoPost(this.tutoA)
         .then(() => {this.$root.$emit('tutoCreated');})
-        .then(() =>{ 
-          this.$refs.form.reset();
+        .then(() =>{
+          this.clear();
           this.$refs.tutorialManagementDrawer.close(); })
         .catch((e) => this.errors.push(e));
       
@@ -170,7 +233,7 @@ export default {
         .then(() => {this.$root.$emit('tutoUpdated');})
         .then(() => {
           this.tutoUp.id = 0;
-          this.$refs.form.reset();
+          this.clear();
           this.$refs.tutorialManagementDrawer.close();})
         .catch((e) => this.errors.push(e));      
     },
@@ -180,8 +243,7 @@ export default {
         .then((data) => {this.tutoU = data;
           this.tutoUp.title = this.tutoU.title;
           this.tutoUp.description = this.tutoU.description;
-          this.tutoUp.author = this.tutoU.author;
-          this.tutoUp.status = this.tutoU.status;})
+          this.tutoUp.themeIds=this.tutoU.themeIds;})
         .catch((e) => this.errors.push(e));
     },
     
@@ -190,6 +252,11 @@ export default {
         .then((data) => {(this.themes = data);})
         .catch((e) => this.errors.push(e));
     },
+    clear(){
+      this.tutoA.title=null;
+      this.tutoA.description=null;
+      this.tutoA.themeIds=null;
+    }
   }
 };
 
