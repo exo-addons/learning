@@ -23,8 +23,7 @@
             offset-y
             offset-x>
             <v-list class="card_menu_list" dense>
-              <!--<v-list-item @click="updateTuto(tuto.id)">-->
-              <v-list-item class="clickable">
+              <v-list-item @click="updateTuto(tuto.id)">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="tuto_menu_icon">mdi-pencil</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.update') }}</span>
@@ -36,7 +35,7 @@
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.duplicate') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="clickable">
+              <v-list-item @click="moveTuto(tuto.id)">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="tuto_menu_icon">mdi-move-resize</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.move') }}</span>
@@ -109,6 +108,9 @@ export default {
     },
     showTuto(id){
       this.$root.$emit('makeShowTTuto', id);
+    },
+    moveTuto(id){
+      this.$root.$emit('makeMoveTuto', id);
     }
   } 
 };

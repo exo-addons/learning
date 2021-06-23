@@ -4,6 +4,8 @@
     <tutorial-dashboard v-show="!showThemes" />
     <theme-management-drawer />
     <tutorial-management-drawer />
+    <tutorial-update-drawer />
+    <tutorial-move-drawer />
     <tutorial-display-drawer />
   </v-app>
 </template>

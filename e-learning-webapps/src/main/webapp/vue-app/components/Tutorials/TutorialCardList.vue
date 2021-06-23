@@ -44,6 +44,9 @@ export default {
     this.$root.$on('tutoUpdated', () => {
       this.getTutosByTheme(this.themeId);
     });
+    this.$root.$on('tutoMoved', () => {
+      this.getTutosByTheme(this.themeId);
+    });
     this.$root.$on('tutoDeleted', () => {
       this.getTutosByTheme(this.themeId);
     });
