@@ -49,10 +49,12 @@ export default {
 
   created() {
     this.$root.$on('themeCreated', () => {
+      this.timeout=3000;
       this.successBar=true;
       this.text=this.$t('addon.elearning.theme.created');
     });
     this.$root.$on('themeUpdated', () => {
+      this.timeout=3000;
       this.successBar=true;
       this.text=this.$t('addon.elearning.theme.updated');
     });

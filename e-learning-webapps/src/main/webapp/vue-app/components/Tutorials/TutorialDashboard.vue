@@ -15,7 +15,7 @@
       <div class="text-center">
         <v-snackbar
           v-model="successBar"
-          timeout="2000"
+          :timeout="timeout"
           :color="this.color">
           {{ text }}
           <template v-slot:action="{ attrs }">
@@ -41,6 +41,7 @@ export default {
       successBar: false,
       text: '',
       color: 'success',
+      timeout: 0,
       deleteId: null,
       themeId: null,
       themeName: null,
@@ -50,16 +51,24 @@ export default {
 
   created() {
     this.$root.$on('tutoCreated', () => {
+      this.timeout=3000;
       this.successBar=true;
       this.text=this.$t('addon.elearning.tutorial.created');
     });
     this.$root.$on('tutoUpdated', () => {
+      this.timeout=3000;
       this.successBar=true;
       this.text=this.$t('addon.elearning.tutorial.updated');
     });
     this.$root.$on('tutoMoved', () => {
+      this.timeout=3000;
       this.successBar=true;
       this.text=this.$t('addon.elearning.tutorial.moved');
+    });
+    this.$root.$on('tutoDuplicated', () => {
+      this.timeout=3000;
+      this.successBar=true;
+      this.text=this.$t('addon.elearning.tutorial.duplicated');
     });
     this.$root.$on('setId', (id) => {
       this.themeId=id;
@@ -95,7 +104,7 @@ export default {
       return this.$tutoService.deleteTuto(this.deleteId)
         .then(() => {
           this.confirmDialog=false;
-          
+          this.timeout=3000;
           this.successBar=true;
           this.text=this.$t('addon.elearning.tutorial.deleted');
           this.$root.$emit('tutoDeleted');})

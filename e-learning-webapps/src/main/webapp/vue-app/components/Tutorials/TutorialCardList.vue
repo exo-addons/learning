@@ -28,7 +28,15 @@ export default {
     return {
       themeId: null,
       tutoListByTheme: [],
-      errors: []
+      errors: [],
+      dupTuto: null,
+      tutoA: {
+        title: null,
+        description: null,
+        themeIds: [],
+        status: null,
+      },
+      newTitle: null
     };
   },
 
@@ -50,6 +58,9 @@ export default {
     this.$root.$on('tutoDeleted', () => {
       this.getTutosByTheme(this.themeId);
     });
+    this.$root.$on('makeDupTuto', (id) => {
+      this.getTutoU(id);
+    });
   },
 
   methods: {
@@ -57,7 +68,25 @@ export default {
       return this.$tutoService.getAllTutosByTheme(id)
         .then((data) => {(this.tutoListByTheme = data);})
         .catch((e) => this.errors.push(e));
-    }
+    },
+    getTutoU(id) {
+      return this.$tutoService.getTutoById(id)
+        .then((data) => {this.dupTuto = data;
+          this.newTitle= this.$t('addon.elearning.tutorial.duplicate.text') ;
+          this.tutoA.title = this.newTitle+this.dupTuto.title;
+          this.tutoA.description = this.dupTuto.description;
+          this.tutoA.status= 'DRAFT';
+          this.tutoA.themeIds=this.dupTuto.themeIds;
+          this.duplicateTuto();
+        })
+        .catch((e) => this.errors.push(e));
+    },
+    duplicateTuto(){
+      return this.$tutoService.tutoPost(this.tutoA)
+        .then(() => {this.$root.$emit('tutoDuplicated');
+          this.getTutosByTheme(this.themeId);})
+        .catch((e) => this.errors.push(e));
+    },
   }
 };
 </script>    
