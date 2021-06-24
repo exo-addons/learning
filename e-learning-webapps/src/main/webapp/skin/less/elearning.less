@@ -23,6 +23,9 @@
     height: 150px;
     filter: blur(5px);
   }
+
+  /********* Themes ***********/
+
   #themes_dashboard{
     max-height: max-content;
     #themes_card_list {
@@ -124,14 +127,11 @@
     
     #ThemeDashboardToolbar{
       height: 75px !important;
-      #theme_add_btn.v-icon{
-        color: @btnPrimaryBackground !important;
-      }
-      #theme_add_list_btn.v-icon{
-        color: @btnPrimaryBackground !important;
-      }
       .add_theme_wrapper {
         position: relative;
+        #theme_add_btn.v-icon{
+          color: @btnPrimaryBackground !important;
+        }
       }
       .theme_Dashboard_menu {
         right: 290px;
@@ -169,6 +169,14 @@
       margin-left: 10px;
       box-shadow: none !important;
     }
+    .theme_drawer_btn_add.v-btn:disabled {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryDisableBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
     .exo_cancel_btn{
       position: relative;
       float: right;
@@ -185,4 +193,325 @@
       width: 75%;
       margin-left: 20px;
     }
+
+
+  /********* Tutorials ***********/
+  
+  #tutorials_dashboard{
+    max-height: max-content;
+    #tutorial_dashboard_toolbar{
+      margin-top: 15px;
+      margin-left: 25px;
+      margin-right: 25px;
+      position: relative;
+      #TutorialDashboardToolbar{
+        height: 75px !important;
+        #tuto_toolbar_prom.v-icon{
+          color: @btnPrimaryBackground !important;
+        }
+        .add_tuto_wrapper{
+          position: relative;
+          #tuto_add_btn.v-icon{
+            color: @btnPrimaryBackground !important;
+          }
+        }
+        .tuto_Dashboard_menu {
+          right: 290px;
+          left: auto!important;
+          top: 20px!important;
+          .toolbar_menu_list.v-list{
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+            .v-list-item{
+              min-height: 5px;
+              padding-left: 10px !important;
+              padding-right: 10px !important;
+              padding-top: 3px !important;
+              padding-bottom: 3px !important;
+            }
+            .toolbar_menu_list_items{
+              .toolbar_menu_icon.v-icon{
+                color: @primaryColor;
+                font-size: 20px;
+              }
+              .toolbar_menu_text{
+                font-size: 0.769rem !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    #tutos_card_list{
+      min-height: 100%;
+      margin-left: 25px;
+      margin-right: 25px;
+      padding-left: 10px;
+      padding-right: 10px;
+      position: relative;
+      background: @baseBackgroundDefault !important; 
+      .container{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+      }
+      .tuto_cards_row{
+        position: relative;
+        display: flex;
+        align-items: center;
+        #tutorial_card{
+          position: relative;
+          .tuto_items{
+            box-shadow: none !important;
+            border-left: .1px solid rgba(87,141,201, .3) !important;
+            border-top: .1px solid rgba(87,141,201, .3) !important;
+            border-right: .1px solid rgba(87,141,201, .3) !important;
+            position: relative;
+            .tuto_card_toolbar{
+              margin-top: 10px;
+              position: relative;
+              .tuto_card_menu_info_icon{
+                color: rgba(87,141,201, .3) !important;
+                float: left;
+              }
+              #tuto_card_title {
+                width: 100% !important;
+                justify-content: center;
+                #tuto_card_title_draft_icon{
+                  margin-right: 5px;
+                  color: @greyColor;
+                }
+              }
+              .tuto_card_menu_icon{
+                color: rgba(87,141,201, .3) !important;
+                float: right;
+              }
+            }
+            .tuto_card_content{
+              height: 40px !important;
+              display: flex; 
+              margin-top: 15px !important;
+              .tuto_card_space_avatar.v-avatar{
+                display: inline-flex;
+                align-items: center;
+              }
+              .tuto_card_space_name{
+                display: inline-flex;
+                align-items: center;
+                margin-left: 10px;
+              }
+            }
+          }
+          #tuto_card_footer {
+            background: @darkBlue;
+            height: 5px;
+            position: relative;
+          }
+          #tuto_card_footer_draft {
+            background: @greyColor;
+            height: 5px;
+            position: relative;
+          }
+        }
+        .tuto_cards{
+          position: relative;
+          .theme_card_menu {
+            right: 40px;
+            left: auto!important;
+            top: 45px!important;
+            .card_menu_list.v-list{
+              padding-top: 5px !important;
+              padding-bottom: 5px !important;
+              .v-list-item{
+                min-height: 5px;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                padding-top: 3px !important;
+                padding-bottom: 3px !important;
+              }
+              .menu_list_items{
+                .tuto_menu_icon.v-icon{
+                  color: @primaryColor;
+                  font-size: 20px;
+                }
+                .tuto_menu_text{
+                  font-size: 0.769rem !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }   
+  }
+  #tutorials_management{
+    .tutorial_steps_wrapper{
+      margin-left: -10px !important;
+      margin-top: -10px !important;
+      .stepper_label{
+        margin-left: 2px;
+        color: darkGrey !important;
+      }
+      .tuto_title_label{
+        font-weight: 600;
+        margin-left: 10px;
+      }
+      .primary_tutorial_input{
+        border-radius: 3px;
+        border: 1px solid @greyColor !important;
+        max-width: 100%;
+        padding: 3px 10px;
+        margin-left: 10px;
+      }
+      .primary_text_area_input{
+        padding-top: 0px;
+        margin-left: 10px;
+      }
+      .tuto_description_label{
+        font-weight: 600;
+        margin-top: 20px;
+        margin-left: 10px;
+      }
+      .tutorial_stepper_next_btn{
+        float: right;
+        border: 1px solid @btnPrimaryBackground !important;
+        background-color: @btnPrimaryColor !important;
+        color: @btnPrimaryBackground;
+        margin-top: 10px;
+        .tutorial_stepper_next_btn_icon.v-icon{
+          color: @btnPrimaryBackground;
+          margin-left: 5px;
+          font-size: 20px;
+        }
+      }
+      .tutorial_stepper_next_btn:disabled{
+        float: right;
+        border: 1px solid @btnPrimaryDisableBackground !important;
+        background-color: @btnPrimaryColor !important;
+        color: @btnPrimaryDisableBackground !important;
+        margin-top: 10px;
+        .tutorial_stepper_next_btn_icon.v-icon{
+          color: @btnPrimaryDisableBackground !important;
+          margin-left: 5px;
+          font-size: 20px;
+        }
+      }
+      #themes_checkbox_container{
+        padding-bottom: 12px;
+        padding-top: 0px;
+        margin-top: -20px;
+      }
+      .tutorial_stepper_back_btn{
+        float: left;
+        border: 1px solid @darkGrey!important;
+        background-color: @btnPrimaryColor !important;
+        color: @darkGrey;
+        margin-top: 10px;
+        .tutorial_stepper_back_btn_icon.v-icon{
+          color: @darkGrey;
+          margin-right: 5px;
+          font-size: 20px;
+        }
+      }
+    }
+    .tuto_drawer_btn_add.v-btn {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
+    .tuto_drawer_btn_add.v-btn:disabled {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryDisableBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
+    .exo_cancel_btn{
+      position: relative;
+      float: right;
+      box-shadow: none !important;
+      border: .1px solid rgba(87,141,201, .3) !important;
+    }
+  }
+  #tutorial_update{
+    #id_update_form{
+      padding-top: 21px;
+      padding-right: 26px;
+      padding-left: 15px;
+      .tuto_title_label{
+        font-weight: 600;
+        margin-left: 10px;
+      }
+      .primary_tutorial_input{
+        border-radius: 3px;
+        border: 1px solid @greyColor !important;
+        max-width: 100%;
+        padding: 3px 10px;
+        margin-left: 10px;
+      }
+      .primary_text_area_input{
+        padding-top: 0px;
+        margin-left: 10px;
+      }
+      .tuto_description_label{
+        font-weight: 600;
+        margin-top: 20px;
+        margin-left: 10px;
+      }
+    }
+    .tuto_drawer_btn_update.v-btn {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
+    .tuto_drawer_btn_update.v-btn:disabled {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryDisableBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
+    .exo_cancel_btn{
+      position: relative;
+      float: right;
+      box-shadow: none !important;
+      border: .1px solid rgba(87,141,201, .3) !important;
+    }
+  }
+  #tutorial_update{
+    #themes_checkbox_container{
+      padding-bottom: 12px;
+      padding-top: 0px;
+      margin-top: -20px;
+    }
+    .tuto_drawer_btn_move.v-btn {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
+    .tuto_drawer_btn_move.v-btn:disabled {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryDisableBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
+    .exo_cancel_btn{
+      position: relative;
+      float: right;
+      box-shadow: none !important;
+      border: .1px solid rgba(87,141,201, .3) !important;
+    }
+  }
 }

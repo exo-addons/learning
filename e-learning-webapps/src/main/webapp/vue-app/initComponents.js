@@ -5,6 +5,8 @@ import TutorialCardList from './components/Tutorials/TutorialCardList.vue';
 import TutorialDashboardToolbar from './components/Tutorials/TutorialDashboardToolbar.vue';
 import TutorialDisplayDrawer from './components/Tutorials/TutorialDisplayDrawer.vue';
 import TutorialManagementDrawer from './components/Tutorials/TutorialManagementDrawer.vue';
+import TutorialUpdateDrawer from './components/Tutorials/TutorialUpdateDrawer.vue';
+import TutorialMoveDrawer from './components/Tutorials/TutorialMoveDrawer.vue';
 import ThemeDashboard from './components/Themes/ThemeDashboard.vue';
 import ThemeCard from './components/Themes/ThemeCard.vue';
 import ThemeCardList from './components/Themes/ThemeCardList.vue';
@@ -19,6 +21,8 @@ const components = {
   'tutorial-dashboard-toolbar': TutorialDashboardToolbar,
   'tutorial-display-drawer': TutorialDisplayDrawer,
   'tutorial-management-drawer': TutorialManagementDrawer,
+  'tutorial-update-drawer': TutorialUpdateDrawer,
+  'tutorial-move-drawer': TutorialMoveDrawer,
   'theme-dashboard': ThemeDashboard,
   'theme-card': ThemeCard,
   'theme-card-list': ThemeCardList,

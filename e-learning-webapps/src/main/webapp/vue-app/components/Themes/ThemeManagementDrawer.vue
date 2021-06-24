@@ -36,13 +36,15 @@
         <v-btn
           class="theme_drawer_btn_add"
           v-if="this.title"
-          @click="themePost">
+          @click="themePost"
+          :disabled="!isAddComplete">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
         <v-btn
           class="theme_drawer_btn_add"
           v-else
-          @click="themeUpdate">
+          @click="themeUpdate"
+          :disabled="!isUpComplete">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
         <v-btn class="exo_cancel_btn" @click="$refs.form.reset()">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
@@ -69,6 +71,15 @@ export default {
     };
   },
   
+  computed: {
+    isAddComplete () {
+      return this.themeA.name;
+    },
+    isUpComplete () {
+      return this.themeUp.name;
+    }
+  },
+
   created() {
     this.$root.$on('addTheme', () => {
       this.title = true;

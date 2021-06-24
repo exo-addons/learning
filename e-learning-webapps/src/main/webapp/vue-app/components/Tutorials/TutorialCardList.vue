@@ -1,16 +1,25 @@
 <template>
-  <v-container id="tutos_card_list ">
-    <v-row v-if="tutoListByTheme">
-      <v-col
-        cols="12"
-        sm="3"
-        md="2"
-        v-for="tuto in tutoListByTheme"
-        :key="tuto.id">
-        <tutorial-card :tuto="tuto" />
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-app
+    id="tutos_card_list"
+    flat>
+    <template>
+      <v-container> 
+        <v-row class="tuto_cards_row border-box-sizing"> 
+          <v-col
+            class="tuto_cards"
+            cols="12"
+            md="6"
+            lg="4"
+            xl="3"
+            v-for="tuto in tutoListByTheme"
+            :key="tuto.id"
+            :id="'tuto-'+tuto.id">
+            <tutorial-card :tuto="tuto" />
+          </v-col>
+        </v-row>
+      </v-container>  
+    </template> 
+  </v-app>
 </template>
 
 <script>
@@ -33,6 +42,9 @@ export default {
       this.getTutosByTheme(this.themeId);
     });
     this.$root.$on('tutoUpdated', () => {
+      this.getTutosByTheme(this.themeId);
+    });
+    this.$root.$on('tutoMoved', () => {
       this.getTutosByTheme(this.themeId);
     });
     this.$root.$on('tutoDeleted', () => {

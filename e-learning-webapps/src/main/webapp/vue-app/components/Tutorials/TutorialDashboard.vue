@@ -57,6 +57,10 @@ export default {
       this.successBar=true;
       this.text=this.$t('addon.elearning.tutorial.updated');
     });
+    this.$root.$on('tutoMoved', () => {
+      this.successBar=true;
+      this.text=this.$t('addon.elearning.tutorial.moved');
+    });
     this.$root.$on('setId', (id) => {
       this.themeId=id;
       this.getThemeName();

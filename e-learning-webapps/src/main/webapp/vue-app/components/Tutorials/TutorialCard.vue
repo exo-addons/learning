@@ -6,64 +6,71 @@
       <v-card
         class="tuto_items"
         :id="`tuto-${tuto.id}`">
-        <div class="theme_card_toolbar d-flex px-3 align-center font-weight-bold">
+        <div class="tuto_card_toolbar d-flex px-3 align-center font-weight-bold">
+          <v-icon class="tuto_card_menu_info_icon" @click="showTuto(tuto.id)">mdi-information-outline</v-icon>
+
           <span
             class="d-flex align-center"
-            id="tuto_card_title">{{ tuto.title }}</span>
-          <v-spacer />
-          <v-icon @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
+            id="tuto_card_title">  <v-icon v-if="tuto.status === 'DRAFT'" id="tuto_card_title_draft_icon"> mdi-file-outline </v-icon> {{ tuto.title }}</span>
+
+          <v-icon class="tuto_card_menu_icon" @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
+
           <v-menu
+            content-class="theme_card_menu"
             v-model="displayActionMenu"
             :attach="`#tuto-${tuto.id}`"
             transition="slide-x-reverse-transition"
-            offset-y>
-            <v-list class="pa-0" dense>
-              <v-list-item class="menu-list" @click="updateTuto(tuto.id)">
-                <v-list-item-title class="subtitle-2">
-                  <v-icon>mdi-pencil</v-icon>
-                  <span>{{ $t('addon.elearning.tutorial.update') }}</span>
+            offset-y
+            offset-x>
+            <v-list class="card_menu_list" dense>
+              <v-list-item @click="updateTuto(tuto.id)">
+                <v-list-item-title class="menu_list_items">
+                  <v-icon class="tuto_menu_icon">mdi-pencil</v-icon>
+                  <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.update') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="menu-list" @click="showTuto(tuto.id)">
-                <v-list-item-title class="subtitle-2">
-                  <v-icon>mdi-eye</v-icon>
-                  <span>{{ $t('addon.elearning.tutorial.display') }}</span>
+              <v-list-item class="clickable">
+                <v-list-item-title class="menu_list_items">
+                  <v-icon class="tuto_menu_icon">mdi-content-copy</v-icon>
+                  <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.duplicate') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="draftButton" @click="deleteTuto(tuto.id)">
-                <v-list-item-title class="subtitle-2">
-                  <v-icon>mdi-delete</v-icon>
-                  <span>{{ $t('addon.elearning.tutorial.delete') }}</span>
+              <v-list-item @click="moveTuto(tuto.id)">
+                <v-list-item-title class="menu_list_items">
+                  <v-icon class="tuto_menu_icon">mdi-move-resize</v-icon>
+                  <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.move') }}</span>
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item class="clickable">
+                <v-list-item-title class="menu_list_items">
+                  <v-icon class="tuto_menu_icon">mdi-package-down</v-icon>
+                  <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.archive') }}</span>
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="deleteTuto(tuto.id)">
+                <v-list-item-title class="menu_list_items">
+                  <v-icon class="tuto_menu_icon">mdi-delete</v-icon>
+                  <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.delete') }}</span>
                 </v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
         </div>
-        <v-img 
-          class="tuto_list_img"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg" />
-        <v-list>
-          <v-list-item>
-            <v-icon>mdi-account</v-icon>
-            <div class="mx-1"></div>
-            <v-list-item-content>
-              <v-list-item-title>{{ tuto.author }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider inset />                  
-          <v-list-item>
-            <v-icon>mdi-calendar</v-icon>
-            <div class="mx-1"></div>
-            <v-list-item-content>
-              <v-list-item-title>
-                <div>
-                  <date-format :value="tuto.createdDate.time" :format="dateTimeFormat" />
-                </div>
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-        <div id="tuto_card_footer"></div>
+        <v-card-text>
+          <v-card-subtitle> {{ tuto.description }} </v-card-subtitle>
+          <v-divider />
+          <div class="tuto_card_content">
+            <v-avatar size="35" class="tuto_card_space_avatar">
+              <img
+                src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"> 
+            </v-avatar>
+            <span class="tuto_card_space_name">
+              Space Name
+            </span>
+          </div>
+        </v-card-text>
+        <div id="tuto_card_footer_draft" v-if="tuto.status === 'DRAFT'"></div>
+        <div id="tuto_card_footer" v-else></div>
       </v-card>
     </template>
   </v-app>
@@ -80,11 +87,6 @@ export default {
   data () {
     return {
       displayActionMenu: false,
-      dateTimeFormat: {
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric',       
-      },
     };
   },
   created() {      
@@ -106,6 +108,9 @@ export default {
     },
     showTuto(id){
       this.$root.$emit('makeShowTTuto', id);
+    },
+    moveTuto(id){
+      this.$root.$emit('makeMoveTuto', id);
     }
   } 
 };

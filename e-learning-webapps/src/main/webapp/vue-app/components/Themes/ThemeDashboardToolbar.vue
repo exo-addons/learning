@@ -32,7 +32,7 @@
       <v-scale-transition>
         <div id="theme_filter_input">
           <v-text-field        
-            placeholder="Filter By Name"
+            :placeholder="$t('addon.elearning.filter.placeholder')"
             prepend-inner-icon="fa-filter"
             class="pa-0 ms-3 me-3 my-auto"
             clearable />
