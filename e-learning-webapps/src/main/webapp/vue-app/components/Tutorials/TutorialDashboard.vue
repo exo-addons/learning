@@ -40,7 +40,7 @@ export default {
     return {
       successBar: false,
       text: '',
-      color: 'success',
+      color: '',
       timeout: 0,
       deleteId: null,
       themeId: null,
@@ -52,23 +52,45 @@ export default {
   created() {
     this.$root.$on('tutoCreated', () => {
       this.timeout=3000;
+      this.successBar=false;
       this.successBar=true;
+      this.color='success';
       this.text=this.$t('addon.elearning.tutorial.created');
     });
     this.$root.$on('tutoUpdated', () => {
       this.timeout=3000;
+      this.successBar=false;
       this.successBar=true;
+      this.color='success';
       this.text=this.$t('addon.elearning.tutorial.updated');
     });
     this.$root.$on('tutoMoved', () => {
       this.timeout=3000;
+      this.successBar=false;
       this.successBar=true;
+      this.color='success';
       this.text=this.$t('addon.elearning.tutorial.moved');
     });
     this.$root.$on('tutoDuplicated', () => {
       this.timeout=3000;
+      this.successBar=false;
       this.successBar=true;
+      this.color='success';
       this.text=this.$t('addon.elearning.tutorial.duplicated');
+    });
+    this.$root.$on('tutoArchived', () => {
+      this.timeout=3000;
+      this.successBar=false;
+      this.successBar=true;
+      this.color='success';
+      this.text=this.$t('addon.elearning.tutorial.archived');
+    });
+    this.$root.$on('tutoUnarchived', () => {
+      this.timeout=3000;
+      this.successBar=false;
+      this.successBar=true;
+      this.color='success';
+      this.text=this.$t('addon.elearning.tutorial.unarchived');
     });
     this.$root.$on('setId', (id) => {
       this.themeId=id;

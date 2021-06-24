@@ -44,6 +44,7 @@ export default {
         id: 0,
         title: null,
         description: null,
+        status: null,
         themeIds: []
       }
     };
@@ -79,6 +80,7 @@ export default {
           this.tutoUp.id = this.tutoU.id;
           this.tutoUp.title = this.tutoU.title;
           this.tutoUp.description = this.tutoU.description;
+          this.tutoUp.status = this.tutoU.status;
           this.tutoUp.themeIds=this.tutoU.themeIds;})
         .catch((e) => this.errors.push(e));
     },
