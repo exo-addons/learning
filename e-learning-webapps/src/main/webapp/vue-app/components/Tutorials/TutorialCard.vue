@@ -26,23 +26,24 @@
               <v-list-item @click="updateTuto(tuto.id)">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="tuto_menu_icon">mdi-pencil</v-icon>
-                  <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.update') }}</span>
+                  <span class="tuto_menu_text" v-if="tuto.status === 'DRAFT'">{{ $t('addon.elearning.tutorial.update.draft') }}</span>
+                  <span class="tuto_menu_text" v-else>{{ $t('addon.elearning.tutorial.update') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="clickable">
+              <v-list-item @click="dupTuto(tuto.id)" v-if="tuto.status != 'DRAFT'">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="tuto_menu_icon">mdi-content-copy</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.duplicate') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item @click="moveTuto(tuto.id)">
+              <v-list-item @click="moveTuto(tuto.id)" v-if="tuto.status != 'DRAFT'">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="tuto_menu_icon">mdi-move-resize</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.move') }}</span>
                 </v-list-item-title>
               </v-list-item>
               <v-list-item class="clickable">
-                <v-list-item-title class="menu_list_items">
+                <v-list-item-title class="menu_list_items" v-if="tuto.status != 'DRAFT'">
                   <v-icon class="tuto_menu_icon">mdi-package-down</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.archive') }}</span>
                 </v-list-item-title>
@@ -50,7 +51,8 @@
               <v-list-item @click="deleteTuto(tuto.id)">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="tuto_menu_icon">mdi-delete</v-icon>
-                  <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.delete') }}</span>
+                  <span class="tuto_menu_text" v-if="tuto.status === 'DRAFT'">{{ $t('addon.elearning.tutorial.delete.draft') }}</span>
+                  <span class="tuto_menu_text" v-else>{{ $t('addon.elearning.tutorial.update') }}</span>
                 </v-list-item-title>
               </v-list-item>
             </v-list>
@@ -111,6 +113,9 @@ export default {
     },
     moveTuto(id){
       this.$root.$emit('makeMoveTuto', id);
+    },
+    dupTuto(id){
+      this.$root.$emit('makeDupTuto', id);
     }
   } 
 };
