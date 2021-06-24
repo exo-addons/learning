@@ -15,10 +15,6 @@
     background: transparent !important;
   }
   
-  .tuto_list_img {
-    height: 150px;
-  }
-  
   .tuto_img {
     height: 150px;
     filter: blur(5px);
@@ -265,6 +261,48 @@
             border-left: .1px solid rgba(87,141,201, .3) !important;
             border-top: .1px solid rgba(87,141,201, .3) !important;
             border-right: .1px solid rgba(87,141,201, .3) !important;
+            position: relative;
+            .tuto_card_toolbar{
+              margin-top: 10px;
+              position: relative;
+              .tuto_card_menu_info_icon{
+                color: rgba(87,141,201, .3) !important;
+                float: left;
+              }
+              #tuto_card_title {
+                width: 100% !important;
+                justify-content: center;
+                #tuto_card_title_draft_icon{
+                  margin-right: 5px;
+                  color: @greyColor;
+                }
+              }
+              .tuto_card_menu_icon{
+                color: rgba(87,141,201, .3) !important;
+                float: right;
+              }
+            }
+            .tuto_card_content{
+              height: 40px !important;
+              display: flex; 
+              margin-top: 15px !important;
+              .tuto_card_space_avatar.v-avatar{
+                display: inline-flex;
+                align-items: center;
+              }
+              .tuto_card_space_name{
+                display: inline-flex;
+                align-items: center;
+                margin-left: 10px;
+              }
+            }
+          }
+          .tuto_items_archived{
+            box-shadow: none !important;
+            border-left: .1px solid rgba(87,141,201, .3) !important;
+            border-top: .1px solid rgba(87,141,201, .3) !important;
+            border-right: .1px solid rgba(87,141,201, .3) !important;
+            background-color: lightgray;
             position: relative;
             .tuto_card_toolbar{
               margin-top: 10px;

@@ -101,6 +101,7 @@ export default {
       tutoA: {
         title: null,
         description: null,
+        status: 'PUBLISHED',
         themeIds: []
       }
     };

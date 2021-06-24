@@ -4,7 +4,7 @@
     flat>
     <template>
       <v-card
-        class="tuto_items"
+        :class="getClass()"
         :id="`tuto-${tuto.id}`">
         <div class="tuto_card_toolbar d-flex px-3 align-center font-weight-bold">
           <v-icon class="tuto_card_menu_info_icon" @click="showTuto(tuto.id)">mdi-information-outline</v-icon>
@@ -42,17 +42,23 @@
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.move') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="clickable">
-                <v-list-item-title class="menu_list_items" v-if="tuto.status != 'DRAFT'">
+              <v-list-item @click="archiveTuto(tuto.id)" v-if="tuto.status != 'DRAFT' && tuto.status != 'ARCHIVED'">
+                <v-list-item-title class="menu_list_items">
                   <v-icon class="tuto_menu_icon">mdi-package-down</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.archive') }}</span>
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="unarchiveTuto(tuto.id)" v-if="tuto.status === 'ARCHIVED'">
+                <v-list-item-title class="menu_list_items">
+                  <v-icon class="tuto_menu_icon">mdi-package-down</v-icon>
+                  <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.unarchive') }}</span>
                 </v-list-item-title>
               </v-list-item>
               <v-list-item @click="deleteTuto(tuto.id)">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="tuto_menu_icon">mdi-delete</v-icon>
                   <span class="tuto_menu_text" v-if="tuto.status === 'DRAFT'">{{ $t('addon.elearning.tutorial.delete.draft') }}</span>
-                  <span class="tuto_menu_text" v-else>{{ $t('addon.elearning.tutorial.update') }}</span>
+                  <span class="tuto_menu_text" v-else>{{ $t('addon.elearning.tutorial.delete') }}</span>
                 </v-list-item-title>
               </v-list-item>
             </v-list>
@@ -116,7 +122,18 @@ export default {
     },
     dupTuto(id){
       this.$root.$emit('makeDupTuto', id);
-    }
+    },
+    archiveTuto(id){
+      this.$root.$emit('makeArchTuto', id);
+    },
+    unarchiveTuto(id){
+      this.$root.$emit('makeUnarchTuto', id);
+    },
+    getClass(){
+      return {
+        'tuto_items': this.tuto.status !== 'ARCHIVED',  
+        'tuto_items_archived': this.tuto.status === 'ARCHIVED'};
+    },
   } 
 };
 </script>

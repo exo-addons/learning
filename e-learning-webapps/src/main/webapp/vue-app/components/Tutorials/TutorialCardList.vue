@@ -30,7 +30,15 @@ export default {
       tutoListByTheme: [],
       errors: [],
       dupTuto: null,
+      archTurto: null,
+      tutoD: {
+        title: null,
+        description: null,
+        themeIds: [],
+        status: null,
+      },
       tutoA: {
+        id: 0,
         title: null,
         description: null,
         themeIds: [],
@@ -59,7 +67,13 @@ export default {
       this.getTutosByTheme(this.themeId);
     });
     this.$root.$on('makeDupTuto', (id) => {
-      this.getTutoU(id);
+      this.getTutoDup(id);
+    });
+    this.$root.$on('makeArchTuto', (id) => {
+      this.getTutoArch(id);
+    });
+    this.$root.$on('makeUnarchTuto', (id) => {
+      this.getTutoUnarch(id);
     });
   },
 
@@ -69,23 +83,61 @@ export default {
         .then((data) => {(this.tutoListByTheme = data);})
         .catch((e) => this.errors.push(e));
     },
-    getTutoU(id) {
+    getTutoDup(id) {
       return this.$tutoService.getTutoById(id)
         .then((data) => {this.dupTuto = data;
           this.newTitle= this.$t('addon.elearning.tutorial.duplicate.text') ;
-          this.tutoA.title = this.newTitle+this.dupTuto.title;
-          this.tutoA.description = this.dupTuto.description;
-          this.tutoA.status= 'DRAFT';
-          this.tutoA.themeIds=this.dupTuto.themeIds;
+          this.tutoD.title = this.newTitle+this.dupTuto.title;
+          this.tutoD.description = this.dupTuto.description;
+          this.tutoD.status= 'DRAFT';
+          this.tutoD.themeIds=this.dupTuto.themeIds;
           this.duplicateTuto();
         })
         .catch((e) => this.errors.push(e));
     },
     duplicateTuto(){
-      return this.$tutoService.tutoPost(this.tutoA)
+      return this.$tutoService.tutoPost(this.tutoD)
         .then(() => {this.$root.$emit('tutoDuplicated');
           this.getTutosByTheme(this.themeId);})
         .catch((e) => this.errors.push(e));
+    },
+    getTutoArch(id) {
+      return this.$tutoService.getTutoById(id)
+        .then((data) => {this.archTurto = data;
+          this.tutoA.id=this.archTurto.id;
+          this.tutoA.title=this.archTurto.title;
+          this.tutoA.description = this.archTurto.description;
+          this.tutoA.status= 'ARCHIVED';
+          this.tutoA.themeIds=this.archTurto.themeIds;
+          this.archiveTuto();
+        })
+        .catch((e) => this.errors.push(e));
+    },
+    archiveTuto() {
+      return this.$tutoService.tutoUpdate(this.tutoA)
+        .then(() => {this.$root.$emit('tutoArchived');})
+        .then(() => {
+          this.getTutosByTheme(this.themeId);})
+        .catch((e) => this.errors.push(e));      
+    },
+    getTutoUnarch(id) {
+      return this.$tutoService.getTutoById(id)
+        .then((data) => {this.archTurto = data;
+          this.tutoA.id=this.archTurto.id;
+          this.tutoA.title=this.archTurto.title;
+          this.tutoA.description = this.archTurto.description;
+          this.tutoA.status= 'PUBLISHED';
+          this.tutoA.themeIds=this.archTurto.themeIds;
+          this.unarchiveTuto();
+        })
+        .catch((e) => this.errors.push(e));
+    },
+    unarchiveTuto() {
+      return this.$tutoService.tutoUpdate(this.tutoA)
+        .then(() => {this.$root.$emit('tutoUnarchived');})
+        .then(() => {
+          this.getTutosByTheme(this.themeId);})
+        .catch((e) => this.errors.push(e));      
     },
   }
 };
