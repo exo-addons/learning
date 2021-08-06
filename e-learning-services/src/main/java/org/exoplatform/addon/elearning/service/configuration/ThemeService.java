@@ -84,19 +84,6 @@ public class ThemeService implements ResourceContainer {
     return ThemeMapper.convertThemeToDTO(theme);
   }
 
-  public List<String> getAllThemeNames(int offset, int limit) {
-    List<String> themes = new ArrayList<String>();
-
-    try {
-      themes = themeDao.getAllThemeNames();
-
-    } catch (Exception e) {
-      Logger LOGGER = Logger.getLogger("LOG");
-      LOGGER.info("Could not get all Theme Names ERROR - " + e);
-    }
-    return themes;
-  }
-  
   public List<Theme> findAllThemesByName(String themeName, int offset, int limit) {
     List<ThemeEntity> themes = new ArrayList<ThemeEntity>();
 

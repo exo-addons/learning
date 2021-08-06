@@ -89,7 +89,7 @@ public class TutorialService implements ResourceContainer {
     return TutorialMapper.convertTutorialToDTO(tuto);
   }
 
-  public List<Tutorial> getAllTutosByTheme(Long id,int offset, int limit) {
+  public List<Tutorial> getAllTutosByTheme(Long id, int offset, int limit) {
     List<TutorialEntity> tutos = new ArrayList<TutorialEntity>();
 
     try {
@@ -98,6 +98,19 @@ public class TutorialService implements ResourceContainer {
     } catch (Exception e) {
       Logger LOGGER = Logger.getLogger("LOG");
       LOGGER.info("Could not get all Tutorials ERROR - " + e);
+    }
+    return TutorialMapper.convertTutorialsToDTOs(tutos);
+  }
+
+  public List<Tutorial> findTutosByName(String tutoTitle, Long id, int offset, int limit) {
+    List<TutorialEntity> tutos = new ArrayList<TutorialEntity>();
+
+    try {
+      tutos = tutorialDao.findTutosByName(tutoTitle, id);
+
+    } catch (Exception e) {
+      Logger LOGGER = Logger.getLogger("LOG");
+      LOGGER.info("Could not find all Tutorials by Name ERROR - " + e);
     }
     return TutorialMapper.convertTutorialsToDTOs(tutos);
   }

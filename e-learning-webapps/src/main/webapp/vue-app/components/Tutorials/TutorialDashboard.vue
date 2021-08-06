@@ -2,8 +2,12 @@
   <v-app
     id="tutorials_dashboard"
     flat>
-    <tutorial-dashboard-toolbar :theme-name="this.themeName" />
-    <tutorial-card-list />
+    <tutorial-dashboard-toolbar 
+      :theme-name="this.themeName"
+      :keyword="keyword"
+      @keyword-changed="keyword = $event" />
+    <tutorial-card-list
+      :keyword="keyword" />
     <exo-confirm-dialog
       ref="confirmDialog"
       :message="$t('addon.elearning.tutorial.deleteConf')"
@@ -45,7 +49,8 @@ export default {
       deleteId: null,
       themeId: null,
       themeName: null,
-      errors: []
+      errors: [],
+      keyword: null
     };
   },
 
@@ -114,6 +119,9 @@ export default {
       }
     });
 
+    this.$root.$on('key-changed', (keyword) => {
+      this.keyword=keyword;
+    });
 
   },
 

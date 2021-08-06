@@ -14,8 +14,7 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 @Entity
 @ExoEntity
 @Table(name = "ADDON_E_LEARNING_THEME")
-@NamedQueries({ 
-  @NamedQuery(name = "ThemeEntity.getAllNames", query = "SELECT t FROM ThemeEntity t"),
+@NamedQueries({
   @NamedQuery(
               name = "ThemeEntity.findAllThemesByName",
               query = "SELECT DISTINCT t FROM ThemeEntity t where LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%'))"

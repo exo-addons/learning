@@ -25,12 +25,12 @@ import io.swagger.annotations.ApiParam;
 
 @Path("tuto")
 @Produces(MediaType.APPLICATION_JSON)
-/*@RolesAllowed("users")*/
+/* @RolesAllowed("users") */
 public class TutorialServiceRest implements ResourceContainer {
 
-  private static final Log LOG           = ExoLogger.getLogger(ThemeServiceRest.class);
-  
-  private TutorialService tutorialService;
+  private static final Log LOG = ExoLogger.getLogger(ThemeServiceRest.class);
+
+  private TutorialService  tutorialService;
 
   public TutorialServiceRest(TutorialService tutorialService) {
     this.tutorialService = tutorialService;
@@ -38,7 +38,7 @@ public class TutorialServiceRest implements ResourceContainer {
 
   @POST
   @Path("/addTuto")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response addTutorial(Tutorial tuto) {
     try {
       String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
@@ -55,7 +55,7 @@ public class TutorialServiceRest implements ResourceContainer {
 
   @DELETE
   @Path("/deleteTuto/{id}")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response deleteTuto(@PathParam("id") Long id) {
 
     try {
@@ -70,14 +70,14 @@ public class TutorialServiceRest implements ResourceContainer {
 
   @PUT
   @Path("/updateTuto")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response updateTuto(Tutorial tuto) {
 
     try {
       tuto = tutorialService.updateTutorial(tuto);
 
     } catch (Exception e) {
-      
+
       LOG.error("Could not update Tutorial", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
@@ -86,12 +86,12 @@ public class TutorialServiceRest implements ResourceContainer {
 
   @GET
   @Path("/getAllTutos")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response getAllTutos(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                               @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
     List<Tutorial> tutos = new ArrayList<Tutorial>();
     try {
-      tutos = tutorialService.getAllTutos(offset,limit);
+      tutos = tutorialService.getAllTutos(offset, limit);
 
     } catch (Exception e) {
       LOG.error("Could not get all Tutorials", e);
@@ -103,7 +103,7 @@ public class TutorialServiceRest implements ResourceContainer {
 
   @GET
   @Path("/getTutoById/{id}")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response getTutoById(@PathParam("id") Long id) {
     Tutorial tuto = new Tutorial();
 
@@ -120,16 +120,35 @@ public class TutorialServiceRest implements ResourceContainer {
 
   @GET
   @Path("/getAllTutosByTheme/{id}")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response getAllTutosByTheme(@PathParam("id") Long id,
                                      @ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                                      @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
     List<Tutorial> tutos = new ArrayList<Tutorial>();
     try {
-      tutos = tutorialService.getAllTutosByTheme(id,offset,limit);
+      tutos = tutorialService.getAllTutosByTheme(id, offset, limit);
 
     } catch (Exception e) {
       LOG.error("Could not get all Tutorials by ThemeId {}", id, e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(tutos, MediaType.APPLICATION_JSON).build();
+
+  }
+
+  @GET
+  @Path("/getTutosByName/{id}/{tutoTitle}")
+  /* @RolesAllowed("users") */
+  public Response findTutosByName(@PathParam("id") Long id,
+                                  @PathParam("tutoTitle") String tutoTitle,
+                                  @ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
+                                  @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
+    List<Tutorial> tutos = new ArrayList<Tutorial>();
+    try {
+      tutos = tutorialService.findTutosByName(tutoTitle, id, offset, limit);
+
+    } catch (Exception e) {
+      LOG.error("Could not get all Tutorials by The Name {}", tutoTitle, e);
       return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.ok(tutos, MediaType.APPLICATION_JSON).build();

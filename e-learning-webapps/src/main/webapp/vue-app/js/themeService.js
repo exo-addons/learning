@@ -62,21 +62,8 @@ export function themeUpdate(theme) {
   });
 }
 
-export function getThemeNames() {
-  return fetch('portal/rest/theme/getAllThemeNames', {
-    method: 'GET'
-  })
-    .then((response) => {
-      if (!response || !response.ok) {
-        throw new Error('Response code indicates a server error', response);
-      } else {
-        return response.json();
-      }
-    });
-}
-
 export function getThemesByName(themeName) {
-  return fetch(`portal/rest/theme/findAllThemesByName/${themeName}`, {
+  return fetch(`/portal/rest/theme/findAllThemesByName/${themeName}`, {
     method: 'GET'
   })
     .then((response) => {

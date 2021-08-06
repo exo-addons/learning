@@ -65,7 +65,7 @@ export default {
   
   methods: {
     getThemes() {
-      return this.$themeService.getThemes()
+      return this.$themeService.getThemes(this.keyword)
         .then((data) => {
           this.themeList.splice(0);
           this.themeList = data;})

@@ -37,6 +37,7 @@ export default {
         description: null,
         themeIds: [],
         status: null,
+        author: null
       },
       tutoA: {
         id: 0,
@@ -48,6 +49,25 @@ export default {
       },
       newTitle: null
     };
+  },
+
+  props: {
+    keyword: {
+      type: String,
+      default: null,
+    }
+  },
+
+  watch: {
+    keyword() {
+      if (!this.keyword) {
+        this.getTutosByTheme();
+      }
+      if (this.keyword) {
+        this.getTutosByName();
+      }
+
+    }
   },
 
   created () {
@@ -81,9 +101,18 @@ export default {
   },
 
   methods: {
-    getTutosByTheme(id) {
-      return this.$tutoService.getAllTutosByTheme(id)
-        .then((data) => {(this.tutoListByTheme = data);})
+    getTutosByTheme() {
+      return this.$tutoService.getAllTutosByTheme(this.themeId)
+        .then((data) => {
+          this.tutoListByTheme.splice(0);
+          this.tutoListByTheme = data;})
+        .catch((e) => this.errors.push(e));
+    },
+    getTutosByName() {
+      return this.$tutoService.getTutosByName(this.themeId,this.keyword)
+        .then((data) => {
+          this.tutoListByTheme.splice(0);
+          this.tutoListByTheme = data;})
         .catch((e) => this.errors.push(e));
     },
     getTutoDup(id) {
@@ -94,6 +123,7 @@ export default {
           this.tutoD.description = this.dupTuto.description;
           this.tutoD.status= 'DRAFT';
           this.tutoD.themeIds=this.dupTuto.themeIds;
+          this.tutoD.author=this.dupTuto.author;
           this.duplicateTuto();
         })
         .catch((e) => this.errors.push(e));

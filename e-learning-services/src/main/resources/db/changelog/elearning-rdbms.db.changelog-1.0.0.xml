@@ -76,6 +76,7 @@
 			</column>
 
 			<column name="NAME" type="NVARCHAR(255)" />
+			<column name="SPACE_NAME" type="NVARCHAR(2000)" />
 
 			<!-- <column name="PARENT_THEME" type="BIGINT"> <constraints nullable="true" 
 				uniqueConstraintName="KEY_PARENT_THEME" foreignKeyName="FK_PARENT_THEME" 
@@ -118,18 +119,6 @@
 			<append
 				value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci" />
 		</modifySql>
-
-
-	</changeSet>
-	
-	<changeSet author="elearning" id="1.0.0-5">
-
-
-		<addColumn tableName="ADDON_E_LEARNING_THEME">
-
-			<column name="SPACE_NAME" type="NVARCHAR(2000)" />
-			
-		</addColumn>
 
 
 	</changeSet>

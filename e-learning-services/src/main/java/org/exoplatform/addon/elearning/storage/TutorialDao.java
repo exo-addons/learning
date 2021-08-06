@@ -2,6 +2,7 @@ package org.exoplatform.addon.elearning.storage;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import org.exoplatform.addon.elearning.entities.TutorialEntity;
@@ -14,6 +15,17 @@ public class TutorialDao extends GenericDAOJPAImpl<TutorialEntity, Long> {
     q.setParameter("id", id);
     List<TutorialEntity> tutos = q.getResultList();
     return tutos;
+  }
+
+  public List<TutorialEntity> findTutosByName(String tutoTitle, Long id) {
+    TypedQuery<TutorialEntity> q = getEntityManager().createNamedQuery("TutorialEntity.findTutosByName", TutorialEntity.class);
+    q.setParameter("id", id);
+    q.setParameter("tutoTitle", tutoTitle);
+    try {
+      return q.getResultList();
+    } catch (NoResultException e) {
+      return null;
+    }
   }
 
 }

@@ -22,32 +22,30 @@ import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.security.ConversationState;
-
-import io.swagger.annotations.ApiParam;
-
-import org.exoplatform.social.core.space.SpaceUtils;
 import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
 
+import io.swagger.annotations.ApiParam;
+
 @Path("theme")
 @Produces(MediaType.APPLICATION_JSON)
-/*@RolesAllowed("users")*/
+/* @RolesAllowed("users") */
 public class ThemeServiceRest implements ResourceContainer {
 
-  private static final Log LOG           = ExoLogger.getLogger(ThemeServiceRest.class);
-  
-  private ThemeService themeService;
-  
+  private static final Log LOG = ExoLogger.getLogger(ThemeServiceRest.class);
+
+  private ThemeService     themeService;
+
   private SpaceService     spaceService;
 
   public ThemeServiceRest(ThemeService themeService, SpaceService spaceService) {
     this.themeService = themeService;
-    this.spaceService= spaceService;
+    this.spaceService = spaceService;
   }
 
   @POST
   @Path("/addTheme")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response addTheme(Theme theme) {
     try {
       String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
@@ -55,7 +53,7 @@ public class ThemeServiceRest implements ResourceContainer {
         return Response.status(Response.Status.FORBIDDEN).build();
       }
       Space space = null;
-      
+
       if (StringUtils.isNotBlank(theme.getSpaceName())) {
         space = spaceService.getSpaceByPrettyName(theme.getSpaceName());
         if (space == null) {
@@ -63,11 +61,11 @@ public class ThemeServiceRest implements ResourceContainer {
           return Response.status(Response.Status.UNAUTHORIZED).build();
         }
       }
-      
+
       theme = themeService.createTheme(theme);
 
     } catch (Exception e) {
-      
+
       LOG.error("Could not create Theme", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
@@ -77,7 +75,7 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @DELETE
   @Path("/deleteTheme/{id}")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response deleteTheme(@PathParam("id") Long id) {
 
     try {
@@ -92,14 +90,14 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @PUT
   @Path("/updateTheme")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response updateTheme(Theme theme) {
 
     try {
       theme = themeService.updateTheme(theme);
 
     } catch (Exception e) {
-      
+
       LOG.error("Could not update Theme", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
@@ -108,12 +106,12 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @GET
   @Path("/getAllThemes")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response getAllThemes(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                                @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
     List<Theme> themes = new ArrayList<Theme>();
     try {
-      themes = themeService.getAllThemes(offset,limit);
+      themes = themeService.getAllThemes(offset, limit);
 
     } catch (Exception e) {
       LOG.error("Could not get all Themes", e);
@@ -125,7 +123,7 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @GET
   @Path("/getThemeById/{id}")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response getThemeById(@PathParam("id") Long id) {
     Theme theme = new Theme();
 
@@ -141,25 +139,8 @@ public class ThemeServiceRest implements ResourceContainer {
   }
 
   @GET
-  @Path("/getAllThemeNames")
-  /*@RolesAllowed("users")*/
-  public Response getAllThemeNames(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
-                                   @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
-    List<String> themes = new ArrayList<String>();
-    try {
-      themes = themeService.getAllThemeNames(offset,limit);
-
-    } catch (Exception e) {
-      LOG.error("Could not get all Theme Names", e);
-      return Response.serverError().entity(e.getMessage()).build();
-    }
-    return Response.ok(themes, MediaType.APPLICATION_JSON).build();
-
-  }
-  
-  @GET
   @Path("/findAllThemesByName/{themeName}")
-  /*@RolesAllowed("users")*/
+  /* @RolesAllowed("users") */
   public Response getAllThemeNames(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                                    @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit,
                                    @PathParam("themeName") String themeName) {

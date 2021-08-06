@@ -1,22 +1,18 @@
 package org.exoplatform.addon.elearning.entities;
 
 import java.sql.Timestamp;
-
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.exoplatform.commons.api.persistence.ExoEntity;
@@ -25,38 +21,39 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 @ExoEntity
 @Table(name = "ADDON_E_LEARNING_TUTO")
 @NamedQueries({
-    @NamedQuery(name = "TutorialEntity.getAllTutosByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id") })
+    @NamedQuery(name = "TutorialEntity.getAllTutosByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id"),
+    @NamedQuery(name = "TutorialEntity.findTutosByName", query = "SELECT DISTINCT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id AND LOWER(t.title) LIKE LOWER(CONCAT('%', :tutoTitle, '%'))") })
 public class TutorialEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "ID")
-  private Long                   id;
+  private Long            id;
 
   @Column(name = "TITLE")
-  private String                 title;
+  private String          title;
 
   @Column(name = "DESCRIPTION")
-  private String                 description;
+  private String          description;
 
   @Column(name = "AUTHOR")
-  private String                 author;
+  private String          author;
 
   @Column(name = "CREATED_DATE")
-  private Timestamp              createdDate;
+  private Timestamp       createdDate;
 
   @ElementCollection
   @CollectionTable(name = "ADDON_E_LEARNING_TUTO_THEME", joinColumns = @JoinColumn(name = "TUTO_ID"))
   @Column(name = "THEME_ID")
-  public Collection<Long>        themeIds;
-  
+  public Collection<Long> themeIds;
+
   /*
-  @OneToMany(mappedBy = "tuto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Collection<StepEntity> steps;
-  */
+   * @OneToMany(mappedBy = "tuto", cascade = CascadeType.ALL, fetch =
+   * FetchType.LAZY) private Collection<StepEntity> steps;
+   */
 
   @Column(name = "STATUS")
-  private String                 status;
+  private String          status;
 
   public TutorialEntity() {
   }

@@ -56,7 +56,8 @@ export default {
         title: null,
         description: null,
         status: null,
-        themeIds: []
+        themeIds: [],
+        author: null
       }
     };
   },
@@ -91,7 +92,8 @@ export default {
           this.tutoUp.title = this.tutoU.title;
           this.tutoUp.description = this.tutoU.description;
           this.tutoUp.status = this.tutoU.status;
-          this.tutoUp.themeIds= this.tutoU.themeIds;})
+          this.tutoUp.themeIds= this.tutoU.themeIds;
+          this.tutoUp.author=this.tutoU.author;})
         .catch((e) => this.errors.push(e));
     },
   }

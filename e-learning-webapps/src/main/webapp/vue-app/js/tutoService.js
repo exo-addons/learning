@@ -74,3 +74,16 @@ export function getAllTutosByTheme(themeId) {
       }
     });
 }
+
+export function getTutosByName(id,tutoTitle) {
+  return fetch(`/portal/rest/tuto/getTutosByName/${id}/${tutoTitle}`, {
+    method: 'GET'
+  })
+    .then((response) => {
+      if (!response || !response.ok) {
+        throw new Error('Response code indicates a server error', response);
+      } else {
+        return response.json();
+      }
+    });
+}

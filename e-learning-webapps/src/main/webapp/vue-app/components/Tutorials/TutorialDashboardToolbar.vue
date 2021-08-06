@@ -40,7 +40,8 @@
 
       <v-scale-transition>
         <div id="tuto_filter_input">
-          <v-text-field        
+          <v-text-field
+            v-model="keyword"        
             :placeholder="$t('addon.elearning.filter.placeholder')"
             prepend-inner-icon="fa-filter"
             class="pa-0 ms-3 me-3 my-auto"
@@ -62,6 +63,15 @@ export default {
     themeName: {
       type: String,
       default: ''
+    },
+    keyword: {
+      type: String,
+      default: null,
+    }
+  },
+  watch: {
+    keyword() {
+      this.$root.$emit('key-changed', this.keyword);
     }
   },
   created () {

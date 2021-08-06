@@ -36,7 +36,7 @@
             :placeholder="$t('addon.elearning.filter.placeholder')"
             prepend-inner-icon="fa-filter"
             class="pa-0 ms-3 me-3 my-auto"
-            :clearable="clearKeyword" />
+            clearable />
         </div>
       </v-scale-transition>
     </v-toolbar>
@@ -73,10 +73,7 @@ export default {
   methods: {
     createTheme(){
       this.$root.$emit('makeTheme');
-    },
-    clearKeyword(){
-      this.keyword = '';
-    }  
+    } 
   }
 };
 
