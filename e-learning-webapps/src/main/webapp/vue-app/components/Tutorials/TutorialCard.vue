@@ -13,7 +13,12 @@
             class="d-flex align-center"
             id="tuto_card_title">  <v-icon v-if="tuto.status === 'DRAFT'" id="tuto_card_title_draft_icon"> mdi-file-outline </v-icon> {{ tuto.title }}</span>
 
-          <v-icon class="tuto_card_menu_icon" @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
+          <v-icon
+            class="tuto_card_menu_icon"
+            @click="displayActionMenu = true"
+            v-show="this.user == tuto.author">
+            mdi-dots-vertical
+          </v-icon>
 
           <v-menu
             content-class="theme_card_menu"
@@ -87,6 +92,10 @@
 <script>
 export default {
   props: {
+    user: {
+      type: String,
+      default: null
+    },
     tuto: {
       type: Object,
       default: null

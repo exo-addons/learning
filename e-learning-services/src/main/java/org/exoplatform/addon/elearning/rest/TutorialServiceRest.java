@@ -19,6 +19,7 @@ import org.exoplatform.addon.elearning.service.dto.Tutorial;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.exoplatform.services.security.ConversationState;
 
 import io.swagger.annotations.ApiParam;
 
@@ -40,6 +41,8 @@ public class TutorialServiceRest implements ResourceContainer {
   /*@RolesAllowed("users")*/
   public Response addTutorial(Tutorial tuto) {
     try {
+      String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
+      tuto.setAuthor(currentUser);
       tuto = tutorialService.createTutorial(tuto);
 
     } catch (Exception e) {

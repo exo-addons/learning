@@ -121,5 +121,17 @@
 
 
 	</changeSet>
+	
+	<changeSet author="elearning" id="1.0.0-5">
+
+
+		<addColumn tableName="ADDON_E_LEARNING_THEME">
+
+			<column name="SPACE_NAME" type="NVARCHAR(2000)" />
+			
+		</addColumn>
+
+
+	</changeSet>
 
 </databaseChangeLog>

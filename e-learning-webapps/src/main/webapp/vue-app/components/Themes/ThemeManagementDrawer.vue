@@ -63,10 +63,12 @@ export default {
       errors: [],
       themeA: {
         name: null,
+        spaceName: null
       },
       themeUp: {
         id: 0,
         name: null,
+        spaceName: null
       }
     };
   },
@@ -95,6 +97,7 @@ export default {
 
   methods: {
     themePost() {
+      this.themeA.spaceName=eXo.env.portal.spaceName;
       return this.$themeService.themePost(this.themeA)
         .then(() => {this.$root.$emit('themeCreated');})
         .then(() =>{ 
@@ -118,7 +121,8 @@ export default {
     getThemeU(id) {
       return this.$themeService.getThemeById(id)
         .then((data) => {this.themeU = data;
-          this.themeUp.name = this.themeU.name;})
+          this.themeUp.name = this.themeU.name;
+          this.themeUp.spaceName = this.themeU.spaceName;})
         .catch((e) => this.errors.push(e));
     },
   }

@@ -15,6 +15,7 @@ public class ThemeMapper {
     Theme theme = new Theme();
     theme.setName(themeEntity.getName());
     theme.setId(themeEntity.getId());
+    theme.setSpaceName(themeEntity.getSpaceName());
     return theme;
   }
 
@@ -27,6 +28,7 @@ public class ThemeMapper {
     ThemeEntity themeEntity = new ThemeEntity();
     themeEntity.setId(theme.getId());
     themeEntity.setName(theme.getName());
+    themeEntity.setSpaceName(theme.getSpaceName());
     return themeEntity;
   }
 

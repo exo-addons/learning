@@ -50,7 +50,7 @@
                 src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"> 
             </v-avatar>
             <span class="theme_card_space_name">
-              Space Name
+              {{ theme.spaceName }}
             </span>
           </div>
         </v-card-text>

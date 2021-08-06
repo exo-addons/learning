@@ -31,11 +31,12 @@
 
       <v-scale-transition>
         <div id="theme_filter_input">
-          <v-text-field        
+          <v-text-field
+            v-model="keyword"        
             :placeholder="$t('addon.elearning.filter.placeholder')"
             prepend-inner-icon="fa-filter"
             class="pa-0 ms-3 me-3 my-auto"
-            clearable />
+            :clearable="clearKeyword" />
         </div>
       </v-scale-transition>
     </v-toolbar>
@@ -46,8 +47,19 @@
 export default {
   data (){
     return {
-      displayActionMenu: false
+      displayActionMenu: false,
     };
+  },
+  props: {
+    keyword: {
+      type: String,
+      default: null,
+    }
+  },
+  watch: {
+    keyword() {
+      this.$emit('keyword-changed', this.keyword);
+    }
   },
   created () {
     $(document).on('mousedown', () => {
@@ -61,6 +73,9 @@ export default {
   methods: {
     createTheme(){
       this.$root.$emit('makeTheme');
+    },
+    clearKeyword(){
+      this.keyword = '';
     }  
   }
 };

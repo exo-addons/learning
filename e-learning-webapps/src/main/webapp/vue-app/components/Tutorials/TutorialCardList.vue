@@ -14,7 +14,7 @@
             v-for="tuto in tutoListByTheme"
             :key="tuto.id"
             :id="'tuto-'+tuto.id">
-            <tutorial-card :tuto="tuto" />
+            <tutorial-card :tuto="tuto" :user="user" />
           </v-col>
         </v-row>
       </v-container>  
@@ -26,6 +26,7 @@
 export default {
   data () {
     return {
+      user: null,
       themeId: null,
       tutoListByTheme: [],
       errors: [],
@@ -43,12 +44,14 @@ export default {
         description: null,
         themeIds: [],
         status: null,
+        author: null
       },
       newTitle: null
     };
   },
 
   created () {
+    this.user=eXo.env.portal.userName;
     this.$root.$on('showTutos', (id) => {
       this.themeId=id;  
       this.getTutosByTheme(this.themeId);
@@ -109,6 +112,7 @@ export default {
           this.tutoA.description = this.archTurto.description;
           this.tutoA.status= 'ARCHIVED';
           this.tutoA.themeIds=this.archTurto.themeIds;
+          this.tutoA.author=this.archTurto.author;
           this.archiveTuto();
         })
         .catch((e) => this.errors.push(e));
@@ -128,6 +132,7 @@ export default {
           this.tutoA.description = this.archTurto.description;
           this.tutoA.status= 'PUBLISHED';
           this.tutoA.themeIds=this.archTurto.themeIds;
+          this.tutoA.author=this.archTurto.author;
           this.unarchiveTuto();
         })
         .catch((e) => this.errors.push(e));

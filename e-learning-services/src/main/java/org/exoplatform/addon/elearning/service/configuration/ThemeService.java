@@ -50,6 +50,7 @@ public class ThemeService implements ResourceContainer {
     try {
       themeEntity = themeDao.find(theme.getId());
       themeEntity.setName(theme.getName());
+      themeEntity.setSpaceName(theme.getSpaceName());
 
     } catch (Exception e) {
       Logger LOGGER = Logger.getLogger("LOG");
@@ -94,5 +95,18 @@ public class ThemeService implements ResourceContainer {
       LOGGER.info("Could not get all Theme Names ERROR - " + e);
     }
     return themes;
+  }
+  
+  public List<Theme> findAllThemesByName(String themeName, int offset, int limit) {
+    List<ThemeEntity> themes = new ArrayList<ThemeEntity>();
+
+    try {
+      themes = themeDao.findAllThemesByName(themeName);
+
+    } catch (Exception e) {
+      Logger LOGGER = Logger.getLogger("LOG");
+      LOGGER.info("Could not find all Themes by Name ERROR - " + e);
+    }
+    return ThemeMapper.convertThemesToDTOs(themes);
   }
 }

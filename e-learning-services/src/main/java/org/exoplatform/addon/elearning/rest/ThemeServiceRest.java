@@ -14,13 +14,20 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang3.StringUtils;
+
 import org.exoplatform.addon.elearning.service.configuration.ThemeService;
 import org.exoplatform.addon.elearning.service.dto.Theme;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.exoplatform.services.security.ConversationState;
 
 import io.swagger.annotations.ApiParam;
+
+import org.exoplatform.social.core.space.SpaceUtils;
+import org.exoplatform.social.core.space.model.Space;
+import org.exoplatform.social.core.space.spi.SpaceService;
 
 @Path("theme")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,9 +37,12 @@ public class ThemeServiceRest implements ResourceContainer {
   private static final Log LOG           = ExoLogger.getLogger(ThemeServiceRest.class);
   
   private ThemeService themeService;
+  
+  private SpaceService     spaceService;
 
-  public ThemeServiceRest(ThemeService themeService) {
+  public ThemeServiceRest(ThemeService themeService, SpaceService spaceService) {
     this.themeService = themeService;
+    this.spaceService= spaceService;
   }
 
   @POST
@@ -40,6 +50,20 @@ public class ThemeServiceRest implements ResourceContainer {
   /*@RolesAllowed("users")*/
   public Response addTheme(Theme theme) {
     try {
+      String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
+      if (currentUser == null) {
+        return Response.status(Response.Status.FORBIDDEN).build();
+      }
+      Space space = null;
+      
+      if (StringUtils.isNotBlank(theme.getSpaceName())) {
+        space = spaceService.getSpaceByPrettyName(theme.getSpaceName());
+        if (space == null) {
+          LOG.warn("User {} attempts to create a project under a non existing space {}", currentUser, theme.getSpaceName());
+          return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+      }
+      
       theme = themeService.createTheme(theme);
 
     } catch (Exception e) {
@@ -127,6 +151,24 @@ public class ThemeServiceRest implements ResourceContainer {
 
     } catch (Exception e) {
       LOG.error("Could not get all Theme Names", e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(themes, MediaType.APPLICATION_JSON).build();
+
+  }
+  
+  @GET
+  @Path("/findAllThemesByName/{themeName}")
+  /*@RolesAllowed("users")*/
+  public Response getAllThemeNames(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
+                                   @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit,
+                                   @PathParam("themeName") String themeName) {
+    List<Theme> themes = new ArrayList<Theme>();
+    try {
+      themes = themeService.findAllThemesByName(themeName, offset, limit);
+
+    } catch (Exception e) {
+      LOG.error("Could not get all Themes by Name", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.ok(themes, MediaType.APPLICATION_JSON).build();

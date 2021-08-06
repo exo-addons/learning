@@ -31,6 +31,24 @@ export default {
       errors: [],
     };
   },
+  props: {
+    keyword: {
+      type: String,
+      default: null,
+    }
+  },
+  
+  watch: {
+    keyword() {
+      if (!this.keyword) {
+        this.getThemes();
+      }
+      if (this.keyword) {
+        this.findThemes();
+      }
+
+    }
+  },
 
   created() {
     this.getThemes();
@@ -44,11 +62,20 @@ export default {
       this.getThemes();
     });
   },
-
+  
   methods: {
     getThemes() {
       return this.$themeService.getThemes()
-        .then((data) => {(this.themeList = data);})
+        .then((data) => {
+          this.themeList.splice(0);
+          this.themeList = data;})
+        .catch((e) => this.errors.push(e));
+    },
+    findThemes(){
+      return this.$themeService.getThemesByName(this.keyword)
+        .then((data) => {
+          this.themeList.splice(0);
+          this.themeList = data;})
         .catch((e) => this.errors.push(e));
     }
   }  

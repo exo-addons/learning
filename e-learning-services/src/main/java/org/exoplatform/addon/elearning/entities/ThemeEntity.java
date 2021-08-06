@@ -14,7 +14,12 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 @Entity
 @ExoEntity
 @Table(name = "ADDON_E_LEARNING_THEME")
-@NamedQueries({ @NamedQuery(name = "ThemeEntity.getAllNames", query = "SELECT t FROM ThemeEntity t") })
+@NamedQueries({ 
+  @NamedQuery(name = "ThemeEntity.getAllNames", query = "SELECT t FROM ThemeEntity t"),
+  @NamedQuery(
+              name = "ThemeEntity.findAllThemesByName",
+              query = "SELECT DISTINCT t FROM ThemeEntity t where LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%'))"
+          ),})
 
 public class ThemeEntity {
 
@@ -25,6 +30,9 @@ public class ThemeEntity {
 
   @Column(name = "NAME")
   private String name;
+  
+  @Column(name = "SPACE_NAME")
+  private String spaceName;
 
   /*
    * @ManyToOne
@@ -40,9 +48,10 @@ public class ThemeEntity {
     this.name = name;
   }
 
-  public ThemeEntity(Long id, String name) {
+  public ThemeEntity(Long id, String name, String spaceName) {
     this.id = id;
     this.name = name;
+    this.spaceName = spaceName;
   }
 
   public Long getId() {
@@ -61,4 +70,14 @@ public class ThemeEntity {
     this.name = name;
   }
 
+  public String getSpaceName() {
+    return spaceName;
+  }
+
+  public void setSpaceName(String spaceName) {
+    this.spaceName = spaceName;
+  }
+
+  
+  
 }
