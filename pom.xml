@@ -29,6 +29,8 @@
     <!-- 3rd party libraries versions -->
     <org.exoplatform.commons.version>6.1.0</org.exoplatform.commons.version>
     <org.exoplatform.social.version>6.1.0</org.exoplatform.social.version>
+    <org.exoplatform.platform-ui.version>6.1.0</org.exoplatform.platform-ui.version>
+
     <org.lombok.version>1.18.2</org.lombok.version>
     <org.lombok.plugin.version>1.18.18.0</org.lombok.plugin.version>
     <org.jackson.version>2.12.2</org.jackson.version>
@@ -53,6 +55,13 @@
         <groupId>org.exoplatform.social</groupId>
         <artifactId>social-component-core</artifactId>
         <version>${org.exoplatform.social.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.exoplatform.platform-ui</groupId>
+        <artifactId>platform-ui</artifactId>
+        <version>${org.exoplatform.platform-ui.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

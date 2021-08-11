@@ -29,12 +29,12 @@
             <field name="predefinedOwner">
               <collection type="java.util.HashSet">
                 <value>
-                  <string>intranet</string>
+                  <string>dw</string>
                 </value>
               </collection>
             </field>
             <field name="location">
-              <string>war:/conf/custom-vuetify-extension/portal</string>
+              <string>war:/conf/elearning-extension/portal</string>
             </field>
           </object>
         </object-param>
