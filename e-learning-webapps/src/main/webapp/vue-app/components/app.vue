@@ -1,6 +1,6 @@
 <template>
   <v-app
-    id="vuetify_webpack_sample"
+    id="vuetify_webpack_sample_Portlet"
     color="transaprent"
     class="VuetifyApp"
     flat>
@@ -10,7 +10,7 @@
         max-width="344"
         class="mx-auto my-2">
         <v-list-item>
-          <v-list-item-avatar color="grey"/>
+          <v-list-item-avatar color="grey" />
           <v-list-item-content>
             <v-list-item-title class="headline">Our Changing Planet</v-list-item-title>
             <v-list-item-subtitle>by Kurt Wagner</v-list-item-subtitle>
@@ -19,7 +19,7 @@
     
         <v-img
           src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
-          height="194"/>
+          height="194" />
     
         <v-card-text>
           Visit ten places on our planet that are undergoing the biggest changes today.
