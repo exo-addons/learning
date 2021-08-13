@@ -1,5 +1,8 @@
 import './initComponents.js';
 
+import * as tutoService from './js/tutoService';
+import * as themeService from './js/themeService';
+
 Vue.use(Vuetify);
 const vuetify = new Vuetify({
   dark: true,
@@ -23,3 +26,11 @@ export function init() {
       }).$mount('#elearning_app');
     });
 }
+
+window.Object.defineProperty(Vue.prototype, '$tutoService', {
+  value: tutoService,
+});
+
+window.Object.defineProperty(Vue.prototype, '$themeService', {
+  value: themeService,
+});
