@@ -26,13 +26,6 @@ public class ThemeEntity {
   @Column(name = "SPACE_NAME")
   private String spaceName;
 
-  /*
-   * @ManyToOne
-   * @JoinColumn(name = "PARENT_THEME") private ThemeEntity themeP;
-   * @OneToMany(mappedBy = "themeP", cascade = CascadeType.ALL) private
-   * Collection<ThemeEntity> subTheme;
-   */
-
   public ThemeEntity() {
   }
 
@@ -69,6 +62,5 @@ public class ThemeEntity {
   public void setSpaceName(String spaceName) {
     this.spaceName = spaceName;
   }
-
 
 }

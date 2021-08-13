@@ -11,7 +11,7 @@ import java.util.Collection;
 @Table(name = "ADDON_E_LEARNING_TUTO")
 @NamedQueries({
         @NamedQuery(name = "TutorialEntity.getAllTutosByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id"),
-        @NamedQuery(name = "TutorialEntity.findTutosByName", query = "SELECT DISTINCT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id AND LOWER(t.title) LIKE LOWER(CONCAT('%', :tutoTitle, '%'))")})
+        @NamedQuery(name = "TutorialEntity.findTutosByName", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id AND LOWER(t.title) LIKE LOWER(CONCAT('%', :tutoTitle, '%'))")})
 public class TutorialEntity {
 
   @Id
@@ -35,11 +35,6 @@ public class TutorialEntity {
   @CollectionTable(name = "ADDON_E_LEARNING_TUTO_THEME", joinColumns = @JoinColumn(name = "TUTO_ID"))
   @Column(name = "THEME_ID")
   public Collection<Long> themeIds;
-
-  /*
-   * @OneToMany(mappedBy = "tuto", cascade = CascadeType.ALL, fetch =
-   * FetchType.LAZY) private Collection<StepEntity> steps;
-   */
 
   @Column(name = "STATUS")
   private String status;
