@@ -16,7 +16,7 @@
         xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
 
   <component>
-    <type>org.exoplatform.addon.elearning.service.configuration.TutorialService</type>
+    <type>org.exoplatform.addon.elearning.service.TutorialService</type>
   </component>
 
   <component>
@@ -24,11 +24,11 @@
   </component>
 
   <component>
-    <type>org.exoplatform.addon.elearning.storage.TutorialDao</type>
+    <type>org.exoplatform.addon.elearning.dao.TutorialDao</type>
   </component>
 
   <component>
-    <type>org.exoplatform.addon.elearning.service.configuration.ThemeService</type>
+    <type>org.exoplatform.addon.elearning.service.ThemeService</type>
   </component>
 
   <component>
@@ -36,7 +36,7 @@
   </component>
 
   <component>
-    <type>org.exoplatform.addon.elearning.storage.ThemeDao</type>
+    <type>org.exoplatform.addon.elearning.dao.ThemeDao</type>
   </component>
 
   <external-component-plugins>

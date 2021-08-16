@@ -2,8 +2,8 @@ package org.exoplatform.addon.elearning.rest;
 
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
-import org.exoplatform.addon.elearning.service.configuration.ThemeService;
-import org.exoplatform.addon.elearning.service.dto.Theme;
+import org.exoplatform.addon.elearning.service.ThemeService;
+import org.exoplatform.addon.elearning.dto.Theme;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -47,7 +47,7 @@ public class ThemeServiceRest implements ResourceContainer {
       if (StringUtils.isNotBlank(theme.getSpaceName())) {
         space = spaceService.getSpaceByPrettyName(theme.getSpaceName());
         if (space == null) {
-          LOG.warn("User {} attempts to create a project under a non existing space {}", currentUser, theme.getSpaceName());
+          LOG.warn("User {} attempts to createTutorial a project under a non existing space {}", currentUser, theme.getSpaceName());
           return Response.status(Response.Status.UNAUTHORIZED).build();
         }
       }
@@ -56,7 +56,7 @@ public class ThemeServiceRest implements ResourceContainer {
 
     } catch (Exception e) {
 
-      LOG.error("Could not create Theme", e);
+      LOG.error("Could not createTutorial Theme", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.status(Response.Status.OK).entity(theme).build();
@@ -72,7 +72,7 @@ public class ThemeServiceRest implements ResourceContainer {
       themeService.deleteTheme(id);
 
     } catch (Exception e) {
-      LOG.error("Could not delete Theme with the Id {}", id, e);
+      LOG.error("Could not deleteThemeById Theme with the Id {}", id, e);
       return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.status(Response.Status.OK).entity("Theme with id " + id + " Deleted").build();

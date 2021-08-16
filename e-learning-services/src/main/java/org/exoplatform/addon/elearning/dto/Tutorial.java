@@ -1,4 +1,4 @@
-package org.exoplatform.addon.elearning.service.dto;
+package org.exoplatform.addon.elearning.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

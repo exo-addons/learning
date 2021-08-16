@@ -1,8 +1,8 @@
 package org.exoplatform.addon.elearning.rest;
 
 import io.swagger.annotations.ApiParam;
-import org.exoplatform.addon.elearning.service.configuration.TutorialService;
-import org.exoplatform.addon.elearning.service.dto.Tutorial;
+import org.exoplatform.addon.elearning.service.TutorialService;
+import org.exoplatform.addon.elearning.dto.Tutorial;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -37,7 +37,7 @@ public class TutorialServiceRest implements ResourceContainer {
       tuto = tutorialService.createTutorial(tuto);
 
     } catch (Exception e) {
-      LOG.error("Could not create Tutorial", e);
+      LOG.error("Could not createTutorial Tutorial", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.status(Response.Status.OK).entity(tuto).build();
@@ -53,7 +53,7 @@ public class TutorialServiceRest implements ResourceContainer {
       tutorialService.deleteTutorial(id);
 
     } catch (Exception e) {
-      LOG.error("Could not delete Tutorial\" with the Id {}", id, e);
+      LOG.error("Could not deleteThemeById Tutorial\" with the Id {}", id, e);
       return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.status(Response.Status.OK).entity("Tutorial with id " + id + " Deleted").build();
@@ -82,7 +82,7 @@ public class TutorialServiceRest implements ResourceContainer {
                               @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
     List<Tutorial> tutos = new ArrayList<Tutorial>();
     try {
-      tutos = tutorialService.getAllTutos(offset, limit);
+      tutos = tutorialService.getAllTutorials(offset, limit);
 
     } catch (Exception e) {
       LOG.error("Could not get all Tutorials", e);
@@ -99,7 +99,7 @@ public class TutorialServiceRest implements ResourceContainer {
     Tutorial tuto = new Tutorial();
 
     try {
-      tuto = tutorialService.getTutoById(id);
+      tuto = tutorialService.getTutorialById(id);
 
     } catch (Exception e) {
       LOG.error("No Tutorial found with id {}", id, e);
@@ -117,7 +117,7 @@ public class TutorialServiceRest implements ResourceContainer {
                                      @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
     List<Tutorial> tutos = new ArrayList<Tutorial>();
     try {
-      tutos = tutorialService.getAllTutosByTheme(id, offset, limit);
+      tutos = tutorialService.getAllTutorialsByTheme(id, offset, limit);
 
     } catch (Exception e) {
       LOG.error("Could not get all Tutorials by ThemeId {}", id, e);
@@ -136,7 +136,7 @@ public class TutorialServiceRest implements ResourceContainer {
                                   @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
     List<Tutorial> tutos = new ArrayList<Tutorial>();
     try {
-      tutos = tutorialService.findTutosByName(tutoTitle, id, offset, limit);
+      tutos = tutorialService.findTutorialsByName(tutoTitle, id, offset, limit);
 
     } catch (Exception e) {
       LOG.error("Could not get all Tutorials by The Name {}", tutoTitle, e);

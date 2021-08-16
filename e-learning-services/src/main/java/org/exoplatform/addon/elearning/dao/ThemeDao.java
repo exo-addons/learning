@@ -1,6 +1,6 @@
-package org.exoplatform.addon.elearning.storage;
+package org.exoplatform.addon.elearning.dao;
 
-import org.exoplatform.addon.elearning.entities.ThemeEntity;
+import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.commons.persistence.impl.GenericDAOJPAImpl;
 
 import javax.persistence.NoResultException;

@@ -1,7 +1,7 @@
-package org.exoplatform.addon.elearning.service.mapper;
+package org.exoplatform.addon.elearning.storage.mapper;
 
-import org.exoplatform.addon.elearning.entities.TutorialEntity;
-import org.exoplatform.addon.elearning.service.dto.Tutorial;
+import org.exoplatform.addon.elearning.entity.TutorialEntity;
+import org.exoplatform.addon.elearning.dto.Tutorial;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package org.exoplatform.addon.elearning.service.mapper;
+package org.exoplatform.addon.elearning.storage.mapper;
 
-import org.exoplatform.addon.elearning.entities.ThemeEntity;
-import org.exoplatform.addon.elearning.service.dto.Theme;
+import org.exoplatform.addon.elearning.entity.ThemeEntity;
+import org.exoplatform.addon.elearning.dto.Theme;
 
 import java.util.List;
 import java.util.stream.Collectors;
