@@ -39,6 +39,14 @@
     <type>org.exoplatform.addon.elearning.dao.ThemeDao</type>
   </component>
 
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.TutorialStorage</type>
+  </component>
+
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.ThemeStorage</type>
+  </component>
+
   <external-component-plugins>
     <target-component>org.exoplatform.commons.api.persistence.DataInitializer</target-component>
     <component-plugin>
