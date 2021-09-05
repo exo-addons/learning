@@ -2,7 +2,10 @@
   <v-app
     id="tutorial_move"
     flat>
-    <exo-drawer ref="tutorialMoveDrawer" right>
+    <exo-drawer 
+      id="tutorialMoveDrawer"
+      ref="tutorialMoveDrawer"
+      right>
       <template slot="title">
         {{ $t('addon.elearning.tutorial.moveF') }}     
       </template>
@@ -33,8 +36,7 @@
 </template>
 <script>
 export default {
-  
-  data () {
+  data() {
     return {
       tutoId: null,
       tutoU: null,
@@ -52,11 +54,11 @@ export default {
   },
 
   computed: {
-    isThemeSelected () {
+    isThemeSelected() {
       return this.tutoUp.themeIds.length > 0;
     }
   },
-  
+
   created() {
     this.getThemes();
     this.$root.$on('makeMoveTuto', (id) => {
@@ -69,31 +71,38 @@ export default {
 
     tutoUpdate() {
       return this.$tutoService.tutoUpdate(this.tutoUp)
-        .then(() => {this.$root.$emit('tutoMoved');})
         .then(() => {
-          this.$refs.tutorialMoveDrawer.close();})
-        .catch((e) => this.errors.push(e));      
+          this.$root.$emit('tutoMoved');
+        })
+        .then(() => {
+          this.$refs.tutorialMoveDrawer.close();
+        })
+        .catch((e) => this.errors.push(e));
     },
 
     getTutoU(id) {
       return this.$tutoService.getTutoById(id)
-        .then((data) => {this.tutoU = data;
+        .then((data) => {
+          this.tutoU = data;
           this.tutoUp.id = this.tutoU.id;
           this.tutoUp.title = this.tutoU.title;
           this.tutoUp.description = this.tutoU.description;
           this.tutoUp.status = this.tutoU.status;
-          this.tutoUp.themeIds=this.tutoU.themeIds;
-          this.tutoUp.author = this.tutoU.author;})
+          this.tutoUp.themeIds = this.tutoU.themeIds;
+          this.tutoUp.author = this.tutoU.author;
+        })
         .catch((e) => this.errors.push(e));
     },
-    
+
     getThemes() {
       return this.$themeService.getThemes()
-        .then((data) => {(this.themes = data);})
+        .then((data) => {
+          (this.themes = data);
+        })
         .catch((e) => this.errors.push(e));
     },
-    clear(){
-      this.tutoUp.themeIds=[];
+    clear() {
+      this.tutoUp.themeIds = [];
     }
   }
 };

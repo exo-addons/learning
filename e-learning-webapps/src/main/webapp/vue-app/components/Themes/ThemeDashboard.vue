@@ -38,7 +38,6 @@
 
 <script>
 export default {
-
   data() {
     return {
       successBar: false,
@@ -53,14 +52,14 @@ export default {
 
   created() {
     this.$root.$on('themeCreated', () => {
-      this.timeout=3000;
-      this.successBar=true;
-      this.text=this.$t('addon.elearning.theme.created');
+      this.timeout = 3000;
+      this.successBar = true;
+      this.text = this.$t('addon.elearning.theme.created');
     });
     this.$root.$on('themeUpdated', () => {
-      this.timeout=3000;
-      this.successBar=true;
-      this.text=this.$t('addon.elearning.theme.updated');
+      this.timeout = 3000;
+      this.successBar = true;
+      this.text = this.$t('addon.elearning.theme.updated');
     });
     this.$root.$on('deleteTheme', (id) => {
       this.prepareDelete(id);
@@ -75,33 +74,35 @@ export default {
       this.$root.$emit('showTutos', id);
     });
     this.$on('keyword-changed', (keyword) => {
-      this.keyword=keyword;
+      this.keyword = keyword;
     });
 
   },
 
   methods: {
-    prepareDelete(id){
-      this.deleteId=id;
+    prepareDelete(id) {
+      this.deleteId = id;
       this.$refs.confirmDialog.open();
     },
     deleteTheme() {
       return this.$themeService.deleteTheme(this.deleteId)
         .then(() => {
-          this.confirmDialog=false;
-          this.successBar=true;
-          this.color='success';
-          this.timeout=3000;
-          this.text=this.$t('addon.elearning.theme.deleted');
+          this.confirmDialog = false;
+          this.successBar = true;
+          this.color = 'success';
+          this.timeout = 3000;
+          this.text = this.$t('addon.elearning.theme.deleted');
           this.$root.$emit('themeDeleted');
         })
-        .catch((e) => {console.error('Error deleting theme', e);
-          this.confirmDialog=false;
-          this.successBar=true;
-          this.color='error';
-          this.timeout=5000;
-          this.text=this.$t('addon.elearning.theme.delete.fail');});
+        .catch((e) => {
+          console.error('Error deleting theme', e);
+          this.confirmDialog = false;
+          this.successBar = true;
+          this.color = 'error';
+          this.timeout = 5000;
+          this.text = this.$t('addon.elearning.theme.delete.fail');
+        });
     }
-  }  
+  }
 };
 </script>

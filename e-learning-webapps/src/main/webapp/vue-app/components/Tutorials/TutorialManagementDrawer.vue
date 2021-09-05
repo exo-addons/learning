@@ -2,7 +2,10 @@
   <v-app
     id="tutorials_management"
     flat>
-    <exo-drawer ref="tutorialManagementDrawer" right>
+    <exo-drawer 
+      id="tutorialManagementDrawer"
+      ref="tutorialManagementDrawer"
+      right>
       <template slot="title">
         {{ $t('addon.elearning.tutorial.creating') }}     
       </template>
@@ -20,7 +23,7 @@
             </v-stepper-step>
 
             <v-stepper-content step="1">
-              <label class="tuto_title_label" for="title">
+              <label class="tuto_title_label" :for="tutoA.title">
                 {{ $t('addon.elearning.theme.label.title') }}  
               </label>
               <v-text-field
@@ -29,7 +32,7 @@
                 :placeholder="$t('addon.elearning.tutorial.label.title')"
                 name="title"
                 v-model="tutoA.title" />
-              <label class="tuto_description_label" for="description">
+              <label class="tuto_description_label" :for="tutoA.description">
                 {{ $t('addon.elearning.tutorial.label.description') }}  
               </label>
               <extended-textarea
@@ -89,14 +92,13 @@
 </template>
 <script>
 export default {
-  
-  data () {
+  data() {
     return {
       add_steps: 1,
       tutoId: null,
       tutoU: null,
       errors: [],
-      status: ['DRAFT','PUBLISHED','ARCHIVED'],
+      status: ['DRAFT', 'PUBLISHED', 'ARCHIVED'],
       themes: [],
       tutoA: {
         title: null,
@@ -108,14 +110,14 @@ export default {
   },
 
   computed: {
-    isStepsComplete () {
+    isStepsComplete() {
       return this.tutoA.title && this.tutoA.themeIds.length > 0;
     },
-    isFirstStepComplete () {
+    isFirstStepComplete() {
       return this.tutoA.title;
     }
   },
-  
+
   created() {
     this.getThemes();
     this.$root.$on('addTuto', () => {
@@ -126,23 +128,28 @@ export default {
   methods: {
     tutoPost() {
       return this.$tutoService.tutoPost(this.tutoA)
-        .then(() => {this.$root.$emit('tutoCreated');})
-        .then(() =>{
+        .then(() => {
+          this.$root.$emit('tutoCreated');
+        })
+        .then(() => {
           this.clear();
-          this.$refs.tutorialManagementDrawer.close(); })
+          this.$refs.tutorialManagementDrawer.close();
+        })
         .catch((e) => this.errors.push(e));
-      
+
     },
-    
+
     getThemes() {
       return this.$themeService.getThemes()
-        .then((data) => {(this.themes = data);})
+        .then((data) => {
+          (this.themes = data);
+        })
         .catch((e) => this.errors.push(e));
     },
-    clear(){
-      this.tutoA.title=null;
-      this.tutoA.description=null;
-      this.tutoA.themeIds=[];
+    clear() {
+      this.tutoA.title = null;
+      this.tutoA.description = null;
+      this.tutoA.themeIds = [];
       this.add_steps = 1;
     }
   }

@@ -2,14 +2,17 @@
   <v-app
     id="tutorial_update"
     flat>
-    <exo-drawer ref="tutorialUpdateDrawer" right>
+    <exo-drawer 
+      id="tutorialUpdateDrawer"
+      ref="tutorialUpdateDrawer"
+      right>
       <template slot="title">
         {{ $t('addon.elearning.tutorial.updateF') }}     
       </template>
       <template slot="content">
         <v-form ref="form">
           <div id="id_update_form">
-            <label class="tuto_title_label" for="title">
+            <label class="tuto_title_label" :for="tutoUp.title">
               {{ $t('addon.elearning.theme.label.title') }}  
             </label>
             <v-text-field
@@ -18,7 +21,7 @@
               :placeholder="$t('addon.elearning.tutorial.label.title')"
               name="title"
               v-model="tutoUp.title" />
-            <label class="tuto_description_label" for="description">
+            <label class="tuto_description_label" :for="tutoUp.description">
               {{ $t('addon.elearning.tutorial.label.description') }}  
             </label>
             <extended-textarea
@@ -44,8 +47,7 @@
 </template>
 <script>
 export default {
-    
-  data () {
+  data() {
     return {
       tutoId: null,
       tutoU: null,
@@ -62,7 +64,7 @@ export default {
     };
   },
   computed: {
-    isFormComplete () {
+    isFormComplete() {
       return this.tutoUp.title;
     }
   },
@@ -70,30 +72,35 @@ export default {
   created() {
     this.$root.$on('makeUpdateTuto', (id) => {
       this.$refs.tutorialUpdateDrawer.open();
-      this.tutoId=id;
+      this.tutoId = id;
       this.getTutoU(id);
     });
   },
 
   methods: {
     tutoUpdate() {
-      this.tutoUp.id=this.tutoId;
+      this.tutoUp.id = this.tutoId;
       return this.$tutoService.tutoUpdate(this.tutoUp)
-        .then(() => {this.$root.$emit('tutoUpdated');})
+        .then(() => {
+          this.$root.$emit('tutoUpdated');
+        })
         .then(() => {
           this.tutoUp.id = 0;
-          this.$refs.tutorialUpdateDrawer.close();})
-        .catch((e) => this.errors.push(e));      
+          this.$refs.tutorialUpdateDrawer.close();
+        })
+        .catch((e) => this.errors.push(e));
     },
 
     getTutoU(id) {
       return this.$tutoService.getTutoById(id)
-        .then((data) => {this.tutoU = data;
+        .then((data) => {
+          this.tutoU = data;
           this.tutoUp.title = this.tutoU.title;
           this.tutoUp.description = this.tutoU.description;
           this.tutoUp.status = this.tutoU.status;
-          this.tutoUp.themeIds= this.tutoU.themeIds;
-          this.tutoUp.author=this.tutoU.author;})
+          this.tutoUp.themeIds = this.tutoU.themeIds;
+          this.tutoUp.author = this.tutoU.author;
+        })
         .catch((e) => this.errors.push(e));
     },
   }

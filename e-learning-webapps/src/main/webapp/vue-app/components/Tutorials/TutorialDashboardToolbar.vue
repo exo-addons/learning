@@ -54,7 +54,7 @@
 
 <script>
 export default {
-  data (){
+  data() {
     return {
       displayActionMenu: false
     };
@@ -74,7 +74,7 @@ export default {
       this.$root.$emit('key-changed', this.keyword);
     }
   },
-  created () {
+  created() {
     $(document).on('mousedown', () => {
       if (this.displayActionMenu) {
         window.setTimeout(() => {
@@ -84,12 +84,12 @@ export default {
     });
   },
   methods: {
-    createTuto(){
+    createTuto() {
       this.$root.$emit('makeTuto');
     },
-    back(){
+    back() {
       this.$root.$emit('backtoThemes');
-    },   
+    },
   }
 };
 

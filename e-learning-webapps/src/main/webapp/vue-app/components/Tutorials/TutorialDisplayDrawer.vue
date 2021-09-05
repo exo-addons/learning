@@ -3,6 +3,7 @@
     id="tutorial_display"
     flat>
     <exo-drawer
+      id="tutorialDisplayDrawer"
       ref="tutorialDisplayDrawer"
       right>
       <template slot="title">
@@ -38,7 +39,6 @@
 </template>
 <script>
 export default {
-    
   data() {
     return {
       errors: [],
@@ -48,21 +48,23 @@ export default {
         month: 'numeric',
         year: 'numeric',
         hour: '2-digit',
-        minute: '2-digit',        
+        minute: '2-digit',
       },
     };
   },
-  created (){
+  created() {
     this.$root.$on('makeShowTTuto', (id) => {
-      this.getTutoById(id);            
-      this.$refs.tutorialDisplayDrawer.open();      
-    });      
+      this.getTutoById(id);
+      this.$refs.tutorialDisplayDrawer.open();
+    });
   },
   methods: {
 
     getTutoById(id) {
       return this.$tutoService.getTutoById(id)
-        .then((data) => {this.tuto = data;})
+        .then((data) => {
+          this.tuto = data;
+        })
         .catch((e) => this.errors.push(e));
     }
   }

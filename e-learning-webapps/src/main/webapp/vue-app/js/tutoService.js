@@ -75,7 +75,7 @@ export function getAllTutosByTheme(themeId) {
     });
 }
 
-export function getTutosByName(id,tutoTitle) {
+export function getTutosByName(id, tutoTitle) {
   return fetch(`/portal/rest/tuto/getTutosByName/${id}/${tutoTitle}`, {
     method: 'GET'
   })

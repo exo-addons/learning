@@ -45,7 +45,7 @@
 
 <script>
 export default {
-  data (){
+  data() {
     return {
       displayActionMenu: false,
     };
@@ -61,7 +61,7 @@ export default {
       this.$emit('keyword-changed', this.keyword);
     }
   },
-  created () {
+  created() {
     $(document).on('mousedown', () => {
       if (this.displayActionMenu) {
         window.setTimeout(() => {
@@ -71,9 +71,9 @@ export default {
     });
   },
   methods: {
-    createTheme(){
+    createTheme() {
       this.$root.$emit('makeTheme');
-    } 
+    }
   }
 };
 

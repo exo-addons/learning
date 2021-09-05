@@ -12,19 +12,19 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
       showThemes: true
     };
   },
-  
+
   created() {
-    this.$root.$on('showTutos', (id) => {      
+    this.$root.$on('showTutos', (id) => {
       this.$root.$emit('setId', id);
-      this.showThemes=false;
+      this.showThemes = false;
     });
-    this.$root.$on('backThemes', () => { 
-      this.showThemes=true;
+    this.$root.$on('backThemes', () => {
+      this.showThemes = true;
     });
   }
 };

@@ -54,8 +54,7 @@
 </template>
 <script>
 export default {
-  
-  data () {
+  data() {
     return {
       title: false,
       themeId: null,
@@ -72,12 +71,12 @@ export default {
       }
     };
   },
-  
+
   computed: {
-    isAddComplete () {
+    isAddComplete() {
       return this.themeA.name;
     },
-    isUpComplete () {
+    isUpComplete() {
       return this.themeUp.name;
     }
   },
@@ -90,39 +89,47 @@ export default {
     this.$root.$on('updateTheme', (id) => {
       this.title = false;
       this.$refs.themeManagementDrawer.open();
-      this.themeId=id;
+      this.themeId = id;
       this.getThemeU(id);
     });
   },
 
   methods: {
     themePost() {
-      this.themeA.spaceName=eXo.env.portal.spaceName;
+      this.themeA.spaceName = eXo.env.portal.spaceName;
       return this.$themeService.themePost(this.themeA)
-        .then(() => {this.$root.$emit('themeCreated');})
-        .then(() =>{ 
+        .then(() => {
+          this.$root.$emit('themeCreated');
+        })
+        .then(() => {
           this.$refs.form.reset();
-          this.$refs.themeManagementDrawer.close(); })
+          this.$refs.themeManagementDrawer.close();
+        })
         .catch((e) => this.errors.push(e));
-      
+
     },
 
     themeUpdate() {
-      this.themeUp.id=this.themeId;
+      this.themeUp.id = this.themeId;
       return this.$themeService.themeUpdate(this.themeUp)
-        .then(() => {this.$root.$emit('themeUpdated');})
+        .then(() => {
+          this.$root.$emit('themeUpdated');
+        })
         .then(() => {
           this.themeUp.id = 0;
           this.$refs.form.reset();
-          this.$refs.themeManagementDrawer.close();})
-        .catch((e) => this.errors.push(e));      
+          this.$refs.themeManagementDrawer.close();
+        })
+        .catch((e) => this.errors.push(e));
     },
 
     getThemeU(id) {
       return this.$themeService.getThemeById(id)
-        .then((data) => {this.themeU = data;
+        .then((data) => {
+          this.themeU = data;
           this.themeUp.name = this.themeU.name;
-          this.themeUp.spaceName = this.themeU.spaceName;})
+          this.themeUp.spaceName = this.themeU.spaceName;
+        })
         .catch((e) => this.errors.push(e));
     },
   }

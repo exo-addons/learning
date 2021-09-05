@@ -24,7 +24,6 @@
 
 <script>
 export default {
-
   data() {
     return {
       themeList: [],
@@ -37,7 +36,7 @@ export default {
       default: null,
     }
   },
-  
+
   watch: {
     keyword() {
       if (!this.keyword) {
@@ -62,22 +61,24 @@ export default {
       this.getThemes();
     });
   },
-  
+
   methods: {
     getThemes() {
       return this.$themeService.getThemes(this.keyword)
         .then((data) => {
           this.themeList.splice(0);
-          this.themeList = data;})
+          this.themeList = data;
+        })
         .catch((e) => this.errors.push(e));
     },
-    findThemes(){
+    findThemes() {
       return this.$themeService.getThemesByName(this.keyword)
         .then((data) => {
           this.themeList.splice(0);
-          this.themeList = data;})
+          this.themeList = data;
+        })
         .catch((e) => this.errors.push(e));
     }
-  }  
+  }
 };
 </script>

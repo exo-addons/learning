@@ -101,12 +101,12 @@ export default {
       default: null
     }
   },
-  data () {
+  data() {
     return {
       displayActionMenu: false,
     };
   },
-  created() {      
+  created() {
     $(document).on('mousedown', () => {
       if (this.displayActionMenu) {
         window.setTimeout(() => {
@@ -120,29 +120,30 @@ export default {
     deleteTuto(id) {
       this.$root.$emit('deleteTuto', id);
     },
-    updateTuto(id){
+    updateTuto(id) {
       this.$root.$emit('makeUpdateTuto', id);
     },
-    showTuto(id){
+    showTuto(id) {
       this.$root.$emit('makeShowTTuto', id);
     },
-    moveTuto(id){
+    moveTuto(id) {
       this.$root.$emit('makeMoveTuto', id);
     },
-    dupTuto(id){
+    dupTuto(id) {
       this.$root.$emit('makeDupTuto', id);
     },
-    archiveTuto(id){
+    archiveTuto(id) {
       this.$root.$emit('makeArchTuto', id);
     },
-    unarchiveTuto(id){
+    unarchiveTuto(id) {
       this.$root.$emit('makeUnarchTuto', id);
     },
-    getClass(){
+    getClass() {
       return {
-        'tuto_items': this.tuto.status !== 'ARCHIVED',  
-        'tuto_items_archived': this.tuto.status === 'ARCHIVED'};
+        'tuto_items': this.tuto.status !== 'ARCHIVED',
+        'tuto_items_archived': this.tuto.status === 'ARCHIVED'
+      };
     },
-  } 
+  }
 };
 </script>

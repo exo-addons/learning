@@ -69,13 +69,13 @@ export default {
       default: null
     }
   },
-  data () {
+  data() {
     return {
       displayActionMenu: false
     };
   },
 
-  created() {      
+  created() {
     $(document).on('mousedown', () => {
       if (this.displayActionMenu) {
         window.setTimeout(() => {
@@ -89,12 +89,12 @@ export default {
     deleteTheme(id) {
       this.$root.$emit('deleteTheme', id);
     },
-    update(id){
+    update(id) {
       this.$root.$emit('makeUpdateTheme', id);
     },
-    showTutos(id){
+    showTutos(id) {
       this.$root.$emit('makeShowTutos', id);
     }
-  }  
+  }
 };
 </script>
