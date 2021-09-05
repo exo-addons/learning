@@ -8,7 +8,7 @@ import java.util.Collection;
 
 @Entity
 @ExoEntity
-@Table(name = "ADDON_E_LEARNING_TUTO")
+@Table(name = "EXO_E_LEARNING_TUTORIAL")
 @NamedQueries({
         @NamedQuery(name = "TutorialEntity.getAllTutorialsByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id"),
         @NamedQuery(name = "TutorialEntity.findTutorialsByName", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id AND LOWER(t.title) LIKE LOWER(CONCAT('%', :tutoTitle, '%'))")})
@@ -16,7 +16,7 @@ public class TutorialEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "ID")
+  @Column(name = "TUTORIAL_ID")
   private Long id;
 
   @Column(name = "TITLE")
@@ -32,7 +32,7 @@ public class TutorialEntity {
   private Timestamp createdDate;
 
   @ElementCollection
-  @CollectionTable(name = "ADDON_E_LEARNING_TUTO_THEME", joinColumns = @JoinColumn(name = "TUTO_ID"))
+  @CollectionTable(name = "EXO_E_LEARNING_TUTO_THEME", joinColumns = @JoinColumn(name = "TUTORIAL_ID"))
   @Column(name = "THEME_ID")
   public Collection<Long> themeIds;
 
