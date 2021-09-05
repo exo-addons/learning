@@ -35,7 +35,7 @@ public class TutorialMapper {
   public static TutorialEntity convertTutorialToEntity(Tutorial tutorial) {
     TutorialEntity tutorialEntity = new TutorialEntity();
     tutorialEntity.setAuthor(tutorial.getAuthor());
-    tutorialEntity.setCreatedDate(new Timestamp(tutorial.getCreatedDate().getTime()));
+    tutorialEntity.setCreatedDate(tutorial.getCreatedDate() != null ? new Timestamp(tutorial.getCreatedDate().getTime()) : new Timestamp(System.currentTimeMillis()));
     tutorialEntity.setId(tutorial.getId());
     tutorialEntity.setStatus(tutorial.getStatus());
     tutorialEntity.setDescription(tutorial.getDescription());

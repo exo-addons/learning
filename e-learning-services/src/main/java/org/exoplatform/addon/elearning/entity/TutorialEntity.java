@@ -10,8 +10,8 @@ import java.util.Collection;
 @ExoEntity
 @Table(name = "ADDON_E_LEARNING_TUTO")
 @NamedQueries({
-        @NamedQuery(name = "TutorialEntity.getAllTutosByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id"),
-        @NamedQuery(name = "TutorialEntity.findTutosByName", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id AND LOWER(t.title) LIKE LOWER(CONCAT('%', :tutoTitle, '%'))")})
+        @NamedQuery(name = "TutorialEntity.getAllTutorialsByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id"),
+        @NamedQuery(name = "TutorialEntity.findTutorialsByName", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeIds theme WHERE theme = :id AND LOWER(t.title) LIKE LOWER(CONCAT('%', :tutoTitle, '%'))")})
 public class TutorialEntity {
 
   @Id
