@@ -6,7 +6,7 @@
     <application-name>exo-elearning</application-name>
     <portlet-name>Elearning</portlet-name>
     <skin-name>Enterprise</skin-name>
-    <css-path>/skin/less/elearning.less</css-path>
+    <css-path>/skin/css/elearning.css</css-path>
   </portlet-skin>
 
   <portlet>
