@@ -5,6 +5,7 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @ExoEntity
@@ -31,10 +32,9 @@ public class TutorialEntity {
   @Column(name = "CREATED_DATE")
   private Timestamp createdDate;
 
-  @ElementCollection
-  @CollectionTable(name = "EXO_E_LEARNING_TUTO_THEME", joinColumns = @JoinColumn(name = "TUTORIAL_ID"))
-  @Column(name = "THEME_ID")
-  public Collection<Long> themeIds;
+  @ManyToMany
+  @JoinTable(name = "EXO_E_LEARNING_TUTORIAL_THEME", joinColumns = @JoinColumn(name = "TUTORIAL_ID"), inverseJoinColumns = @JoinColumn(name = "THEME_ID"))
+  public Set<ThemeEntity> themeEntities;
 
   @Column(name = "STATUS")
   private String status;
@@ -42,34 +42,13 @@ public class TutorialEntity {
   public TutorialEntity() {
   }
 
-  public TutorialEntity(Long id,
-                        String title,
-                        String description,
-                        String author,
-                        Timestamp createdDate,
-                        Collection<Long> themeIds,
-                        String status) {
-
+  public TutorialEntity(Long id, String title, String description, String author, Timestamp createdDate, Set<ThemeEntity> themeEntities, String status) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.author = author;
     this.createdDate = createdDate;
-    this.themeIds = themeIds;
-    this.status = status;
-  }
-
-  public TutorialEntity(String title,
-                        String description,
-                        String author,
-                        Timestamp createdDate,
-                        Collection<Long> themeIds,
-                        String status) {
-    this.title = title;
-    this.description = description;
-    this.author = author;
-    this.createdDate = createdDate;
-    this.themeIds = themeIds;
+    this.themeEntities = themeEntities;
     this.status = status;
   }
 
@@ -113,12 +92,12 @@ public class TutorialEntity {
     this.createdDate = createdDate;
   }
 
-  public Collection<Long> getThemeIds() {
-    return themeIds;
+  public Set<ThemeEntity> getThemeEntities() {
+    return themeEntities;
   }
 
-  public void setThemeIds(Collection<Long> themeIds) {
-    this.themeIds = themeIds;
+  public void setThemeEntities(Set<ThemeEntity> themeEntities) {
+    this.themeEntities = themeEntities;
   }
 
   public String getStatus() {

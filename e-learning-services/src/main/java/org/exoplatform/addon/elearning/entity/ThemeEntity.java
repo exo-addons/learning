@@ -58,10 +58,14 @@ public class ThemeEntity {
   @Column(name = "LAST_MODIFIED_DATE")
   private Long lastModifiedDate;
 
+  @ManyToMany(mappedBy = "themeEntities")
+  private Set<TutorialEntity> tutorialEntities;
+
   public ThemeEntity() {
   }
 
-  public ThemeEntity(Long id, String name, String spaceName, Set<String> managers, Set<String> participators, ThemeEntity parent, List<ThemeEntity> children, Long lastModifiedDate) {
+  public ThemeEntity(Long id, String name, String spaceName, Set<String> managers, Set<String> participators, ThemeEntity parent, List<ThemeEntity> children,
+                     Long lastModifiedDate, Set<TutorialEntity> tutorialEntities) {
     this.id = id;
     this.name = name;
     this.spaceName = spaceName;
@@ -70,6 +74,7 @@ public class ThemeEntity {
     this.parent = parent;
     this.children = children;
     this.lastModifiedDate = lastModifiedDate;
+    this.tutorialEntities = tutorialEntities;
   }
 
   public Long getId() {
@@ -134,5 +139,13 @@ public class ThemeEntity {
 
   public void setLastModifiedDate(Long lastModifiedDate) {
     this.lastModifiedDate = lastModifiedDate;
+  }
+
+  public Set<TutorialEntity> getTutorialEntities() {
+    return tutorialEntities;
+  }
+
+  public void setTutorialEntities(Set<TutorialEntity> tutorialEntities) {
+    this.tutorialEntities = tutorialEntities;
   }
 }

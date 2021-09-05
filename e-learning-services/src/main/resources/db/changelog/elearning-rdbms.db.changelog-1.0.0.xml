@@ -74,7 +74,7 @@
 
 
   <changeSet author="elearning" id="1.0.0-4">
-    <createTable tableName="EXO_E_LEARNING_TUTO_THEME">
+    <createTable tableName="EXO_E_LEARNING_TUTORIAL_THEME">
       <column name="TUTORIAL_ID" type="BIGINT">
         <constraints nullable="true" foreignKeyName="FK_TUTO_ID"
                      primaryKey="true" primaryKeyName="FK_TUTO_THEME_ID"
