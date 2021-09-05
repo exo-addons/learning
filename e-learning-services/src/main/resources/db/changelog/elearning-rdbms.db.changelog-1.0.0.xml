@@ -12,8 +12,6 @@
             dbms="oracle,postgresql"/>
 
   <changeSet author="elearning" id="1.0.0-1">
-
-
     <createTable tableName="ADDON_E_LEARNING_TUTO">
       <column name="ID" type="BIGINT"
               autoIncrement="${autoIncrement}" startWith="1">
@@ -25,28 +23,20 @@
       <column name="AUTHOR" type="NVARCHAR(2000)"/>
       <column name="CREATED_DATE" type="TIMESTAMP"/>
       <column name="STATUS" type="NVARCHAR(255)"/>
-
     </createTable>
-
-
     <modifySql dbms="mysql">
       <append
               value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
     </modifySql>
-
-
   </changeSet>
 
   <changeSet author="elearning" id="1.0.0-2">
-
-
     <createTable tableName="ADDON_E_LEARNING_STEP">
       <column name="ID" type="BIGINT"
               autoIncrement="${autoIncrement}" startWith="1">
         <constraints nullable="false" primaryKey="true"
                      primaryKeyName="PK_STEP_ID"/>
       </column>
-
       <column name="MEDIA" type="BIGINT"/>
       <column name="ORDER" type="INT"/>
       <column name="TUTO_ID" type="BIGINT">
@@ -55,21 +45,15 @@
                      references="ADDON_E_LEARNING_TUTO(ID)" deleteCascade="true"/>
       </column>
     </createTable>
-
-
     <modifySql dbms="mysql">
       <append
               value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
     </modifySql>
-
-
   </changeSet>
 
   <changeSet author="elearning" id="1.0.0-3">
-
-
-    <createTable tableName="ADDON_E_LEARNING_THEME">
-      <column name="ID" type="BIGINT"
+    <createTable tableName="EXO_E_LEARNING_THEME">
+      <column name="THEME_ID" type="BIGINT"
               autoIncrement="${autoIncrement}" startWith="1">
         <constraints nullable="false" primaryKey="true"
                      primaryKeyName="PK_THEME_ID"/>
@@ -77,24 +61,20 @@
 
       <column name="NAME" type="NVARCHAR(255)"/>
       <column name="SPACE_NAME" type="NVARCHAR(2000)"/>
-
+      <column name="PARENT_THEME_ID" type="BIGINT">
+        <constraints foreignKeyName="FK_PARENT_THEME_ID" references="EXO_E_LEARNING_THEME(THEME_ID)" nullable="true"/>
+      </column>
+      <column name="LAST_MODIFIED_DATE" type="BIGINT"></column>
     </createTable>
-
-
     <modifySql dbms="mysql">
       <append
               value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
     </modifySql>
-
-
   </changeSet>
 
 
   <changeSet author="elearning" id="1.0.0-4">
-
-
     <createTable tableName="ADDON_E_LEARNING_TUTO_THEME">
-
       <column name="TUTO_ID" type="BIGINT">
         <constraints nullable="true" foreignKeyName="FK_TUTO_ID"
                      primaryKey="true" primaryKeyName="FK_TUTO_THEME_ID"
@@ -104,17 +84,46 @@
         <constraints nullable="true"
                      foreignKeyName="FK_THEME_ID" primaryKey="true"
                      primaryKeyName="FK_TUTO_THEME_ID"
-                     references="ADDON_E_LEARNING_THEME(ID)"/>
+                     references="EXO_E_LEARNING_THEME(THEME_ID)"/>
       </column>
     </createTable>
-
 
     <modifySql dbms="mysql">
       <append
               value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
     </modifySql>
+  </changeSet>
 
+  <!-- Definition of E_LEARNING_THEME_MANAGER table -->
+  <changeSet author="task" id="1.0.0-5">
+    <createTable tableName="EXO_E_LEARNING_THEME_MANAGERS">
+      <column name="THEME_ID" type="BIGINT">
+        <constraints foreignKeyName="FK_THEME_ID_01" references="EXO_E_LEARNING_THEME(THEME_ID)"
+                     nullable="false"/>
+      </column>
+      <column name="MANAGER" type="NVARCHAR(250)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <modifySql dbms="mysql">
+      <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+    </modifySql>
+  </changeSet>
 
+  <!-- Definition of E_LEARNING_THEME_PARTICIPATOR table -->
+  <changeSet author="task" id="1.0.0-6">
+    <createTable tableName="EXO_E_LEARNING_THEME_PARTICIPATORS">
+      <column name="THEME_ID" type="BIGINT">
+        <constraints foreignKeyName="FK_THEME_ID_02" references="EXO_E_LEARNING_THEME(THEME_ID)"
+                     nullable="false"/>
+      </column>
+      <column name="PARTICIPATOR" type="NVARCHAR(250)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <modifySql dbms="mysql">
+      <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+    </modifySql>
   </changeSet>
 
 </databaseChangeLog>
