@@ -1,12 +1,15 @@
 @import "./variables.less";
 @import "./mixins.less";
+
 #elearning_app {
   background: @primaryBackground !important;
+  padding: 20px;
+  
   .controls {
     position: relative;
   }
 
-  .snackbar_btn.v-btn { 
+  .snackbar_btn.v-btn {
     color: @secondaryColor !important;
     background: transparent !important;
   }
@@ -14,7 +17,7 @@
   .exo_cancel_btn.v-btn {
     background: transparent !important;
   }
-  
+
   .tuto_img {
     height: 150px;
     filter: blur(5px);
@@ -22,89 +25,103 @@
 
   /********* Themes ***********/
 
-  #themes_dashboard{
+  #themes_dashboard {
     max-height: max-content;
+
     #themes_card_list {
       min-height: 100%;
-      margin-left: 25px;
-      margin-right: 25px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding:10px;
       position: relative;
-      background: @baseBackgroundDefault !important; 
-      .container{
+      background: @baseBackgroundDefault !important;
+
+      .container {
         padding-left: 0px !important;
         padding-right: 0px !important;
       }
-      .theme_cards_row{
+
+      .theme_cards_row {
         position: relative;
         display: flex;
         align-items: center;
+
         .theme_cards {
           position: relative;
+
           .theme_card_menu {
             right: 40px;
-            left: auto!important;
-            top: 45px!important;
-            .card_menu_list.v-list{
+            left: auto !important;
+            top: 45px !important;
+
+            .card_menu_list.v-list {
               padding-top: 5px !important;
               padding-bottom: 5px !important;
-              .v-list-item{
+
+              .v-list-item {
                 min-height: 5px;
                 padding-left: 10px !important;
                 padding-right: 10px !important;
                 padding-top: 3px !important;
                 padding-bottom: 3px !important;
               }
-              .menu_list_items{
-                .theme_menu_icon.v-icon{
+
+              .menu_list_items {
+                .theme_menu_icon.v-icon {
                   color: @primaryColor;
                   font-size: 20px;
                 }
-                .theme_menu_text{
+
+                .theme_menu_text {
                   font-size: 0.769rem !important;
                 }
               }
             }
           }
         }
+
         #theme_card {
           position: relative;
-          
+
           #theme_card_footer {
             background: @orangeColor;
             height: 5px;
             position: relative;
           }
-          
-          .theme_items{
+
+          .theme_items {
             box-shadow: none !important;
-            border-left: .1px solid rgba(87,141,201, .3) !important;
-            border-top: .1px solid rgba(87,141,201, .3) !important;
-            border-right: .1px solid rgba(87,141,201, .3) !important;
+            border-left: .1px solid rgba(87, 141, 201, .3) !important;
+            border-top: .1px solid rgba(87, 141, 201, .3) !important;
+            border-right: .1px solid rgba(87, 141, 201, .3) !important;
             position: relative;
-            .theme_card_toolbar{
+
+            .theme_card_toolbar {
               margin-top: 10px;
               position: relative;
+
               #theme_card_title {
+                cursor: pointer;
                 width: 100% !important;
                 justify-content: center;
               }
-              .theme_card_menu_icon{
-                color: rgba(87,141,201, .3) !important;
+
+              .theme_card_menu_icon {
+                color: rgba(87, 141, 201, .3) !important;
                 float: right;
               }
-              
+
             }
-            .theme_card_content{
+
+            .theme_card_content {
               height: 40px !important;
-              display: flex; 
+              display: flex;
               margin-top: 15px !important;
-              .theme_card_space_avatar.v-avatar{
+
+              .theme_card_space_avatar.v-avatar {
                 display: inline-flex;
                 align-items: center;
               }
-              .theme_card_space_name{
+
+              .theme_card_space_name {
                 display: inline-flex;
                 align-items: center;
                 margin-left: 10px;
@@ -112,43 +129,48 @@
             }
           }
         }
-      }     
+      }
     }
-  };
-  #theme_dashboard_toolbar{
-    margin-top: 15px;
-    margin-left: 25px;
-    margin-right: 25px;
-    position: relative;
-    
-    #ThemeDashboardToolbar{
+  }
+;
+
+  #theme_dashboard_toolbar {
+
+    #ThemeDashboardToolbar {
       height: 75px !important;
+
       .add_theme_wrapper {
         position: relative;
-        #theme_add_btn.v-icon{
+
+        #theme_add_btn.v-icon {
           color: @btnPrimaryBackground !important;
         }
       }
+
       .theme_Dashboard_menu {
         right: 290px;
-        left: auto!important;
-        top: 40px!important;
-        .toolbar_menu_list.v-list{
+        left: auto !important;
+        top: 40px !important;
+
+        .toolbar_menu_list.v-list {
           padding-top: 5px !important;
           padding-bottom: 5px !important;
-          .v-list-item{
+
+          .v-list-item {
             min-height: 5px;
             padding-left: 10px !important;
             padding-right: 10px !important;
             padding-top: 3px !important;
             padding-bottom: 3px !important;
           }
-          .toolbar_menu_list_items{
-            .toolbar_menu_icon.v-icon{
+
+          .toolbar_menu_list_items {
+            .toolbar_menu_icon.v-icon {
               color: @primaryColor;
               font-size: 20px;
             }
-            .toolbar_menu_text{
+
+            .toolbar_menu_text {
               font-size: 0.769rem !important;
             }
           }
@@ -156,7 +178,8 @@
       }
     }
   }
-  #themes_management{
+
+  #themes_management {
     .theme_drawer_btn_add.v-btn {
       color: @btnPrimaryColor !important;
       background: @btnPrimaryBackground !important;
@@ -165,6 +188,7 @@
       margin-left: 10px;
       box-shadow: none !important;
     }
+
     .theme_drawer_btn_add.v-btn:disabled {
       color: @btnPrimaryColor !important;
       background: @btnPrimaryDisableBackground !important;
@@ -173,64 +197,72 @@
       margin-left: 10px;
       box-shadow: none !important;
     }
-    .exo_cancel_btn{
+
+    .exo_cancel_btn {
       position: relative;
       float: right;
       box-shadow: none !important;
-      border: .1px solid rgba(87,141,201, .3) !important;
+      border: .1px solid rgba(87, 141, 201, .3) !important;
     }
-    }
-    .theme_title_label{
-      font-weight: 600;
-      margin-left: 20px;
-      margin-top: 20px;
-    }
-    .primary_theme_input{
-      width: 75%;
-      margin-left: 20px;
-    }
+  }
+
+  .theme_title_label {
+    font-weight: 600;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+
+  .primary_theme_input {
+    width: 75%;
+    margin-left: 20px;
+  }
 
 
   /********* Tutorials ***********/
-  
-  #tutorials_dashboard{
+
+  #tutorials_dashboard {
     max-height: max-content;
-    #tutorial_dashboard_toolbar{
-      margin-top: 15px;
-      margin-left: 25px;
-      margin-right: 25px;
-      position: relative;
-      #TutorialDashboardToolbar{
+
+    #tutorial_dashboard_toolbar {
+      #TutorialDashboardToolbar {
         height: 75px !important;
-        #tuto_toolbar_prom.v-icon{
+
+        #tuto_toolbar_prom.v-icon {
           color: @btnPrimaryBackground !important;
         }
-        .add_tuto_wrapper{
+
+        .add_tuto_wrapper {
           position: relative;
-          #tuto_add_btn.v-icon{
+
+          #tuto_add_btn.v-icon {
             color: @btnPrimaryBackground !important;
           }
         }
+
         .tuto_Dashboard_menu {
           right: 290px;
-          left: auto!important;
-          top: 20px!important;
-          .toolbar_menu_list.v-list{
+          left: auto !important;
+          top: 20px !important;
+
+          .toolbar_menu_list.v-list {
             padding-top: 5px !important;
             padding-bottom: 5px !important;
-            .v-list-item{
+
+            .v-list-item {
               min-height: 5px;
               padding-left: 10px !important;
               padding-right: 10px !important;
               padding-top: 3px !important;
               padding-bottom: 3px !important;
             }
-            .toolbar_menu_list_items{
-              .toolbar_menu_icon.v-icon{
+
+            .toolbar_menu_list_items {
+              .toolbar_menu_icon.v-icon {
                 color: @primaryColor;
                 font-size: 20px;
               }
-              .toolbar_menu_text{
+
+              .toolbar_menu_text {
                 font-size: 0.769rem !important;
               }
             }
@@ -238,140 +270,167 @@
         }
       }
     }
-    #tutos_card_list{
+
+    #tutos_card_list {
       min-height: 100%;
-      margin-left: 25px;
-      margin-right: 25px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding:10px;
       position: relative;
-      background: @baseBackgroundDefault !important; 
-      .container{
+      background: @baseBackgroundDefault !important;
+
+      .container {
         padding-left: 0px !important;
         padding-right: 0px !important;
       }
-      .tuto_cards_row{
+
+      .tuto_cards_row {
         position: relative;
         display: flex;
         align-items: center;
-        #tutorial_card{
+
+        #tutorial_card {
           position: relative;
-          .tuto_items{
+
+          .tuto_items {
             box-shadow: none !important;
-            border-left: .1px solid rgba(87,141,201, .3) !important;
-            border-top: .1px solid rgba(87,141,201, .3) !important;
-            border-right: .1px solid rgba(87,141,201, .3) !important;
+            border-left: .1px solid rgba(87, 141, 201, .3) !important;
+            border-top: .1px solid rgba(87, 141, 201, .3) !important;
+            border-right: .1px solid rgba(87, 141, 201, .3) !important;
             position: relative;
-            .tuto_card_toolbar{
+
+            .tuto_card_toolbar {
               margin-top: 10px;
               position: relative;
-              .tuto_card_menu_info_icon{
-                color: rgba(87,141,201, .3) !important;
+
+              .tuto_card_menu_info_icon {
+                color: rgba(87, 141, 201, .3) !important;
                 float: left;
               }
+
               #tuto_card_title {
                 width: 100% !important;
                 justify-content: center;
-                #tuto_card_title_draft_icon{
+
+                #tuto_card_title_draft_icon {
                   margin-right: 5px;
                   color: @greyColor;
                 }
               }
-              .tuto_card_menu_icon{
-                color: rgba(87,141,201, .3) !important;
+
+              .tuto_card_menu_icon {
+                color: rgba(87, 141, 201, .3) !important;
                 float: right;
               }
             }
-            .tuto_card_content{
+
+            .tuto_card_content {
               height: 40px !important;
-              display: flex; 
+              display: flex;
               margin-top: 15px !important;
-              .tuto_card_space_avatar.v-avatar{
+
+              .tuto_card_space_avatar.v-avatar {
                 display: inline-flex;
                 align-items: center;
               }
-              .tuto_card_space_name{
+
+              .tuto_card_space_name {
                 display: inline-flex;
                 align-items: center;
                 margin-left: 10px;
               }
             }
           }
-          .tuto_items_archived{
+
+          .tuto_items_archived {
             box-shadow: none !important;
-            border-left: .1px solid rgba(87,141,201, .3) !important;
-            border-top: .1px solid rgba(87,141,201, .3) !important;
-            border-right: .1px solid rgba(87,141,201, .3) !important;
+            border-left: .1px solid rgba(87, 141, 201, .3) !important;
+            border-top: .1px solid rgba(87, 141, 201, .3) !important;
+            border-right: .1px solid rgba(87, 141, 201, .3) !important;
             background-color: lightgray;
             position: relative;
-            .tuto_card_toolbar{
+
+            .tuto_card_toolbar {
               margin-top: 10px;
               position: relative;
-              .tuto_card_menu_info_icon{
-                color: rgba(87,141,201, .3) !important;
+
+              .tuto_card_menu_info_icon {
+                color: rgba(87, 141, 201, .3) !important;
                 float: left;
               }
+
               #tuto_card_title {
                 width: 100% !important;
                 justify-content: center;
-                #tuto_card_title_draft_icon{
+
+                #tuto_card_title_draft_icon {
                   margin-right: 5px;
                   color: @greyColor;
                 }
               }
-              .tuto_card_menu_icon{
-                color: rgba(87,141,201, .3) !important;
+
+              .tuto_card_menu_icon {
+                color: rgba(87, 141, 201, .3) !important;
                 float: right;
               }
             }
-            .tuto_card_content{
+
+            .tuto_card_content {
               height: 40px !important;
-              display: flex; 
+              display: flex;
               margin-top: 15px !important;
-              .tuto_card_space_avatar.v-avatar{
+
+              .tuto_card_space_avatar.v-avatar {
                 display: inline-flex;
                 align-items: center;
               }
-              .tuto_card_space_name{
+
+              .tuto_card_space_name {
                 display: inline-flex;
                 align-items: center;
                 margin-left: 10px;
               }
             }
           }
+
           #tuto_card_footer {
             background: @darkBlue;
             height: 5px;
             position: relative;
           }
+
           #tuto_card_footer_draft {
             background: @greyColor;
             height: 5px;
             position: relative;
           }
         }
-        .tuto_cards{
+
+        .tuto_cards {
           position: relative;
+
           .theme_card_menu {
             right: 40px;
-            left: auto!important;
-            top: 45px!important;
-            .card_menu_list.v-list{
+            left: auto !important;
+            top: 45px !important;
+
+            .card_menu_list.v-list {
               padding-top: 5px !important;
               padding-bottom: 5px !important;
-              .v-list-item{
+
+              .v-list-item {
                 min-height: 5px;
                 padding-left: 10px !important;
                 padding-right: 10px !important;
                 padding-top: 3px !important;
                 padding-bottom: 3px !important;
               }
-              .menu_list_items{
-                .tuto_menu_icon.v-icon{
+
+              .menu_list_items {
+                .tuto_menu_icon.v-icon {
                   color: @primaryColor;
                   font-size: 20px;
                 }
-                .tuto_menu_text{
+
+                .tuto_menu_text {
                   font-size: 0.769rem !important;
                 }
               }
@@ -379,78 +438,92 @@
           }
         }
       }
-    }   
+    }
   }
-  #tutorials_management{
-    .tutorial_steps_wrapper{
+
+  #tutorials_management {
+    .tutorial_steps_wrapper {
       margin-left: -10px !important;
       margin-top: -10px !important;
-      .stepper_label{
+
+      .stepper_label {
         margin-left: 2px;
         color: darkGrey !important;
       }
-      .tuto_title_label{
+
+      .tuto_title_label {
         font-weight: 600;
         margin-left: 10px;
       }
-      .primary_tutorial_input{
+
+      .primary_tutorial_input {
         border-radius: 3px;
         border: 1px solid @greyColor !important;
         max-width: 100%;
         padding: 3px 10px;
         margin-left: 10px;
       }
-      .primary_text_area_input{
+
+      .primary_text_area_input {
         padding-top: 0px;
         margin-left: 10px;
       }
-      .tuto_description_label{
+
+      .tuto_description_label {
         font-weight: 600;
         margin-top: 20px;
         margin-left: 10px;
       }
-      .tutorial_stepper_next_btn{
+
+      .tutorial_stepper_next_btn {
         float: right;
         border: 1px solid @btnPrimaryBackground !important;
         background-color: @btnPrimaryColor !important;
         color: @btnPrimaryBackground;
         margin-top: 10px;
-        .tutorial_stepper_next_btn_icon.v-icon{
+
+        .tutorial_stepper_next_btn_icon.v-icon {
           color: @btnPrimaryBackground;
           margin-left: 5px;
           font-size: 20px;
         }
       }
-      .tutorial_stepper_next_btn:disabled{
+
+      .tutorial_stepper_next_btn:disabled {
         float: right;
         border: 1px solid @btnPrimaryDisableBackground !important;
         background-color: @btnPrimaryColor !important;
         color: @btnPrimaryDisableBackground !important;
         margin-top: 10px;
-        .tutorial_stepper_next_btn_icon.v-icon{
+
+        .tutorial_stepper_next_btn_icon.v-icon {
           color: @btnPrimaryDisableBackground !important;
           margin-left: 5px;
           font-size: 20px;
         }
       }
-      #themes_checkbox_container{
+
+      #themes_checkbox_container {
         padding-bottom: 12px;
         padding-top: 0px;
         margin-top: -20px;
       }
-      .tutorial_stepper_back_btn{
+
+      .tutorial_stepper_back_btn {
         float: left;
-        border: 1px solid @darkGrey!important;
+        border: 1px solid @darkGrey !important;
         background-color: @btnPrimaryColor !important;
         color: @darkGrey;
         margin-top: 10px;
-        .tutorial_stepper_back_btn_icon.v-icon{
+
+        .tutorial_stepper_back_btn_icon.v-icon {
           color: @darkGrey;
           margin-right: 5px;
           font-size: 20px;
         }
       }
     }
+
     .tuto_drawer_btn_add.v-btn {
       color: @btnPrimaryColor !important;
       background: @btnPrimaryBackground !important;
@@ -459,6 +532,7 @@
       margin-left: 10px;
       box-shadow: none !important;
     }
+
     .tuto_drawer_btn_add.v-btn:disabled {
       color: @btnPrimaryColor !important;
       background: @btnPrimaryDisableBackground !important;
@@ -467,39 +541,46 @@
       margin-left: 10px;
       box-shadow: none !important;
     }
-    .exo_cancel_btn{
+
+    .exo_cancel_btn {
       position: relative;
       float: right;
       box-shadow: none !important;
-      border: .1px solid rgba(87,141,201, .3) !important;
+      border: .1px solid rgba(87, 141, 201, .3) !important;
     }
   }
-  #tutorial_update{
-    #id_update_form{
+
+  #tutorial_update {
+    #id_update_form {
       padding-top: 21px;
       padding-right: 26px;
       padding-left: 15px;
-      .tuto_title_label{
+
+      .tuto_title_label {
         font-weight: 600;
         margin-left: 10px;
       }
-      .primary_tutorial_input{
+
+      .primary_tutorial_input {
         border-radius: 3px;
         border: 1px solid @greyColor !important;
         max-width: 100%;
         padding: 3px 10px;
         margin-left: 10px;
       }
-      .primary_text_area_input{
+
+      .primary_text_area_input {
         padding-top: 0px;
         margin-left: 10px;
       }
-      .tuto_description_label{
+
+      .tuto_description_label {
         font-weight: 600;
         margin-top: 20px;
         margin-left: 10px;
       }
     }
+
     .tuto_drawer_btn_update.v-btn {
       color: @btnPrimaryColor !important;
       background: @btnPrimaryBackground !important;
@@ -508,6 +589,7 @@
       margin-left: 10px;
       box-shadow: none !important;
     }
+
     .tuto_drawer_btn_update.v-btn:disabled {
       color: @btnPrimaryColor !important;
       background: @btnPrimaryDisableBackground !important;
@@ -516,19 +598,22 @@
       margin-left: 10px;
       box-shadow: none !important;
     }
-    .exo_cancel_btn{
+
+    .exo_cancel_btn {
       position: relative;
       float: right;
       box-shadow: none !important;
-      border: .1px solid rgba(87,141,201, .3) !important;
+      border: .1px solid rgba(87, 141, 201, .3) !important;
     }
   }
-  #tutorial_update{
-    #themes_checkbox_container{
+
+  #tutorial_update {
+    #themes_checkbox_container {
       padding-bottom: 12px;
       padding-top: 0px;
       margin-top: -20px;
     }
+
     .tuto_drawer_btn_move.v-btn {
       color: @btnPrimaryColor !important;
       background: @btnPrimaryBackground !important;
@@ -537,6 +622,7 @@
       margin-left: 10px;
       box-shadow: none !important;
     }
+
     .tuto_drawer_btn_move.v-btn:disabled {
       color: @btnPrimaryColor !important;
       background: @btnPrimaryDisableBackground !important;
@@ -545,11 +631,12 @@
       margin-left: 10px;
       box-shadow: none !important;
     }
-    .exo_cancel_btn{
+
+    .exo_cancel_btn {
       position: relative;
       float: right;
       box-shadow: none !important;
-      border: .1px solid rgba(87,141,201, .3) !important;
+      border: .1px solid rgba(87, 141, 201, .3) !important;
     }
   }
 }
