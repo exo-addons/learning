@@ -15,7 +15,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Path("theme")
 @Produces(MediaType.APPLICATION_JSON)
@@ -99,7 +101,7 @@ public class ThemeServiceRest implements ResourceContainer {
   /* @RolesAllowed("users") */
   public Response getAllThemes(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                                @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
-    List<Theme> themes = new ArrayList<Theme>();
+    Set<Theme> themes;
     try {
       themes = themeService.getAllThemes(offset, limit);
 
@@ -134,7 +136,7 @@ public class ThemeServiceRest implements ResourceContainer {
   public Response getAllThemeNames(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                                    @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit,
                                    @PathParam("themeName") String themeName) {
-    List<Theme> themes = new ArrayList<Theme>();
+    Set<Theme> themes;
     try {
       themes = themeService.findAllThemesByName(themeName, offset, limit);
 

@@ -6,6 +6,7 @@ import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 
 import java.util.List;
+import java.util.Set;
 
 public class ThemeService implements ResourceContainer {
 
@@ -34,7 +35,7 @@ public class ThemeService implements ResourceContainer {
     return themeStorage.updateTheme(theme);
   }
 
-  public List<Theme> getAllThemes(int offset, int limit) {
+  public Set<Theme> getAllThemes(int offset, int limit) {
     return themeStorage.getAllThemes();
   }
 
@@ -42,7 +43,7 @@ public class ThemeService implements ResourceContainer {
     return themeStorage.getThemeById(id);
   }
 
-  public List<Theme> findAllThemesByName(String themeName, int offset, int limit) {
+  public Set<Theme> findAllThemesByName(String themeName, int offset, int limit) {
     return themeStorage.findAllThemesByName(themeName);
   }
 }

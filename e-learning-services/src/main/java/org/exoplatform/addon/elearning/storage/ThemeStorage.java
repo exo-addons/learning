@@ -6,6 +6,7 @@ import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.storage.mapper.ThemeMapper;
 
 import java.util.List;
+import java.util.Set;
 
 public class ThemeStorage {
   private ThemeDao themeDao;
@@ -35,13 +36,13 @@ public class ThemeStorage {
     return updatedTheme;
   }
 
-  public List<Theme> getAllThemes() {
-    List<ThemeEntity> themeEntities = themeDao.findAll();
+  public Set<Theme> getAllThemes() {
+    Set<ThemeEntity> themeEntities = (Set<ThemeEntity>) themeDao.findAll();
     return ThemeMapper.convertThemesToDTOs(themeEntities);
   }
 
-  public List<Theme> findAllThemesByName(String themeName) {
-    List<ThemeEntity> themeEntities = themeDao.findAllThemesByName(themeName);
+  public Set<Theme> findAllThemesByName(String themeName) {
+    Set<ThemeEntity> themeEntities = (Set<ThemeEntity>) themeDao.findAllThemesByName(themeName);
     return ThemeMapper.convertThemesToDTOs(themeEntities);
   }
 }
