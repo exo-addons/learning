@@ -4,6 +4,7 @@ import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.dto.Theme;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ThemeMapper {
@@ -16,12 +17,18 @@ public class ThemeMapper {
     theme.setName(themeEntity.getName());
     theme.setId(themeEntity.getId());
     theme.setSpaceName(themeEntity.getSpaceName());
+    theme.setManagers(themeEntity.getManagers());
+    theme.setParticipators(themeEntity.getParticipators());
+    theme.setParent(themeEntity.getParent());
+    theme.setChildren(themeEntity.getChildren());
+    theme.setLastModifiedDate(themeEntity.getLastModifiedDate());
+    theme.setTutorialEntities(themeEntity.getTutorialEntities());
     return theme;
   }
 
-  public static List<Theme> convertThemesToDTOs(List<ThemeEntity> themes) {
+  public static Set<Theme> convertThemesToDTOs(Set<ThemeEntity> themes) {
 
-    return themes.stream().map(ThemeMapper::convertThemeToDTO).collect(Collectors.toList());
+    return (Set<Theme>) themes.stream().map(ThemeMapper::convertThemeToDTO).collect(Collectors.toList());
   }
 
   public static ThemeEntity convertThemeToEntity(Theme theme) {
@@ -29,7 +36,18 @@ public class ThemeMapper {
     themeEntity.setId(theme.getId());
     themeEntity.setName(theme.getName());
     themeEntity.setSpaceName(theme.getSpaceName());
+    themeEntity.setManagers(theme.getManagers());
+    themeEntity.setParticipators(theme.getParticipators());
+    themeEntity.setParent(theme.getParent());
+    themeEntity.setChildren(theme.getChildren());
+    themeEntity.setLastModifiedDate(theme.getLastModifiedDate());
+    themeEntity.setTutorialEntities(theme.getTutorialEntities());
     return themeEntity;
+  }
+
+  public static Set<ThemeEntity> convertThemesToEntities(Set<Theme> themes) {
+
+    return (Set<ThemeEntity>) themes.stream().map(ThemeMapper::convertThemeToEntity).collect(Collectors.toList());
   }
 
 }

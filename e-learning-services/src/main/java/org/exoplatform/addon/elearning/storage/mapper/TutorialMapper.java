@@ -1,5 +1,7 @@
 package org.exoplatform.addon.elearning.storage.mapper;
 
+import org.exoplatform.addon.elearning.dto.Theme;
+import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.entity.TutorialEntity;
 import org.exoplatform.addon.elearning.dto.Tutorial;
 
@@ -7,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TutorialMapper {
@@ -22,8 +25,9 @@ public class TutorialMapper {
     tutorial.setStatus(tutorialEntity.getStatus());
     tutorial.setDescription(tutorialEntity.getDescription());
     tutorial.setTitle(tutorialEntity.getTitle());
-    ArrayList<Long> themeIds = new ArrayList<Long>(tutorialEntity.getThemeIds());
-    tutorial.setThemeIds(themeIds);
+    Set<ThemeEntity> themeEntities = tutorialEntity.getThemeEntities();
+    Set<Theme> themes = ThemeMapper.convertThemesToDTOs(themeEntities);
+    tutorial.setThemes(themes);
     return tutorial;
   }
 
@@ -40,7 +44,7 @@ public class TutorialMapper {
     tutorialEntity.setStatus(tutorial.getStatus());
     tutorialEntity.setDescription(tutorial.getDescription());
     tutorialEntity.setTitle(tutorial.getTitle());
-    tutorialEntity.setThemeIds(tutorial.getThemeIds());
+    tutorialEntity.setThemeEntities(ThemeMapper.convertThemesToEntities(tutorial.getThemes()));
     return tutorialEntity;
   }
 
