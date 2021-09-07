@@ -32,6 +32,9 @@ public class ThemeMapper {
   }
 
   public static Set<Theme> convertThemesToDTOs(Set<ThemeEntity> themes) {
+    if (themes == null) {
+      return null;
+    }
 
     return (Set<Theme>) themes.stream().map(ThemeMapper::convertThemeToDTO).collect(Collectors.toList());
   }
@@ -55,6 +58,9 @@ public class ThemeMapper {
   }
 
   public static Set<ThemeEntity> convertThemesToEntities(Set<Theme> themes) {
+    if (themes == null) {
+      return null;
+    }
 
     return (Set<ThemeEntity>) themes.stream().map(ThemeMapper::convertThemeToEntity).collect(Collectors.toList());
   }

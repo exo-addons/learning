@@ -34,16 +34,19 @@ public class TutorialMapper {
     return tutorial;
   }
 
-  public static Set<Tutorial> convertTutorialsToDTOs(List<TutorialEntity> tutos) {
+  public static Set<Tutorial> convertTutorialsToDTOs(List<TutorialEntity> tutorialEntities) {
+    if (tutorialEntities == null) {
+      return null;
+    }
 
-    return (Set<Tutorial>) tutos.stream().map(TutorialMapper::convertTutorialToDTO).collect(Collectors.toList());
+    return (Set<Tutorial>) tutorialEntities.stream().map(TutorialMapper::convertTutorialToDTO).collect(Collectors.toList());
   }
 
   public static TutorialEntity convertTutorialToEntity(Tutorial tutorial) {
     if (tutorial == null) {
       return null;
     }
-    
+
     TutorialEntity tutorialEntity = new TutorialEntity();
     tutorialEntity.setAuthor(tutorial.getAuthor());
     tutorialEntity.setCreatedDate(tutorial.getCreatedDate() != null ? new Timestamp(tutorial.getCreatedDate().getTime()) : new Timestamp(System.currentTimeMillis()));
@@ -56,6 +59,9 @@ public class TutorialMapper {
   }
 
   public static List<TutorialEntity> convertTutorialsToEntities(Set<Tutorial> tutorials) {
+    if (tutorials == null) {
+      return null;
+    }
 
     return tutorials.stream().map(TutorialMapper::convertTutorialToEntity).collect(Collectors.toList());
   }
