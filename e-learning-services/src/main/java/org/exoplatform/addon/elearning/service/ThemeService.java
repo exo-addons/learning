@@ -26,6 +26,7 @@ public class ThemeService implements ResourceContainer {
     if (theme == null) {
       throw new IllegalAccessException("Theme is mandatory");
     }
+    theme.setLastModifiedDate(System.currentTimeMillis());
 
     return themeStorage.createTheme(theme);
   }

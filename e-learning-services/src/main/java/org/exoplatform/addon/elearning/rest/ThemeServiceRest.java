@@ -85,7 +85,7 @@ public class ThemeServiceRest implements ResourceContainer {
       }
 
     } catch (Exception e) {
-      LOG.error("Could not createTutorial Theme", e);
+      LOG.error("Could not create Tutorial Theme", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
     return Response.status(Response.Status.OK).entity(theme).build();
