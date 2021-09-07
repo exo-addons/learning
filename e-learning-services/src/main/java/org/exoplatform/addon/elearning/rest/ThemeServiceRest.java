@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.exoplatform.addon.elearning.dto.Theme;
 import org.exoplatform.addon.elearning.service.ThemeService;
+import org.exoplatform.addon.elearning.util.UserUtil;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -18,6 +19,9 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Path("theme")
@@ -49,20 +53,38 @@ public class ThemeServiceRest implements ResourceContainer {
       if (currentUser == null) {
         return Response.status(Response.Status.FORBIDDEN).build();
       }
-      Space space = null;
+      Space space;
 
       if (StringUtils.isNotBlank(theme.getSpaceName())) {
         space = spaceService.getSpaceByPrettyName(theme.getSpaceName());
         if (space == null) {
-          LOG.warn("User {} attempts to createTutorial a project under a non existing space {}", currentUser, theme.getSpaceName());
+          LOG.warn("User {} attempts to create a Tutorial under a non existing space {}", currentUser, theme.getSpaceName());
           return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        if (!spaceService.isMember(space, currentUser)) {
+          LOG.warn("User {} attempts to create a Theme under a non authorized space {}",
+                  currentUser,
+                  theme.getSpaceName());
+          return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        if (theme.getParent() != null) {
+          Long parentId = theme.getParent().getId();
+          Theme parent = themeService.getThemeById(parentId);
+          if (!parent.canEdit(ConversationState.getCurrent().getIdentity())) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+          }
+          theme = themeService.createTheme(theme, parentId);
+        } else {
+          List<String> memberships = UserUtil.getSpaceMemberships(space.getGroupId());
+          Set<String> managers = new HashSet<>(Arrays.asList(memberships.get(0)));
+          Set<String> participators = new HashSet<>(Arrays.asList(memberships.get(1)));
+          theme.setManagers(managers);
+          theme.setParticipators(participators);
+          theme = themeService.createTheme(theme);
         }
       }
 
-      theme = themeService.createTheme(theme);
-
     } catch (Exception e) {
-
       LOG.error("Could not createTutorial Theme", e);
       return Response.serverError().entity(e.getMessage()).build();
     }

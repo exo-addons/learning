@@ -3,9 +3,10 @@ package org.exoplatform.addon.elearning.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.exoplatform.addon.elearning.entity.ThemeEntity;
-import org.exoplatform.addon.elearning.entity.TutorialEntity;
+import org.exoplatform.services.security.Identity;
+import org.exoplatform.services.security.MembershipEntry;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,13 +24,13 @@ public class Theme {
 
   private Set<String> participators;
 
-  private ThemeEntity parent;
+  private Theme parent;
 
-  private List<ThemeEntity> children;
+  private List<Theme> children;
 
   private Long lastModifiedDate;
 
-  private Set<TutorialEntity> tutorialEntities;
+  private Set<Theme> tutorialEntities;
 
   public Theme(String name) {
     this.name = name;
@@ -38,6 +39,32 @@ public class Theme {
   public Theme(String name, String spaceName) {
     this.name = name;
     this.spaceName = spaceName;
+  }
+
+  public boolean canEdit(Identity user) {
+    return hasPermission(user, getManagers());
+  }
+
+  private boolean hasPermission(Identity user, Set<String> permissions) {
+    if (permissions.contains(user.getUserId())) {
+      return true;
+    } else {
+      Set<MembershipEntry> memberships = new HashSet<MembershipEntry>();
+      for (String per : permissions) {
+        MembershipEntry entry = MembershipEntry.parse(per);
+        if (entry != null) {
+          memberships.add(entry);
+        }
+      }
+
+      for (MembershipEntry entry : user.getMemberships()) {
+        if (memberships.contains(entry)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
 
