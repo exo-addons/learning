@@ -30,16 +30,7 @@ public class Theme {
 
   private Long lastModifiedDate;
 
-  private Set<Theme> tutorialEntities;
-
-  public Theme(String name) {
-    this.name = name;
-  }
-
-  public Theme(String name, String spaceName) {
-    this.name = name;
-    this.spaceName = spaceName;
-  }
+  private List<Tutorial> tutorialEntities;
 
   public boolean canEdit(Identity user) {
     return hasPermission(user, getManagers());

@@ -1,7 +1,8 @@
 package org.exoplatform.addon.elearning.storage.mapper;
 
-import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.dto.Theme;
+import org.exoplatform.addon.elearning.dto.Tutorial;
+import org.exoplatform.addon.elearning.entity.ThemeEntity;
 
 import java.util.List;
 import java.util.Set;
@@ -13,16 +14,20 @@ public class ThemeMapper {
   }
 
   public static Theme convertThemeToDTO(ThemeEntity themeEntity) {
+    if (themeEntity == null) {
+      return null;
+    }
+
     Theme theme = new Theme();
     theme.setName(themeEntity.getName());
     theme.setId(themeEntity.getId());
     theme.setSpaceName(themeEntity.getSpaceName());
     theme.setManagers(themeEntity.getManagers());
     theme.setParticipators(themeEntity.getParticipators());
-    theme.setParent(themeEntity.getParent());
-    theme.setChildren(themeEntity.getChildren());
+    theme.setParent(convertThemeToDTO(themeEntity.getParent()));
+    theme.setChildren((List<Theme>) convertThemesToDTOs(themeEntity.getChildren()));
     theme.setLastModifiedDate(themeEntity.getLastModifiedDate());
-    theme.setTutorialEntities(themeEntity.getTutorialEntities());
+    theme.setTutorialEntities((List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(themeEntity.getTutorialEntities()));
     return theme;
   }
 
@@ -32,16 +37,20 @@ public class ThemeMapper {
   }
 
   public static ThemeEntity convertThemeToEntity(Theme theme) {
+    if (theme == null) {
+      return null;
+    }
+
     ThemeEntity themeEntity = new ThemeEntity();
     themeEntity.setId(theme.getId());
     themeEntity.setName(theme.getName());
     themeEntity.setSpaceName(theme.getSpaceName());
     themeEntity.setManagers(theme.getManagers());
     themeEntity.setParticipators(theme.getParticipators());
-    themeEntity.setParent(theme.getParent());
-    themeEntity.setChildren(theme.getChildren());
+    themeEntity.setParent(convertThemeToEntity(theme.getParent()));
+    themeEntity.setChildren(convertThemesToEntities((Set<Theme>) theme.getChildren()));
     themeEntity.setLastModifiedDate(theme.getLastModifiedDate());
-    themeEntity.setTutorialEntities(theme.getTutorialEntities());
+    themeEntity.setTutorialEntities(TutorialMapper.convertTutorialsToEntities((Set<Tutorial>) theme.getTutorialEntities()));
     return themeEntity;
   }
 

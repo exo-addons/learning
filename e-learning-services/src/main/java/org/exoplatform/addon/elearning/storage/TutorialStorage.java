@@ -37,16 +37,16 @@ public class TutorialStorage {
 
   public List<Tutorial> getAllTutorials() {
     List<TutorialEntity> tutorialEntities = tutorialDao.findAll();
-    return TutorialMapper.convertTutorialsToDTOs(tutorialEntities);
+    return (List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(tutorialEntities);
   }
 
   public List<Tutorial> getAllTutorialsByTheme(Long id) {
     List<TutorialEntity> tutorialEntities = tutorialDao.getAllTutorialsByTheme(id);
-    return TutorialMapper.convertTutorialsToDTOs(tutorialEntities);
+    return (List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(tutorialEntities);
   }
 
   public List<Tutorial> findTutorialsByName(String tutorialTitle, Long id) {
     List<TutorialEntity> tutorialEntities = tutorialDao.findTutorialsByName(tutorialTitle, id);
-    return TutorialMapper.convertTutorialsToDTOs(tutorialEntities);
+    return (List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(tutorialEntities);
   }
 }

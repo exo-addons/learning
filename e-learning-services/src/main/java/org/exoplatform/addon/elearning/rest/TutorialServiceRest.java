@@ -1,8 +1,8 @@
 package org.exoplatform.addon.elearning.rest;
 
 import io.swagger.annotations.ApiParam;
-import org.exoplatform.addon.elearning.service.TutorialService;
 import org.exoplatform.addon.elearning.dto.Tutorial;
+import org.exoplatform.addon.elearning.service.TutorialService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -11,7 +11,6 @@ import org.exoplatform.services.security.ConversationState;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("tuto")
@@ -80,15 +79,15 @@ public class TutorialServiceRest implements ResourceContainer {
   /* @RolesAllowed("users") */
   public Response getAllTutos(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                               @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
-    List<Tutorial> tutos = new ArrayList<Tutorial>();
+    List<Tutorial> tutorials;
     try {
-      tutos = tutorialService.getAllTutorials(offset, limit);
+      tutorials = tutorialService.getAllTutorials(offset, limit);
 
     } catch (Exception e) {
       LOG.error("Could not get all Tutorials", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
-    return Response.ok(tutos, MediaType.APPLICATION_JSON).build();
+    return Response.ok(tutorials, MediaType.APPLICATION_JSON).build();
 
   }
 
@@ -96,16 +95,16 @@ public class TutorialServiceRest implements ResourceContainer {
   @Path("/getTutoById/{id}")
   /* @RolesAllowed("users") */
   public Response getTutoById(@PathParam("id") Long id) {
-    Tutorial tuto = new Tutorial();
+    Tutorial tutorial;
 
     try {
-      tuto = tutorialService.getTutorialById(id);
+      tutorial = tutorialService.getTutorialById(id);
 
     } catch (Exception e) {
       LOG.error("No Tutorial found with id {}", id, e);
       return Response.serverError().entity(e.getMessage()).build();
     }
-    return Response.ok(tuto, MediaType.APPLICATION_JSON).build();
+    return Response.ok(tutorial, MediaType.APPLICATION_JSON).build();
 
   }
 
@@ -115,15 +114,15 @@ public class TutorialServiceRest implements ResourceContainer {
   public Response getAllTutosByTheme(@PathParam("id") Long id,
                                      @ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                                      @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
-    List<Tutorial> tutos = new ArrayList<Tutorial>();
+    List<Tutorial> tutorials;
     try {
-      tutos = tutorialService.getAllTutorialsByTheme(id, offset, limit);
+      tutorials = tutorialService.getAllTutorialsByTheme(id, offset, limit);
 
     } catch (Exception e) {
       LOG.error("Could not get all Tutorials by ThemeId {}", id, e);
       return Response.serverError().entity(e.getMessage()).build();
     }
-    return Response.ok(tutos, MediaType.APPLICATION_JSON).build();
+    return Response.ok(tutorials, MediaType.APPLICATION_JSON).build();
 
   }
 
@@ -134,7 +133,7 @@ public class TutorialServiceRest implements ResourceContainer {
                                   @PathParam("tutoTitle") String tutoTitle,
                                   @ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                                   @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
-    List<Tutorial> tutos = new ArrayList<Tutorial>();
+    List<Tutorial> tutos;
     try {
       tutos = tutorialService.findTutorialsByName(tutoTitle, id, offset, limit);
 

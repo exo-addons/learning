@@ -4,7 +4,6 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -53,19 +52,19 @@ public class ThemeEntity {
   private ThemeEntity parent;
 
   @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-  private List<ThemeEntity> children = new LinkedList<>();
+  private Set<ThemeEntity> children = new HashSet<>();
 
   @Column(name = "LAST_MODIFIED_DATE")
   private Long lastModifiedDate;
 
   @ManyToMany(mappedBy = "themeEntities")
-  private Set<TutorialEntity> tutorialEntities;
+  private List<TutorialEntity> tutorialEntities;
 
   public ThemeEntity() {
   }
 
-  public ThemeEntity(Long id, String name, String spaceName, Set<String> managers, Set<String> participators, ThemeEntity parent, List<ThemeEntity> children,
-                     Long lastModifiedDate, Set<TutorialEntity> tutorialEntities) {
+  public ThemeEntity(Long id, String name, String spaceName, Set<String> managers, Set<String> participators, ThemeEntity parent, Set<ThemeEntity> children,
+                     Long lastModifiedDate, List<TutorialEntity> tutorialEntities) {
     this.id = id;
     this.name = name;
     this.spaceName = spaceName;
@@ -125,11 +124,11 @@ public class ThemeEntity {
     this.parent = parent;
   }
 
-  public List<ThemeEntity> getChildren() {
+  public Set<ThemeEntity> getChildren() {
     return children;
   }
 
-  public void setChildren(List<ThemeEntity> children) {
+  public void setChildren(Set<ThemeEntity> children) {
     this.children = children;
   }
 
@@ -141,11 +140,11 @@ public class ThemeEntity {
     this.lastModifiedDate = lastModifiedDate;
   }
 
-  public Set<TutorialEntity> getTutorialEntities() {
+  public List<TutorialEntity> getTutorialEntities() {
     return tutorialEntities;
   }
 
-  public void setTutorialEntities(Set<TutorialEntity> tutorialEntities) {
+  public void setTutorialEntities(List<TutorialEntity> tutorialEntities) {
     this.tutorialEntities = tutorialEntities;
   }
 }

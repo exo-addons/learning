@@ -1,12 +1,11 @@
 package org.exoplatform.addon.elearning.storage.mapper;
 
 import org.exoplatform.addon.elearning.dto.Theme;
+import org.exoplatform.addon.elearning.dto.Tutorial;
 import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.entity.TutorialEntity;
-import org.exoplatform.addon.elearning.dto.Tutorial;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +17,10 @@ public class TutorialMapper {
   }
 
   public static Tutorial convertTutorialToDTO(TutorialEntity tutorialEntity) {
+    if (tutorialEntity == null) {
+      return null;
+    }
+
     Tutorial tutorial = new Tutorial();
     tutorial.setAuthor(tutorialEntity.getAuthor());
     tutorial.setCreatedDate(new Date(tutorialEntity.getCreatedDate().getTime()));
@@ -31,12 +34,16 @@ public class TutorialMapper {
     return tutorial;
   }
 
-  public static List<Tutorial> convertTutorialsToDTOs(List<TutorialEntity> tutos) {
+  public static Set<Tutorial> convertTutorialsToDTOs(List<TutorialEntity> tutos) {
 
-    return tutos.stream().map(TutorialMapper::convertTutorialToDTO).collect(Collectors.toList());
+    return (Set<Tutorial>) tutos.stream().map(TutorialMapper::convertTutorialToDTO).collect(Collectors.toList());
   }
 
   public static TutorialEntity convertTutorialToEntity(Tutorial tutorial) {
+    if (tutorial == null) {
+      return null;
+    }
+    
     TutorialEntity tutorialEntity = new TutorialEntity();
     tutorialEntity.setAuthor(tutorial.getAuthor());
     tutorialEntity.setCreatedDate(tutorial.getCreatedDate() != null ? new Timestamp(tutorial.getCreatedDate().getTime()) : new Timestamp(System.currentTimeMillis()));
@@ -46,6 +53,11 @@ public class TutorialMapper {
     tutorialEntity.setTitle(tutorial.getTitle());
     tutorialEntity.setThemeEntities(ThemeMapper.convertThemesToEntities(tutorial.getThemes()));
     return tutorialEntity;
+  }
+
+  public static List<TutorialEntity> convertTutorialsToEntities(Set<Tutorial> tutorials) {
+
+    return tutorials.stream().map(TutorialMapper::convertTutorialToEntity).collect(Collectors.toList());
   }
 
 }
