@@ -6,6 +6,7 @@ import org.exoplatform.addon.elearning.entity.TutorialEntity;
 import org.exoplatform.addon.elearning.storage.mapper.TutorialMapper;
 
 import java.util.List;
+import java.util.Set;
 
 public class TutorialStorage {
   private TutorialDao tutorialDao;
@@ -37,16 +38,16 @@ public class TutorialStorage {
 
   public List<Tutorial> getAllTutorials() {
     List<TutorialEntity> tutorialEntities = tutorialDao.findAll();
-    return (List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(tutorialEntities);
+    return (List<Tutorial>) TutorialMapper.convertTutorialsToDTOs((Set<TutorialEntity>) tutorialEntities);
   }
 
   public List<Tutorial> getAllTutorialsByTheme(Long id) {
     List<TutorialEntity> tutorialEntities = tutorialDao.getAllTutorialsByTheme(id);
-    return (List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(tutorialEntities);
+    return (List<Tutorial>) TutorialMapper.convertTutorialsToDTOs((Set<TutorialEntity>) tutorialEntities);
   }
 
   public List<Tutorial> findTutorialsByName(String tutorialTitle, Long id) {
     List<TutorialEntity> tutorialEntities = tutorialDao.findTutorialsByName(tutorialTitle, id);
-    return (List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(tutorialEntities);
+    return (List<Tutorial>) TutorialMapper.convertTutorialsToDTOs((Set<TutorialEntity>) tutorialEntities);
   }
 }

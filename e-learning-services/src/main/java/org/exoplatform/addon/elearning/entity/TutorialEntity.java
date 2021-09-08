@@ -4,14 +4,14 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @ExoEntity
 @Table(name = "EXO_E_LEARNING_TUTORIAL")
 @NamedQueries({
-        @NamedQuery(name = "TutorialEntity.getAllTutorialsByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeEntities theme WHERE theme = :id"),
+        @NamedQuery(name = "TutorialEntity.getAllTutorialsByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeEntities theme WHERE theme.id = :id"),
         @NamedQuery(name = "TutorialEntity.findTutorialsByName", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeEntities theme WHERE theme = :id AND LOWER(t.title) LIKE LOWER(CONCAT('%', :tutoTitle, '%'))")})
 public class TutorialEntity {
 
@@ -32,9 +32,10 @@ public class TutorialEntity {
   @Column(name = "CREATED_DATE")
   private Timestamp createdDate;
 
-  @ManyToMany
+  @ManyToMany(cascade = { CascadeType.ALL })
   @JoinTable(name = "EXO_E_LEARNING_TUTORIAL_THEME", joinColumns = @JoinColumn(name = "TUTORIAL_ID"), inverseJoinColumns = @JoinColumn(name = "THEME_ID"))
-  public Set<ThemeEntity> themeEntities;
+  @Column(name = "THEME_ID")
+  public Set<ThemeEntity> themeEntities = new HashSet<>();
 
   @Column(name = "STATUS")
   private String status;

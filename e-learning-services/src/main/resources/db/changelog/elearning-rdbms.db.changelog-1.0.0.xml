@@ -76,14 +76,14 @@
   <changeSet author="elearning" id="1.0.0-4">
     <createTable tableName="EXO_E_LEARNING_TUTORIAL_THEME">
       <column name="TUTORIAL_ID" type="BIGINT">
-        <constraints nullable="true" foreignKeyName="FK_TUTO_ID"
-                     primaryKey="true" primaryKeyName="FK_TUTO_THEME_ID"
+        <constraints nullable="true" foreignKeyName="FK_E_LEARNING_TUTORIAL_THEME_TUTORIAL_ID"
+                     primaryKey="true" primaryKeyName="PK_E_LEARNING_TUTORIAL_THEME_ID"
                      references="EXO_E_LEARNING_TUTORIAL(TUTORIAL_ID)"/>
       </column>
       <column name="THEME_ID" type="BIGINT">
         <constraints nullable="true"
-                     foreignKeyName="FK_THEME_ID" primaryKey="true"
-                     primaryKeyName="FK_TUTO_THEME_ID"
+                     foreignKeyName="FK_E_LEARNING_TUTORIAL_THEME_THEME_ID" primaryKey="true"
+                     primaryKeyName="PK_E_LEARNING_TUTORIAL_THEME_ID"
                      references="EXO_E_LEARNING_THEME(THEME_ID)"/>
       </column>
     </createTable>
@@ -98,10 +98,10 @@
   <changeSet author="task" id="1.0.0-5">
     <createTable tableName="EXO_E_LEARNING_THEME_MANAGERS">
       <column name="THEME_ID" type="BIGINT">
-        <constraints foreignKeyName="FK_THEME_ID_01" references="EXO_E_LEARNING_THEME(THEME_ID)"
+        <constraints foreignKeyName="FK_E_LEARNING_THEME_MANAGERS_THEME_ID" references="EXO_E_LEARNING_THEME(THEME_ID)"
                      nullable="false"/>
       </column>
-      <column name="MANAGER" type="NVARCHAR(250)">
+      <column name="MANAGERS" type="NVARCHAR(250)">
         <constraints nullable="false"/>
       </column>
     </createTable>
@@ -114,10 +114,10 @@
   <changeSet author="task" id="1.0.0-6">
     <createTable tableName="EXO_E_LEARNING_THEME_PARTICIPATORS">
       <column name="THEME_ID" type="BIGINT">
-        <constraints foreignKeyName="FK_THEME_ID_02" references="EXO_E_LEARNING_THEME(THEME_ID)"
+        <constraints foreignKeyName="FK_E_LEARNING_THEME_PARTICIPATORS_THEME_ID" references="EXO_E_LEARNING_THEME(THEME_ID)"
                      nullable="false"/>
       </column>
-      <column name="PARTICIPATOR" type="NVARCHAR(250)">
+      <column name="PARTICIPATORS" type="NVARCHAR(250)">
         <constraints nullable="false"/>
       </column>
     </createTable>

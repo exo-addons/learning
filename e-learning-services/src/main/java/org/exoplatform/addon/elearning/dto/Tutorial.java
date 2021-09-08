@@ -29,12 +29,4 @@ public class Tutorial implements Serializable {
 
   private Set<Theme> themes;
 
-  public Tutorial(String title, String description, String author, String status, Set<Theme> themes) {
-    this.title = title;
-    this.description = description;
-    this.author = author;
-    this.status = status;
-    this.themes = themes;
-  }
-
 }

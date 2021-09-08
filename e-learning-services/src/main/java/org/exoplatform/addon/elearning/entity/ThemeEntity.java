@@ -4,7 +4,6 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,14 +36,16 @@ public class ThemeEntity {
   @Column(name = "SPACE_NAME")
   private String spaceName;
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "EXO_E_LEARNING_THEME_MANAGERS",
           joinColumns = @JoinColumn(name = "THEME_ID"))
+  @Column(name = "MANAGERS")
   private Set<String> managers = new HashSet<>();
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "EXO_E_LEARNING_THEME_PARTICIPATORS",
           joinColumns = @JoinColumn(name = "THEME_ID"))
+  @Column(name = "PARTICIPATORS")
   private Set<String> participators = new HashSet<>();
 
   @ManyToOne(optional = true, fetch = FetchType.LAZY)
@@ -58,13 +59,14 @@ public class ThemeEntity {
   private Long lastModifiedDate;
 
   @ManyToMany(mappedBy = "themeEntities")
-  private List<TutorialEntity> tutorialEntities;
+  @Column(name = "TUTORIAL_ID")
+  private Set<TutorialEntity> tutorialEntities = new HashSet<>();
 
   public ThemeEntity() {
   }
 
   public ThemeEntity(Long id, String name, String spaceName, Set<String> managers, Set<String> participators, ThemeEntity parent, Set<ThemeEntity> children,
-                     Long lastModifiedDate, List<TutorialEntity> tutorialEntities) {
+                     Long lastModifiedDate, Set<TutorialEntity> tutorialEntities) {
     this.id = id;
     this.name = name;
     this.spaceName = spaceName;
@@ -140,11 +142,11 @@ public class ThemeEntity {
     this.lastModifiedDate = lastModifiedDate;
   }
 
-  public List<TutorialEntity> getTutorialEntities() {
+  public Set<TutorialEntity> getTutorialEntities() {
     return tutorialEntities;
   }
 
-  public void setTutorialEntities(List<TutorialEntity> tutorialEntities) {
+  public void setTutorialEntities(Set<TutorialEntity> tutorialEntities) {
     this.tutorialEntities = tutorialEntities;
   }
 }

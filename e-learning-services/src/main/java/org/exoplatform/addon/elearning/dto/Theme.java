@@ -30,7 +30,7 @@ public class Theme {
 
   private Long lastModifiedDate;
 
-  private List<Tutorial> tutorialEntities;
+  private List<Tutorial> tutorials;
 
   public boolean canEdit(Identity user) {
     return hasPermission(user, getManagers());
@@ -57,6 +57,5 @@ public class Theme {
 
     return false;
   }
-
 
 }

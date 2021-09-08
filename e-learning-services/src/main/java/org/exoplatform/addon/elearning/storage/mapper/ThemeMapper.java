@@ -27,7 +27,7 @@ public class ThemeMapper {
     theme.setParent(convertThemeToDTO(themeEntity.getParent()));
     theme.setChildren((List<Theme>) convertThemesToDTOs(themeEntity.getChildren()));
     theme.setLastModifiedDate(themeEntity.getLastModifiedDate());
-    theme.setTutorialEntities((List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(themeEntity.getTutorialEntities()));
+    theme.setTutorials((List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(themeEntity.getTutorialEntities()));
     return theme;
   }
 
@@ -53,7 +53,7 @@ public class ThemeMapper {
     themeEntity.setParent(convertThemeToEntity(theme.getParent()));
     themeEntity.setChildren(convertThemesToEntities((Set<Theme>) theme.getChildren()));
     themeEntity.setLastModifiedDate(theme.getLastModifiedDate());
-    themeEntity.setTutorialEntities(TutorialMapper.convertTutorialsToEntities((Set<Tutorial>) theme.getTutorialEntities()));
+    themeEntity.setTutorialEntities(TutorialMapper.convertTutorialsToEntities((Set<Tutorial>) theme.getTutorials()));
     return themeEntity;
   }
 

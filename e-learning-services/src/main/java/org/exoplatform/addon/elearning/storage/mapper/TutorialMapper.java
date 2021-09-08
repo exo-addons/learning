@@ -7,7 +7,6 @@ import org.exoplatform.addon.elearning.entity.TutorialEntity;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +33,7 @@ public class TutorialMapper {
     return tutorial;
   }
 
-  public static Set<Tutorial> convertTutorialsToDTOs(List<TutorialEntity> tutorialEntities) {
+  public static Set<Tutorial> convertTutorialsToDTOs(Set<TutorialEntity> tutorialEntities) {
     if (tutorialEntities == null) {
       return null;
     }
@@ -58,12 +57,12 @@ public class TutorialMapper {
     return tutorialEntity;
   }
 
-  public static List<TutorialEntity> convertTutorialsToEntities(Set<Tutorial> tutorials) {
+  public static Set<TutorialEntity> convertTutorialsToEntities(Set<Tutorial> tutorials) {
     if (tutorials == null) {
       return null;
     }
 
-    return tutorials.stream().map(TutorialMapper::convertTutorialToEntity).collect(Collectors.toList());
+    return (Set<TutorialEntity>) tutorials.stream().map(TutorialMapper::convertTutorialToEntity).collect(Collectors.toList());
   }
 
 }
