@@ -5,8 +5,8 @@ import org.exoplatform.addon.elearning.dto.Theme;
 import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.storage.mapper.ThemeMapper;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ThemeStorage {
   private ThemeDao themeDao;
@@ -32,17 +32,16 @@ public class ThemeStorage {
 
   public Theme updateTheme(Theme theme) {
     ThemeEntity themeEntity = ThemeMapper.convertThemeToEntity(theme);
-    Theme updatedTheme = ThemeMapper.convertThemeToDTO(themeDao.update(themeEntity));
-    return updatedTheme;
+    return ThemeMapper.convertThemeToDTO(themeDao.update(themeEntity));
   }
 
-  public Set<Theme> getAllThemes() {
-    Set<ThemeEntity> themeEntities = (Set<ThemeEntity>) themeDao.findAll();
-    return ThemeMapper.convertThemesToDTOs(themeEntities);
+  public List<Theme> getAllThemes() {
+    List<ThemeEntity> themeEntities = themeDao.findAll();
+    return ThemeMapper.convertThemesToDTOs(new HashSet<>(themeEntities));
   }
 
-  public Set<Theme> findAllThemesByName(String themeName) {
-    Set<ThemeEntity> themeEntities = (Set<ThemeEntity>) themeDao.findAllThemesByName(themeName);
-    return ThemeMapper.convertThemesToDTOs(themeEntities);
+  public List<Theme> findAllThemesByName(String themeName) {
+    List<ThemeEntity> themeEntities = themeDao.findAllThemesByName(themeName);
+    return ThemeMapper.convertThemesToDTOs(new HashSet<>(themeEntities));
   }
 }

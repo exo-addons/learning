@@ -2,11 +2,11 @@ package org.exoplatform.addon.elearning.storage.mapper;
 
 import org.exoplatform.addon.elearning.dto.Theme;
 import org.exoplatform.addon.elearning.dto.Tutorial;
-import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.entity.TutorialEntity;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,18 +27,16 @@ public class TutorialMapper {
     tutorial.setStatus(tutorialEntity.getStatus());
     tutorial.setDescription(tutorialEntity.getDescription());
     tutorial.setTitle(tutorialEntity.getTitle());
-    Set<ThemeEntity> themeEntities = tutorialEntity.getThemeEntities();
-    Set<Theme> themes = ThemeMapper.convertThemesToDTOs(themeEntities);
-    tutorial.setThemes(themes);
+    tutorial.setThemes(ThemeMapper.convertThemesToDTOs(tutorialEntity.getThemeEntities()));
     return tutorial;
   }
 
-  public static Set<Tutorial> convertTutorialsToDTOs(Set<TutorialEntity> tutorialEntities) {
+  public static List<Tutorial> convertTutorialsToDTOs(Set<TutorialEntity> tutorialEntities) {
     if (tutorialEntities == null) {
       return null;
     }
 
-    return (Set<Tutorial>) tutorialEntities.stream().map(TutorialMapper::convertTutorialToDTO).collect(Collectors.toList());
+    return tutorialEntities.stream().map(TutorialMapper::convertTutorialToDTO).collect(Collectors.toList());
   }
 
   public static TutorialEntity convertTutorialToEntity(Tutorial tutorial) {
@@ -53,11 +51,11 @@ public class TutorialMapper {
     tutorialEntity.setStatus(tutorial.getStatus());
     tutorialEntity.setDescription(tutorial.getDescription());
     tutorialEntity.setTitle(tutorial.getTitle());
-    tutorialEntity.setThemeEntities(ThemeMapper.convertThemesToEntities(tutorial.getThemes()));
+    tutorialEntity.setThemeEntities(ThemeMapper.convertThemesToEntities((List<Theme>) tutorial.getThemes()));
     return tutorialEntity;
   }
 
-  public static Set<TutorialEntity> convertTutorialsToEntities(Set<Tutorial> tutorials) {
+  public static Set<TutorialEntity> convertTutorialsToEntities(List<Tutorial> tutorials) {
     if (tutorials == null) {
       return null;
     }

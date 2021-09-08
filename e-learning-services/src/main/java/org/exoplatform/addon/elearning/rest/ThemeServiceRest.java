@@ -138,7 +138,7 @@ public class ThemeServiceRest implements ResourceContainer {
   /* @RolesAllowed("users") */
   public Response getAllThemes(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                                @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
-    Set<Theme> themes;
+    List<Theme> themes;
     try {
       themes = themeService.getAllThemes(offset, limit);
 
@@ -173,7 +173,7 @@ public class ThemeServiceRest implements ResourceContainer {
   public Response getAllThemeNames(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
                                    @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit,
                                    @PathParam("themeName") String themeName) {
-    Set<Theme> themes;
+    List<Theme> themes;
     try {
       themes = themeService.findAllThemesByName(themeName, offset, limit);
 

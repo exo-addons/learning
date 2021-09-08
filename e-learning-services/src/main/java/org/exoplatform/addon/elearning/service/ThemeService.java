@@ -9,7 +9,7 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class ThemeService implements ResourceContainer {
 
@@ -41,7 +41,7 @@ public class ThemeService implements ResourceContainer {
     return themeStorage.updateTheme(theme);
   }
 
-  public Set<Theme> getAllThemes(int offset, int limit) {
+  public List<Theme> getAllThemes(int offset, int limit) {
     return themeStorage.getAllThemes();
   }
 
@@ -49,7 +49,7 @@ public class ThemeService implements ResourceContainer {
     return themeStorage.getThemeById(id);
   }
 
-  public Set<Theme> findAllThemesByName(String themeName, int offset, int limit) {
+  public List<Theme> findAllThemesByName(String themeName, int offset, int limit) {
     return themeStorage.findAllThemesByName(themeName);
   }
 

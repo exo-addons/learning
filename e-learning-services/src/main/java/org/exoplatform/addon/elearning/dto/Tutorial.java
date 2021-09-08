@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +26,6 @@ public class Tutorial implements Serializable {
 
   private List<Step> steps;
 
-  private Set<Theme> themes;
+  private List<Theme> themes;
 
 }

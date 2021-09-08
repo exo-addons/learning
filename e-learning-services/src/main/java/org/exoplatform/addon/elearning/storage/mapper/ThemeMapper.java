@@ -4,6 +4,7 @@ import org.exoplatform.addon.elearning.dto.Theme;
 import org.exoplatform.addon.elearning.dto.Tutorial;
 import org.exoplatform.addon.elearning.entity.ThemeEntity;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,18 +26,18 @@ public class ThemeMapper {
     theme.setManagers(themeEntity.getManagers());
     theme.setParticipators(themeEntity.getParticipators());
     theme.setParent(convertThemeToDTO(themeEntity.getParent()));
-    theme.setChildren((List<Theme>) convertThemesToDTOs(themeEntity.getChildren()));
+    theme.setChildren(convertThemesToDTOs(themeEntity.getChildren()));
     theme.setLastModifiedDate(themeEntity.getLastModifiedDate());
     theme.setTutorials((List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(themeEntity.getTutorialEntities()));
     return theme;
   }
 
-  public static Set<Theme> convertThemesToDTOs(Set<ThemeEntity> themes) {
+  public static List<Theme> convertThemesToDTOs(Set<ThemeEntity> themes) {
     if (themes == null) {
       return null;
     }
 
-    return (Set<Theme>) themes.stream().map(ThemeMapper::convertThemeToDTO).collect(Collectors.toList());
+    return themes.stream().map(ThemeMapper::convertThemeToDTO).collect(Collectors.toList());
   }
 
   public static ThemeEntity convertThemeToEntity(Theme theme) {
@@ -51,18 +52,18 @@ public class ThemeMapper {
     themeEntity.setManagers(theme.getManagers());
     themeEntity.setParticipators(theme.getParticipators());
     themeEntity.setParent(convertThemeToEntity(theme.getParent()));
-    themeEntity.setChildren(convertThemesToEntities((Set<Theme>) theme.getChildren()));
+    themeEntity.setChildren(convertThemesToEntities(theme.getChildren()));
     themeEntity.setLastModifiedDate(theme.getLastModifiedDate());
-    themeEntity.setTutorialEntities(TutorialMapper.convertTutorialsToEntities((Set<Tutorial>) theme.getTutorials()));
+    themeEntity.setTutorialEntities(TutorialMapper.convertTutorialsToEntities(theme.getTutorials()));
     return themeEntity;
   }
 
-  public static Set<ThemeEntity> convertThemesToEntities(Set<Theme> themes) {
+  public static Set<ThemeEntity> convertThemesToEntities(List<Theme> themes) {
     if (themes == null) {
       return null;
     }
 
-    return (Set<ThemeEntity>) themes.stream().map(ThemeMapper::convertThemeToEntity).collect(Collectors.toList());
+    return new HashSet<>(themes.stream().map(ThemeMapper::convertThemeToEntity).collect(Collectors.toList()));
   }
 
 }
