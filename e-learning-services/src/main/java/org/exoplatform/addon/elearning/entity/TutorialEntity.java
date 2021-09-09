@@ -4,7 +4,9 @@ import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,7 +34,7 @@ public class TutorialEntity {
   @Column(name = "CREATED_DATE")
   private Timestamp createdDate;
 
-  @ManyToMany(cascade = { CascadeType.ALL })
+  @ManyToMany(cascade = {CascadeType.ALL})
   @JoinTable(name = "EXO_E_LEARNING_TUTORIAL_THEME", joinColumns = @JoinColumn(name = "TUTORIAL_ID"), inverseJoinColumns = @JoinColumn(name = "THEME_ID"))
   @Column(name = "THEME_ID")
   public Set<ThemeEntity> themeEntities = new HashSet<>();
@@ -40,10 +42,13 @@ public class TutorialEntity {
   @Column(name = "STATUS")
   private String status;
 
+  @OneToMany(mappedBy = "tutorialEntity", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  private List<StepEntity> stepEntities = new ArrayList<>();
+
   public TutorialEntity() {
   }
 
-  public TutorialEntity(Long id, String title, String description, String author, Timestamp createdDate, Set<ThemeEntity> themeEntities, String status) {
+  public TutorialEntity(Long id, String title, String description, String author, Timestamp createdDate, Set<ThemeEntity> themeEntities, String status, List<StepEntity> stepEntities) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -51,6 +56,7 @@ public class TutorialEntity {
     this.createdDate = createdDate;
     this.themeEntities = themeEntities;
     this.status = status;
+    this.stepEntities = stepEntities;
   }
 
   public Long getId() {
@@ -107,6 +113,14 @@ public class TutorialEntity {
 
   public void setStatus(String status) {
     this.status = status;
+  }
+
+  public List<StepEntity> getStepEntities() {
+    return stepEntities;
+  }
+
+  public void setStepEntities(List<StepEntity> stepEntities) {
+    this.stepEntities = stepEntities;
   }
 
   public enum Status {
