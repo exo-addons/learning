@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.exoplatform.services.security.Identity;
 import org.exoplatform.services.security.MembershipEntry;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Theme {
+public class Theme implements Serializable {
   private Long id;
 
   private String name;

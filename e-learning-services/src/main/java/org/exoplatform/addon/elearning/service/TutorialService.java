@@ -1,6 +1,8 @@
 package org.exoplatform.addon.elearning.service;
 
+import org.exoplatform.addon.elearning.dto.Step;
 import org.exoplatform.addon.elearning.dto.Tutorial;
+import org.exoplatform.addon.elearning.storage.StepStorage;
 import org.exoplatform.addon.elearning.storage.TutorialStorage;
 import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -11,8 +13,11 @@ public class TutorialService implements ResourceContainer {
 
   private TutorialStorage tutorialStorage;
 
-  public TutorialService(TutorialStorage tutorialStorage) {
+  private StepStorage stepStorage;
+
+  public TutorialService(TutorialStorage tutorialStorage, StepStorage stepStorage) {
     this.tutorialStorage = tutorialStorage;
+    this.stepStorage = stepStorage;
   }
 
   @ExoTransactional
@@ -47,6 +52,22 @@ public class TutorialService implements ResourceContainer {
 
   public List<Tutorial> findTutorialsByName(String tutorialTitle, Long id, int offset, int limit) {
     return tutorialStorage.findTutorialsByName(tutorialTitle, id);
+  }
+
+  @ExoTransactional
+  public Step addTutorialStep(Step step, Long tutorialId) {
+    Tutorial tutorial = tutorialStorage.getTutorialById(tutorialId);
+    return stepStorage.addStep(step, tutorial);
+  }
+
+  @ExoTransactional
+  public Step updateTutorialStep(Step step) {
+    return stepStorage.updateStep(step);
+  }
+
+  @ExoTransactional
+  public void deleteTutorialStep(Long id) {
+    stepStorage.deleteStepById(id);
   }
 
 }

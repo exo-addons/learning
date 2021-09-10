@@ -12,20 +12,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tutorial implements Serializable {
+  private Long id;
+
+  private String title;
+
+  private String description;
+
   private String author;
 
   private Date createdDate;
 
-  private Long id;
+  private List<Theme> themes;
 
   private String status;
 
-  private String description;
-
-  private String title;
-
   private List<Step> steps;
-
-  private List<Theme> themes;
 
 }

@@ -1,6 +1,10 @@
 package org.exoplatform.addon.elearning.rest;
 
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.exoplatform.addon.elearning.dto.Step;
 import org.exoplatform.addon.elearning.dto.Tutorial;
 import org.exoplatform.addon.elearning.service.TutorialService;
 import org.exoplatform.services.log.ExoLogger;
@@ -8,6 +12,7 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.security.ConversationState;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -143,6 +148,49 @@ public class TutorialServiceRest implements ResourceContainer {
     }
     return Response.ok(tutos, MediaType.APPLICATION_JSON).build();
 
+  }
+
+  @POST
+  @Path("/addTutorialStep/{id}")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Adds a tutorial step", httpMethod = "POST", response = Response.class, notes = "This adds a tutorial step")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response addTutorialStep(@ApiParam(value = "Tutorial id", required = true) @PathParam("id") Long id,
+                                  @ApiParam(value = "Step to save", required = true) Step step) {
+    String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
+    if (step == null) {
+      LOG.warn("User {} attempts to add a non valid step.", currentUser);
+    }
+    step = tutorialService.addTutorialStep(step, id);
+
+    return Response.status(Response.Status.OK).entity(step).build();
+
+  }
+
+  @PUT
+  @Path("/updateTutorialStep")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Updates a tutorial step", httpMethod = "PUT", response = Response.class, notes = "This updates a tutorial step")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response updateTutorialStep(@ApiParam(value = "Step to save", required = true) Step step) {
+    step = tutorialService.updateTutorialStep(step);
+    return Response.status(Response.Status.OK).entity("Tutorial Step with id " + step.getId() + " Updated").build();
+  }
+
+  @DELETE
+  @Path("/deleteTutorialStep/{id}")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Deletes a tutorial step", httpMethod = "PUT", response = Response.class, notes = "This deletes a tutorial step")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response deleteTutorialStep(@ApiParam(value = "Tutorial step id", required = true) @PathParam("id") Long stepId) {
+    tutorialService.deleteTutorialStep(stepId);
+    return Response.status(Response.Status.OK).entity("Tutorial with id " + stepId + " Deleted").build();
   }
 
 }
