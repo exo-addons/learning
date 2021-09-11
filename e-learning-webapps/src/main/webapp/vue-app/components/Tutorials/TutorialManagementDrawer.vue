@@ -119,7 +119,7 @@ export default {
   },
 
   created() {
-    this.getThemes();
+    // this.getThemes();
     this.$root.$on('addTuto', () => {
       this.$refs.tutorialManagementDrawer.open();
     });

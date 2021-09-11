@@ -3,25 +3,25 @@
     id="themes_management"
     flat>
     <exo-drawer ref="themeManagementDrawer" right>
-      <template v-if="this.title" slot="title">
-        {{ $t('addon.elearning.theme.creating') }}     
+      <template v-if="!this.themeToUpdate" slot="title">
+        {{ $t('addon.elearning.theme.creating') }}
       </template>
       <template v-else slot="title">
-        {{ $t('addon.elearning.theme.updateF') }}     
+        {{ $t('addon.elearning.theme.updateF') }}
       </template>
       <template slot="content">
         <v-form ref="form">
-          <label class="theme_title_label" for="title">
-            {{ $t('addon.elearning.theme.label.title') }}  
+          <label class="theme_title_label" :for="title">
+            {{ $t('addon.elearning.theme.label.title') }}
           </label>
           <v-text-field
-            v-if="this.title"
+            v-if="themeToUpdate"
             class="primary_theme_input"
             outlined
             clearable
             :placeholder="$t('addon.elearning.theme.label.placeholder')"
             name="title"
-            v-model="themeA.name" />
+            v-model="titleToUpdate" />
           <v-text-field
             v-else
             class="primary_theme_input"
@@ -29,22 +29,14 @@
             clearable
             :placeholder="$t('addon.elearning.theme.label.placeholder')"
             name="title"
-            v-model="themeUp.name" />
+            v-model="title" />
         </v-form>
       </template>
       <template slot="footer">
         <v-btn
           class="theme_drawer_btn_add"
-          v-if="this.title"
-          @click="themePost"
-          :disabled="!isAddComplete">
-          {{ $t('addon.elearning.tutorial.confirm') }}
-        </v-btn>
-        <v-btn
-          class="theme_drawer_btn_add"
-          v-else
-          @click="themeUpdate"
-          :disabled="!isUpComplete">
+          @click="createOrUpdateTheme"
+          :disabled="!canCreateThemeOrUpdate">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
         <v-btn class="exo_cancel_btn" @click="$refs.form.reset()">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
@@ -54,83 +46,69 @@
 </template>
 <script>
 export default {
+  props: {
+    themeToUpdate: {
+      type: Object,
+      default: null
+    },
+    parentTheme: {
+      type: Object,
+      default: null
+    },
+    spaceName: {
+      type: String,
+      default: ''
+    },
+  },
+  
   data() {
     return {
-      title: false,
-      themeId: null,
-      themeU: null,
+      title: null,
+      titleToUpdate: null,
       errors: [],
-      themeA: {
-        name: null,
-        spaceName: null
-      },
-      themeUp: {
-        id: 0,
-        name: null,
-        spaceName: null
-      }
     };
   },
-
+  
   computed: {
-    isAddComplete() {
-      return this.themeA.name;
-    },
-    isUpComplete() {
-      return this.themeUp.name;
+    canCreateThemeOrUpdate() {
+      return this.themeToUpdate && this.themeToUpdate.name !== this.titleToUpdate && this.titleToUpdate || this.title;
+    }
+  },
+  
+  watch: {
+    themeToUpdate() {
+      if (this.themeToUpdate) {
+        this.titleToUpdate = this.themeToUpdate.name;
+      }
     }
   },
 
-  created() {
-    this.$root.$on('addTheme', () => {
-      this.title = true;
-      this.$refs.themeManagementDrawer.open();
-    });
-    this.$root.$on('updateTheme', (id) => {
-      this.title = false;
-      this.$refs.themeManagementDrawer.open();
-      this.themeId = id;
-      this.getThemeU(id);
-    });
-  },
-
   methods: {
-    themePost() {
-      this.themeA.spaceName = eXo.env.portal.spaceName;
-      return this.$themeService.themePost(this.themeA)
-        .then(() => {
-          this.$root.$emit('themeCreated');
-        })
-        .then(() => {
-          this.$refs.form.reset();
-          this.$refs.themeManagementDrawer.close();
-        })
-        .catch((e) => this.errors.push(e));
-
+    createOrUpdateTheme() {
+      if (!this.themeToUpdate) {
+        const theme = {
+          name: this.title,
+          spaceName: this.spaceName,
+          parent: this.parentTheme
+        };
+        return this.$themeService.createTheme(theme).then(addedTheme => {
+          this.$emit('themeAdded', addedTheme);
+        }).catch((e) => this.errors.push(e));
+        
+      } else {
+        this.themeToUpdate.name = this.titleToUpdate;
+        return this.$themeService.updateTheme(this.themeToUpdate).then(updatedTheme => {
+          this.$emit('themeUpdated', updatedTheme);
+        }).catch((e) => this.errors.push(e));
+        
+      }
     },
-
-    themeUpdate() {
-      this.themeUp.id = this.themeId;
-      return this.$themeService.themeUpdate(this.themeUp)
-        .then(() => {
-          this.$root.$emit('themeUpdated');
-        })
-        .then(() => {
-          this.themeUp.id = 0;
-          this.$refs.form.reset();
-          this.$refs.themeManagementDrawer.close();
-        })
-        .catch((e) => this.errors.push(e));
+    close() {
+      this.$refs.form.reset();
+      this.$refs.themeManagementDrawer.close();
     },
-
-    getThemeU(id) {
-      return this.$themeService.getThemeById(id)
-        .then((data) => {
-          this.themeU = data;
-          this.themeUp.name = this.themeU.name;
-          this.themeUp.spaceName = this.themeU.spaceName;
-        })
-        .catch((e) => this.errors.push(e));
+    open() {
+      this.$refs.themeManagementDrawer.open();
     },
   }
 };

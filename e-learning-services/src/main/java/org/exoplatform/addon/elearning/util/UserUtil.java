@@ -36,19 +36,19 @@ public class UserUtil {
     return displayName;
   }
 
-  public static List<String> getSpaceMemberships(String space_group_id) {
-    List<String> memberships = new LinkedList<String>();
-    if (space_group_id != null) {
-      memberships.add(new MembershipEntry(space_group_id, "manager").toString());
-      memberships.add(new MembershipEntry(space_group_id, "member").toString());
+  public static List<String> getSpaceMemberships(String spaceGroupId) {
+    List<String> memberships = new LinkedList<>();
+    if (spaceGroupId != null) {
+      memberships.add(new MembershipEntry(spaceGroupId, "manager").toString());
+      memberships.add(new MembershipEntry(spaceGroupId, "member").toString());
     } else {
-      throw new IllegalArgumentException("space_group_id is null");
+      throw new IllegalArgumentException("spaceGroupId is null");
     }
     return memberships;
   }
 
   public static List<String> getMemberships(Identity identity) {
-    Map<String, List<MembershipEntry>> gms = new HashMap<String, List<MembershipEntry>>();
+    Map<String, List<MembershipEntry>> gms = new HashMap<>();
     for (MembershipEntry m : identity.getMemberships()) {
       List<MembershipEntry> ms = gms.get(m.getGroup());
       if (ms == null) {
@@ -62,7 +62,7 @@ public class UserUtil {
       }
     }
 
-    List<String> memberships = new ArrayList<String>();
+    List<String> memberships = new ArrayList<>();
     String userName = identity.getUserId();
     memberships.add(userName);
     for (List<MembershipEntry> ms : gms.values()) {

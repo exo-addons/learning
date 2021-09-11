@@ -15,6 +15,24 @@ import java.util.Set;
                 query = "SELECT t FROM ThemeEntity t where LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%'))"
         ),
         @NamedQuery(
+                name = "ThemeEntity.findThemesBySpaceName",
+                query = "SELECT t FROM ThemeEntity t where t.spaceName = :spaceName" +
+                        " order by t.lastModifiedDate desc"
+        ),
+        @NamedQuery(
+                name = "ThemeEntity.countFoundThemesBySpaceName",
+                query = "SELECT count (t) FROM ThemeEntity t where t.spaceName = :spaceName"
+        ),
+        @NamedQuery(
+                name = "ThemeEntity.searchSpaceThemesByThemeName",
+                query = "SELECT t FROM ThemeEntity t where t.spaceName = :spaceName AND  LOWER(t.name) LIKE LOWER(CONCAT('%', :query, '%'))" +
+                        " order by t.lastModifiedDate desc"
+        ),
+        @NamedQuery(
+                name = "ThemeEntity.countFoundSpaceThemesByThemeName",
+                query = "SELECT count (t) FROM ThemeEntity t where t.spaceName = :spaceName AND  LOWER(t.name) LIKE LOWER(CONCAT('%', :query, '%'))"
+        ),
+        @NamedQuery(
                 name = "ThemeEntity.findThemesByMemberships",
                 query = "SELECT DISTINCT t FROM ThemeEntity t"
                         + " LEFT JOIN t.managers managers "

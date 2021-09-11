@@ -7,6 +7,7 @@ import org.exoplatform.services.security.Identity;
 import org.exoplatform.services.security.MembershipEntry;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,17 +22,17 @@ public class Theme implements Serializable {
 
   private String spaceName;
 
-  private Set<String> managers;
+  private Set<String> managers = new HashSet<>();
 
-  private Set<String> participators;
+  private Set<String> participators = new HashSet<>();
 
   private Theme parent;
 
-  private List<Theme> children;
+  private List<Theme> children = new ArrayList<>();
 
   private Long lastModifiedDate;
 
-  private List<Tutorial> tutorials;
+  private List<Tutorial> tutorials = new ArrayList<>();
 
   public boolean canEdit(Identity user) {
     return hasPermission(user, getManagers());

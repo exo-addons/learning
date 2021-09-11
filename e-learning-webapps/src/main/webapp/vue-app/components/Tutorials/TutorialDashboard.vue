@@ -39,6 +39,12 @@
 
 <script>
 export default {
+  props: {
+    spaceName: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       successBar: false,

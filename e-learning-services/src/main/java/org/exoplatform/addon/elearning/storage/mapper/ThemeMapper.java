@@ -1,9 +1,9 @@
 package org.exoplatform.addon.elearning.storage.mapper;
 
 import org.exoplatform.addon.elearning.dto.Theme;
-import org.exoplatform.addon.elearning.dto.Tutorial;
 import org.exoplatform.addon.elearning.entity.ThemeEntity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,15 +28,14 @@ public class ThemeMapper {
     theme.setParent(convertThemeToDTO(themeEntity.getParent()));
     theme.setChildren(convertThemesToDTOs(themeEntity.getChildren()));
     theme.setLastModifiedDate(themeEntity.getLastModifiedDate());
-    theme.setTutorials((List<Tutorial>) TutorialMapper.convertTutorialsToDTOs(themeEntity.getTutorialEntities()));
+    theme.setTutorials(TutorialMapper.convertTutorialsToDTOs(themeEntity.getTutorialEntities()));
     return theme;
   }
 
   public static List<Theme> convertThemesToDTOs(Set<ThemeEntity> themes) {
     if (themes == null) {
-      return null;
+      return new ArrayList<>();
     }
-
     return themes.stream().map(ThemeMapper::convertThemeToDTO).collect(Collectors.toList());
   }
 
@@ -60,9 +59,8 @@ public class ThemeMapper {
 
   public static Set<ThemeEntity> convertThemesToEntities(List<Theme> themes) {
     if (themes == null) {
-      return null;
+      return new HashSet<>();
     }
-
     return new HashSet<>(themes.stream().map(ThemeMapper::convertThemeToEntity).collect(Collectors.toList()));
   }
 
