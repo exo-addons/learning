@@ -1,5 +1,18 @@
-export function getThemes(spaceName, keyword, offset, limit) {
-  return fetch(`/portal/rest/theme/findThemes?spaceName=${spaceName}&q=${keyword}&offset=${offset}&limit=${limit}`, {
+export function getThemes(spaceName, isRoot, keyword, offset, limit) {
+  return fetch(`/portal/rest/theme/findThemes?spaceName=${spaceName}&isRoot=${isRoot}&q=${keyword}&offset=${offset}&limit=${limit}`, {
+    method: 'GET',
+    credentials: 'include',
+  }).then((response) => {
+    if (!response || !response.ok) {
+      throw new Error('Response code indicates a server error', response);
+    } else {
+      return response.json();
+    }
+  });
+}
+
+export function getChildThemes(spaceName, parentThemeId, keyword, offset, limit) {
+  return fetch(`/portal/rest/theme/getChildThemes?spaceName=${spaceName}&parentThemeId=${parentThemeId}&q=${keyword}&offset=${offset}&limit=${limit}`, {
     method: 'GET',
     credentials: 'include',
   }).then((response) => {

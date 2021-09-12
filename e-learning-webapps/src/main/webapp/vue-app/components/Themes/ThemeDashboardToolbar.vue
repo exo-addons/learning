@@ -53,7 +53,7 @@ export default {
   props: {
     keyword: {
       type: String,
-      default: null,
+      default: '',
     }
   },
   watch: {

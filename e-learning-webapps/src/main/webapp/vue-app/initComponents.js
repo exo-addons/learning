@@ -1,24 +1,24 @@
 import ElearningManagement from './components/ElearningManagement.vue';
-import TutorialDashboard from './components/Tutorials/TutorialDashboard.vue';
+import ThemeTutorialMixDashboard from './components/Tutorials/ThemeTutorialMixDashboard.vue';
 import TutorialCard from './components/Tutorials/TutorialCard.vue';
 import TutorialCardList from './components/Tutorials/TutorialCardList.vue';
-import TutorialDashboardToolbar from './components/Tutorials/TutorialDashboardToolbar.vue';
-import TutorialDisplayDrawer from './components/Tutorials/TutorialDisplayDrawer.vue';
-import TutorialManagementDrawer from './components/Tutorials/TutorialManagementDrawer.vue';
-import TutorialUpdateDrawer from './components/Tutorials/TutorialUpdateDrawer.vue';
-import TutorialMoveDrawer from './components/Tutorials/TutorialMoveDrawer.vue';
+import ThemeTutorialMixDashboardToolbar from './components/Tutorials/ThemeTutorialMixDashboardToolbar.vue';
+import TutorialDisplayDrawer from './components/Tutorials/drawer/TutorialDisplayDrawer.vue';
+import TutorialManagementDrawer from './components/Tutorials/drawer/TutorialManagementDrawer.vue';
+import TutorialUpdateDrawer from './components/Tutorials/drawer/TutorialUpdateDrawer.vue';
+import TutorialMoveDrawer from './components/Tutorials/drawer/TutorialMoveDrawer.vue';
 import ThemeDashboard from './components/Themes/ThemeDashboard.vue';
 import ThemeCard from './components/Themes/ThemeCard.vue';
 import ThemeCardList from './components/Themes/ThemeCardList.vue';
 import ThemeDashboardToolbar from './components/Themes/ThemeDashboardToolbar.vue';
-import ThemeManagementDrawer from './components/Themes/ThemeManagementDrawer.vue';
+import ThemeManagementDrawer from './components/Themes/drawer/ThemeManagementDrawer.vue';
 
 const components = {
   'elearning-management': ElearningManagement,
-  'tutorial-dashboard': TutorialDashboard,
+  'theme-tutorial-mix-dashboard': ThemeTutorialMixDashboard,
   'tutorial-card': TutorialCard,
   'tutorial-card-list': TutorialCardList,
-  'tutorial-dashboard-toolbar': TutorialDashboardToolbar,
+  'theme-tutorial-mix-dashboard-toolbar': ThemeTutorialMixDashboardToolbar,
   'tutorial-display-drawer': TutorialDisplayDrawer,
   'tutorial-management-drawer': TutorialManagementDrawer,
   'tutorial-update-drawer': TutorialUpdateDrawer,

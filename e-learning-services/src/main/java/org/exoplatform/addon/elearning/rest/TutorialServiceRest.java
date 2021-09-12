@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.exoplatform.addon.elearning.dto.Step;
 import org.exoplatform.addon.elearning.dto.Tutorial;
+import org.exoplatform.addon.elearning.rest.entity.TutorialsDataEntity;
 import org.exoplatform.addon.elearning.service.TutorialService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -18,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("tuto")
+@Path("tutorial")
 @Produces(MediaType.APPLICATION_JSON)
 /* @RolesAllowed("users") */
 public class TutorialServiceRest implements ResourceContainer {
@@ -80,54 +81,31 @@ public class TutorialServiceRest implements ResourceContainer {
   }
 
   @GET
-  @Path("/getAllTutos")
-  /* @RolesAllowed("users") */
-  public Response getAllTutos(@ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
-                              @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
+  @Path("/getTutorialsByTheme/{themeId}")
+  @Produces(MediaType.APPLICATION_JSON)
+  @RolesAllowed("users")
+  @ApiOperation(value = "Get Tutorials by theme", httpMethod = "GET", response = Response.class, notes = "This returns Tutorials")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response getTutorialsByTheme(@ApiParam(value = "themeId", required = true) @PathParam("themeId") Long themeId,
+                                      @ApiParam(value = "Offset", defaultValue = "0") @QueryParam("offset") int offset,
+                                      @ApiParam(value = "Limit", defaultValue = "-1") @QueryParam("limit") int limit) {
+    if (limit == 0) {
+      limit = -1;
+    }
+    TutorialsDataEntity dataEntities;
     List<Tutorial> tutorials;
     try {
-      tutorials = tutorialService.getAllTutorials(offset, limit);
+      tutorials = tutorialService.getTutorialsByTheme(themeId, offset, limit);
+      long count = tutorialService.countTutorialsByTheme(themeId);
+      dataEntities = new TutorialsDataEntity(count, tutorials);
 
     } catch (Exception e) {
-      LOG.error("Could not get all Tutorials", e);
+      LOG.error("Could not get all Tutorials by ThemeId {}", themeId, e);
       return Response.serverError().entity(e.getMessage()).build();
     }
-    return Response.ok(tutorials, MediaType.APPLICATION_JSON).build();
-
-  }
-
-  @GET
-  @Path("/getTutoById/{id}")
-  /* @RolesAllowed("users") */
-  public Response getTutoById(@PathParam("id") Long id) {
-    Tutorial tutorial;
-
-    try {
-      tutorial = tutorialService.getTutorialById(id);
-
-    } catch (Exception e) {
-      LOG.error("No Tutorial found with id {}", id, e);
-      return Response.serverError().entity(e.getMessage()).build();
-    }
-    return Response.ok(tutorial, MediaType.APPLICATION_JSON).build();
-
-  }
-
-  @GET
-  @Path("/getAllTutosByTheme/{id}")
-  /* @RolesAllowed("users") */
-  public Response getAllTutosByTheme(@PathParam("id") Long id,
-                                     @ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
-                                     @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
-    List<Tutorial> tutorials;
-    try {
-      tutorials = tutorialService.getAllTutorialsByTheme(id, offset, limit);
-
-    } catch (Exception e) {
-      LOG.error("Could not get all Tutorials by ThemeId {}", id, e);
-      return Response.serverError().entity(e.getMessage()).build();
-    }
-    return Response.ok(tutorials, MediaType.APPLICATION_JSON).build();
+    return Response.ok(dataEntities, MediaType.APPLICATION_JSON).build();
 
   }
 
@@ -137,7 +115,7 @@ public class TutorialServiceRest implements ResourceContainer {
   public Response findTutosByName(@PathParam("id") Long id,
                                   @PathParam("tutoTitle") String tutoTitle,
                                   @ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
-                                  @ApiParam(value = "Limit", required = false, defaultValue = "20") @QueryParam("limit") int limit) {
+                                  @ApiParam(value = "Limit", required = false, defaultValue = "-1") @QueryParam("limit") int limit) {
     List<Tutorial> tutos;
     try {
       tutos = tutorialService.findTutorialsByName(tutoTitle, id, offset, limit);

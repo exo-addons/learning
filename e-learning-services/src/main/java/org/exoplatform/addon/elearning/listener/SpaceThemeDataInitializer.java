@@ -5,11 +5,12 @@ import org.exoplatform.addon.elearning.service.ThemeService;
 import org.exoplatform.addon.elearning.util.UserUtil;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.social.core.space.SpaceListenerPlugin;
 import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceLifeCycleEvent;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,12 +30,13 @@ public class SpaceThemeDataInitializer extends SpaceListenerPlugin {
     try {
       Space space = spaceLifeCycleEvent.getSpace();
       String spaceGroupId = space.getGroupId();
+      String creator = ConversationState.getCurrent().getIdentity().getUserId();
 
       List<String> memberships = UserUtil.getSpaceMemberships(spaceGroupId);
-      Set<String> managers = new HashSet<>(Arrays.asList(memberships.get(0)));
-      Set<String> participators = new HashSet<>(Arrays.asList(memberships.get(1)));
-      Theme theme = new Theme(null, space.getDisplayName(), space.getPrettyName(), managers, participators, null, null, null, null);
-      themeService.createTheme(theme);
+      Set<String> managers = new HashSet<>(Collections.singletonList(memberships.get(0)));
+      Set<String> participators = new HashSet<>(Collections.singletonList(memberships.get(1)));
+      Theme theme = new Theme(space.getDisplayName(), space.getPrettyName(), managers, participators, creator);
+      themeService.createTheme(theme, null, space.getPrettyName());
     } catch (Exception e) {
       LOG.error("Could not create Tutorial Theme:", e);
     }

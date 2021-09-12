@@ -51,9 +51,6 @@ export default {
   },
 
   created() {
-    this.$root.$on('makeShowTutos', (id) => {
-      this.$root.$emit('showTutos', id);
-    });
     this.$on('keyword-changed', (keyword) => {
       this.keyword = keyword;
     });

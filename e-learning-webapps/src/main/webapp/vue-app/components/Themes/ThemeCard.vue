@@ -10,7 +10,7 @@
           <span
             class="d-flex align-center"
             id="theme_card_title" 
-            @click="showTutos(theme.id)">{{ theme.name }} </span>
+            @click="displayThemeContent">{{ theme.name }} </span>
           
           <v-icon 
             v-if="canUpdate"
@@ -54,9 +54,12 @@
               <img
                 :src="space.avatarUrl"> 
             </v-avatar>
-            <span class="theme_card_space_name">
+            <a 
+              :href="spaceUrl" 
+              class="theme_card_space_name"
+              :title="space.displayName">
               {{ space.displayName }}
-            </span>
+            </a>
           </div>
         </v-card-text>
         <div id="theme_card_footer"></div>
@@ -91,6 +94,17 @@ export default {
       displayActionMenu: false
     };
   },
+  
+  computed: {
+    spaceUrl() {
+      if (this.space && this.space.groupId) {
+        const uriPart = this.space.groupId.replace(/\//g, ':');
+        return `${eXo.env.portal.context}/g/${uriPart}/`;
+      } else {
+        return '#';
+      }
+    },
+  },
 
   created() {
     $(document).on('mousedown', () => {
@@ -109,8 +123,12 @@ export default {
     update() {
       this.$emit('updateTheme', this.theme);
     },
-    showTutos(id) {
-      this.$root.$emit('makeShowTutos', id);
+    displayThemeContent() {
+      if (this.theme.parent) {
+        this.$root.$emit('displayThemeContent', this.theme);
+      } else {
+        this.$root.$emit('displayRootThemeContent', this.theme, this.space, this.canUpdate);
+      }
     }
   }
 };

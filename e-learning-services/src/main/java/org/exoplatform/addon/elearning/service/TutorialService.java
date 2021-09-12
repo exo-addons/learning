@@ -2,11 +2,12 @@ package org.exoplatform.addon.elearning.service;
 
 import org.exoplatform.addon.elearning.dto.Step;
 import org.exoplatform.addon.elearning.dto.Tutorial;
+import org.exoplatform.addon.elearning.entity.Status;
 import org.exoplatform.addon.elearning.storage.StepStorage;
 import org.exoplatform.addon.elearning.storage.TutorialStorage;
-import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TutorialService implements ResourceContainer {
@@ -20,20 +21,24 @@ public class TutorialService implements ResourceContainer {
     this.stepStorage = stepStorage;
   }
 
-  @ExoTransactional
   public Tutorial createTutorial(Tutorial tutorial) throws IllegalAccessException {
     if (tutorial == null) {
       throw new IllegalAccessException("Tutorial is mandatory");
     }
-    return tutorialStorage.createTutorial(tutorial);
+    List<Long> themeIds = new ArrayList<>(tutorial.getThemeIds());
+    if (themeIds.isEmpty()) {
+      throw new IllegalAccessException("At least one theme is mandatory");
+    }
+    tutorial.getThemeIds().clear();
+    tutorial.setStatus(Status.DRAFT);
+
+    return tutorialStorage.createTutorial(tutorial, themeIds);
   }
 
-  @ExoTransactional
   public void deleteTutorial(Long id) {
     tutorialStorage.deleteTutorial(id);
   }
 
-  @ExoTransactional
   public Tutorial updateTutorial(Tutorial tutorial) {
     return tutorialStorage.updateTutorial(tutorial);
   }
@@ -46,28 +51,28 @@ public class TutorialService implements ResourceContainer {
     return tutorialStorage.getTutorialById(id);
   }
 
-  public List<Tutorial> getAllTutorialsByTheme(Long id, int offset, int limit) {
-    return tutorialStorage.getAllTutorialsByTheme(id);
+  public List<Tutorial> getTutorialsByTheme(Long themeId, int offset, int limit) {
+    return tutorialStorage.getTutorialsByTheme(themeId, offset, limit);
   }
 
   public List<Tutorial> findTutorialsByName(String tutorialTitle, Long id, int offset, int limit) {
     return tutorialStorage.findTutorialsByName(tutorialTitle, id);
   }
 
-  @ExoTransactional
   public Step addTutorialStep(Step step, Long tutorialId) {
     Tutorial tutorial = tutorialStorage.getTutorialById(tutorialId);
     return stepStorage.addStep(step, tutorial);
   }
 
-  @ExoTransactional
   public Step updateTutorialStep(Step step) {
     return stepStorage.updateStep(step);
   }
 
-  @ExoTransactional
   public void deleteTutorialStep(Long id) {
     stepStorage.deleteStepById(id);
   }
 
+  public long countTutorialsByTheme(Long themeId) {
+    return tutorialStorage.countTutorialsByTheme(themeId);
+  }
 }

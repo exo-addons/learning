@@ -1,15 +1,13 @@
 <template>
   <v-app id="elearning_app">
     <theme-dashboard 
-      v-show="showThemes"
+      v-if="displayThemesBoard"
       :space-name="spaceName" />
-    <tutorial-dashboard 
-      v-show="!showThemes"
-      :space-name="spaceName" />
-    <tutorial-management-drawer />
-    <tutorial-update-drawer />
-    <tutorial-move-drawer />
-    <tutorial-display-drawer />
+    <theme-tutorial-mix-dashboard 
+      v-else
+      :parent-theme="parentTheme"
+      :space="space"
+      :can-update="canUpdate" />
   </v-app>
 </template>
 
@@ -17,18 +15,23 @@
 export default {
   data() {
     return {
-      showThemes: true,
+      displayThemesBoard: true,
       spaceName: eXo.env.portal.spaceName,
+      parentTheme: null,
+      space: null,
+      canUpdate: false,
     };
   },
 
   created() {
-    this.$root.$on('showTutos', (id) => {
-      this.$root.$emit('setId', id);
-      this.showThemes = false;
+    this.$root.$on('displayRootThemeContent', (parentTheme, space, canUpdate) => {
+      this.displayThemesBoard = false;
+      this.parentTheme = parentTheme;
+      this.space = space;
+      this.canUpdate = canUpdate;
     });
-    this.$root.$on('backThemes', () => {
-      this.showThemes = true;
+    this.$root.$on('displayThemesBoard', () => {
+      this.displayThemesBoard = true;
     });
   }
 };

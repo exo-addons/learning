@@ -1,7 +1,10 @@
 package org.exoplatform.addon.elearning.storage.mapper;
 
+import org.exoplatform.addon.elearning.dao.ThemeDao;
+import org.exoplatform.addon.elearning.dao.TutorialDao;
 import org.exoplatform.addon.elearning.dto.Step;
 import org.exoplatform.addon.elearning.entity.StepEntity;
+import org.exoplatform.addon.elearning.entity.TutorialEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class StepMapper {
 
-  public StepMapper() {
+  private StepMapper() {
   }
 
   public static Step convertStepToDTO(StepEntity stepEntity) {
@@ -23,12 +26,12 @@ public class StepMapper {
     step.setBody(stepEntity.getBody());
     step.setMedia(stepEntity.getMedia());
     step.setOrder(stepEntity.getOrder());
-    step.setTutorial(TutorialMapper.convertTutorialToDTO(stepEntity.getTutorialEntity()));
+    step.setTutorialId(stepEntity.getTutorialEntity().getId());
     return step;
 
   }
 
-  public static StepEntity convertStepToEntity(Step step) {
+  public static StepEntity convertStepToEntity(Step step, ThemeDao themeDao, TutorialDao tutorialDao) {
     if (step == null) {
       return null;
     }
@@ -39,7 +42,8 @@ public class StepMapper {
     stepEntity.setBody(step.getBody());
     stepEntity.setMedia(step.getMedia());
     stepEntity.setOrder(step.getOrder());
-    stepEntity.setTutorialEntity(TutorialMapper.convertTutorialToEntity(step.getTutorial()));
+    TutorialEntity tutorialEntity = tutorialDao.find(step.getTutorialId());
+    stepEntity.setTutorialEntity(tutorialEntity);
     return stepEntity;
 
   }
@@ -52,11 +56,11 @@ public class StepMapper {
 
   }
 
-  public static List<StepEntity> convertStepsToEntities(List<Step> steps) {
+  public static List<StepEntity> convertStepsToEntities(List<Step> steps, ThemeDao themeDao, TutorialDao tutorialDao) {
     if (steps == null) {
       return new ArrayList<>();
     }
-    return steps.stream().map(StepMapper::convertStepToEntity).collect(Collectors.toList());
+    return steps.stream().map(step -> convertStepToEntity(step, themeDao, tutorialDao)).collect(Collectors.toList());
 
   }
 

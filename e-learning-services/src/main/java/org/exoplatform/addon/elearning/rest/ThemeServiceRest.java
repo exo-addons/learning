@@ -9,7 +9,6 @@ import org.exoplatform.addon.elearning.dto.Theme;
 import org.exoplatform.addon.elearning.rest.entity.SpaceDataEntity;
 import org.exoplatform.addon.elearning.rest.entity.ThemesDataEntity;
 import org.exoplatform.addon.elearning.service.ThemeService;
-import org.exoplatform.addon.elearning.util.UserUtil;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -22,10 +21,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Path("theme")
 @Produces(MediaType.APPLICATION_JSON)
@@ -52,39 +48,38 @@ public class ThemeServiceRest implements ResourceContainer {
           @ApiResponse(code = 404, message = "Resource not found")})
   public Response addTheme(@ApiParam(value = "Theme to save", required = true) Theme theme) {
     try {
-      String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
-      if (currentUser == null) {
+      Identity identity = ConversationState.getCurrent().getIdentity();
+      if (identity.getUserId() == null) {
         return Response.status(Response.Status.FORBIDDEN).build();
       }
+      theme.setCreator(identity.getUserId());
+      
       Space space;
-
       if (StringUtils.isNotBlank(theme.getSpaceName())) {
         space = spaceService.getSpaceByPrettyName(theme.getSpaceName());
         if (space == null) {
-          LOG.warn("User {} attempts to create a Tutorial under a non existing space {}", currentUser, theme.getSpaceName());
+          LOG.warn("User {} attempts to create a Tutorial under a non existing space {}", identity.getUserId(), theme.getSpaceName());
           return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        if (!spaceService.isMember(space, currentUser)) {
+        if (!spaceService.isMember(space, identity.getUserId())) {
           LOG.warn("User {} attempts to create a Theme under a non authorized space {}",
-                  currentUser,
+                  identity.getUserId(),
                   theme.getSpaceName());
           return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        if (theme.getParent() != null) {
-          Long parentId = theme.getParent().getId();
+        if (theme.getParentId() != null) {
+          Long parentId = theme.getParentId();
           Theme parent = themeService.getThemeById(parentId);
-          if (!parent.canEdit(ConversationState.getCurrent().getIdentity())) {
+          if (!parent.canEdit(identity)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
           }
-          theme = themeService.createTheme(theme, parentId);
+          theme = themeService.createTheme(theme, parentId, space.getPrettyName());
         } else {
-          List<String> memberships = UserUtil.getSpaceMemberships(space.getGroupId());
-          Set<String> managers = new HashSet<>(Arrays.asList(memberships.get(0)));
-          Set<String> participators = new HashSet<>(Arrays.asList(memberships.get(1)));
-          theme.setManagers(managers);
-          theme.setParticipators(participators);
-          theme = themeService.createTheme(theme);
+          theme = themeService.createTheme(theme, null, space.getPrettyName());
         }
+      } else {
+        //todo add implementation for global themes (not space themes)
+        return Response.status(Response.Status.UNAUTHORIZED).build();
       }
 
     } catch (Exception e) {
@@ -117,7 +112,6 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @PUT
   @Path("updateTheme")
-  @Produces(MediaType.APPLICATION_JSON)
   @RolesAllowed("users")
   @ApiOperation(value = "Update Theme", httpMethod = "PUT", response = Response.class, notes = "This Update Theme info")
   @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
@@ -137,14 +131,14 @@ public class ThemeServiceRest implements ResourceContainer {
 
   @GET
   @Path("findThemes")
-  @Produces(MediaType.APPLICATION_JSON)
   @RolesAllowed("users")
   @ApiOperation(value = "Get Themes", httpMethod = "GET", response = Response.class, notes = "This returns Themes")
   @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
           @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
           @ApiResponse(code = 404, message = "Resource not found")})
-  public Response findThemes(@ApiParam(value = "Search term", defaultValue = "null") @QueryParam("q") String query,
-                             @ApiParam(value = "Space Name", defaultValue = "null") @QueryParam("spaceName") String spaceName,
+  public Response findThemes(@ApiParam(value = "Search term", defaultValue = "") @QueryParam("q") String query,
+                             @ApiParam(value = "Space Name", defaultValue = "") @QueryParam("spaceName") String spaceName,
+                             @ApiParam(value = "Is Root Theme", defaultValue = "false") @QueryParam("isRoot") boolean isRoot,
                              @ApiParam(value = "Offset", defaultValue = "0") @QueryParam("offset") int offset,
                              @ApiParam(value = "Limit", defaultValue = "-1") @QueryParam("limit") int limit) {
     if (limit == 0) {
@@ -163,11 +157,53 @@ public class ThemeServiceRest implements ResourceContainer {
 
         } else {
           boolean canUpdateTheme = spaceService.isManager(space, identity.getUserId());
-          long count = themeService.countFoundThemesBySpaceName(spaceName, query);
-          themes = themeService.findThemesBySpaceName(spaceName, query, offset, limit);
-          SpaceDataEntity spaceDataEntity = new SpaceDataEntity(space.getId(), space.getDisplayName(), space.getPrettyName(), space.getAvatarUrl(), space.getUrl());
+          long count = themeService.countFoundThemesBySpaceName(spaceName, isRoot, query);
+          themes = themeService.findThemesBySpaceName(spaceName, isRoot, query, offset, limit);
+          SpaceDataEntity spaceDataEntity = new SpaceDataEntity(space.getId(), space.getDisplayName(), space.getPrettyName(), space.getAvatarUrl(), space.getUrl(), space.getGroupId());
           dataEntity = new ThemesDataEntity(count, canUpdateTheme, spaceDataEntity, themes);
 
+        }
+      }
+
+    } catch (Exception e) {
+      LOG.error("Could not get all Themes", e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(dataEntity, MediaType.APPLICATION_JSON).build();
+
+  }
+
+  @GET
+  @Path("getChildThemes")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Get Themes", httpMethod = "GET", response = Response.class, notes = "This returns Themes")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response getChildThemes(@ApiParam(value = "Search term", defaultValue = "") @QueryParam("q") String query,
+                                 @ApiParam(value = "Space Name", defaultValue = "") @QueryParam("spaceName") String spaceName,
+                                 @ApiParam(value = "Parent Theme Id", required = true) @QueryParam("parentThemeId") long parentThemeId,
+                                 @ApiParam(value = "Offset", defaultValue = "0") @QueryParam("offset") int offset,
+                                 @ApiParam(value = "Limit", defaultValue = "-1") @QueryParam("limit") int limit) {
+    if (limit == 0) {
+      limit = -1;
+    }
+    ThemesDataEntity dataEntity = new ThemesDataEntity();
+    List<Theme> themes;
+    try {
+      Identity identity = ConversationState.getCurrent().getIdentity();
+      if (StringUtils.isNoneEmpty(spaceName)) {
+        Space space = spaceService.getSpaceByPrettyName(spaceName);
+        boolean isMember = spaceService.isMember(space, identity.getUserId());
+        if (!isMember) {
+          return Response.status(Response.Status.FORBIDDEN).build();
+
+        } else {
+          boolean canUpdateTheme = spaceService.isManager(space, identity.getUserId());
+          long count = themeService.countParentThemeChildren(parentThemeId, query);
+          themes = themeService.retrieveChildThemes(parentThemeId, query, offset, limit);
+          SpaceDataEntity spaceDataEntity = new SpaceDataEntity(space.getId(), space.getDisplayName(), space.getPrettyName(), space.getAvatarUrl(), space.getUrl(), space.getGroupId());
+          dataEntity = new ThemesDataEntity(count, canUpdateTheme, spaceDataEntity, themes);
         }
       }
 

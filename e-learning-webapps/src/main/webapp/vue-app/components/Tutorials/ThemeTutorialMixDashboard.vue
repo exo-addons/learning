@@ -1,13 +1,23 @@
 <template>
   <v-app
-    id="tutorials_dashboard"
+    id="theme-tutorial-mix-dashboard"
     flat>
-    <tutorial-dashboard-toolbar 
-      :theme-name="this.themeName"
+    <theme-tutorial-mix-dashboard-toolbar 
+      :theme-name="themeName"
+      :space="space"
       :keyword="keyword"
       @keyword-changed="keyword = $event" />
-    <tutorial-card-list
+    <theme-card-list
+      :space-name="space && space.prettyName"
+      :space="space"
+      :parent-theme="parentTheme"
       :keyword="keyword" />
+    <v-divider />
+    <tutorial-card-list
+      :keyword="keyword"
+      :parent-theme="parentTheme"
+      :space="space"
+      :can-update="canUpdate" />
     <exo-confirm-dialog
       ref="confirmDialog"
       :message="$t('addon.elearning.tutorial.deleteConf')"
@@ -40,11 +50,20 @@
 <script>
 export default {
   props: {
-    spaceName: {
-      type: String,
-      default: ''
-    }
+    parentTheme: {
+      type: Object,
+      default: null
+    },
+    space: {
+      type: Object,
+      default: null
+    },
+    canUpdate: {
+      type: Boolean,
+      default: false
+    },
   },
+  
   data() {
     return {
       successBar: false,
@@ -55,11 +74,14 @@ export default {
       themeId: null,
       themeName: null,
       errors: [],
-      keyword: null
+      keyword: '',
     };
   },
 
   created() {
+    this.$root.$on('displayThemeContent', theme => {
+      this.parentTheme = theme;
+    });
     this.$root.$on('tutoCreated', () => {
       this.timeout = 3000;
       this.successBar = false;
@@ -109,12 +131,6 @@ export default {
     this.$root.$on('deleteTuto', (id) => {
       this.prepareDelete(id);
     });
-    this.$root.$on('makeTuto', () => {
-      this.$root.$emit('addTuto');
-    });
-    this.$root.$on('backtoThemes', () => {
-      this.$root.$emit('backThemes');
-    });
 
     $(document).on('mousedown', () => {
       if (this.displayActionMenu) {
@@ -153,6 +169,6 @@ export default {
         })
         .catch((e) => this.errors.push(e));
     }
-  }  
+  }
 };
 </script>

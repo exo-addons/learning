@@ -15,22 +15,20 @@ import java.util.Set;
                 query = "SELECT t FROM ThemeEntity t where LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%'))"
         ),
         @NamedQuery(
-                name = "ThemeEntity.findThemesBySpaceName",
-                query = "SELECT t FROM ThemeEntity t where t.spaceName = :spaceName" +
-                        " order by t.lastModifiedDate desc"
+                name = "ThemeEntity.countParentThemeChildren",
+                query = "SELECT count (t) FROM ThemeEntity t where t.parent.id = :id"
         ),
         @NamedQuery(
-                name = "ThemeEntity.countFoundThemesBySpaceName",
-                query = "SELECT count (t) FROM ThemeEntity t where t.spaceName = :spaceName"
+                name = "ThemeEntity.retrieveChildThemes",
+                query = "SELECT t FROM ThemeEntity t where t.parent.id = :id"
         ),
         @NamedQuery(
-                name = "ThemeEntity.searchSpaceThemesByThemeName",
-                query = "SELECT t FROM ThemeEntity t where t.spaceName = :spaceName AND  LOWER(t.name) LIKE LOWER(CONCAT('%', :query, '%'))" +
-                        " order by t.lastModifiedDate desc"
+                name = "ThemeEntity.countSearchedParentThemeChildren",
+                query = "SELECT count (t) FROM ThemeEntity t where t.parent.id = :id AND LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%'))"
         ),
         @NamedQuery(
-                name = "ThemeEntity.countFoundSpaceThemesByThemeName",
-                query = "SELECT count (t) FROM ThemeEntity t where t.spaceName = :spaceName AND  LOWER(t.name) LIKE LOWER(CONCAT('%', :query, '%'))"
+                name = "ThemeEntity.retrieveSearchedChildThemes",
+                query = "SELECT t FROM ThemeEntity t where t.parent.id = :id AND LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%'))"
         ),
         @NamedQuery(
                 name = "ThemeEntity.findThemesByMemberships",
@@ -67,7 +65,7 @@ public class ThemeEntity {
   private Set<String> participators = new HashSet<>();
 
   @ManyToOne(optional = true, fetch = FetchType.LAZY)
-  @JoinColumn(name = "PARENT_THEME_ID", nullable = true)
+  @JoinColumn(name = "PARENT_THEME_ID")
   private ThemeEntity parent;
 
   @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -76,15 +74,18 @@ public class ThemeEntity {
   @Column(name = "LAST_MODIFIED_DATE")
   private Long lastModifiedDate;
 
-  @ManyToMany(mappedBy = "themeEntities")
+  @ManyToMany(mappedBy = "themeEntities", fetch = FetchType.LAZY)
   @Column(name = "TUTORIAL_ID")
   private Set<TutorialEntity> tutorialEntities = new HashSet<>();
+
+  @Column(name = "CREATOR")
+  private String creator;
 
   public ThemeEntity() {
   }
 
   public ThemeEntity(Long id, String name, String spaceName, Set<String> managers, Set<String> participators, ThemeEntity parent, Set<ThemeEntity> children,
-                     Long lastModifiedDate, Set<TutorialEntity> tutorialEntities) {
+                     Long lastModifiedDate, Set<TutorialEntity> tutorialEntities, String creator) {
     this.id = id;
     this.name = name;
     this.spaceName = spaceName;
@@ -94,6 +95,7 @@ public class ThemeEntity {
     this.children = children;
     this.lastModifiedDate = lastModifiedDate;
     this.tutorialEntities = tutorialEntities;
+    this.creator = creator;
   }
 
   public Long getId() {
@@ -164,7 +166,21 @@ public class ThemeEntity {
     return tutorialEntities;
   }
 
-  public void setTutorialEntities(Set<TutorialEntity> tutorialEntities) {
-    this.tutorialEntities = tutorialEntities;
+  public void addTutorialEntity(TutorialEntity tutorialEntity) {
+    tutorialEntities.add(tutorialEntity);
+    tutorialEntity.getThemeEntities().add(this);
+  }
+
+  public void removeTutorialEntity(TutorialEntity tutorialEntity) {
+    tutorialEntities.remove(tutorialEntity);
+    tutorialEntity.getThemeEntities().remove(this);
+  }
+
+  public String getCreator() {
+    return creator;
+  }
+
+  public void setCreator(String creator) {
+    this.creator = creator;
   }
 }

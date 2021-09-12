@@ -1,6 +1,7 @@
 export function getTutos() {
-  return fetch('/portal/rest/tuto/getAllTutos', {
-    method: 'GET'
+  return fetch('/portal/rest/tutorial/getAllTutos', {
+    method: 'GET',
+    credentials: 'include',
   })
     .then((response) => {
       if (!response || !response.ok) {
@@ -12,8 +13,9 @@ export function getTutos() {
 }
 
 export function getTutoById(tutoId) {
-  return fetch(`/portal/rest/tuto/getTutoById/${tutoId}`, {
-    method: 'GET'
+  return fetch(`/portal/rest/tutorial/getTutoById/${tutoId}`, {
+    method: 'GET',
+    credentials: 'include',
   })
     .then((response) => {
       if (!response || !response.ok) {
@@ -25,8 +27,9 @@ export function getTutoById(tutoId) {
 }
 
 export function deleteTuto(deleteId) {
-  return fetch(`/portal/rest/tuto/deleteTuto/${deleteId}`, {
-    method: 'DELETE'
+  return fetch(`/portal/rest/tutorial/deleteTuto/${deleteId}`, {
+    method: 'DELETE',
+    credentials: 'include',
   }).then(response => {
     if (!response || !response.ok) {
       throw new Error('Response code indicates a server error', response);
@@ -35,12 +38,13 @@ export function deleteTuto(deleteId) {
 }
 
 export function tutoPost(tuto) {
-  return fetch('/portal/rest/tuto/addTuto', {
+  return fetch('/portal/rest/tutorial/addTuto', {
     method: 'POST',
     body: JSON.stringify(tuto),
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    credentials: 'include',
   }).then(response => {
     if (!response || !response.ok) {
       throw new Error('Response code indicates a server error', response);
@@ -49,12 +53,13 @@ export function tutoPost(tuto) {
 }
 
 export function tutoUpdate(tuto) {
-  return fetch('/portal/rest/tuto/updateTuto', {
+  return fetch('/portal/rest/tutorial/updateTuto', {
     method: 'PUT',
     body: JSON.stringify(tuto),
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    credentials: 'include',
   }).then(response => {
     if (!response || !response.ok) {
       throw new Error('Response code indicates a server error', response);
@@ -62,9 +67,10 @@ export function tutoUpdate(tuto) {
   });
 }
 
-export function getAllTutosByTheme(themeId) {
-  return fetch(`/portal/rest/tuto/getAllTutosByTheme/${themeId}`, {
-    method: 'GET'
+export function getTutorialsByTheme(themeId, offset, limit) {
+  return fetch(`/portal/rest/tutorial/getTutorialsByTheme/${themeId}?offset=${offset}&limit=${limit}`, {
+    method: 'GET',
+    credentials: 'include',
   })
     .then((response) => {
       if (!response || !response.ok) {
@@ -76,8 +82,9 @@ export function getAllTutosByTheme(themeId) {
 }
 
 export function getTutosByName(id, tutoTitle) {
-  return fetch(`/portal/rest/tuto/getTutosByName/${id}/${tutoTitle}`, {
-    method: 'GET'
+  return fetch(`/portal/rest/tutorial/getTutosByName/${id}/${tutoTitle}`, {
+    method: 'GET',
+    credentials: 'include',
   })
     .then((response) => {
       if (!response || !response.ok) {
