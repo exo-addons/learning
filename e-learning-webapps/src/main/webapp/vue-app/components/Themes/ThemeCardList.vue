@@ -67,18 +67,6 @@ export default {
     };
   },
 
-  // watch: {
-  //   keyword() {
-  //     if (!this.keyword) {
-  //       this.getThemes();
-  //     }
-  //     if (this.keyword) {
-  //       this.findThemes();
-  //     }
-  //
-  //   }
-  // },
-
   created() {
     this.findThemes();
     this.$root.$on('openThemeDrawer', () => {

@@ -60,7 +60,6 @@ export default {
   },
 
   created() {
-    // this.getThemes();
     this.$root.$on('makeMoveTuto', (id) => {
       this.$refs.tutorialMoveDrawer.open();
       this.getTutoU(id);
