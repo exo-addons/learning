@@ -12,7 +12,12 @@
             id="theme_card_title" 
             @click="showTutos(theme.id)">{{ theme.name }} </span>
           
-          <v-icon class="theme_card_menu_icon" @click="displayActionMenu = true">mdi-dots-vertical</v-icon>
+          <v-icon 
+            v-if="canUpdate"
+            class="theme_card_menu_icon"
+            @click="displayActionMenu = true">
+            mdi-dots-vertical
+          </v-icon>
           
           <v-menu
             content-class="theme_card_menu"
@@ -22,7 +27,7 @@
             offset-y
             offset-x>
             <v-list class="card_menu_list" dense>
-              <v-list-item @click="update(theme.id)">
+              <v-list-item @click="update">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="theme_menu_icon">mdi-pencil</v-icon>
                   <span class="theme_menu_text">{{ $t('addon.elearning.theme.update') }}</span>
@@ -47,10 +52,10 @@
           <div class="theme_card_content">
             <v-avatar size="35" class="theme_card_space_avatar">
               <img
-                src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"> 
+                :src="space.avatarUrl"> 
             </v-avatar>
             <span class="theme_card_space_name">
-              {{ theme.spaceName }}
+              {{ space.displayName }}
             </span>
           </div>
         </v-card-text>
@@ -62,13 +67,25 @@
 
 <script>
 export default {
-
   props: {
     theme: {
       type: Object,
       default: null
-    }
+    },
+    space: {
+      type: Object,
+      default: null
+    },
+    canUpdate: {
+      type: Boolean,
+      default: false
+    },
+    spaceName: {
+      type: String,
+      default: ''
+    },
   },
+  
   data() {
     return {
       displayActionMenu: false
@@ -87,10 +104,10 @@ export default {
 
   methods: {
     deleteTheme(id) {
-      this.$root.$emit('deleteTheme', id);
+      this.$emit('deleteTheme', id);
     },
-    update(id) {
-      this.$root.$emit('makeUpdateTheme', id);
+    update() {
+      this.$emit('updateTheme', this.theme);
     },
     showTutos(id) {
       this.$root.$emit('makeShowTutos', id);

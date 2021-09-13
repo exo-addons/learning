@@ -1,32 +1,20 @@
-export function getThemes() {
-  return fetch('/portal/rest/theme/getAllThemes', {
-    method: 'GET'
-  })
-    .then((response) => {
-      if (!response || !response.ok) {
-        throw new Error('Response code indicates a server error', response);
-      } else {
-        return response.json();
-      }
-    });
-}
-
-export function getThemeById(themeId) {
-  return fetch(`/portal/rest/theme/getThemeById/${themeId}`, {
-    method: 'GET'
-  })
-    .then((response) => {
-      if (!response || !response.ok) {
-        throw new Error('Response code indicates a server error', response);
-      } else {
-        return response.json();
-      }
-    });
+export function getThemes(spaceName, keyword, offset, limit) {
+  return fetch(`/portal/rest/theme/findThemes?spaceName=${spaceName}&q=${keyword}&offset=${offset}&limit=${limit}`, {
+    method: 'GET',
+    credentials: 'include',
+  }).then((response) => {
+    if (!response || !response.ok) {
+      throw new Error('Response code indicates a server error', response);
+    } else {
+      return response.json();
+    }
+  });
 }
 
 export function deleteTheme(deleteId) {
   return fetch(`/portal/rest/theme/deleteTheme/${deleteId}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    credentials: 'include',
   }).then(response => {
     if (!response || !response.ok) {
       throw new Error('Response code indicates a server error', response);
@@ -34,9 +22,10 @@ export function deleteTheme(deleteId) {
   });
 }
 
-export function themePost(theme) {
+export function createTheme(theme) {
   return fetch('/portal/rest/theme/addTheme', {
     method: 'POST',
+    credentials: 'include',
     body: JSON.stringify(theme),
     headers: {
       'Content-Type': 'application/json'
@@ -44,13 +33,16 @@ export function themePost(theme) {
   }).then(response => {
     if (!response || !response.ok) {
       throw new Error('Response code indicates a server error', response);
+    } else {
+      return response.json();
     }
   });
 }
 
-export function themeUpdate(theme) {
+export function updateTheme(theme) {
   return fetch('/portal/rest/theme/updateTheme', {
     method: 'PUT',
+    credentials: 'include',
     body: JSON.stringify(theme),
     headers: {
       'Content-Type': 'application/json'
@@ -58,19 +50,8 @@ export function themeUpdate(theme) {
   }).then(response => {
     if (!response || !response.ok) {
       throw new Error('Response code indicates a server error', response);
+    } else {
+      return response.json();
     }
   });
-}
-
-export function getThemesByName(themeName) {
-  return fetch(`/portal/rest/theme/findAllThemesByName/${themeName}`, {
-    method: 'GET'
-  })
-    .then((response) => {
-      if (!response || !response.ok) {
-        throw new Error('Response code indicates a server error', response);
-      } else {
-        return response.json();
-      }
-    });
 }

@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     createTheme() {
-      this.$root.$emit('makeTheme');
+      this.$root.$emit('openThemeDrawer');
     }
   }
 };

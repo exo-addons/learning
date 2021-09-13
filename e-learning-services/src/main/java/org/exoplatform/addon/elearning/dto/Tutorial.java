@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,10 +23,10 @@ public class Tutorial implements Serializable {
 
   private Date createdDate;
 
-  private List<Theme> themes;
+  private List<Theme> themes = new ArrayList<>();
 
   private String status;
 
-  private List<Step> steps;
+  private List<Step> steps = new ArrayList<>();
 
 }

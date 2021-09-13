@@ -68,4 +68,12 @@ public class ThemeService implements ResourceContainer {
       throw new EntityNotFoundException(parentId, Theme.class);
     }
   }
+
+  public List<Theme> findThemesBySpaceName(String spaceName, String query, int offset, int limit) {
+    return themeStorage.findThemesBySpaceName(spaceName, query, offset, limit);
+  }
+
+  public long countFoundThemesBySpaceName(String spaceName, String query) {
+    return themeStorage.countFoundThemesBySpaceName(spaceName, query);
+  }
 }

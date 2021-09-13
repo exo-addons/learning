@@ -44,4 +44,13 @@ public class ThemeStorage {
     List<ThemeEntity> themeEntities = themeDao.findAllThemesByName(themeName);
     return ThemeMapper.convertThemesToDTOs(new HashSet<>(themeEntities));
   }
+
+  public List<Theme> findThemesBySpaceName(String spaceName, String query, int offset, int limit) {
+    List<ThemeEntity> themeEntities = themeDao.findThemesBySpaceName(spaceName, query, offset, limit);
+    return ThemeMapper.convertThemesToDTOs(new HashSet<>(themeEntities));
+  }
+
+  public long countFoundThemesBySpaceName(String spaceName, String query) {
+    return themeDao.countFoundThemesBySpaceName(spaceName, query);
+  }
 }

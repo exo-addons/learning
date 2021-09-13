@@ -1,8 +1,11 @@
 <template>
   <v-app id="elearning_app">
-    <theme-dashboard v-show="showThemes" />
-    <tutorial-dashboard v-show="!showThemes" />
-    <theme-management-drawer />
+    <theme-dashboard 
+      v-show="showThemes"
+      :space-name="spaceName" />
+    <tutorial-dashboard 
+      v-show="!showThemes"
+      :space-name="spaceName" />
     <tutorial-management-drawer />
     <tutorial-update-drawer />
     <tutorial-move-drawer />
@@ -14,7 +17,8 @@
 export default {
   data() {
     return {
-      showThemes: true
+      showThemes: true,
+      spaceName: eXo.env.portal.spaceName,
     };
   },
 

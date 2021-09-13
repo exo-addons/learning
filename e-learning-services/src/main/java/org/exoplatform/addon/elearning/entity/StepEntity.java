@@ -28,7 +28,6 @@ public class StepEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "TUTORIAL_ID", nullable = false)
-  @Column(name = "TUTORIAL_ID")
   private TutorialEntity tutorialEntity;
 
   public StepEntity() {
