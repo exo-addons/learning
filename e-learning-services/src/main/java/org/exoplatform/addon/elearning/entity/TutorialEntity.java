@@ -13,7 +13,8 @@ import java.util.Set;
 @ExoEntity
 @Table(name = "EXO_E_LEARNING_TUTORIAL")
 @NamedQueries({
-        @NamedQuery(name = "TutorialEntity.getAllTutorialsByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeEntities theme WHERE theme.id = :id"),
+        @NamedQuery(name = "TutorialEntity.getTutorialsByTheme", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeEntities theme WHERE theme.id = :themeId"),
+        @NamedQuery(name = "TutorialEntity.countTutorialsByTheme", query = "SELECT count (t) FROM TutorialEntity t INNER JOIN t.themeEntities theme WHERE theme.id = :themeId"),
         @NamedQuery(name = "TutorialEntity.findTutorialsByName", query = "SELECT t FROM TutorialEntity t INNER JOIN t.themeEntities theme WHERE theme = :id AND LOWER(t.title) LIKE LOWER(CONCAT('%', :tutoTitle, '%'))")})
 public class TutorialEntity {
 
@@ -34,13 +35,17 @@ public class TutorialEntity {
   @Column(name = "CREATED_DATE")
   private Timestamp createdDate;
 
-  @ManyToMany(cascade = {CascadeType.ALL})
-  @JoinTable(name = "EXO_E_LEARNING_TUTORIAL_THEME", joinColumns = @JoinColumn(name = "TUTORIAL_ID"), inverseJoinColumns = @JoinColumn(name = "THEME_ID"))
+  @ManyToMany
+  @JoinTable(
+          name = "EXO_E_LEARNING_TUTORIAL_THEME",
+          joinColumns = @JoinColumn(name = "TUTORIAL_ID", referencedColumnName = "TUTORIAL_ID"),
+          inverseJoinColumns = @JoinColumn(name = "THEME_ID", referencedColumnName = "THEME_ID"))
   @Column(name = "THEME_ID")
   public Set<ThemeEntity> themeEntities = new HashSet<>();
 
   @Column(name = "STATUS")
-  private String status;
+  @Enumerated(EnumType.ORDINAL)
+  private Status status;
 
   @OneToMany(mappedBy = "tutorialEntity", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
   private List<StepEntity> stepEntities = new ArrayList<>();
@@ -48,7 +53,7 @@ public class TutorialEntity {
   public TutorialEntity() {
   }
 
-  public TutorialEntity(Long id, String title, String description, String author, Timestamp createdDate, Set<ThemeEntity> themeEntities, String status, List<StepEntity> stepEntities) {
+  public TutorialEntity(Long id, String title, String description, String author, Timestamp createdDate, Set<ThemeEntity> themeEntities, Status status, List<StepEntity> stepEntities) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -103,15 +108,21 @@ public class TutorialEntity {
     return themeEntities;
   }
 
-  public void setThemeEntities(Set<ThemeEntity> themeEntities) {
-    this.themeEntities = themeEntities;
+  public void addThemeEntity(ThemeEntity themeEntity) {
+    this.themeEntities.add(themeEntity);
+    themeEntity.getTutorialEntities().add(this);
   }
 
-  public String getStatus() {
+  public void removeThemeEntity(ThemeEntity themeEntity) {
+    this.themeEntities.remove(themeEntity);
+    themeEntity.getTutorialEntities().remove(this);
+  }
+
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
@@ -121,10 +132,6 @@ public class TutorialEntity {
 
   public void setStepEntities(List<StepEntity> stepEntities) {
     this.stepEntities = stepEntities;
-  }
-
-  public enum Status {
-    DRAFT, ARCHIVED, PUBLISHED
   }
 
 }

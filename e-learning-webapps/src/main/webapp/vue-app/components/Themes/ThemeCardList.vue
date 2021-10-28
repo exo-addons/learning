@@ -5,14 +5,14 @@
     <v-container>
       <v-row class="theme_cards_row border-box-sizing">
         <v-col
+          v-for="theme in themesList"
+          :key="theme.id"
+          :id="'theme-' + theme.id"
           class="theme_cards"
           cols="12"
           md="6"
           lg="4"
-          xl="3"
-          v-for="theme in themesList"
-          :key="theme.id"
-          :id="'theme-' + theme.id">
+          xl="3">
           <theme-card 
             :space="space"
             :theme="theme"
@@ -46,6 +46,14 @@ export default {
       type: String,
       default: ''
     },
+    space: {
+      type: Object,
+      default: null
+    },
+    parentTheme: {
+      type: Object,
+      default: null
+    },
     keyword: {
       type: String,
       default: '',
@@ -57,33 +65,61 @@ export default {
       themesList: [],
       themesCount: 0,
       canUpdate: false,
-      space: null,
       offset: 0,
       limit: 0,
       themeToUpdate: null,
-      parentTheme: null,
       deleteId: null,
       errors: [],
     };
   },
 
-  created() {
-    this.findThemes();
-    this.$root.$on('openThemeDrawer', () => {
-      this.$refs.themeManagementDrawer.open();
-    });
+  watch: {
+    keyword() {
+      if (!this.keyword) {
+        this.getThemes();
+      }
+      if (this.keyword) {
+        this.findThemes();
+      }
+
+    },
+    parentTheme: {
+      immediate: true,
+      handler() {
+        this.fillThemesList();
+      }
+    },
   },
-  
-  beforeDestroy() {
-    this.$root.$off('openThemeDrawer');
+
+  created() {
+    this.fillThemesList();
+    this.$root.$on('openThemeDrawer', () => {
+      if (this.$refs.themeManagementDrawer) {
+        this.$refs.themeManagementDrawer.open();
+      }
+    });
   },
 
   methods: {
+    fillThemesList() {
+      if (!this.parentTheme) {
+        this.findThemes();
+      } else {
+        this.getThemeChildren();
+      }      
+    },
     findThemes() {
-      return this.$themeService.getThemes(this.spaceName, this.keyword, this.offset, this.limit).then(data => {
+      const isRoot = this.parentTheme ? false : true;
+      return this.$themeService.getThemes(this.spaceName, isRoot, this.keyword, this.offset, this.limit).then(data => {
         this.themesCount = data.count;
         this.canUpdate = data.canUpdate;
         this.space = data.space;
+        this.themesList = data.themeList;
+      }).catch((e) => this.errors.push(e));
+    },
+    getThemeChildren() {
+      return this.$themeService.getChildThemes(this.spaceName, this.parentTheme.id, this.keyword, this.offset, this.limit).then(data => {
+        this.themesCount = data.count;
         this.themesList = data.themeList;
       }).catch((e) => this.errors.push(e));
     },

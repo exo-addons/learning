@@ -1,42 +1,39 @@
 package org.exoplatform.addon.elearning.service;
 
 import org.exoplatform.addon.elearning.dto.Theme;
-import org.exoplatform.addon.elearning.service.exception.EntityNotFoundException;
 import org.exoplatform.addon.elearning.storage.ThemeStorage;
-import org.exoplatform.commons.api.persistence.ExoTransactional;
+import org.exoplatform.addon.elearning.util.UserUtil;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.exoplatform.social.core.space.model.Space;
+import org.exoplatform.social.core.space.spi.SpaceService;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ThemeService implements ResourceContainer {
 
   private static final Log LOG = ExoLogger.getLogger(ThemeService.class);
 
+  public static final String DEFAULT_USERS_GROUP = "/platform/users";
+
+  public static final String DEFAULT_USERS_PERMISSION = "*:" + DEFAULT_USERS_GROUP;
+
   private ThemeStorage themeStorage;
 
-  public ThemeService(ThemeStorage themeStorage) {
+  private SpaceService spaceService;
+
+  public ThemeService(ThemeStorage themeStorage, SpaceService spaceService) {
     this.themeStorage = themeStorage;
+    this.spaceService = spaceService;
   }
 
-  @ExoTransactional
-  public Theme createTheme(Theme theme) throws IllegalAccessException {
-    if (theme == null) {
-      throw new IllegalAccessException("Theme is mandatory");
-    }
-    theme.setLastModifiedDate(System.currentTimeMillis());
-
-    return themeStorage.createTheme(theme);
-  }
-
-  @ExoTransactional
   public void deleteTheme(Long id) {
     themeStorage.deleteThemeById(id);
   }
 
-  @ExoTransactional
   public Theme updateTheme(Theme theme) {
     return themeStorage.updateTheme(theme);
   }
@@ -53,27 +50,48 @@ public class ThemeService implements ResourceContainer {
     return themeStorage.findAllThemesByName(themeName);
   }
 
-  public Theme createTheme(Theme theme, Long parentId) throws IllegalAccessException, EntityNotFoundException {
-    Theme parentTheme = themeStorage.getThemeById(parentId);
-    if (parentTheme != null) {
-      theme.setParent(parentTheme);
-      theme.setParticipators(new HashSet<>(parentTheme.getParticipators()));
-      theme.setManagers(new HashSet<>(parentTheme.getManagers()));
-      theme.setLastModifiedDate(System.currentTimeMillis());
-
-      theme = createTheme(theme);
-      return theme;
+  public Theme createTheme(Theme theme, Long parentId, String spaceName) {
+    Set<String> managers = new HashSet<>();
+    Set<String> participators = new HashSet<>();
+    if (parentId != null) {
+      Theme parentTheme = themeStorage.getThemeById(parentId);
+      theme.setParentId(parentId);
+      Set<String> parentThemeManagers = parentTheme.getManagers();
+      Set<String> parentThemeParticipators = parentTheme.getParticipators();
+      managers.addAll(parentThemeManagers);
+      participators.addAll(parentThemeParticipators);
+    } else if (spaceName != null) {
+      Space space = spaceService.getSpaceByPrettyName(spaceName);
+      theme.setSpaceName(spaceName);
+      List<String> memberships = UserUtil.getSpaceMemberships(space.getGroupId());
+      managers.add(memberships.get(0));
+      participators.add(memberships.get(1));
     } else {
-      LOG.info("Can not find theme for parent with ID: " + parentId);
-      throw new EntityNotFoundException(parentId, Theme.class);
+      managers.add(theme.getCreator());
+      participators.add(DEFAULT_USERS_PERMISSION);
     }
+
+    theme.setManagers(managers);
+    theme.setParticipators(participators);
+    theme.setLastModifiedDate(System.currentTimeMillis());
+
+    theme = themeStorage.createTheme(theme);
+    return theme;
   }
 
-  public List<Theme> findThemesBySpaceName(String spaceName, String query, int offset, int limit) {
-    return themeStorage.findThemesBySpaceName(spaceName, query, offset, limit);
+  public List<Theme> findThemesBySpaceName(String spaceName, boolean isRoot, String query, int offset, int limit) {
+    return themeStorage.findThemesBySpaceName(spaceName, isRoot, query, offset, limit);
   }
 
-  public long countFoundThemesBySpaceName(String spaceName, String query) {
-    return themeStorage.countFoundThemesBySpaceName(spaceName, query);
+  public long countFoundThemesBySpaceName(String spaceName, boolean isRoot, String query) {
+    return themeStorage.countFoundThemesBySpaceName(spaceName, isRoot, query);
+  }
+
+  public long countParentThemeChildren(long parentThemeId, String query) {
+    return themeStorage.countParentThemeChildren(parentThemeId, query);
+  }
+
+  public List<Theme> retrieveChildThemes(long parentThemeId, String query, int offset, int limit) {
+    return themeStorage.retrieveChildThemes(parentThemeId, query, offset, limit);
   }
 }

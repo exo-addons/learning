@@ -1,7 +1,10 @@
 package org.exoplatform.addon.elearning.storage.mapper;
 
+import org.exoplatform.addon.elearning.dao.ThemeDao;
+import org.exoplatform.addon.elearning.dao.TutorialDao;
 import org.exoplatform.addon.elearning.dto.Theme;
 import org.exoplatform.addon.elearning.entity.ThemeEntity;
+import org.exoplatform.addon.elearning.entity.TutorialEntity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,35 +14,52 @@ import java.util.stream.Collectors;
 
 public class ThemeMapper {
 
-  public ThemeMapper() {
+  private ThemeMapper() {
   }
 
-  public static Theme convertThemeToDTO(ThemeEntity themeEntity) {
+  public static Theme convertThemeEntityToDTO(ThemeEntity themeEntity) {
     if (themeEntity == null) {
       return null;
     }
 
     Theme theme = new Theme();
-    theme.setName(themeEntity.getName());
     theme.setId(themeEntity.getId());
+    theme.setName(themeEntity.getName());
     theme.setSpaceName(themeEntity.getSpaceName());
     theme.setManagers(themeEntity.getManagers());
     theme.setParticipators(themeEntity.getParticipators());
-    theme.setParent(convertThemeToDTO(themeEntity.getParent()));
-    theme.setChildren(convertThemesToDTOs(themeEntity.getChildren()));
     theme.setLastModifiedDate(themeEntity.getLastModifiedDate());
-    theme.setTutorials(TutorialMapper.convertTutorialsToDTOs(themeEntity.getTutorialEntities()));
+    theme.setCreator(themeEntity.getCreator());
+    List<Long> tutorialIds = themeEntity.getTutorialEntities().stream().map(TutorialEntity::getId).collect(Collectors.toList());
+    theme.setTutorialIds(tutorialIds);
+    if (themeEntity.getParent() != null) {
+      theme.setParentId(themeEntity.getParent().getId());
+    }
     return theme;
   }
 
-  public static List<Theme> convertThemesToDTOs(Set<ThemeEntity> themes) {
-    if (themes == null) {
+  public static List<Theme> convertThemeEntitiesToDTOs(Set<ThemeEntity> themeEntities, boolean withChildren) {
+    if (themeEntities == null) {
       return new ArrayList<>();
     }
-    return themes.stream().map(ThemeMapper::convertThemeToDTO).collect(Collectors.toList());
+    List<Theme> themeList = new ArrayList<>();
+    for (ThemeEntity themeEntity : themeEntities) {
+      if (themeEntity != null) {
+        Theme theme = convertThemeEntityToDTO(themeEntity);
+        if (themeEntity.getParent() != null) {
+          theme.setParentId(themeEntity.getParent().getId());
+        }
+        if (withChildren) {
+          List<Long> childrenIds = themeEntity.getChildren().stream().map(ThemeEntity::getId).collect(Collectors.toList());
+          theme.setChildrenIds(childrenIds);
+        }
+        themeList.add(theme);
+      }
+    }
+    return themeList;
   }
 
-  public static ThemeEntity convertThemeToEntity(Theme theme) {
+  public static ThemeEntity convertThemeDTOToEntity(Theme theme, ThemeDao themeDao, TutorialDao tutorialDao) {
     if (theme == null) {
       return null;
     }
@@ -50,18 +70,37 @@ public class ThemeMapper {
     themeEntity.setSpaceName(theme.getSpaceName());
     themeEntity.setManagers(theme.getManagers());
     themeEntity.setParticipators(theme.getParticipators());
-    themeEntity.setParent(convertThemeToEntity(theme.getParent()));
-    themeEntity.setChildren(convertThemesToEntities(theme.getChildren()));
+    if (theme.getChildrenIds() != null && !theme.getChildrenIds().isEmpty()) {
+      Set<ThemeEntity> children = new HashSet<>();
+      for (Long childId : theme.getChildrenIds()) {
+        children.add(themeDao.find(childId));
+      }
+      themeEntity.setChildren(children);
+    }
     themeEntity.setLastModifiedDate(theme.getLastModifiedDate());
-    themeEntity.setTutorialEntities(TutorialMapper.convertTutorialsToEntities(theme.getTutorials()));
+    themeEntity.setCreator(theme.getCreator());
+    for (Long tutorialId : theme.getTutorialIds()) {
+      themeEntity.addTutorialEntity(tutorialDao.find(tutorialId));
+    }
+    if (theme.getParentId() != null) {
+      themeEntity.setParent(themeDao.find(theme.getParentId()));
+    }
     return themeEntity;
   }
 
-  public static Set<ThemeEntity> convertThemesToEntities(List<Theme> themes) {
+  public static Set<ThemeEntity> convertThemeDTOsToEntities(List<Theme> themes, ThemeDao themeDao, TutorialDao tutorialDao) {
     if (themes == null) {
       return new HashSet<>();
     }
-    return new HashSet<>(themes.stream().map(ThemeMapper::convertThemeToEntity).collect(Collectors.toList()));
+    List<ThemeEntity> themeEntities = new ArrayList<>();
+    for (Theme theme : themes) {
+      ThemeEntity themeEntity = convertThemeDTOToEntity(theme, themeDao, tutorialDao);
+      if (theme != null && theme.getParentId() != null) {
+        themeEntity.setParent(themeDao.find(theme.getParentId()));
+      }
+      themeEntities.add(themeEntity);
+    }
+    return new HashSet<>(themeEntities);
   }
 
 }

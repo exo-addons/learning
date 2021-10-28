@@ -26,13 +26,23 @@ public class Theme implements Serializable {
 
   private Set<String> participators = new HashSet<>();
 
-  private Theme parent;
+  private Long parentId;
 
-  private List<Theme> children = new ArrayList<>();
+  private List<Long> childrenIds = new ArrayList<>();
 
   private Long lastModifiedDate;
 
-  private List<Tutorial> tutorials = new ArrayList<>();
+  private List<Long> tutorialIds = new ArrayList<>();
+  
+  private String creator;
+
+  public Theme(String name, String spaceName, Set<String> managers, Set<String> participators, String creator) {
+    this.name = name;
+    this.spaceName = spaceName;
+    this.managers = managers;
+    this.participators = participators;
+    this.creator = creator;
+  }
 
   public boolean canEdit(Identity user) {
     return hasPermission(user, getManagers());

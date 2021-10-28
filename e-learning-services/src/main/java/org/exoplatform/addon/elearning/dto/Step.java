@@ -20,5 +20,5 @@ public class Step implements Serializable {
 
   private int order;
 
-  private Tutorial tutorial;
+  private Long tutorialId;
 }

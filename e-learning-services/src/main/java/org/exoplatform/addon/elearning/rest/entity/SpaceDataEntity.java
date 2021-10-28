@@ -15,5 +15,6 @@ public class SpaceDataEntity implements Serializable {
   private String prettyName;
   private String avatarUrl;
   private String url;
+  private String groupId;
 
 }

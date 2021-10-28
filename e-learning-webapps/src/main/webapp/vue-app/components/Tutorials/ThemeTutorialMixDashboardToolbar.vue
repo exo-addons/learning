@@ -4,7 +4,7 @@
       id="TutorialDashboardToolbar"
       flat
       class="toolbarLarge pb-3">
-      <v-icon @click="back" id="tuto_toolbar_prom">mdi-chart-tree</v-icon>
+      <v-icon @click="backToThemeDashboard" id="tuto_toolbar_prom">mdi-chart-tree</v-icon>
       <v-icon>mdi-chevron-right</v-icon>
       <span> {{ themeName }} </span>
       <v-toolbar-title />
@@ -21,13 +21,13 @@
             offset-y
             offset-x>
             <v-list class="toolbar_menu_list" dense>
-              <v-list-item @click="createTuto">
+              <v-list-item @click="addNewTutorial">
                 <v-list-item-title class="toolbar_menu_list_items">
                   <v-icon class="toolbar_menu_icon">mdi-school</v-icon>
                   <span class="toolbar_menu_text">{{ $t('addon.elearning.tutorial.create') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="clickable">
+              <v-list-item @click="addNewSubTheme">
                 <v-list-item-title class="toolbar_menu_list_items">
                   <v-icon class="toolbar_menu_icon">mdi-folder</v-icon>
                   <span class="toolbar_menu_text">{{ $t('addon.elearning.theme.create') }}</span>
@@ -54,26 +54,33 @@
 
 <script>
 export default {
-  data() {
-    return {
-      displayActionMenu: false
-    };
-  },
   props: {
     themeName: {
       type: String,
       default: ''
     },
+    space: {
+      type: Object,
+      default: null
+    },
     keyword: {
       type: String,
-      default: null,
+      default: '',
     }
   },
+  
+  data() {
+    return {
+      displayActionMenu: false
+    };
+  },
+  
   watch: {
     keyword() {
       this.$root.$emit('key-changed', this.keyword);
     }
   },
+  
   created() {
     $(document).on('mousedown', () => {
       if (this.displayActionMenu) {
@@ -83,12 +90,16 @@ export default {
       }
     });
   },
+  
   methods: {
-    createTuto() {
-      this.$root.$emit('makeTuto');
+    addNewTutorial() {
+      this.$root.$emit('openTutorialDrawer');
     },
-    back() {
-      this.$root.$emit('backtoThemes');
+    addNewSubTheme() {
+      this.$root.$emit('openThemeDrawer');
+    },
+    backToThemeDashboard() {
+      this.$root.$emit('displayThemesBoard');
     },
   }
 };
