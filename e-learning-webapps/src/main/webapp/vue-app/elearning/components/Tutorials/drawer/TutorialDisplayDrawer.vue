@@ -1,7 +1,5 @@
 <template>
-  <v-app
-    id="tutorial_display"
-    flat>
+  <div id="tutorial_display">
     <exo-drawer
       id="tutorialDisplayDrawer"
       ref="tutorialDisplayDrawer"
@@ -35,7 +33,7 @@
         </div>
       </template>
     </exo-drawer>
-  </v-app>
+  </div>
 </template>
 <script>
 export default {

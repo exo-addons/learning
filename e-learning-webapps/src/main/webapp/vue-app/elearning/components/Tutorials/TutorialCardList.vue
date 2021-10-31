@@ -1,7 +1,5 @@
 <template>
-  <v-app
-    id="tutos_card_list"
-    flat>
+  <div id="tutos_card_list">
     <template>
       <v-container> 
         <v-row class="tuto_cards_row border-box-sizing"> 
@@ -14,7 +12,10 @@
             v-for="tutorial in tutorialsList"
             :key="tutorial.id"
             :id="'tutorial-' + tutorial.id">
-            <tutorial-card :tutorial="tutorial" />
+            <tutorial-card
+              :tutorial="tutorial"
+              :space="space"
+              :can-update="canUpdate" />
           </v-col>
         </v-row>
       </v-container>
@@ -25,7 +26,7 @@
         :space-name="space && space.prettyName"
         :space="space" />
     </template> 
-  </v-app>
+  </div>
 </template>
 
 <script>

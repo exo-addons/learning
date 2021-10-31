@@ -1,7 +1,5 @@
 <template>
-  <v-app
-    id="themes_management"
-    flat>
+  <div id="themes_management">
     <exo-drawer ref="themeManagementDrawer" right>
       <template v-if="!this.themeToUpdate" slot="title">
         {{ $t('addon.elearning.theme.creating') }}
@@ -42,7 +40,7 @@
         <v-btn class="exo_cancel_btn" @click="$refs.form.reset()">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
       </template>
     </exo-drawer>
-  </v-app>
+  </div>
 </template>
 <script>
 export default {
@@ -89,7 +87,7 @@ export default {
         const theme = {
           name: this.title,
           spaceName: this.spaceName,
-          parent: this.parentTheme
+          parentId: this.parentTheme.id
         };
         return this.$themeService.createTheme(theme).then(addedTheme => {
           this.$emit('themeAdded', addedTheme);

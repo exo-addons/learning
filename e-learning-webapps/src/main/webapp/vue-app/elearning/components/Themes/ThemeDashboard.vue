@@ -1,33 +1,18 @@
 <template>
-  <v-app
-    id="themes_dashboard"
-    flat>
+  <div id="themes_dashboard">
     <theme-dashboard-toolbar
       :keyword="keyword"
       @keyword-changed="keyword = $event" />
     <theme-card-list 
       :space-name="spaceName"
       :keyword="keyword" />
-    <template>
-      <div class="text-center">
-        <v-snackbar
-          v-model="successBar"
-          :timeout="timeout"
-          :color="this.color">
-          {{ text }}
-          <template v-slot:action="{ attrs }">
-            <v-btn 
-              class="snackbar_btn"
-              text
-              v-bind="attrs"
-              @click="successBar = false">
-              {{ $t('addon.elearning.tutorial.dismiss') }}
-            </v-btn>
-          </template>
-        </v-snackbar>
-      </div>
-    </template>
-  </v-app>
+    <v-alert
+      v-model="alert"
+      :type="type"
+      dismissible>
+      {{ message }}
+    </v-alert>
+  </div>
 </template>
 
 <script>
@@ -38,22 +23,29 @@ export default {
       default: ''
     },
   },
-  
   data() {
     return {
-      successBar: false,
-      text: '',
-      color: 'success',
-      timeout: 0,
-      errors: [],
       keyword: '',
+      alert: false,
+      type: '',
+      message: '',
     };
   },
-
   created() {
     this.$on('keyword-changed', (keyword) => {
       this.keyword = keyword;
     });
+    this.$root.$on('show-alert', message => {
+      this.displayMessage(message);
+    });
   },
+  methods: {
+    displayMessage(message) {
+      this.message = message.message;
+      this.type = message.type;
+      this.alert = true;
+      window.setTimeout(() => this.alert = false, 5000);
+    },
+  }
 };
 </script>

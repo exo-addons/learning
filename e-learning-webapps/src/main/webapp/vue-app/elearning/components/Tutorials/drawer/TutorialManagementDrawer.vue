@@ -1,7 +1,5 @@
 <template>
-  <v-app
-    id="tutorials_management"
-    flat>
+  <div id="tutorials_management">
     <exo-drawer 
       id="tutorialManagementDrawer"
       ref="tutorialManagementDrawer"
@@ -88,7 +86,7 @@
         <v-btn class="exo_cancel_btn" @click="clear">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
       </template>
     </exo-drawer>
-  </v-app>
+  </div>
 </template>
 <script>
 export default {
@@ -120,6 +118,12 @@ export default {
     };
   },
 
+  watch: {
+    parentTheme() {
+      this.getThemes();
+    }
+  },
+
   computed: {
     isStepsComplete() {
       return this.tutorial && this.tutorial.title && this.tutorial.themeIds && this.tutorial.themeIds.length > 0;
@@ -127,10 +131,6 @@ export default {
     isFirstStepComplete() {
       return this.tutorial && this.tutorial.title;
     }
-  },
-  
-  created() {
-    this.getThemes();
   },
 
   methods: {
@@ -159,6 +159,7 @@ export default {
       const isRoot = this.parentTheme ? false : true;
       return this.$themeService.getThemes(this.spaceName, isRoot, '', 0, 0).then((data) => {
         this.themes = data.themeList;
+        this.tutorial.themeIds.push(this.parentTheme.id);
       }).catch((e) => this.errors.push(e));
     },
     clear() {

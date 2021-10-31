@@ -1,7 +1,5 @@
 <template>
-  <v-app
-    id="theme-tutorial-mix-dashboard"
-    flat>
+  <div id="theme-tutorial-mix-dashboard">
     <theme-tutorial-mix-dashboard-toolbar 
       :theme-name="themeName"
       :space="space"
@@ -25,26 +23,13 @@
       :ok-label="$t('addon.elearning.tutorial.confirm')"
       :cancel-label="$t('addon.elearning.tutorial.cancel')"
       @ok="deleteTuto()" />
-    <template>
-      <div class="text-center">
-        <v-snackbar
-          v-model="successBar"
-          :timeout="timeout"
-          :color="this.color">
-          {{ text }}
-          <template v-slot:action="{ attrs }">
-            <v-btn 
-              class="snackbar_btn"
-              text
-              v-bind="attrs"
-              @click="successBar = false">
-              {{ $t('addon.elearning.tutorial.dismiss') }}
-            </v-btn>
-          </template>
-        </v-snackbar>
-      </div>
-    </template>   
-  </v-app>
+    <v-alert
+      v-model="alert"
+      :type="type"
+      dismissible>
+      {{ message }}
+    </v-alert>
+  </div>
 </template>
 
 <script>
@@ -66,10 +51,9 @@ export default {
   
   data() {
     return {
-      successBar: false,
-      text: '',
-      color: '',
-      timeout: 0,
+      alert: false,
+      type: '',
+      message: '',
       deleteId: null,
       themeId: null,
       themeName: null,
@@ -79,8 +63,8 @@ export default {
   },
 
   created() {
-    this.$root.$on('displayThemeContent', theme => {
-      this.parentTheme = theme;
+    this.$root.$on('show-alert', message => {
+      this.displayMessage(message);
     });
     this.$root.$on('tutoCreated', () => {
       this.timeout = 3000;
@@ -168,7 +152,13 @@ export default {
           this.themeName = data.name;
         })
         .catch((e) => this.errors.push(e));
-    }
+    },
+    displayMessage(message) {
+      this.message = message.message;
+      this.type = message.type;
+      this.alert = true;
+      window.setTimeout(() => this.alert = false, 5000);
+    },
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-app id="theme_dashboard_toolbar">
+  <div id="theme_dashboard_toolbar">
     <v-toolbar
       id="ThemeDashboardToolbar"
       flat
@@ -40,7 +40,7 @@
         </div>
       </v-scale-transition>
     </v-toolbar>
-  </v-app>
+  </div>
 </template>
 
 <script>
