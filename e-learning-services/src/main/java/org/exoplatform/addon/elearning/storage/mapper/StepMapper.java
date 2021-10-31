@@ -23,8 +23,8 @@ public class StepMapper {
     Step step = new Step();
     step.setId(stepEntity.getId());
     step.setTitle(stepEntity.getTitle());
-    step.setBody(stepEntity.getBody());
-    step.setMedia(stepEntity.getMedia());
+    step.setContent(stepEntity.getContent());
+    step.setMediaLink(stepEntity.getMediaLink());
     step.setOrder(stepEntity.getOrder());
     step.setTutorialId(stepEntity.getTutorialEntity().getId());
     return step;
@@ -39,8 +39,8 @@ public class StepMapper {
     StepEntity stepEntity = new StepEntity();
     stepEntity.setId(step.getId());
     stepEntity.setTitle(step.getTitle());
-    stepEntity.setBody(step.getBody());
-    stepEntity.setMedia(step.getMedia());
+    stepEntity.setContent(step.getContent());
+    stepEntity.setMediaLink(step.getMediaLink());
     stepEntity.setOrder(step.getOrder());
     TutorialEntity tutorialEntity = tutorialDao.find(step.getTutorialId());
     stepEntity.setTutorialEntity(tutorialEntity);

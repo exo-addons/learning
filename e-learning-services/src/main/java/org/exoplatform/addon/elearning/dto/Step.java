@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,11 +15,13 @@ public class Step implements Serializable {
 
   private String title;
 
-  private String body;
+  private String content;
 
-  private Long media;
+  private String mediaLink;
 
   private int order;
 
   private Long tutorialId;
+  
+  private List<Attachment> attachments;
 }
