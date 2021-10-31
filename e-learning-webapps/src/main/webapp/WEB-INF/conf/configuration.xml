@@ -7,6 +7,7 @@
   <import>war:/conf/elearning-extension/bundle-configuration.xml</import>
   <import>war:/conf/elearning-extension/portal-configuration.xml</import>
   <import>war:/conf/elearning-extension/application-registry-configuration.xml</import>
+  <import>war:/conf/elearning-extension/dynamic-container-configuration.xml</import>
   <import>war:/conf/elearning-extension/social-configuration.xml</import>
 
 </configuration>

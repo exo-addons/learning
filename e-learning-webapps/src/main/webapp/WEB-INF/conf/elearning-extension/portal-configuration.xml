@@ -21,7 +21,7 @@
               <string>portal</string>
             </field>
             <field name="override">
-              <boolean>true</boolean>
+              <boolean>${exo.agenda.portalConfig.metadata.override:true}</boolean>
             </field>
             <field name="importMode">
               <string>insert</string>
@@ -29,7 +29,7 @@
             <field name="predefinedOwner">
               <collection type="java.util.HashSet">
                 <value>
-                  <string>dw</string>
+                  <string>global</string>
                 </value>
               </collection>
             </field>

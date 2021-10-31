@@ -7,7 +7,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:/
 		<portlet-class>org.exoplatform.commons.api.portlet.GenericDispatchedViewPortlet</portlet-class>
 		<init-param>
       		<name>portlet-view-dispatched-file-path</name>
-      		<value>/index.html</value>
+      		<value>/html/elearning.html</value>
      	</init-param>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -17,6 +17,25 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:/
 		<portlet-info>
 			<title>Elearning eXo addon</title>
 			<keywords>Elearning eXo addon</keywords>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>ElearningEditor</portlet-name>
+		<display-name xml:lang="EN">Elearning Editor Application</display-name>
+		<portlet-class>org.exoplatform.commons.api.portlet.GenericDispatchedViewPortlet</portlet-class>
+		<init-param>
+      		<name>portlet-view-dispatched-file-path</name>
+      		<value>/html/elearningEditor.html</value>
+     	</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<resource-bundle>locale.addon.elearning</resource-bundle>
+		<portlet-info>
+			<title>Elearning Editor eXo addon</title>
+			<keywords>Elearning Editor eXo addon</keywords>
 		</portlet-info>
 	</portlet>
 </portlet-app>
