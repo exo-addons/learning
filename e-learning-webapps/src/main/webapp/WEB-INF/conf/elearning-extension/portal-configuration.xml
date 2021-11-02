@@ -17,15 +17,6 @@
           <name>portal.configuration</name>
           <description>description</description>
           <object type="org.exoplatform.portal.config.NewPortalConfig">
-            <field name="ownerType">
-              <string>portal</string>
-            </field>
-            <field name="override">
-              <boolean>${exo.agenda.portalConfig.metadata.override:true}</boolean>
-            </field>
-            <field name="importMode">
-              <string>insert</string>
-            </field>
             <field name="predefinedOwner">
               <collection type="java.util.HashSet">
                 <value>
@@ -33,8 +24,17 @@
                 </value>
               </collection>
             </field>
-            <field name="location">
-              <string>war:/conf/elearning-extension/portal</string>
+            <field name="ownerType">
+              <string>portal</string>
+            </field>
+            <field name="templateLocation">
+              <string>war:/conf/elearning-extension/</string>
+            </field>
+            <field name="override">
+              <boolean>${exo.elearning.portalConfig.metadata.override:true}</boolean>
+            </field>
+            <field name="importMode">
+              <string>${exo.elearning.portalConfig.metadata.importMode:insert}</string>
             </field>
           </object>
         </object-param>

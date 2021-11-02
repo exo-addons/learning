@@ -8,20 +8,23 @@
     <title>Elearning Editor</title>
     <access-permissions>*:/platform/users</access-permissions>
     <edit-permission>*:/platform/administrators</edit-permission>
-    <container id="top-elearning-editor-container" template="system:/groovy/portal/webui/container/UIAddOnContainer.gtmpl">
-      <name>top-elearning-editor-container</name>
+    <container id="ElearningEditorContainer" template="system:/groovy/portal/webui/container/UIContainer.gtmpl">
       <access-permissions>*:/platform/users</access-permissions>
-      <factory-id>addonContainer</factory-id>
-    </container>
-    <container id="elearning-editor-container" template="system:/groovy/portal/webui/container/UIAddOnContainer.gtmpl">
-      <name>elearning-editor-container</name>
-      <access-permissions>*:/platform/users</access-permissions>
-      <factory-id>addonContainer</factory-id>
-    </container>
-    <container id="bottom-elearning-editor-container" template="system:/groovy/portal/webui/container/UIAddOnContainer.gtmpl">
-      <name>bottom-elearning-editor-container</name>
-      <access-permissions>*:/platform/users</access-permissions>
-      <factory-id>addonContainer</factory-id>
+      <container id="top-elearning-editor-container" template="system:/groovy/portal/webui/container/UIAddOnContainer.gtmpl">
+        <name>top-elearning-editor-container</name>
+        <access-permissions>*:/platform/users</access-permissions>
+        <factory-id>addonContainer</factory-id>
+      </container>
+      <container id="elearning-editor-container" template="system:/groovy/portal/webui/container/UIAddOnContainer.gtmpl">
+        <name>elearning-editor-container</name>
+        <access-permissions>*:/platform/users</access-permissions>
+        <factory-id>addonContainer</factory-id>
+      </container>
+      <container id="bottom-elearning-editor-container" template="system:/groovy/portal/webui/container/UIAddOnContainer.gtmpl">
+        <name>bottom-elearning-editor-container</name>
+        <access-permissions>*:/platform/users</access-permissions>
+        <factory-id>addonContainer</factory-id>
+      </container>
     </container>
   </page>
 </page-set>
