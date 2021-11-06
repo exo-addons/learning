@@ -113,14 +113,36 @@
         <constraints nullable="false" primaryKey="true"
                      primaryKeyName="PK_STEP_ID"/>
       </column>
-      <column name="TITLE" type="LONGTEXT"/>
-      <column name="BODY" type="LONGTEXT"/>
-      <column name="MEDIA" type="BIGINT"/>
+      <column name="TITLE" type="NVARCHAR(1000)"/>
+      <column name="CONTENT" type="LONGTEXT"/>
+      <column name="IMAGE_FILE_ID" type="BIGINT"/>
       <column name="ORDER" type="INT"/>
       <column name="TUTORIAL_ID" type="BIGINT">
         <constraints nullable="false"
                      foreignKeyName="FK_E_LEARNING_STEP_TUTORIAL_ID"
                      references="EXO_E_LEARNING_TUTORIAL(TUTORIAL_ID)" deleteCascade="true"/>
+      </column>
+    </createTable>
+    <modifySql dbms="mysql">
+      <append
+              value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+    </modifySql>
+  </changeSet>
+
+  <changeSet author="elearning" id="1.0.0-7">
+    <createTable tableName="EXO_E_LEARNING_ATTACHMENT">
+      <column name="ATTACHMENT_ID" type="BIGINT"
+              autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true"
+                     primaryKeyName="PK_ATTACHMENT_ID"/>
+      </column>
+      <column name="FULL_TITLE" type="NVARCHAR(1000)"/>
+      <column name="CREATED_DATE" type="TIMESTAMP"/>
+      <column name="ATTACHMENT_FILE_ID" type="BIGINT"/>
+      <column name="STEP_ID" type="BIGINT">
+        <constraints nullable="false"
+                     foreignKeyName="FK_E_LEARNING_ATTACHMENT_STEP_ID"
+                     references="EXO_E_LEARNING_STEP(STEP_ID)" deleteCascade="true"/>
       </column>
     </createTable>
     <modifySql dbms="mysql">

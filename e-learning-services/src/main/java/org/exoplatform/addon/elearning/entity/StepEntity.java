@@ -3,6 +3,8 @@ package org.exoplatform.addon.elearning.entity;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @ExoEntity
@@ -17,11 +19,14 @@ public class StepEntity {
   @Column(name = "TITLE")
   private String title;
 
-  @Column(name = "BODY", length = 2000)
-  private String body;
+  @Column(name = "CONTENT", length = 2000)
+  private String content;
 
-  @Column(name = "MEDIA")
-  private Long media;
+  @Column(name = "IMAGE_FILE_ID")
+  private Long imageFileId;
+
+  @Column(name = "MEDIA_LINK", length = 2000)
+  private String mediaLink;
 
   @Column(name = "ORDER")
   private int order;
@@ -30,16 +35,21 @@ public class StepEntity {
   @JoinColumn(name = "TUTORIAL_ID", nullable = false)
   private TutorialEntity tutorialEntity;
 
+  @OneToMany(mappedBy = "stepEntity", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  private List<AttachmentEntity> attachmentEntities = new ArrayList<>();
+
   public StepEntity() {
   }
 
-  public StepEntity(Long id, String title, String body, Long media, int order, TutorialEntity tutorialEntity) {
+  public StepEntity(Long id, String title, String content, Long imageFileId, String mediaLink, int order, TutorialEntity tutorialEntity, List<AttachmentEntity> attachmentEntities) {
     this.id = id;
     this.title = title;
-    this.body = body;
-    this.media = media;
+    this.content = content;
+    this.imageFileId = imageFileId;
+    this.mediaLink = mediaLink;
     this.order = order;
     this.tutorialEntity = tutorialEntity;
+    this.attachmentEntities = attachmentEntities;
   }
 
   public Long getId() {
@@ -50,10 +60,6 @@ public class StepEntity {
     this.id = id;
   }
 
-  public Long getMedia() {
-    return media;
-  }
-
   public String getTitle() {
     return title;
   }
@@ -62,16 +68,28 @@ public class StepEntity {
     this.title = title;
   }
 
-  public String getBody() {
-    return body;
+  public String getContent() {
+    return content;
   }
 
-  public void setBody(String body) {
-    this.body = body;
+  public void setContent(String content) {
+    this.content = content;
   }
 
-  public void setMedia(Long media) {
-    this.media = media;
+  public Long getImageFileId() {
+    return imageFileId;
+  }
+
+  public void setImageFileId(Long imageFileId) {
+    this.imageFileId = imageFileId;
+  }
+
+  public String getMediaLink() {
+    return mediaLink;
+  }
+
+  public void setMediaLink(String mediaLink) {
+    this.mediaLink = mediaLink;
   }
 
   public int getOrder() {
@@ -88,5 +106,13 @@ public class StepEntity {
 
   public void setTutorialEntity(TutorialEntity tutorialEntity) {
     this.tutorialEntity = tutorialEntity;
+  }
+
+  public List<AttachmentEntity> getAttachmentEntities() {
+    return attachmentEntities;
+  }
+
+  public void setAttachmentEntities(List<AttachmentEntity> attachmentEntities) {
+    this.attachmentEntities = attachmentEntities;
   }
 }
