@@ -26,15 +26,15 @@ import java.util.List;
 @Path("theme")
 @Produces(MediaType.APPLICATION_JSON)
 /* @RolesAllowed("users") */
-public class ThemeServiceRest implements ResourceContainer {
+public class ThemeRestService implements ResourceContainer {
 
-  private static final Log LOG = ExoLogger.getLogger(ThemeServiceRest.class);
+  private static final Log LOG = ExoLogger.getLogger(ThemeRestService.class);
 
   private ThemeService themeService;
 
   private SpaceService spaceService;
 
-  public ThemeServiceRest(ThemeService themeService, SpaceService spaceService) {
+  public ThemeRestService(ThemeService themeService, SpaceService spaceService) {
     this.themeService = themeService;
     this.spaceService = spaceService;
   }
@@ -67,7 +67,7 @@ public class ThemeServiceRest implements ResourceContainer {
                   theme.getSpaceName());
           return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        if (theme.getParentId() != null) {
+        if (theme.getParentId() != null && theme.getParentId() > 0) {
           Long parentId = theme.getParentId();
           Theme parent = themeService.getThemeById(parentId);
           if (!parent.canEdit(identity)) {

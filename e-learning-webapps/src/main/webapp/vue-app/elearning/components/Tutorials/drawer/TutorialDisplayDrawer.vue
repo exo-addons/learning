@@ -52,14 +52,13 @@ export default {
   },
   created() {
     this.$root.$on('makeShowTTuto', (id) => {
-      this.getTutoById(id);
+      this.getTutorialById(id);
       this.$refs.tutorialDisplayDrawer.open();
     });
   },
   methods: {
-
-    getTutoById(id) {
-      return this.$tutoService.getTutoById(id)
+    getTutorialById(id) {
+      return this.$tutoService.getTutorialById(id)
         .then((data) => {
           this.tuto = data;
         })

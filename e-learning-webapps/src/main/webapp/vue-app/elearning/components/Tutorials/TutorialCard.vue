@@ -24,7 +24,7 @@
           offset-y
           offset-x>
           <v-list class="card_menu_list" dense>
-            <v-list-item @click="updateTuto(tutorial.id)">
+            <v-list-item @click="updateTutorial(tutorial.id)">
               <v-list-item-title class="menu_list_items">
                 <v-icon class="tuto_menu_icon">mdi-pencil</v-icon>
                 <span class="tuto_menu_text" v-if="tutorial.status === 'DRAFT'">{{ $t('addon.elearning.tutorial.update.draft') }}</span>
@@ -55,7 +55,7 @@
                 <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.unarchive') }}</span>
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="deleteTuto(tutorial.id)">
+            <v-list-item @click="deleteTutorial(tutorial.id)">
               <v-list-item-title class="menu_list_items">
                 <v-icon class="tuto_menu_icon">mdi-delete</v-icon>
                 <span class="tuto_menu_text" v-if="tutorial.status === 'DRAFT'">{{ $t('addon.elearning.tutorial.delete.draft') }}</span>
@@ -129,11 +129,11 @@ export default {
   },
 
   methods: {
-    deleteTuto(id) {
-      this.$root.$emit('deleteTuto', id);
+    deleteTutorial(id) {
+      this.$root.$emit('deleteTutorial', id);
     },
-    updateTuto(id) {
-      this.$root.$emit('makeUpdateTuto', id);
+    updateTutorial(id) {
+      this.$root.$emit('makeUpdateTutorial', id);
     },
     showTuto(id) {
       this.$root.$emit('makeShowTTuto', id);

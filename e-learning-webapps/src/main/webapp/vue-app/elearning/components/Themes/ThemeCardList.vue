@@ -57,7 +57,6 @@ export default {
       default: '',
     },
   },
-
   data() {
     return {
       themesList: [],
@@ -70,7 +69,6 @@ export default {
       errors: [],
     };
   },
-
   watch: {
     keyword() {
       if (!this.keyword) {
@@ -88,7 +86,6 @@ export default {
       }
     },
   },
-
   created() {
     this.fillThemesList();
     this.$root.$on('openThemeDrawer', () => {
@@ -97,7 +94,6 @@ export default {
       }
     });
   },
-
   methods: {
     fillThemesList() {
       if (!this.parentTheme) {
@@ -107,7 +103,7 @@ export default {
       }      
     },
     findThemes() {
-      const isRoot = this.parentTheme ? false : true;
+      const isRoot = !this.parentTheme;
       return this.$themeService.getThemes(this.spaceName, isRoot, this.keyword, this.offset, this.limit).then(data => {
         this.themesCount = data.count;
         this.canUpdate = data.canUpdate;
@@ -123,7 +119,7 @@ export default {
       }).catch((e) => this.errors.push(e));
     },
     addCreatedTheme(addedTheme) {
-      this.themesList.push(addedTheme);
+      this.themesList.unshift(addedTheme);
       this.$refs.themeManagementDrawer.close();
     },
     openThemeDrawerForUpdate(theme) {

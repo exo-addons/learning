@@ -107,8 +107,7 @@ export default {
       type: Object,
       default: null
     },
-  },
-  
+  },  
   data() {
     return {
       add_steps: 1,
@@ -117,13 +116,6 @@ export default {
       themes: [],
     };
   },
-
-  watch: {
-    parentTheme() {
-      this.getThemes();
-    }
-  },
-
   computed: {
     isStepsComplete() {
       return this.tutorial && this.tutorial.title && this.tutorial.themeIds && this.tutorial.themeIds.length > 0;
@@ -132,42 +124,56 @@ export default {
       return this.tutorial && this.tutorial.title;
     }
   },
-
   methods: {
-    open() {
-      this.$refs.tutorialManagementDrawer.open();
-    },
     createOrUpdateTutorial() {
       if (!this.tutorial.id) {
-        return this.$tutoService.tutoPost(this.tutorial).then(() => {
-          this.$root.$emit('tutoCreated');
-        }).then(() => {
-          this.clear();
-          this.$refs.tutorialManagementDrawer.close();
-        }).catch((e) => this.errors.push(e));
+        let tutorialId;
+        return this.$tutoService.addTutorial(this.tutorial).then(addedTutorial => {
+          tutorialId = addedTutorial.id;
+          this.$emit('tutorialAdded', addedTutorial);
+          const tutorialIds = this.parentTheme.tutorialIds;
+          tutorialIds.push(addedTutorial.id);
+          const updatedParent = {
+            id: this.parentTheme.id,
+            name: this.parentTheme.name,
+            spaceName: this.parentTheme.spaceName,
+            managers: this.parentTheme.managers,
+            participators: this.parentTheme.participators,
+            parentId: this.parentTheme.parentId,
+            childrenIds: this.parentTheme.childrenIds,
+            lastModifiedDate: this.parentTheme.lastModifiedDate,
+            tutorialIds: tutorialIds,
+            creator: this.parentTheme.creator,
+          };
+          this.$root.$emit('parent-theme-updated', updatedParent);
+        }).catch((e) => this.errors.push(e)).finally(() => window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-editor?spaceId=${eXo.env.portal.spaceId}&tutorialId=${tutorialId}`, '_blank'));
       } else {
-        return this.$tutoService.tutoUpdate(this.tutorial).then(() => {
-          this.$root.$emit('tutoCreated');
-        }).then(() => {
-          this.clear();
-          this.$refs.tutorialManagementDrawer.close();
+        return this.$tutoService.updateTutorial(this.tutorial).then(updatedTutorial => {
+          this.$emit('tutorialUpdated', updatedTutorial);
         }).catch((e) => this.errors.push(e));
       }
-
     },
     getThemes() {
-      const isRoot = this.parentTheme ? false : true;
+      const isRoot = !this.parentTheme;
       return this.$themeService.getThemes(this.spaceName, isRoot, '', 0, 0).then((data) => {
         this.themes = data.themeList;
         this.tutorial.themeIds.push(this.parentTheme.id);
       }).catch((e) => this.errors.push(e));
+    },
+    open() {
+      this.getThemes();
+      this.$refs.tutorialManagementDrawer.open();
+    },
+    close() {
+      this.clear();
+      this.$refs.tutorialManagementDrawer.close();
     },
     clear() {
       this.tutorial.title = null;
       this.tutorial.description = null;
       this.tutorial.themes = [];
       this.add_steps = 1;
-    }
+    },
   }
 };
 

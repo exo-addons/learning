@@ -1,5 +1,7 @@
+import { eLearningConstans } from '../js/elearningConstants.js';
+
 export function getThemes(spaceName, isRoot, keyword, offset, limit) {
-  return fetch(`/portal/rest/theme/findThemes?spaceName=${spaceName}&isRoot=${isRoot}&q=${keyword}&offset=${offset}&limit=${limit}`, {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/theme/findThemes?spaceName=${spaceName}&isRoot=${isRoot}&q=${keyword}&offset=${offset}&limit=${limit}`, {
     method: 'GET',
     credentials: 'include',
   }).then((response) => {
@@ -12,7 +14,7 @@ export function getThemes(spaceName, isRoot, keyword, offset, limit) {
 }
 
 export function getChildThemes(spaceName, parentThemeId, keyword, offset, limit) {
-  return fetch(`/portal/rest/theme/getChildThemes?spaceName=${spaceName}&parentThemeId=${parentThemeId}&q=${keyword}&offset=${offset}&limit=${limit}`, {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/theme/getChildThemes?spaceName=${spaceName}&parentThemeId=${parentThemeId}&q=${keyword}&offset=${offset}&limit=${limit}`, {
     method: 'GET',
     credentials: 'include',
   }).then((response) => {
@@ -25,7 +27,7 @@ export function getChildThemes(spaceName, parentThemeId, keyword, offset, limit)
 }
 
 export function deleteTheme(deleteId) {
-  return fetch(`/portal/rest/theme/deleteTheme/${deleteId}`, {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/theme/deleteTheme/${deleteId}`, {
     method: 'DELETE',
     credentials: 'include',
   }).then(response => {
@@ -36,7 +38,7 @@ export function deleteTheme(deleteId) {
 }
 
 export function createTheme(theme) {
-  return fetch('/portal/rest/theme/addTheme', {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/theme/addTheme`, {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify(theme),
@@ -53,7 +55,7 @@ export function createTheme(theme) {
 }
 
 export function updateTheme(theme) {
-  return fetch('/portal/rest/theme/updateTheme', {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/theme/updateTheme`, {
     method: 'PUT',
     credentials: 'include',
     body: JSON.stringify(theme),

@@ -22,9 +22,9 @@ public class Theme implements Serializable {
 
   private String spaceName;
 
-  private Set<String> managers = new HashSet<>();
+  private List<String> managers = new ArrayList<>();
 
-  private Set<String> participators = new HashSet<>();
+  private List<String> participators = new ArrayList<>();
 
   private Long parentId;
 
@@ -33,10 +33,10 @@ public class Theme implements Serializable {
   private Long lastModifiedDate;
 
   private List<Long> tutorialIds = new ArrayList<>();
-  
+
   private String creator;
 
-  public Theme(String name, String spaceName, Set<String> managers, Set<String> participators, String creator) {
+  public Theme(String name, String spaceName, List<String> managers, List<String> participators, String creator) {
     this.name = name;
     this.spaceName = spaceName;
     this.managers = managers;
@@ -48,11 +48,11 @@ public class Theme implements Serializable {
     return hasPermission(user, getManagers());
   }
 
-  private boolean hasPermission(Identity user, Set<String> permissions) {
+  private boolean hasPermission(Identity user, List<String> permissions) {
     if (permissions.contains(user.getUserId())) {
       return true;
     } else {
-      Set<MembershipEntry> memberships = new HashSet<MembershipEntry>();
+      Set<MembershipEntry> memberships = new HashSet<>();
       for (String per : permissions) {
         MembershipEntry entry = MembershipEntry.parse(per);
         if (entry != null) {

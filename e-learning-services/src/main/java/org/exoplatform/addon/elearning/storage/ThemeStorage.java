@@ -5,8 +5,8 @@ import org.exoplatform.addon.elearning.dao.TutorialDao;
 import org.exoplatform.addon.elearning.dto.Theme;
 import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.storage.mapper.ThemeMapper;
+import org.exoplatform.commons.api.persistence.ExoTransactional;
 
-import java.util.HashSet;
 import java.util.List;
 
 public class ThemeStorage {
@@ -18,7 +18,13 @@ public class ThemeStorage {
     this.tutorialDao = tutorialDao;
   }
 
+  @ExoTransactional
   public Theme createTheme(Theme theme) {
+    if (theme.getParentId() != null && theme.getParentId() > 0) {
+      ThemeEntity parentTheme = themeDao.find(theme.getParentId());
+      parentTheme.setLastModifiedDate(System.currentTimeMillis());
+      themeDao.update(parentTheme);
+    }
     ThemeEntity themeEntity = themeDao.create(ThemeMapper.convertThemeDTOToEntity(theme, themeDao, tutorialDao));
     return ThemeMapper.convertThemeEntityToDTO(themeEntity);
   }
@@ -40,17 +46,17 @@ public class ThemeStorage {
 
   public List<Theme> getAllThemes() {
     List<ThemeEntity> themeEntities = themeDao.findAll();
-    return ThemeMapper.convertThemeEntitiesToDTOs(new HashSet<>(themeEntities), true);
+    return ThemeMapper.convertThemeEntitiesToDTOs(themeEntities, true);
   }
 
   public List<Theme> findAllThemesByName(String themeName) {
     List<ThemeEntity> themeEntities = themeDao.findAllThemesByName(themeName);
-    return ThemeMapper.convertThemeEntitiesToDTOs(new HashSet<>(themeEntities), true);
+    return ThemeMapper.convertThemeEntitiesToDTOs(themeEntities, true);
   }
 
   public List<Theme> findThemesBySpaceName(String spaceName, boolean isRoot, String query, int offset, int limit) {
     List<ThemeEntity> themeEntities = themeDao.findThemesBySpaceName(spaceName, isRoot, query, offset, limit);
-    return ThemeMapper.convertThemeEntitiesToDTOs(new HashSet<>(themeEntities), true);
+    return ThemeMapper.convertThemeEntitiesToDTOs(themeEntities, true);
   }
 
   public long countFoundThemesBySpaceName(String spaceName, boolean isRoot, String query) {
@@ -63,6 +69,6 @@ public class ThemeStorage {
 
   public List<Theme> retrieveChildThemes(long parentThemeId, String query, int offset, int limit) {
     List<ThemeEntity> themeEntities = themeDao.retrieveChildThemes(parentThemeId, query, offset, limit);
-    return ThemeMapper.convertThemeEntitiesToDTOs(new HashSet<>(themeEntities), true);
+    return ThemeMapper.convertThemeEntitiesToDTOs(themeEntities, true);
   }
 }

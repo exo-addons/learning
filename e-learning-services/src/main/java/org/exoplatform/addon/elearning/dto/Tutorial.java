@@ -24,6 +24,8 @@ public class Tutorial implements Serializable {
 
   private Date createdDate;
 
+  private Long lastModifiedDate;
+
   private List<Long> themeIds = new ArrayList<Long>();
 
   private Status status;

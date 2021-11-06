@@ -24,10 +24,10 @@ public class TutorialDao extends GenericDAOJPAImpl<TutorialEntity, Long> {
     }
   }
 
-  public List<TutorialEntity> findTutorialsByName(String tutoTitle, Long id) {
+  public List<TutorialEntity> findTutorialsByName(String tutorialTitle, Long id) {
     TypedQuery<TutorialEntity> q = getEntityManager().createNamedQuery("TutorialEntity.findTutorialsByName", TutorialEntity.class);
     q.setParameter("id", id);
-    q.setParameter("tutoTitle", tutoTitle);
+    q.setParameter("tutorialTitle", tutorialTitle);
     try {
       return q.getResultList();
     } catch (NoResultException e) {
