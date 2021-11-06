@@ -115,6 +115,7 @@
       </column>
       <column name="TITLE" type="NVARCHAR(1000)"/>
       <column name="CONTENT" type="LONGTEXT"/>
+      <column name="IMAGE_FILE_ID" type="BIGINT"/>
       <column name="ORDER" type="INT"/>
       <column name="TUTORIAL_ID" type="BIGINT">
         <constraints nullable="false"

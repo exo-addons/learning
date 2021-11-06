@@ -24,6 +24,7 @@ public class StepMapper {
     step.setId(stepEntity.getId());
     step.setTitle(stepEntity.getTitle());
     step.setContent(stepEntity.getContent());
+    step.setImageFileId(stepEntity.getImageFileId());
     step.setMediaLink(stepEntity.getMediaLink());
     step.setOrder(stepEntity.getOrder());
     step.setTutorialId(stepEntity.getTutorialEntity().getId());
@@ -40,6 +41,7 @@ public class StepMapper {
     stepEntity.setId(step.getId());
     stepEntity.setTitle(step.getTitle());
     stepEntity.setContent(step.getContent());
+    stepEntity.setImageFileId(step.getImageFileId());
     stepEntity.setMediaLink(step.getMediaLink());
     stepEntity.setOrder(step.getOrder());
     TutorialEntity tutorialEntity = tutorialDao.find(step.getTutorialId());

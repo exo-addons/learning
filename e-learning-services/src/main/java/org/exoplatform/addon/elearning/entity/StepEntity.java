@@ -22,6 +22,9 @@ public class StepEntity {
   @Column(name = "CONTENT", length = 2000)
   private String content;
 
+  @Column(name = "IMAGE_FILE_ID")
+  private Long imageFileId;
+
   @Column(name = "MEDIA_LINK", length = 2000)
   private String mediaLink;
 
@@ -38,10 +41,11 @@ public class StepEntity {
   public StepEntity() {
   }
 
-  public StepEntity(Long id, String title, String content, String mediaLink, int order, TutorialEntity tutorialEntity, List<AttachmentEntity> attachmentEntities) {
+  public StepEntity(Long id, String title, String content, Long imageFileId, String mediaLink, int order, TutorialEntity tutorialEntity, List<AttachmentEntity> attachmentEntities) {
     this.id = id;
     this.title = title;
     this.content = content;
+    this.imageFileId = imageFileId;
     this.mediaLink = mediaLink;
     this.order = order;
     this.tutorialEntity = tutorialEntity;
@@ -70,6 +74,14 @@ public class StepEntity {
 
   public void setContent(String content) {
     this.content = content;
+  }
+
+  public Long getImageFileId() {
+    return imageFileId;
+  }
+
+  public void setImageFileId(Long imageFileId) {
+    this.imageFileId = imageFileId;
   }
 
   public String getMediaLink() {

@@ -19,9 +19,11 @@ public class Step implements Serializable {
 
   private String mediaLink;
 
+  private Long imageFileId;
+
   private int order;
 
   private Long tutorialId;
-  
+
   private List<Attachment> attachments;
 }
