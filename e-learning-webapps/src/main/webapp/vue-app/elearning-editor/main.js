@@ -33,6 +33,6 @@ export function init() {
         template: `<elearning-editor id="${appId}" />`,
         i18n,
         vuetify,
-      }).$mount('#elearning_app');
+      }).$mount('#elearningEditor_app');
     });
 }

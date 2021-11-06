@@ -1,5 +1,7 @@
 <template>
-  <h1>Hello Elearning Editor !</h1>
+  <div>
+    <h1>Hello Elearning Editor !</h1>
+  </div>
 </template>
 
 <script>
