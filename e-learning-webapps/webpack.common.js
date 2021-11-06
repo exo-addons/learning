@@ -5,7 +5,8 @@ let config = {
   // set the entry point of the application
   // can use multiple entry
   entry: {
-    elearning: './src/main/webapp/vue-app/main.js'
+    elearning: './src/main/webapp/vue-app/elearning/main.js',
+    elearningEditor:'./src/main/webapp/vue-app/elearning-editor/main.js'
   },
   output: {
     filename: 'js/[name].bundle.js',
