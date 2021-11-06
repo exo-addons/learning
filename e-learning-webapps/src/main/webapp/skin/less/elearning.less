@@ -2,16 +2,15 @@
 @import "./mixins.less";
 
 #elearning_app {
-  background: @primaryBackground !important;
+  min-height: 86vh;
   padding: 20px;
+  
+  .v-application--wrap {
+    background-color: @baseBackgroundDefault;
+  }
   
   .controls {
     position: relative;
-  }
-
-  .snackbar_btn.v-btn {
-    color: @secondaryColor !important;
-    background: transparent !important;
   }
 
   .exo_cancel_btn.v-btn {
@@ -29,10 +28,8 @@
     max-height: max-content;
 
     #themes_card_list {
-      min-height: 100%;
       padding:10px;
       position: relative;
-      background: @baseBackgroundDefault !important;
 
       .container {
         padding-left: 0px !important;
@@ -272,7 +269,6 @@
     }
 
     #tutos_card_list {
-      min-height: 100%;
       padding:10px;
       position: relative;
       background: @baseBackgroundDefault !important;
@@ -298,6 +294,7 @@
             position: relative;
 
             .tuto_card_toolbar {
+              justify-content: space-between;
               margin-top: 10px;
               position: relative;
 
@@ -349,6 +346,7 @@
             position: relative;
 
             .tuto_card_toolbar {
+              justify-content: space-between;
               margin-top: 10px;
               position: relative;
 

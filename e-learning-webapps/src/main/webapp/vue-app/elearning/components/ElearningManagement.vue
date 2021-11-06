@@ -24,6 +24,9 @@ export default {
   },
 
   created() {
+    this.$root.$on('displayThemeContent', theme => {
+      this.parentTheme = theme;
+    });
     this.$root.$on('displayRootThemeContent', (parentTheme, space, canUpdate) => {
       this.displayThemesBoard = false;
       this.parentTheme = parentTheme;

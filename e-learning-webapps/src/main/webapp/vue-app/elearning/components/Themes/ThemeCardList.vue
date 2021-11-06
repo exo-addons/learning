@@ -1,7 +1,5 @@
 <template>
-  <v-app
-    id="themes_card_list"
-    flat>
+  <div id="themes_card_list">
     <v-container>
       <v-row class="theme_cards_row border-box-sizing">
         <v-col
@@ -36,7 +34,7 @@
       :ok-label="$t('addon.elearning.tutorial.confirm')"
       :cancel-label="$t('addon.elearning.tutorial.cancel')"
       @ok="deleteTheme" />
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -120,6 +118,7 @@ export default {
     getThemeChildren() {
       return this.$themeService.getChildThemes(this.spaceName, this.parentTheme.id, this.keyword, this.offset, this.limit).then(data => {
         this.themesCount = data.count;
+        this.canUpdate = data.canUpdate;
         this.themesList = data.themeList;
       }).catch((e) => this.errors.push(e));
     },

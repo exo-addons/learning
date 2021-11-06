@@ -1,7 +1,5 @@
 <template>
-  <v-app
-    id="tutorial_move"
-    flat>
+  <div id="tutorial_move">
     <exo-drawer 
       id="tutorialMoveDrawer"
       ref="tutorialMoveDrawer"
@@ -32,7 +30,7 @@
         <v-btn class="exo_cancel_btn" @click="clear">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
       </template>
     </exo-drawer>
-  </v-app>
+  </div>
 </template>
 <script>
 export default {

@@ -1,5 +1,5 @@
 <template>
-  <v-app id="tutorial_dashboard_toolbar">
+  <div id="tutorial_dashboard_toolbar">
     <v-toolbar
       id="TutorialDashboardToolbar"
       flat
@@ -49,7 +49,7 @@
         </div>
       </v-scale-transition>
     </v-toolbar>
-  </v-app>
+  </div>
 </template>
 
 <script>
