@@ -12,7 +12,6 @@ import ThemeCard from './components/Themes/ThemeCard.vue';
 import ThemeCardList from './components/Themes/ThemeCardList.vue';
 import ThemeDashboardToolbar from './components/Themes/ThemeDashboardToolbar.vue';
 import ThemeManagementDrawer from './components/Themes/drawer/ThemeManagementDrawer.vue';
-import ThemeBreadcrumb from './components/Themes/ThemeBreadcrumb.vue';
 
 const components = {
   'elearning-management': ElearningManagement,
@@ -29,7 +28,6 @@ const components = {
   'theme-card-list': ThemeCardList,
   'theme-dashboard-toolbar': ThemeDashboardToolbar,
   'theme-management-drawer': ThemeManagementDrawer,
-  'theme-breadcrumb': ThemeBreadcrumb,
 };
 
 for (const key in components) {
