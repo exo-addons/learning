@@ -146,7 +146,8 @@ export default {
             creator: this.parentTheme.creator,
           };
           this.$root.$emit('parent-theme-updated', updatedParent);
-        }).catch((e) => this.errors.push(e)).finally(() => window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-editor?spaceId=${eXo.env.portal.spaceId}&tutorialId=${tutorialId}`, '_blank'));
+        }).catch((e) => this.errors.push(e))
+          .finally(() => window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-editor?spaceId=${eXo.env.portal.spaceId}&themeId=${this.parentTheme.id}&tutorialId=${tutorialId}`, '_blank'));
       } else {
         return this.$tutoService.updateTutorial(this.tutorial).then(updatedTutorial => {
           this.$emit('tutorialUpdated', updatedTutorial);
