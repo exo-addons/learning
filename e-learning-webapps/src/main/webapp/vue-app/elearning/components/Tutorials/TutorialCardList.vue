@@ -24,7 +24,9 @@
         :tutorial="tutorialToUpdate"
         :parent-theme="parentTheme"
         :space-name="space && space.prettyName"
-        :space="space" />
+        :space="space"
+        @tutorialAdded="addCreatedTutorial"
+        @tutorialUpdated="updateTutorial" />
     </template> 
   </div>
 </template>
@@ -95,7 +97,7 @@ export default {
         this.getTutorialsByTheme();
       }
       if (this.keyword) {
-        this.getTutosByName();
+        this.getTutorialsByName();
       }
 
     }
@@ -108,42 +110,49 @@ export default {
       }
     });
     
-    
-    this.$root.$on('tutoCreated', () => {
-      this.getTutorialsByTheme(this.themeId);
-    });
-    this.$root.$on('tutoUpdated', () => {
-      this.getTutorialsByTheme(this.themeId);
-    });
-    this.$root.$on('tutoMoved', () => {
-      this.getTutorialsByTheme(this.themeId);
-    });
-    this.$root.$on('tutoDeleted', () => {
-      this.getTutorialsByTheme(this.themeId);
-    });
-    this.$root.$on('makeDupTuto', (id) => {
-      this.getTutoDup(id);
-    });
-    this.$root.$on('makeArchTuto', (id) => {
-      this.getTutoArch(id);
-    });
-    this.$root.$on('makeUnarchTuto', (id) => {
-      this.getTutoUnarch(id);
-    });
+    // this.$root.$on('tutorialUpdated', () => {
+    //   this.getTutorialsByTheme(this.themeId);
+    // });
+    // this.$root.$on('tutoMoved', () => {
+    //   this.getTutorialsByTheme(this.themeId);
+    // });
+    // this.$root.$on('tutoDeleted', () => {
+    //   this.getTutorialsByTheme(this.themeId);
+    // });
+    // this.$root.$on('makeDupTuto', (id) => {
+    //   this.getTutoDup(id);
+    // });
+    // this.$root.$on('makeArchTuto', (id) => {
+    //   this.getTutoArch(id);
+    // });
+    // this.$root.$on('makeUnarchTuto', (id) => {
+    //   this.getTutoUnarch(id);
+    // });
   },
   methods: {
+    addCreatedTutorial(addedTutorial) {
+      this.tutorialsList.unshift(addedTutorial);
+      this.$refs.tutorialManagementDrawer.close();
+    },
+    updateTutorial(updatedTutorial) {
+      const index = this.tutorialsList.findIndex(tutorial => tutorial.id === updatedTutorial.id);
+      this.tutorialsList.splice(index, 1, updatedTutorial);
+      this.tutorialToUpdate = null;
+      this.$refs.tutorialManagementDrawer.close();
+
+    },
     getTutorialsByTheme() {
       return this.$tutoService.getTutorialsByTheme(this.parentTheme.id, this.offset, this.limit).then(data => {
         this.tutorialsList = data.tutorialList;
       }).catch((e) => this.errors.push(e));
     },
-    getTutosByName() {
-      return this.$tutoService.getTutosByName(this.parentTheme.id, this.keyword).then((data) => {
+    getTutorialsByName() {
+      return this.$tutoService.getTutorialsByName(this.parentTheme.id, this.keyword).then((data) => {
         this.tutorialsList = data.tutorialList;
       }).catch((e) => this.errors.push(e));
     },
     getTutoDup(id) {
-      return this.$tutoService.getTutoById(id).then((data) => {
+      return this.$tutoService.getTutorialById(id).then((data) => {
         this.dupTuto = data;
         this.newTitle = this.$t('addon.elearning.tutorial.duplicate.text');
         this.tutoD.title = this.newTitle + this.dupTuto.title;
@@ -155,13 +164,13 @@ export default {
       }).catch((e) => this.errors.push(e));
     },
     duplicateTuto() {
-      return this.$tutoService.tutoPost(this.tutoD).then(() => {
+      return this.$tutoService.addTutorial(this.tutoD).then(() => {
         this.$root.$emit('tutoDuplicated');
         this.getTutorialsByTheme();
       }).catch((e) => this.errors.push(e));
     },
     getTutoArch(id) {
-      return this.$tutoService.getTutoById(id).then((data) => {
+      return this.$tutoService.getTutorialById(id).then((data) => {
         this.archTurto = data;
         this.tutoA.id = this.archTurto.id;
         this.tutoA.title = this.archTurto.title;
@@ -173,14 +182,14 @@ export default {
       }).catch((e) => this.errors.push(e));
     },
     archiveTuto() {
-      return this.$tutoService.tutoUpdate(this.tutoA).then(() => {
+      return this.$tutoService.updateTutorial(this.tutoA).then(() => {
         this.$root.$emit('tutoArchived');
       }).then(() => {
         this.getTutorialsByTheme();
       }).catch((e) => this.errors.push(e));
     },
     getTutoUnarch(id) {
-      return this.$tutoService.getTutoById(id).then((data) => {
+      return this.$tutoService.getTutorialById(id).then((data) => {
         this.archTurto = data;
         this.tutoA.id = this.archTurto.id;
         this.tutoA.title = this.archTurto.title;
@@ -192,7 +201,7 @@ export default {
       }).catch((e) => this.errors.push(e));
     },
     unarchiveTuto() {
-      return this.$tutoService.tutoUpdate(this.tutoA).then(() => {
+      return this.$tutoService.updateTutorial(this.tutoA).then(() => {
         this.$root.$emit('tutoUnarchived');
       }).then(() => {
         this.getTutorialsByTheme();

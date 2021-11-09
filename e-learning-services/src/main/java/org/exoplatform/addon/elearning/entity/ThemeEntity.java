@@ -3,8 +3,8 @@ package org.exoplatform.addon.elearning.entity;
 import org.exoplatform.commons.api.persistence.ExoEntity;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @ExoEntity
@@ -12,7 +12,7 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(
                 name = "ThemeEntity.findAllThemesByName",
-                query = "SELECT t FROM ThemeEntity t where LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%'))"
+                query = "SELECT t FROM ThemeEntity t where LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%')) order by t.lastModifiedDate DESC "
         ),
         @NamedQuery(
                 name = "ThemeEntity.countParentThemeChildren",
@@ -20,7 +20,7 @@ import java.util.Set;
         ),
         @NamedQuery(
                 name = "ThemeEntity.retrieveChildThemes",
-                query = "SELECT t FROM ThemeEntity t where t.parent.id = :id"
+                query = "SELECT t FROM ThemeEntity t where t.parent.id = :id order by t.lastModifiedDate DESC "
         ),
         @NamedQuery(
                 name = "ThemeEntity.countSearchedParentThemeChildren",
@@ -28,7 +28,7 @@ import java.util.Set;
         ),
         @NamedQuery(
                 name = "ThemeEntity.retrieveSearchedChildThemes",
-                query = "SELECT t FROM ThemeEntity t where t.parent.id = :id AND LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%'))"
+                query = "SELECT t FROM ThemeEntity t where t.parent.id = :id AND LOWER(t.name) LIKE LOWER(CONCAT('%', :themeName, '%')) order by t.lastModifiedDate DESC "
         ),
         @NamedQuery(
                 name = "ThemeEntity.findThemesByMemberships",
@@ -56,27 +56,27 @@ public class ThemeEntity {
   @CollectionTable(name = "EXO_E_LEARNING_THEME_MANAGERS",
           joinColumns = @JoinColumn(name = "THEME_ID"))
   @Column(name = "MANAGERS")
-  private Set<String> managers = new HashSet<>();
+  private List<String> managers = new ArrayList<>();
 
   @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "EXO_E_LEARNING_THEME_PARTICIPATORS",
           joinColumns = @JoinColumn(name = "THEME_ID"))
   @Column(name = "PARTICIPATORS")
-  private Set<String> participators = new HashSet<>();
+  private List<String> participators = new ArrayList<>();
 
   @ManyToOne(optional = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "PARENT_THEME_ID")
   private ThemeEntity parent;
 
   @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-  private Set<ThemeEntity> children = new HashSet<>();
+  private List<ThemeEntity> children = new ArrayList<>();
 
   @Column(name = "LAST_MODIFIED_DATE")
   private Long lastModifiedDate;
 
   @ManyToMany(mappedBy = "themeEntities", fetch = FetchType.LAZY)
   @Column(name = "TUTORIAL_ID")
-  private Set<TutorialEntity> tutorialEntities = new HashSet<>();
+  private List<TutorialEntity> tutorialEntities = new ArrayList<>();
 
   @Column(name = "CREATOR")
   private String creator;
@@ -84,8 +84,8 @@ public class ThemeEntity {
   public ThemeEntity() {
   }
 
-  public ThemeEntity(Long id, String name, String spaceName, Set<String> managers, Set<String> participators, ThemeEntity parent, Set<ThemeEntity> children,
-                     Long lastModifiedDate, Set<TutorialEntity> tutorialEntities, String creator) {
+  public ThemeEntity(Long id, String name, String spaceName, List<String> managers, List<String> participators, ThemeEntity parent, List<ThemeEntity> children,
+                     Long lastModifiedDate, List<TutorialEntity> tutorialEntities, String creator) {
     this.id = id;
     this.name = name;
     this.spaceName = spaceName;
@@ -122,19 +122,19 @@ public class ThemeEntity {
     this.spaceName = spaceName;
   }
 
-  public Set<String> getManagers() {
+  public List<String> getManagers() {
     return managers;
   }
 
-  public void setManagers(Set<String> managers) {
+  public void setManagers(List<String> managers) {
     this.managers = managers;
   }
 
-  public Set<String> getParticipators() {
+  public List<String> getParticipators() {
     return participators;
   }
 
-  public void setParticipators(Set<String> participators) {
+  public void setParticipators(List<String> participators) {
     this.participators = participators;
   }
 
@@ -146,11 +146,11 @@ public class ThemeEntity {
     this.parent = parent;
   }
 
-  public Set<ThemeEntity> getChildren() {
+  public List<ThemeEntity> getChildren() {
     return children;
   }
 
-  public void setChildren(Set<ThemeEntity> children) {
+  public void setChildren(List<ThemeEntity> children) {
     this.children = children;
   }
 
@@ -162,7 +162,7 @@ public class ThemeEntity {
     this.lastModifiedDate = lastModifiedDate;
   }
 
-  public Set<TutorialEntity> getTutorialEntities() {
+  public List<TutorialEntity> getTutorialEntities() {
     return tutorialEntities;
   }
 

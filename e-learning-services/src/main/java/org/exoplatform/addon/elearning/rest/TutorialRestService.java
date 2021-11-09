@@ -22,37 +22,46 @@ import java.util.List;
 @Path("tutorial")
 @Produces(MediaType.APPLICATION_JSON)
 /* @RolesAllowed("users") */
-public class TutorialServiceRest implements ResourceContainer {
+public class TutorialRestService implements ResourceContainer {
 
-  private static final Log LOG = ExoLogger.getLogger(TutorialServiceRest.class);
+  private static final Log LOG = ExoLogger.getLogger(TutorialRestService.class);
 
   private TutorialService tutorialService;
 
-  public TutorialServiceRest(TutorialService tutorialService) {
+  public TutorialRestService(TutorialService tutorialService) {
     this.tutorialService = tutorialService;
   }
 
   @POST
-  @Path("/addTuto")
-  /* @RolesAllowed("users") */
-  public Response addTutorial(Tutorial tuto) {
+  @Path("/addTutorial")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Adds a tutorial", httpMethod = "POST", response = Response.class, notes = "This Adds a tutorial")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response addTutorial(Tutorial tutorial) {
     try {
       String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
-      tuto.setAuthor(currentUser);
-      tuto = tutorialService.createTutorial(tuto);
+      tutorial.setAuthor(currentUser);
+      tutorial = tutorialService.createTutorial(tutorial);
 
     } catch (Exception e) {
-      LOG.error("Could not createTutorial Tutorial", e);
+      LOG.error("Could not create Tutorial:", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
-    return Response.status(Response.Status.OK).entity(tuto).build();
+    return Response.ok(tutorial, MediaType.APPLICATION_JSON).build();
 
   }
 
   @DELETE
-  @Path("/deleteTuto/{id}")
-  /* @RolesAllowed("users") */
-  public Response deleteTuto(@PathParam("id") Long id) {
+  @Path("/deleteTutorial/{id}")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Delete tutorial", httpMethod = "DELETE", response = Response.class, notes = "This deletes the tutorial", consumes = "application/json")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Tutorial deleted"),
+          @ApiResponse(code = 400, message = "Invalid query input"),
+          @ApiResponse(code = 401, message = "User not authorized to delete the Project"),
+          @ApiResponse(code = 500, message = "Internal server error")})
+  public Response deleteTutorial(@PathParam("id") Long id) {
 
     try {
       tutorialService.deleteTutorial(id);
@@ -65,19 +74,23 @@ public class TutorialServiceRest implements ResourceContainer {
   }
 
   @PUT
-  @Path("/updateTuto")
-  /* @RolesAllowed("users") */
-  public Response updateTuto(Tutorial tuto) {
+  @Path("/updateTutorial")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Update tutorial", httpMethod = "PUT", response = Response.class, notes = "This Update Tutorial info")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response updateTutorial(Tutorial tutorial) {
 
     try {
-      tuto = tutorialService.updateTutorial(tuto);
+      tutorial = tutorialService.updateTutorial(tutorial);
 
     } catch (Exception e) {
 
       LOG.error("Could not update Tutorial", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
-    return Response.status(Response.Status.OK).entity("Tutorial with id " + tuto.getId() + " Updated").build();
+    return Response.status(Response.Status.OK).entity("Tutorial with id " + tutorial.getId() + " Updated").build();
   }
 
   @GET
@@ -110,21 +123,25 @@ public class TutorialServiceRest implements ResourceContainer {
   }
 
   @GET
-  @Path("/getTutosByName/{id}/{tutoTitle}")
-  /* @RolesAllowed("users") */
-  public Response findTutosByName(@PathParam("id") Long id,
-                                  @PathParam("tutoTitle") String tutoTitle,
-                                  @ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
-                                  @ApiParam(value = "Limit", required = false, defaultValue = "-1") @QueryParam("limit") int limit) {
-    List<Tutorial> tutos;
+  @Path("/getTutorialsByName/{id}/{tutorialTitle}")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Search Tutorial by name.", httpMethod = "GET", response = Response.class, notes = "This returns Tutorials by name")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response findTutorialsByName(@PathParam("id") Long id,
+                                      @PathParam("tutorialTitle") String tutorialTitle,
+                                      @ApiParam(value = "Offset", required = false, defaultValue = "0") @QueryParam("offset") int offset,
+                                      @ApiParam(value = "Limit", required = false, defaultValue = "-1") @QueryParam("limit") int limit) {
+    List<Tutorial> tutorials;
     try {
-      tutos = tutorialService.findTutorialsByName(tutoTitle, id, offset, limit);
+      tutorials = tutorialService.findTutorialsByName(tutorialTitle, id, offset, limit);
 
     } catch (Exception e) {
-      LOG.error("Could not get all Tutorials by The Name {}", tutoTitle, e);
+      LOG.error("Could not get all Tutorials by The Name {}", tutorialTitle, e);
       return Response.serverError().entity(e.getMessage()).build();
     }
-    return Response.ok(tutos, MediaType.APPLICATION_JSON).build();
+    return Response.ok(tutorials, MediaType.APPLICATION_JSON).build();
 
   }
 

@@ -1,7 +1,9 @@
 import ElearningEditor from './components/ElearningEditor.vue';
+import StepDashboard from './components/Steps/StepDashboard.vue';
 
 const components = {
   'elearning-editor': ElearningEditor,
+  'step-dashboard': StepDashboard,
 };
 
 for (const key in components) {

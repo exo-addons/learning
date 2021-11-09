@@ -25,7 +25,7 @@
       <column name="PARENT_THEME_ID" type="BIGINT">
         <constraints foreignKeyName="FK_PARENT_THEME_ID" references="EXO_E_LEARNING_THEME(THEME_ID)" nullable="true"/>
       </column>
-      <column name="LAST_MODIFIED_DATE" type="BIGINT"></column>
+      <column name="LAST_MODIFIED_DATE" type="BIGINT"/>
     </createTable>
     <modifySql dbms="mysql">
       <append
@@ -77,6 +77,7 @@
       <column name="DESCRIPTION" type="NVARCHAR(2000)"/>
       <column name="AUTHOR" type="NVARCHAR(2000)"/>
       <column name="CREATED_DATE" type="TIMESTAMP"/>
+      <column name="LAST_MODIFIED_DATE" type="BIGINT"/>
       <column name="STATUS" type="INTEGER" defaultValue="0"/>
     </createTable>
     <modifySql dbms="mysql">

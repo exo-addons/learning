@@ -23,7 +23,7 @@
       <template slot="footer">
         <v-btn
           class="tuto_drawer_btn_move"
-          @click="tutoUpdate"
+          @click="updateTutorial"
           :disabled="!isThemeSelected">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
@@ -36,7 +36,7 @@
 export default {
   data() {
     return {
-      tutoId: null,
+      tutorialId: null,
       tutoU: null,
       errors: [],
       themes: [],
@@ -50,24 +50,20 @@ export default {
       }
     };
   },
-
   computed: {
     isThemeSelected() {
       return this.tutoUp.themeIds.length > 0;
     }
   },
-
   created() {
     this.$root.$on('makeMoveTuto', (id) => {
       this.$refs.tutorialMoveDrawer.open();
       this.getTutoU(id);
     });
   },
-
   methods: {
-
-    tutoUpdate() {
-      return this.$tutoService.tutoUpdate(this.tutoUp)
+    updateTutorial() {
+      return this.$tutoService.updateTutorial(this.tutoUp)
         .then(() => {
           this.$root.$emit('tutoMoved');
         })
@@ -78,7 +74,7 @@ export default {
     },
 
     getTutoU(id) {
-      return this.$tutoService.getTutoById(id)
+      return this.$tutoService.getTutorialById(id)
         .then((data) => {
           this.tutoU = data;
           this.tutoUp.id = this.tutoU.id;

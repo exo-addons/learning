@@ -6,7 +6,9 @@ import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.entity.TutorialEntity;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class TutorialMapper {
@@ -22,6 +24,7 @@ public class TutorialMapper {
     Tutorial tutorial = new Tutorial();
     tutorial.setAuthor(tutorialEntity.getAuthor());
     tutorial.setCreatedDate(new Date(tutorialEntity.getCreatedDate().getTime()));
+    tutorial.setLastModifiedDate(tutorialEntity.getLastModifiedDate());
     tutorial.setId(tutorialEntity.getId());
     tutorial.setStatus(tutorialEntity.getStatus());
     tutorial.setDescription(tutorialEntity.getDescription());
@@ -31,7 +34,7 @@ public class TutorialMapper {
     return tutorial;
   }
 
-  public static List<Tutorial> convertTutorialsToDTOs(Set<TutorialEntity> tutorialEntities) {
+  public static List<Tutorial> convertTutorialsToDTOs(List<TutorialEntity> tutorialEntities) {
     if (tutorialEntities == null) {
       return new ArrayList<>();
     }
@@ -46,25 +49,22 @@ public class TutorialMapper {
     TutorialEntity tutorialEntity = new TutorialEntity();
     tutorialEntity.setAuthor(tutorial.getAuthor());
     tutorialEntity.setCreatedDate(tutorial.getCreatedDate() != null ? new Timestamp(tutorial.getCreatedDate().getTime()) : new Timestamp(System.currentTimeMillis()));
+    tutorialEntity.setLastModifiedDate(tutorial.getLastModifiedDate());
     tutorialEntity.setId(tutorial.getId() == null || tutorial.getId().equals(0L) ? null : tutorial.getId());
     tutorialEntity.setStatus(tutorial.getStatus());
     tutorialEntity.setDescription(tutorial.getDescription());
     tutorialEntity.setTitle(tutorial.getTitle());
-    Set<ThemeEntity> themeEntities = new HashSet<>();
     for (Long themeId : tutorial.getThemeIds()) {
       tutorialEntity.addThemeEntity(themeDao.find(themeId));
-    }
-    
-    for (ThemeEntity themeEntity : themeEntities) {
     }
     return tutorialEntity;
   }
 
-  public static Set<TutorialEntity> convertTutorialsToEntities(List<Tutorial> tutorials, ThemeDao themeDao) {
+  public static List<TutorialEntity> convertTutorialsToEntities(List<Tutorial> tutorials, ThemeDao themeDao) {
     if (tutorials == null) {
-      return new HashSet<>();
+      return new ArrayList<>();
     }
-    return new HashSet<>(tutorials.stream().map(tutorial -> convertTutorialToEntity(tutorial, themeDao)).collect(Collectors.toList()));
+    return tutorials.stream().map(tutorial -> convertTutorialToEntity(tutorial, themeDao)).collect(Collectors.toList());
   }
 
 }

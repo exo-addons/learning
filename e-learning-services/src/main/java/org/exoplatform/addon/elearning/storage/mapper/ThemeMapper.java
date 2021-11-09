@@ -7,9 +7,7 @@ import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.entity.TutorialEntity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ThemeMapper {
@@ -38,7 +36,7 @@ public class ThemeMapper {
     return theme;
   }
 
-  public static List<Theme> convertThemeEntitiesToDTOs(Set<ThemeEntity> themeEntities, boolean withChildren) {
+  public static List<Theme> convertThemeEntitiesToDTOs(List<ThemeEntity> themeEntities, boolean withChildren) {
     if (themeEntities == null) {
       return new ArrayList<>();
     }
@@ -71,7 +69,7 @@ public class ThemeMapper {
     themeEntity.setManagers(theme.getManagers());
     themeEntity.setParticipators(theme.getParticipators());
     if (theme.getChildrenIds() != null && !theme.getChildrenIds().isEmpty()) {
-      Set<ThemeEntity> children = new HashSet<>();
+      List<ThemeEntity> children = new ArrayList<>();
       for (Long childId : theme.getChildrenIds()) {
         children.add(themeDao.find(childId));
       }
@@ -88,9 +86,9 @@ public class ThemeMapper {
     return themeEntity;
   }
 
-  public static Set<ThemeEntity> convertThemeDTOsToEntities(List<Theme> themes, ThemeDao themeDao, TutorialDao tutorialDao) {
+  public static List<ThemeEntity> convertThemeDTOsToEntities(List<Theme> themes, ThemeDao themeDao, TutorialDao tutorialDao) {
     if (themes == null) {
-      return new HashSet<>();
+      return new ArrayList<>();
     }
     List<ThemeEntity> themeEntities = new ArrayList<>();
     for (Theme theme : themes) {
@@ -100,7 +98,7 @@ public class ThemeMapper {
       }
       themeEntities.add(themeEntity);
     }
-    return new HashSet<>(themeEntities);
+    return themeEntities;
   }
 
 }

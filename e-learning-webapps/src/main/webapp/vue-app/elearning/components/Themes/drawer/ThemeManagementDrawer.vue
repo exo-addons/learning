@@ -87,10 +87,25 @@ export default {
         const theme = {
           name: this.title,
           spaceName: this.spaceName,
-          parentId: this.parentTheme.id
+          parentId: this.parentTheme ? this.parentTheme.id: null,
         };
         return this.$themeService.createTheme(theme).then(addedTheme => {
           this.$emit('themeAdded', addedTheme);
+          const themeIds = this.parentTheme.childrenIds;
+          themeIds.push(theme.id);
+          const updatedParent = {
+            id: this.parentTheme.id,
+            name: this.parentTheme.name,
+            spaceName: this.parentTheme.spaceName,
+            managers: this.parentTheme.managers,
+            participators: this.parentTheme.participators,
+            parentId: this.parentTheme.parentId,
+            childrenIds: themeIds,
+            lastModifiedDate: this.parentTheme.lastModifiedDate,
+            tutorialIds: this.parentTheme.tutorialIds,
+            creator: this.parentTheme.creator,            
+          };
+          this.$root.$emit('parent-theme-updated', updatedParent);
         }).catch((e) => this.errors.push(e));
         
       } else {

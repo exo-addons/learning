@@ -4,11 +4,11 @@
 #elearning_app {
   min-height: 86vh;
   padding: 20px;
-  
+
   .v-application--wrap {
     background-color: @baseBackgroundDefault;
   }
-  
+
   .controls {
     position: relative;
   }
@@ -28,7 +28,7 @@
     max-height: max-content;
 
     #themes_card_list {
-      padding:10px;
+      padding: 10px;
       position: relative;
 
       .container {
@@ -269,7 +269,7 @@
     }
 
     #tutos_card_list {
-      padding:10px;
+      padding: 10px;
       position: relative;
       background: @baseBackgroundDefault !important;
 
@@ -635,6 +635,218 @@
       float: right;
       box-shadow: none !important;
       border: .1px solid rgba(87, 141, 201, .3) !important;
+    }
+  }
+}
+
+#eLearningEditor {
+  position: fixed;
+  height: 100%;
+  top: 0;
+  z-index: 1031;
+  background: #eeeeee;
+
+  .eLearning-topbar {
+    width: 100%;
+    z-index: 10;
+    background-color: @baseBackground;
+    position: absolute;
+
+    .eLearningActions {
+      //TODO remove paddings
+      .eLearningFormButtons {
+        .eLearningFormLeftActions {
+          flex: auto;
+
+          img {
+            height: 40px;
+          }
+
+          input[type="text"] {
+            flex: 0 1 100%;
+            font-size: 24px;
+
+            &:focus {
+              box-shadow: none !important;
+            }
+          }
+        }
+
+        .eLearningFormRightActions {
+          position: relative;
+          display: inline-flex;
+
+          .settings-archive-btns {
+            place-self: center;
+
+            button {
+              color: @toolbarLightIconColor;
+            }
+          }
+
+          #eLearningUpdateAndPost {
+            height: 36px;
+            min-width: 64px;
+
+            .publish-and-post-btn {
+              left: auto !important;
+              right: 20px;
+              top: 40px !important;
+              background: @baseBackground;
+              min-width: 180px !important;
+            }
+
+            #eLearningPublichAndPost {
+              &:focus {
+                &::after {
+                  opacity: 0 !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .eLearning-content-wrapper {
+    height: calc(~"100vh - 126px");
+    overflow: auto;
+    z-index: 5;
+    background-color: #eeeeee;
+    margin-top: 79px;
+
+    .eLearning-content {
+      background-color: @baseBackground;
+      height: calc(~"100vh - 126px");
+      border-radius: 4px;
+
+      .step-form {
+
+        .top-bar {
+          .preview-btn {
+            border: 2px solid @primaryColor;
+          }
+        }
+
+        #stepTitle {
+          width: 100%;
+          box-sizing: border-box;
+          font-size: 21px;
+          letter-spacing: 0.3px;
+          border-bottom: solid 1px @greyColor !important;
+
+          &:focus {
+            box-shadow: none !important;
+          }
+
+          &::placeholder {
+            color: @greyColorLighten1 !important;
+          }
+        }
+
+        .content-dashboard {
+          height: calc(~"100vh - 250px");
+
+          .group-steps {
+            background-color: @baseBackgroundDark;
+            border-radius: 4px;
+
+            .add-step-wrapper {
+              text-align: center;
+              color: @toolbarLightIconColor;
+              .add-step {
+                display: flex;
+                width: 16vw;
+                height: 16vh;
+                cursor: pointer;
+                border-radius: 4px;
+                background-color: @baseBackground;
+              }
+
+              .add-step > div {
+                display: inline-grid;
+                width: 87%;
+                height: 77%;
+                margin: auto;
+                border: 1px dashed;
+                color: @toolbarLightIconColor;
+
+                i {
+                  color: @toolbarLightIconColor;
+                }
+              }
+            }
+          }
+
+
+          .step-media-selector {
+            height: 46vh;
+
+            .media {
+              display: inline-flex;
+              width: 100%;
+              height: 100%;
+              cursor: pointer;
+              border: 1px dashed;
+              border-radius: 4px;
+              color: @toolbarLightIconColor;
+            }
+
+            .media > div {
+              width: fit-content;
+              margin: auto;
+
+              p {
+                font-size: 20px;
+                font-weight: bold;
+                text-align: center;
+              }
+
+              i {
+                display: grid;
+                color: @toolbarLightIconColor;
+              }
+            }
+          }
+
+          .step-content-wrapper {
+            max-height: 23vh;
+            #stepTop {
+              display: block;
+              box-shadow: 0 3px 5px hsla(0, 1%, 43%, 0.24);
+              z-index: 10;
+
+              .cke_top {
+                height: auto;
+              }
+
+              .cke_toolbox {
+                flex-flow: wrap;
+                background: #fdfdfd !important;
+                background-image: none !important;
+                border-bottom: 0;
+              }
+
+              .cke_shared {
+                border: 0;
+              }
+            }
+
+            #cke_stepContent {
+              border-color: transparent;
+              flex: 0 1 100%;
+              margin-bottom: 0;
+              
+              .cke_contents.cke_reset {
+                height: 142px!important;
+              }
+
+            }
+          }
+
+        }
+      }
     }
   }
 }

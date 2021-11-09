@@ -34,7 +34,7 @@
       <template slot="footer">
         <v-btn
           class="tuto_drawer_btn_update"
-          @click="tutoUpdate"
+          @click="updateTutorial"
           :disabled="!isFormComplete">
           {{ $t('addon.elearning.tutorial.confirm') }}
         </v-btn>
@@ -47,7 +47,7 @@
 export default {
   data() {
     return {
-      tutoId: null,
+      tutorialId: null,
       tutoU: null,
       errors: [],
       themes: [],
@@ -66,21 +66,19 @@ export default {
       return this.tutoUp.title;
     }
   },
-
   created() {
-    this.$root.$on('makeUpdateTuto', (id) => {
+    this.$root.$on('makeUpdateTutorial', (id) => {
       this.$refs.tutorialUpdateDrawer.open();
-      this.tutoId = id;
+      this.tutorialId = id;
       this.getTutoU(id);
     });
   },
-
   methods: {
-    tutoUpdate() {
-      this.tutoUp.id = this.tutoId;
-      return this.$tutoService.tutoUpdate(this.tutoUp)
+    updateTutorial() {
+      this.tutoUp.id = this.tutorialId;
+      return this.$tutoService.updateTutorial(this.tutoUp)
         .then(() => {
-          this.$root.$emit('tutoUpdated');
+          this.$root.$emit('tutorialUpdated');
         })
         .then(() => {
           this.tutoUp.id = 0;
@@ -90,7 +88,7 @@ export default {
     },
 
     getTutoU(id) {
-      return this.$tutoService.getTutoById(id)
+      return this.$tutoService.getTutorialById(id)
         .then((data) => {
           this.tutoU = data;
           this.tutoUp.title = this.tutoU.title;

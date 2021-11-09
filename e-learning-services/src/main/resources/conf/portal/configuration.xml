@@ -28,7 +28,7 @@
   </component>
 
   <component>
-    <type>org.exoplatform.addon.elearning.rest.ThemeServiceRest</type>
+    <type>org.exoplatform.addon.elearning.rest.ThemeRestService</type>
   </component>
 
   <component>
@@ -44,7 +44,7 @@
   </component>
 
   <component>
-    <type>org.exoplatform.addon.elearning.rest.TutorialServiceRest</type>
+    <type>org.exoplatform.addon.elearning.rest.TutorialRestService</type>
   </component>
 
   <component>

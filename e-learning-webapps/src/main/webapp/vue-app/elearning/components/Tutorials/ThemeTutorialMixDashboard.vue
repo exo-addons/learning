@@ -10,7 +10,7 @@
       :space="space"
       :parent-theme="parentTheme"
       :keyword="keyword" />
-    <v-divider />
+    <v-divider v-if="displayDivider" />
     <tutorial-card-list
       :keyword="keyword"
       :parent-theme="parentTheme"
@@ -22,7 +22,7 @@
       :title="$t('addon.elearning.tutorial.confirmD')"
       :ok-label="$t('addon.elearning.tutorial.confirm')"
       :cancel-label="$t('addon.elearning.tutorial.cancel')"
-      @ok="deleteTuto()" />
+      @ok="deleteTutorial()" />
     <v-alert
       v-model="alert"
       :type="type"
@@ -47,8 +47,7 @@ export default {
       type: Boolean,
       default: false
     },
-  },
-  
+  },  
   data() {
     return {
       alert: false,
@@ -61,19 +60,16 @@ export default {
       keyword: '',
     };
   },
-
+  computed: {
+    displayDivider() {
+      return this.parentTheme && this.parentTheme.childrenIds.length > 0 && this.parentTheme.tutorialIds.length > 0;
+    }
+  },
   created() {
     this.$root.$on('show-alert', message => {
       this.displayMessage(message);
     });
-    this.$root.$on('tutoCreated', () => {
-      this.timeout = 3000;
-      this.successBar = false;
-      this.successBar = true;
-      this.color = 'success';
-      this.text = this.$t('addon.elearning.tutorial.created');
-    });
-    this.$root.$on('tutoUpdated', () => {
+    this.$root.$on('tutorialUpdated', () => {
       this.timeout = 3000;
       this.successBar = false;
       this.successBar = true;
@@ -112,7 +108,7 @@ export default {
       this.themeId = id;
       this.getThemeName();
     });
-    this.$root.$on('deleteTuto', (id) => {
+    this.$root.$on('deleteTutorial', (id) => {
       this.prepareDelete(id);
     });
 
@@ -129,14 +125,13 @@ export default {
     });
 
   },
-
   methods: {
     prepareDelete(id) {
       this.deleteId = id;
       this.$refs.confirmDialog.open();
     },
-    deleteTuto() {
-      return this.$tutoService.deleteTuto(this.deleteId)
+    deleteTutorial() {
+      return this.$tutoService.deleteTutorial(this.deleteId)
         .then(() => {
           this.confirmDialog = false;
           this.timeout = 3000;

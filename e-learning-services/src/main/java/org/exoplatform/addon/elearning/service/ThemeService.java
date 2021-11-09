@@ -9,9 +9,8 @@ import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class ThemeService implements ResourceContainer {
 
@@ -35,6 +34,7 @@ public class ThemeService implements ResourceContainer {
   }
 
   public Theme updateTheme(Theme theme) {
+    theme.setLastModifiedDate(System.currentTimeMillis());
     return themeStorage.updateTheme(theme);
   }
 
@@ -51,13 +51,13 @@ public class ThemeService implements ResourceContainer {
   }
 
   public Theme createTheme(Theme theme, Long parentId, String spaceName) {
-    Set<String> managers = new HashSet<>();
-    Set<String> participators = new HashSet<>();
+    List<String> managers = new ArrayList<>();
+    List<String> participators = new ArrayList<>();
     if (parentId != null) {
       Theme parentTheme = themeStorage.getThemeById(parentId);
       theme.setParentId(parentId);
-      Set<String> parentThemeManagers = parentTheme.getManagers();
-      Set<String> parentThemeParticipators = parentTheme.getParticipators();
+      List<String> parentThemeManagers = parentTheme.getManagers();
+      List<String> parentThemeParticipators = parentTheme.getParticipators();
       managers.addAll(parentThemeManagers);
       participators.addAll(parentThemeParticipators);
     } else if (spaceName != null) {

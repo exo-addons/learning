@@ -33,8 +33,8 @@ public class SpaceThemeDataInitializer extends SpaceListenerPlugin {
       String creator = ConversationState.getCurrent().getIdentity().getUserId();
 
       List<String> memberships = UserUtil.getSpaceMemberships(spaceGroupId);
-      Set<String> managers = new HashSet<>(Collections.singletonList(memberships.get(0)));
-      Set<String> participators = new HashSet<>(Collections.singletonList(memberships.get(1)));
+      List<String> managers = Collections.singletonList(memberships.get(0));
+      List<String> participators = Collections.singletonList(memberships.get(1));
       Theme theme = new Theme(space.getDisplayName(), space.getPrettyName(), managers, participators, creator);
       themeService.createTheme(theme, null, space.getPrettyName());
     } catch (Exception e) {

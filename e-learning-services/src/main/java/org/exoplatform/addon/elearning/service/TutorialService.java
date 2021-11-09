@@ -2,12 +2,12 @@ package org.exoplatform.addon.elearning.service;
 
 import org.exoplatform.addon.elearning.dto.Step;
 import org.exoplatform.addon.elearning.dto.Tutorial;
-import org.exoplatform.addon.elearning.entity.Status;
 import org.exoplatform.addon.elearning.storage.StepStorage;
 import org.exoplatform.addon.elearning.storage.TutorialStorage;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TutorialService implements ResourceContainer {
@@ -30,7 +30,7 @@ public class TutorialService implements ResourceContainer {
       throw new IllegalAccessException("At least one theme is mandatory");
     }
     tutorial.getThemeIds().clear();
-    tutorial.setStatus(Status.DRAFT);
+    tutorial.setCreatedDate(new Date(System.currentTimeMillis()));
 
     return tutorialStorage.createTutorial(tutorial, themeIds);
   }
@@ -40,6 +40,7 @@ public class TutorialService implements ResourceContainer {
   }
 
   public Tutorial updateTutorial(Tutorial tutorial) {
+    tutorial.setLastModifiedDate(System.currentTimeMillis());
     return tutorialStorage.updateTutorial(tutorial);
   }
 
@@ -61,10 +62,13 @@ public class TutorialService implements ResourceContainer {
 
   public Step addTutorialStep(Step step, Long tutorialId) {
     Tutorial tutorial = tutorialStorage.getTutorialById(tutorialId);
+    updateTutorial(tutorial);
     return stepStorage.addStep(step, tutorial);
   }
 
   public Step updateTutorialStep(Step step) {
+    Tutorial tutorial = tutorialStorage.getTutorialById(step.getTutorialId());
+    updateTutorial(tutorial);
     return stepStorage.updateStep(step);
   }
 

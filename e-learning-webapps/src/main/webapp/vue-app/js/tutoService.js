@@ -1,5 +1,7 @@
-export function getTutos() {
-  return fetch('/portal/rest/tutorial/getAllTutos', {
+import { eLearningConstans } from '../js/elearningConstants.js';
+
+export function getTutorialById(tutorialId) {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/getTutorialById/${tutorialId}`, {
     method: 'GET',
     credentials: 'include',
   })
@@ -12,22 +14,8 @@ export function getTutos() {
     });
 }
 
-export function getTutoById(tutoId) {
-  return fetch(`/portal/rest/tutorial/getTutoById/${tutoId}`, {
-    method: 'GET',
-    credentials: 'include',
-  })
-    .then((response) => {
-      if (!response || !response.ok) {
-        throw new Error('Response code indicates a server error', response);
-      } else {
-        return response.json();
-      }
-    });
-}
-
-export function deleteTuto(deleteId) {
-  return fetch(`/portal/rest/tutorial/deleteTuto/${deleteId}`, {
+export function deleteTutorial(tutorialId) {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/deleteTutorial/${tutorialId}`, {
     method: 'DELETE',
     credentials: 'include',
   }).then(response => {
@@ -37,10 +25,10 @@ export function deleteTuto(deleteId) {
   });
 }
 
-export function tutoPost(tuto) {
-  return fetch('/portal/rest/tutorial/addTuto', {
+export function addTutorial(tutorial) {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/addTutorial`, {
     method: 'POST',
-    body: JSON.stringify(tuto),
+    body: JSON.stringify(tutorial),
     headers: {
       'Content-Type': 'application/json'
     },
@@ -48,14 +36,16 @@ export function tutoPost(tuto) {
   }).then(response => {
     if (!response || !response.ok) {
       throw new Error('Response code indicates a server error', response);
+    } else {
+      return response.json();
     }
   });
 }
 
-export function tutoUpdate(tuto) {
-  return fetch('/portal/rest/tutorial/updateTuto', {
+export function updateTutorial(tutorial) {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/updateTutorial`, {
     method: 'PUT',
-    body: JSON.stringify(tuto),
+    body: JSON.stringify(tutorial),
     headers: {
       'Content-Type': 'application/json'
     },
@@ -63,12 +53,14 @@ export function tutoUpdate(tuto) {
   }).then(response => {
     if (!response || !response.ok) {
       throw new Error('Response code indicates a server error', response);
+    } else {
+      return response.json();
     }
   });
 }
 
 export function getTutorialsByTheme(themeId, offset, limit) {
-  return fetch(`/portal/rest/tutorial/getTutorialsByTheme/${themeId}?offset=${offset}&limit=${limit}`, {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/getTutorialsByTheme/${themeId}?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     credentials: 'include',
   })
@@ -81,8 +73,8 @@ export function getTutorialsByTheme(themeId, offset, limit) {
     });
 }
 
-export function getTutosByName(id, tutoTitle) {
-  return fetch(`/portal/rest/tutorial/getTutosByName/${id}/${tutoTitle}`, {
+export function getTutorialsByName(id, tutorialTitle) {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/getTutorialsByName/${id}/${tutorialTitle}`, {
     method: 'GET',
     credentials: 'include',
   })
