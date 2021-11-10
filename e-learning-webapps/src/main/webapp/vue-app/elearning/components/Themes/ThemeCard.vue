@@ -122,7 +122,7 @@ export default {
       this.$emit('updateTheme', this.theme);
     },
     displayThemeContent() {
-      if (this.theme.parent) {
+      if (this.theme.parentId) {
         this.$root.$emit('displayThemeContent', this.theme);
       } else {
         this.$root.$emit('displayRootThemeContent', this.theme, this.space, this.canUpdate);

@@ -1,7 +1,7 @@
 <template>
   <div id="theme-tutorial-mix-dashboard">
-    <theme-tutorial-mix-dashboard-toolbar 
-      :theme-name="themeName"
+    <theme-tutorial-mix-dashboard-toolbar
+      :parent-theme="parentTheme"
       :space="space"
       :keyword="keyword"
       @keyword-changed="keyword = $event" />

@@ -10,7 +10,6 @@ import TutorialMoveDrawer from './components/Tutorials/drawer/TutorialMoveDrawer
 import ThemeDashboard from './components/Themes/ThemeDashboard.vue';
 import ThemeCard from './components/Themes/ThemeCard.vue';
 import ThemeCardList from './components/Themes/ThemeCardList.vue';
-import ThemeDashboardToolbar from './components/Themes/ThemeDashboardToolbar.vue';
 import ThemeManagementDrawer from './components/Themes/drawer/ThemeManagementDrawer.vue';
 
 const components = {
@@ -26,7 +25,6 @@ const components = {
   'theme-dashboard': ThemeDashboard,
   'theme-card': ThemeCard,
   'theme-card-list': ThemeCardList,
-  'theme-dashboard-toolbar': ThemeDashboardToolbar,
   'theme-management-drawer': ThemeManagementDrawer,
 };
 

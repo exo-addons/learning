@@ -1,6 +1,6 @@
 <template>
   <div id="themes_dashboard">
-    <theme-dashboard-toolbar
+    <theme-tutorial-mix-dashboard-toolbar
       :keyword="keyword"
       @keyword-changed="keyword = $event" />
     <theme-card-list 

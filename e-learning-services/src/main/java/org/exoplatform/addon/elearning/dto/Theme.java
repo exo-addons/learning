@@ -35,6 +35,8 @@ public class Theme implements Serializable {
   private List<Long> tutorialIds = new ArrayList<>();
 
   private String creator;
+  
+  private List<Breadcrumb> breadcrumbs = new ArrayList<>();
 
   public Theme(String name, String spaceName, List<String> managers, List<String> participators, String creator) {
     this.name = name;
