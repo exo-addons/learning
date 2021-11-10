@@ -21,6 +21,7 @@
 
       <column name="NAME" type="NVARCHAR(255)"/>
       <column name="SPACE_NAME" type="NVARCHAR(2000)"/>
+      <column name="COLOR" type="NVARCHAR(255)"/>
       <column name="CREATOR" type="NVARCHAR(255)"/>
       <column name="PARENT_THEME_ID" type="BIGINT">
         <constraints foreignKeyName="FK_PARENT_THEME_ID" references="EXO_E_LEARNING_THEME(THEME_ID)" nullable="true"/>

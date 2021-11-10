@@ -1,11 +1,11 @@
 <template>
-  <div id="tutorial_dashboard_toolbar">
+  <div id="theme_tutorial_dashboard_toolbar">
     <v-toolbar
-      id="TutorialDashboardToolbar"
+      id="themeTutorialDashboardToolbar"
       flat
       class="toolbarLarge pb-3">
       <v-icon @click="backToThemeDashboard" id="tuto_toolbar_prom">account_tree</v-icon>
-      <v-breadcrumbs v-if="parentTheme" :items="items">
+      <v-breadcrumbs :items="items">
         <template v-slot:item="{ item }">
           <v-breadcrumbs-item
             class="breadcrumb"
@@ -20,17 +20,17 @@
       </v-breadcrumbs>
       <v-spacer />
       <v-scale-transition>
-        <div class="add_tuto_wrapper">
-          <v-icon id="tuto_add_btn" @click="displayActionMenu = true">mdi-plus</v-icon>
+        <div class="add_them_tutorial_wrapper">
+          <v-icon id="theme_tutorial_add_btn" @click="displayActionMenu = true">mdi-plus</v-icon>
           <v-menu
             v-model="displayActionMenu"
-            attach="#TutorialDashboardToolbar"
-            content-class="tuto_Dashboard_menu"
+            attach="#themeTutorialDashboardToolbar"
+            content-class="tutorial_Dashboard_menu"
             transition="slide-x-reverse-transition"
             offset-y
             offset-x>
             <v-list class="toolbar_menu_list" dense>
-              <v-list-item @click="addNewTutorial">
+              <v-list-item v-if="parentTheme" @click="addNewTutorial">
                 <v-list-item-title class="toolbar_menu_list_items">
                   <v-icon class="toolbar_menu_icon">mdi-school</v-icon>
                   <span class="toolbar_menu_text">{{ $t('addon.elearning.tutorial.create') }}</span>
@@ -99,23 +99,27 @@ export default {
     $(document).on('mousedown', () => {
       if (this.displayActionMenu) {
         window.setTimeout(() => {
-          this.displayActionMenu = false;
+          this.closeToolbarMenu();
         }, 200);
       }
     });
   },  
   methods: {
     openTheme(themeId) {
-      if (themeId) {
+      if (themeId && this.parentTheme.id !== themeId) {
         this.$themeService.getThemeById(themeId).then(parentTheme => {
           this.$root.$emit('displayThemeContent', parentTheme);
         }).catch((e) => this.errors.push(e));
-      } else {
+      } else if (!themeId) {
         this.$root.$emit('displayThemesBoard');
       }
     },
     updateBreadcrumbs() {
-      this.items = this.parentTheme.breadcrumbs;
+      this.items = this.parentTheme ? this.parentTheme.breadcrumbs : [{
+        themeId: null,
+        name: 'Home',
+        disabled: false
+      }];
     },
     addNewTutorial() {
       this.$root.$emit('openTutorialDrawer');
@@ -125,6 +129,9 @@ export default {
     },
     backToThemeDashboard() {
       this.$root.$emit('displayThemesBoard');
+    },
+    closeToolbarMenu() {
+      this.displayActionMenu = false;
     },
   }
 };

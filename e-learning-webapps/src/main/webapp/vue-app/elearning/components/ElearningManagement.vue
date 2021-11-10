@@ -2,9 +2,11 @@
   <v-app id="elearning_app">
     <theme-dashboard 
       v-if="displayThemesBoard"
+      ref="themeDashboard"
       :space-name="spaceName" />
     <theme-tutorial-mix-dashboard 
       v-else
+      ref="themeTutorialMixDashboard"
       :parent-theme="parentTheme"
       :space="space"
       :can-update="canUpdate" />

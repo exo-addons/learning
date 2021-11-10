@@ -13,6 +13,7 @@
             :key="tutorial.id"
             :id="'tutorial-' + tutorial.id">
             <tutorial-card
+              :parent-theme="parentTheme"
               :tutorial="tutorial"
               :space="space"
               :can-update="canUpdate" />

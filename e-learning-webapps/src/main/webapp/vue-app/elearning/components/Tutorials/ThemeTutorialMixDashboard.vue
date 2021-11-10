@@ -10,7 +10,7 @@
       :space="space"
       :parent-theme="parentTheme"
       :keyword="keyword" />
-    <v-divider v-if="displayDivider" />
+    <v-divider v-show="displayDivider" />
     <tutorial-card-list
       :keyword="keyword"
       :parent-theme="parentTheme"
@@ -56,14 +56,18 @@ export default {
       deleteId: null,
       themeId: null,
       themeName: null,
+      displayDivider: false,
       errors: [],
       keyword: '',
     };
   },
-  computed: {
-    displayDivider() {
-      return this.parentTheme && this.parentTheme.childrenIds.length > 0 && this.parentTheme.tutorialIds.length > 0;
-    }
+  watch: {
+    parentTheme: {
+      immediate: true,
+      handler() {
+        this.displayDivider = this.parentTheme && this.parentTheme.childrenIds.length > 0 && this.parentTheme.tutorialIds.length > 0;
+      }
+    },
   },
   created() {
     this.$root.$on('show-alert', message => {
