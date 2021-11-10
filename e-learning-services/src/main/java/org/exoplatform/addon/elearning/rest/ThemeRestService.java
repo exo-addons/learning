@@ -53,7 +53,7 @@ public class ThemeRestService implements ResourceContainer {
         return Response.status(Response.Status.FORBIDDEN).build();
       }
       theme.setCreator(identity.getUserId());
-      
+
       Space space;
       if (StringUtils.isNotBlank(theme.getSpaceName())) {
         space = spaceService.getSpaceByPrettyName(theme.getSpaceName());
@@ -235,6 +235,30 @@ public class ThemeRestService implements ResourceContainer {
     }
     return Response.ok(dataEntity, MediaType.APPLICATION_JSON).build();
 
+  }
+
+  @PUT
+  @Path("updateThemeColor/{themeId}")
+  @Produces(MediaType.APPLICATION_JSON)
+  @RolesAllowed("users")
+  @ApiOperation(value = "Change Theme Color", httpMethod = "POST", response = Response.class, notes = "This change Theme Color")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response changeThemeColor(@ApiParam(value = "themeId", required = true) @PathParam("themeId") Long themeId,
+                                   @ApiParam(value = "color", required = false, defaultValue = "null") @QueryParam("color") String color) {
+    Theme theme;
+    try {
+      theme = themeService.getThemeById(themeId);
+      if (theme == null) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+      }
+      theme = themeService.changeThemeColor(theme, color);
+    } catch (Exception e) {
+      LOG.error("Could not get all Themes", e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(theme, MediaType.APPLICATION_JSON).build();
   }
 
 }

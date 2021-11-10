@@ -5,6 +5,107 @@
   min-height: 86vh;
   padding: 20px;
 
+  //custom colors
+  .no_border_color {
+    background: #eeeeee;
+  }
+
+  .asparagus_border {
+    background: #909958 !important;
+  }
+
+  .laurel_green_border {
+    background: #BED67E !important;
+  }
+
+  .moss_green_border {
+    background: #98CC81 !important;
+  }
+
+  .munsell_blue_border {
+    background: #319AB3 !important;
+  }
+
+  .sky_blue_border {
+    background: #4DBED9 !important;
+  }
+
+  .powder_blue_border {
+    background: #9EE4F5 !important;
+  }
+
+  .baby_blue_border {
+    background: #B2E2FF !important;
+  }
+
+  .navy_blue_border {
+    background: #4273C8 !important;
+  }
+
+  .blue_gray_border {
+    background: #8EB0EA !important;
+  }
+
+  .light_blue_border {
+    background: #B3CFFF !important;
+  }
+
+  .light_gray_border {
+    background: #CDCDCD !important;
+  }
+
+  .purple_border {
+    background: #774EA9 !important;
+  }
+
+  .light_purple_border {
+    background: #BC99E7 !important;
+  }
+
+  .pink_border {
+    background: #FFC8F0 !important;
+  }
+
+  .beige_border {
+    background: #FFE1BE !important;
+  }
+
+  .hot_pink_border {
+    background: #F97575 !important;
+  }
+
+  .light_brown_border {
+    background: #C5B294 !important;
+  }
+
+  .gray_border {
+    background: #A39594 !important;
+  }
+
+  .plum_border {
+    background: #CEA6AC !important;
+  }
+
+  .Orange_border {
+    background: #FFA500 !important;
+  }
+
+  .green_border {
+    background: #4CAF50 !important;
+  }
+
+  .red_border {
+    background: #F44336 !important;
+  }
+
+  .yellow_border {
+    background: #ffeb3b !important;
+  }
+
+  .brown_border {
+    background: #795548 !important;
+  }
+
   .v-application--wrap {
     background-color: @baseBackgroundDefault;
   }
@@ -75,6 +176,37 @@
                   font-size: 0.769rem !important;
                 }
               }
+
+              .noColorLabel {
+                border: 1px solid @borderColor;
+                cursor: pointer;
+              }
+
+              .themeColorPicker {
+                width: 144px;
+                max-width: 144px;
+
+                .themeColorCell {
+                  width: 20px;
+                  height: 20px;
+                  min-width: 20px;
+                  min-height: 20px;
+                  margin: 2px;
+                  cursor: pointer;
+                }
+
+                .isSelected {
+                  position: relative;
+                  text-align: center;
+
+                  &:before {
+                    content: '\e9c6';
+                    font-family: 'PLF-FONT-ICONS' !important;
+                    color: white;
+                    font-size: 14px;
+                  }
+                }
+              }
             }
           }
         }
@@ -83,7 +215,6 @@
           position: relative;
 
           #theme_card_footer {
-            background: @orangeColor;
             height: 5px;
             position: relative;
           }
@@ -133,25 +264,37 @@
       }
     }
   }
-;
 
-  #theme_dashboard_toolbar {
+  #theme_tutorial_dashboard_toolbar {
+    #themeTutorialDashboardToolbar {
 
-    #ThemeDashboardToolbar {
-      height: 75px !important;
+      ul {
+        li {
+          color: @primaryColor;
+        }
 
-      .add_theme_wrapper {
+        li:last-child {
+          color: @textColor;
+          cursor: default;
+        }
+      }
+
+      .breadcrumb {
+        cursor: pointer;
+      }
+
+      .add_them_tutorial_wrapper {
         position: relative;
 
-        #theme_add_btn.v-icon {
+        #theme_tutorial_add_btn.v-icon {
           color: @btnPrimaryBackground !important;
         }
       }
 
-      .theme_Dashboard_menu {
+      .tutorial_Dashboard_menu {
         right: 290px;
         left: auto !important;
-        top: 40px !important;
+        top: 20px !important;
 
         .toolbar_menu_list.v-list {
           padding-top: 5px !important;
@@ -224,26 +367,36 @@
   #theme-tutorial-mix-dashboard {
     max-height: max-content;
 
-    #tutorial_dashboard_toolbar {
-      #TutorialDashboardToolbar {
-        height: 75px !important;
+    #theme_tutorial_dashboard_toolbar {
+      #themeTutorialDashboardToolbar {
+
+        ul {
+          li {
+            color: @primaryColor;
+          }
+
+          li:last-child {
+            color: @textColor;
+            cursor: default;
+          }
+        }
 
         .breadcrumb {
           cursor: pointer;
         }
 
-        .add_tuto_wrapper {
+        .add_them_tutorial_wrapper {
           position: relative;
 
-          #tuto_add_btn.v-icon {
+          #theme_tutorial_add_btn.v-icon {
             color: @btnPrimaryBackground !important;
           }
         }
 
-        .tuto_Dashboard_menu {
-          right: 290px;
+        .tutorial_Dashboard_menu {
+          right: 280px;
           left: auto !important;
-          top: 20px !important;
+          top: 48px !important;
 
           .toolbar_menu_list.v-list {
             padding-top: 5px !important;

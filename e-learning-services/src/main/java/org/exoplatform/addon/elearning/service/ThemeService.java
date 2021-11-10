@@ -22,6 +22,8 @@ public class ThemeService implements ResourceContainer {
 
   public static final String DEFAULT_USERS_PERMISSION = "*:" + DEFAULT_USERS_GROUP;
 
+  public static final String THEME_HOME = "Home";
+
   private ThemeStorage themeStorage;
 
   private SpaceService spaceService;
@@ -104,7 +106,7 @@ public class ThemeService implements ResourceContainer {
       breadcrumbs.add(new Breadcrumb(parentTheme.getId(), parentTheme.getName(), false));
       parentId = parentTheme.getParentId();
     }
-    breadcrumbs.add(new Breadcrumb(null, theme.getSpaceName(), false));
+    breadcrumbs.add(new Breadcrumb(null, THEME_HOME, false));
     Collections.reverse(breadcrumbs);
     return breadcrumbs;
   }
@@ -131,5 +133,11 @@ public class ThemeService implements ResourceContainer {
       theme.setBreadcrumbs(getThemeBreadcrumbs(theme));
     }
     return themes;
+  }
+
+  public Theme changeThemeColor(Theme theme, String color) {
+    theme.setColor(color);
+    theme = updateTheme(theme);
+    return theme;
   }
 }

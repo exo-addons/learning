@@ -41,7 +41,22 @@
                 <v-icon class="theme_menu_icon">mdi-delete</v-icon>
                 <span class="theme_menu_text">{{ $t('addon.elearning.theme.delete') }}</span>
               </v-list-item-title>
-            </v-list-item>              
+            </v-list-item>
+            <v-list-item class="menu_list_items px-2 noColorLabel">
+              <v-list-item-title class="noColorLabel caption text-center text&#45;&#45;secondary">
+                <span @click="changeColorTheme(theme,'')">{{ $t('label.noColor') }}</span>
+              </v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title class="subtitle-2 row themeColorPicker mx-auto my-2">
+                <span
+                  v-for="(color, i) in themeColors"
+                  :key="i"
+                  :class="[ color.class , color.class === theme.color ? 'isSelected' : '']"
+                  class="themeColorCell"
+                  @click="changeColorTheme(theme,color.class)"></span>
+              </v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-menu>
       </div>
@@ -61,7 +76,7 @@
           </a>
         </div>
       </v-card-text>
-      <div id="theme_card_footer"></div>
+      <div id="theme_card_footer" :class="theme.color ? `${theme.color}_border` : 'no_border_color'"></div>
     </v-card>
   </div>
 </template>
@@ -89,7 +104,33 @@ export default {
   
   data() {
     return {
-      displayActionMenu: false
+      displayActionMenu: false,
+      themeColors: [
+        { class: 'asparagus' },
+        { class: 'munsell_blue' },
+        { class: 'navy_blue' },
+        { class: 'purple' },
+        { class: 'red' },
+        { class: 'brown' },
+        { class: 'laurel_green' },
+        { class: 'sky_blue' },
+        { class: 'blue_gray' },
+        { class: 'light_purple' },
+        { class: 'hot_pink' },
+        { class: 'light_brown' },
+        { class: 'moss_green' },
+        { class: 'powder_blue' },
+        { class: 'light_blue' },
+        { class: 'pink' },
+        { class: 'Orange' },
+        { class: 'gray' },
+        { class: 'green' },
+        { class: 'baby_blue' },
+        { class: 'light_gray' },
+        { class: 'beige' },
+        { class: 'yellow' },
+        { class: 'plum' },
+      ],
     };
   },
   
@@ -127,7 +168,11 @@ export default {
       } else {
         this.$root.$emit('displayRootThemeContent', this.theme, this.space, this.canUpdate);
       }
-    }
+    },
+    changeColorTheme(theme, color) {
+      this.$themeService.updateThemeColor(theme, color)
+        .then(this.theme.color = color);
+    },
   }
 };
 </script>

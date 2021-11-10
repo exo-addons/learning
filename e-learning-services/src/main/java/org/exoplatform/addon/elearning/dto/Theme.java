@@ -26,6 +26,8 @@ public class Theme implements Serializable {
 
   private List<String> participators = new ArrayList<>();
 
+  private String color;
+
   private Long parentId;
 
   private List<Long> childrenIds = new ArrayList<>();
@@ -35,7 +37,7 @@ public class Theme implements Serializable {
   private List<Long> tutorialIds = new ArrayList<>();
 
   private String creator;
-  
+
   private List<Breadcrumb> breadcrumbs = new ArrayList<>();
 
   public Theme(String name, String spaceName, List<String> managers, List<String> participators, String creator) {

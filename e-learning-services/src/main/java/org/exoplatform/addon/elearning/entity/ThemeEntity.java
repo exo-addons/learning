@@ -64,6 +64,9 @@ public class ThemeEntity {
   @Column(name = "PARTICIPATORS")
   private List<String> participators = new ArrayList<>();
 
+  @Column(name = "COLOR")
+  private String color;
+
   @ManyToOne(optional = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "PARENT_THEME_ID")
   private ThemeEntity parent;
@@ -84,13 +87,13 @@ public class ThemeEntity {
   public ThemeEntity() {
   }
 
-  public ThemeEntity(Long id, String name, String spaceName, List<String> managers, List<String> participators, ThemeEntity parent, List<ThemeEntity> children,
-                     Long lastModifiedDate, List<TutorialEntity> tutorialEntities, String creator) {
+  public ThemeEntity(Long id, String name, String spaceName, List<String> managers, List<String> participators, String color, ThemeEntity parent, List<ThemeEntity> children, Long lastModifiedDate, List<TutorialEntity> tutorialEntities, String creator) {
     this.id = id;
     this.name = name;
     this.spaceName = spaceName;
     this.managers = managers;
     this.participators = participators;
+    this.color = color;
     this.parent = parent;
     this.children = children;
     this.lastModifiedDate = lastModifiedDate;
@@ -136,6 +139,14 @@ public class ThemeEntity {
 
   public void setParticipators(List<String> participators) {
     this.participators = participators;
+  }
+
+  public String getColor() {
+    return color;
+  }
+
+  public void setColor(String color) {
+    this.color = color;
   }
 
   public ThemeEntity getParent() {

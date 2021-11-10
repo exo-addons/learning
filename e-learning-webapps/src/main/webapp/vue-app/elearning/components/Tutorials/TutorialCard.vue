@@ -81,8 +81,7 @@
           </a>
         </div>
       </v-card-text>
-      <div id="tuto_card_footer_draft" v-if="tutorial.status === 'DRAFT'"></div>
-      <div id="tuto_card_footer" v-else></div>
+      <div id="tuto_card_footer" :class="parentTheme.color ? `${parentTheme.color}_border` : 'no_border_color'"></div>
     </v-card>
   </div>
 </template>
@@ -90,6 +89,10 @@
 <script>
 export default {
   props: {
+    parentTheme: {
+      type: Object,
+      default: null
+    },
     canUpdate: {
       type: Boolean,
       default: false

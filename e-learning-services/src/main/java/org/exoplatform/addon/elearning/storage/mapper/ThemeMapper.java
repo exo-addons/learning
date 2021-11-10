@@ -26,6 +26,7 @@ public class ThemeMapper {
     theme.setSpaceName(themeEntity.getSpaceName());
     theme.setManagers(themeEntity.getManagers());
     theme.setParticipators(themeEntity.getParticipators());
+    theme.setColor(themeEntity.getColor());
     theme.setLastModifiedDate(themeEntity.getLastModifiedDate());
     theme.setCreator(themeEntity.getCreator());
     List<Long> tutorialIds = themeEntity.getTutorialEntities().stream().map(TutorialEntity::getId).collect(Collectors.toList());
@@ -68,6 +69,7 @@ public class ThemeMapper {
     themeEntity.setSpaceName(theme.getSpaceName());
     themeEntity.setManagers(theme.getManagers());
     themeEntity.setParticipators(theme.getParticipators());
+    themeEntity.setColor(theme.getColor());
     if (theme.getChildrenIds() != null && !theme.getChildrenIds().isEmpty()) {
       List<ThemeEntity> children = new ArrayList<>();
       for (Long childId : theme.getChildrenIds()) {
