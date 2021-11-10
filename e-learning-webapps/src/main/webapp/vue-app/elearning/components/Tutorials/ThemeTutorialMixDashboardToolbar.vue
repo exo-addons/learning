@@ -4,12 +4,21 @@
       id="TutorialDashboardToolbar"
       flat
       class="toolbarLarge pb-3">
-      <v-icon @click="backToThemeDashboard" id="tuto_toolbar_prom">mdi-chart-tree</v-icon>
-      <v-icon>mdi-chevron-right</v-icon>
-      <span> {{ themeName }} </span>
-      <v-toolbar-title />
+      <v-icon @click="backToThemeDashboard" id="tuto_toolbar_prom">account_tree</v-icon>
+      <v-breadcrumbs v-if="parentTheme" :items="items">
+        <template v-slot:item="{ item }">
+          <v-breadcrumbs-item
+            class="breadcrumb"
+            :disabled="item.disabled"
+            @click="openTheme(item.themeId)">
+            {{ item.name }}
+          </v-breadcrumbs-item>
+        </template>
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
       <v-spacer />
-
       <v-scale-transition>
         <div class="add_tuto_wrapper">
           <v-icon id="tuto_add_btn" @click="displayActionMenu = true">mdi-plus</v-icon>
@@ -37,7 +46,6 @@
           </v-menu>
         </div>
       </v-scale-transition>
-
       <v-scale-transition>
         <div id="tuto_filter_input">
           <v-text-field
@@ -55,9 +63,9 @@
 <script>
 export default {
   props: {
-    themeName: {
-      type: String,
-      default: ''
+    parentTheme: {
+      type: Object,
+      default: null
     },
     space: {
       type: Object,
@@ -68,20 +76,26 @@ export default {
       default: '',
     }
   },
-  
   data() {
     return {
-      displayActionMenu: false
+      items: [],
+      displayActionMenu: false,
+      errors: [],
     };
   },
-  
   watch: {
     keyword() {
       this.$root.$emit('key-changed', this.keyword);
-    }
-  },
-  
+    },
+    parentTheme: {
+      immediate: true,
+      handler() {
+        this.updateBreadcrumbs();
+      }
+    },
+  },  
   created() {
+    this.updateBreadcrumbs();
     $(document).on('mousedown', () => {
       if (this.displayActionMenu) {
         window.setTimeout(() => {
@@ -89,9 +103,20 @@ export default {
         }, 200);
       }
     });
-  },
-  
+  },  
   methods: {
+    openTheme(themeId) {
+      if (themeId) {
+        this.$themeService.getThemeById(themeId).then(parentTheme => {
+          this.$root.$emit('displayThemeContent', parentTheme);
+        }).catch((e) => this.errors.push(e));
+      } else {
+        this.$root.$emit('displayThemesBoard');
+      }
+    },
+    updateBreadcrumbs() {
+      this.items = this.parentTheme.breadcrumbs;
+    },
     addNewTutorial() {
       this.$root.$emit('openTutorialDrawer');
     },

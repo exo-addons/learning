@@ -134,18 +134,10 @@ export default {
           const tutorialIds = this.parentTheme.tutorialIds;
           tutorialIds.push(addedTutorial.id);
           const updatedParent = {
-            id: this.parentTheme.id,
-            name: this.parentTheme.name,
-            spaceName: this.parentTheme.spaceName,
-            managers: this.parentTheme.managers,
-            participators: this.parentTheme.participators,
-            parentId: this.parentTheme.parentId,
-            childrenIds: this.parentTheme.childrenIds,
-            lastModifiedDate: this.parentTheme.lastModifiedDate,
             tutorialIds: tutorialIds,
-            creator: this.parentTheme.creator,
           };
-          this.$root.$emit('parent-theme-updated', updatedParent);
+          Object.assign(this.parentTheme, updatedParent);
+          this.$root.$emit('parent-theme-updated', this.parentTheme);
         }).catch((e) => this.errors.push(e))
           .finally(() => window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-editor?spaceId=${eXo.env.portal.spaceId}&themeId=${this.parentTheme.id}&tutorialId=${tutorialId}`, '_blank'));
       } else {

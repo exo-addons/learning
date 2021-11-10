@@ -1,5 +1,6 @@
 package org.exoplatform.addon.elearning.service;
 
+import org.exoplatform.addon.elearning.dto.Breadcrumb;
 import org.exoplatform.addon.elearning.dto.Theme;
 import org.exoplatform.addon.elearning.storage.ThemeStorage;
 import org.exoplatform.addon.elearning.util.UserUtil;
@@ -10,6 +11,7 @@ import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ThemeService implements ResourceContainer {
@@ -35,19 +37,31 @@ public class ThemeService implements ResourceContainer {
 
   public Theme updateTheme(Theme theme) {
     theme.setLastModifiedDate(System.currentTimeMillis());
-    return themeStorage.updateTheme(theme);
+    Theme updatedTheme = themeStorage.updateTheme(theme);
+    updatedTheme.setBreadcrumbs(getThemeBreadcrumbs(updatedTheme));
+    return updatedTheme;
   }
 
   public List<Theme> getAllThemes(int offset, int limit) {
-    return themeStorage.getAllThemes();
+    List<Theme> themes = themeStorage.getAllThemes();
+    for (Theme theme : themes) {
+      theme.setBreadcrumbs(getThemeBreadcrumbs(theme));
+    }
+    return themes;
   }
 
   public Theme getThemeById(Long id) {
-    return themeStorage.getThemeById(id);
+    Theme theme = themeStorage.getThemeById(id);
+    theme.setBreadcrumbs(getThemeBreadcrumbs(theme));
+    return theme;
   }
 
   public List<Theme> findAllThemesByName(String themeName, int offset, int limit) {
-    return themeStorage.findAllThemesByName(themeName);
+    List<Theme> themes = themeStorage.findAllThemesByName(themeName);
+    for (Theme theme : themes) {
+      theme.setBreadcrumbs(getThemeBreadcrumbs(theme));
+    }
+    return themes;
   }
 
   public Theme createTheme(Theme theme, Long parentId, String spaceName) {
@@ -76,11 +90,31 @@ public class ThemeService implements ResourceContainer {
     theme.setLastModifiedDate(System.currentTimeMillis());
 
     theme = themeStorage.createTheme(theme);
+    theme.setBreadcrumbs(getThemeBreadcrumbs(theme));
     return theme;
   }
 
+  private List<Breadcrumb> getThemeBreadcrumbs(Theme theme) {
+    Theme parentTheme;
+    List<Breadcrumb> breadcrumbs = new ArrayList<>();
+    breadcrumbs.add(new Breadcrumb(theme.getId(), theme.getName(), false));
+    Long parentId = theme.getParentId();
+    while (parentId != null) {
+      parentTheme = getThemeById(parentId);
+      breadcrumbs.add(new Breadcrumb(parentTheme.getId(), parentTheme.getName(), false));
+      parentId = parentTheme.getParentId();
+    }
+    breadcrumbs.add(new Breadcrumb(null, theme.getSpaceName(), false));
+    Collections.reverse(breadcrumbs);
+    return breadcrumbs;
+  }
+
   public List<Theme> findThemesBySpaceName(String spaceName, boolean isRoot, String query, int offset, int limit) {
-    return themeStorage.findThemesBySpaceName(spaceName, isRoot, query, offset, limit);
+    List<Theme> themes = themeStorage.findThemesBySpaceName(spaceName, isRoot, query, offset, limit);
+    for (Theme theme : themes) {
+      theme.setBreadcrumbs(getThemeBreadcrumbs(theme));
+    }
+    return themes;
   }
 
   public long countFoundThemesBySpaceName(String spaceName, boolean isRoot, String query) {
@@ -92,6 +126,10 @@ public class ThemeService implements ResourceContainer {
   }
 
   public List<Theme> retrieveChildThemes(long parentThemeId, String query, int offset, int limit) {
-    return themeStorage.retrieveChildThemes(parentThemeId, query, offset, limit);
+    List<Theme> themes = themeStorage.retrieveChildThemes(parentThemeId, query, offset, limit);
+    for (Theme theme : themes) {
+      theme.setBreadcrumbs(getThemeBreadcrumbs(theme));
+    }
+    return themes;
   }
 }

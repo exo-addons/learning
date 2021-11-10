@@ -174,6 +174,28 @@ public class ThemeRestService implements ResourceContainer {
   }
 
   @GET
+  @Path("findThemeById/{id}")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Get Theme by id", httpMethod = "GET", response = Response.class, notes = "This returns Theme")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response findThemeById(@ApiParam(value = "themeId", required = true) @PathParam("id") Long themeId) {
+    Theme theme;
+    try {
+      theme = themeService.getThemeById(themeId);
+      if (theme == null) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+      }
+    } catch (Exception e) {
+      LOG.error("Could not get all Themes", e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(theme, MediaType.APPLICATION_JSON).build();
+
+  }
+
+  @GET
   @Path("getChildThemes")
   @RolesAllowed("users")
   @ApiOperation(value = "Get Themes", httpMethod = "GET", response = Response.class, notes = "This returns Themes")

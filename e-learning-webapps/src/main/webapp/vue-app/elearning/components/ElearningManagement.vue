@@ -24,7 +24,7 @@ export default {
   },
 
   created() {
-    this.$root.$on('parent-theme-updated', (updatedParent) => {
+    this.$root.$on('parent-theme-updated', updatedParent => {
       this.parentTheme = updatedParent;
     });
     this.$root.$on('displayThemeContent', theme => {
