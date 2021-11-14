@@ -12,4 +12,12 @@
       <page-reference>portal::global::elearning-editor</page-reference>
     </node>
   </page-nodes>
+  <page-nodes>
+    <node>
+      <name>elearning-preview</name>
+      <label>#{portal.global.elearning.preview}</label>
+      <visibility>SYSTEM</visibility>
+      <page-reference>portal::global::elearning-preview</page-reference>
+    </node>
+  </page-nodes>
 </node-navigation>
