@@ -7,7 +7,8 @@ let config = {
   // can use multiple entry
   entry: {
     elearning: './src/main/webapp/vue-app/elearning/main.js',
-    elearningEditor:'./src/main/webapp/vue-app/elearning-editor/main.js'
+    elearningEditor:'./src/main/webapp/vue-app/elearning-editor/main.js',
+    elearningPreview: './src/main/webapp/vue-app/elearning-preview/main.js'
   },
   output: {
     filename: 'js/[name].bundle.js',

@@ -38,4 +38,23 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:/
 			<keywords>Elearning Editor eXo addon</keywords>
 		</portlet-info>
 	</portlet>
+
+	<portlet>
+		<portlet-name>ElearningPreview</portlet-name>
+		<display-name xml:lang="EN">Elearning Preview Application</display-name>
+		<portlet-class>org.exoplatform.commons.api.portlet.GenericDispatchedViewPortlet</portlet-class>
+		<init-param>
+      		<name>portlet-view-dispatched-file-path</name>
+      		<value>/html/elearningPreview.html</value>
+     	</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<resource-bundle>locale.addon.elearning</resource-bundle>
+		<portlet-info>
+			<title>Elearning Preview eXo addon</title>
+			<keywords>Elearning Preview eXo addon</keywords>
+		</portlet-info>
+	</portlet>
 </portlet-app>

@@ -16,6 +16,13 @@
     <css-path>/skin/css/elearning.css</css-path>
   </portlet-skin>
 
+  <portlet-skin>
+    <application-name>exo-elearning</application-name>
+    <portlet-name>ElearningPreview</portlet-name>
+    <skin-name>Enterprise</skin-name>
+    <css-path>/skin/css/elearning.css</css-path>
+  </portlet-skin>
+
   <portlet>
     <name>Elearning</name>
     <module>
@@ -66,8 +73,44 @@
         <module>vuetify</module>
       </depends>
       <depends>
+        <module>userPopupPlugin</module>
+      </depends>
+      <depends>
         <module>commons-editor</module>
         <as>editor</as>
+      </depends>
+      <depends>
+        <module>userPopupPlugin</module>
+      </depends>
+      <depends>
+        <module>eXoVueI18n</module>
+      </depends>
+      <depends>
+        <module>jquery</module>
+        <as>$</as>
+      </depends>
+    </module>
+  </portlet>
+
+
+  <portlet>
+    <name>ElearningPreview</name>
+    <module>
+      <script>
+        <minify>false</minify>
+        <path>/js/elearningPreview.bundle.js</path>
+      </script>
+      <depends>
+        <module>commonVueComponents</module>
+      </depends>
+      <depends>
+        <module>extensionRegistry</module>
+      </depends>
+      <depends>
+        <module>vue</module>
+      </depends>
+      <depends>
+        <module>vuetify</module>
       </depends>
       <depends>
         <module>userPopupPlugin</module>
