@@ -5,7 +5,7 @@
       ref="tutorialDisplayDrawer"
       right>
       <template slot="title">
-        {{ $t('addon.elearning.tutorial.details') }}  
+        {{ $t('addon.elearning.tutorial.form.details.label') }}  
       </template>
       <template slot="content">
         <div v-if="tuto">
@@ -39,7 +39,6 @@
 export default {
   data() {
     return {
-      errors: [],
       tuto: null,
       dateTimeFormat: {
         day: 'numeric',
@@ -62,7 +61,7 @@ export default {
         .then((data) => {
           this.tuto = data;
         })
-        .catch((e) => this.errors.push(e));
+        .catch((e) => console.error('Error when retrieving tutorial', e));
     }
   }
 };

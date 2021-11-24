@@ -1,25 +1,22 @@
 <template>
-  <div id="themes_card_list">
-    <v-container>
-      <v-row class="theme_cards_row border-box-sizing">
-        <v-col
-          v-for="theme in themesList"
-          :key="theme.id"
-          :id="'theme-' + theme.id"
-          class="theme_cards"
-          cols="12"
-          md="6"
-          lg="4"
-          xl="3">
-          <theme-card 
-            :space="space"
-            :theme="theme"
-            :can-update="canUpdate"
-            @updateTheme="openThemeDrawerForUpdate"
-            @deleteTheme="openDeleteModal" />
-        </v-col>
-      </v-row>
-    </v-container>
+  <div id="themes_card_list" :class="!themesList.length ? 'empty' : ''">
+    <v-row class="theme_cards_row border-box-sizing" dense>
+      <v-col
+        v-for="theme in themesList"
+        class="theme_cards pa-4"
+        cols="12"
+        md="6"
+        lg="4"
+        xl="3"
+        :key="theme.id">
+        <theme-card 
+          :space="space"
+          :theme="theme"
+          :can-update="canUpdate"
+          @updateTheme="openThemeDrawerForUpdate"
+          @deleteTheme="openDeleteModal" />
+      </v-col>
+    </v-row>
     <theme-management-drawer
       ref="themeManagementDrawer"
       :theme-to-update="themeToUpdate"
@@ -29,10 +26,10 @@
       @themeUpdated="closeDrawerAfterThemeUpdate" />
     <exo-confirm-dialog
       ref="confirmDialog"
-      :message="$t('addon.elearning.theme.deleteConf')"
-      :title="$t('addon.elearning.tutorial.confirmD')"
-      :ok-label="$t('addon.elearning.tutorial.confirm')"
-      :cancel-label="$t('addon.elearning.tutorial.cancel')"
+      :message="$t('addon.elearning.theme.form.delete.confirm')"
+      :title="$t('addon.elearning.theme.form.delete.title')"
+      :ok-label="$t('addon.elearning.theme.form.confirm')"
+      :cancel-label="$t('addon.elearning.theme.form.cancel')"
       @ok="deleteTheme" />
   </div>
 </template>
@@ -43,10 +40,6 @@ export default {
     spaceName: {
       type: String,
       default: ''
-    },
-    space: {
-      type: Object,
-      default: null
     },
     parentTheme: {
       type: Object,
@@ -62,11 +55,11 @@ export default {
       themesList: [],
       themesCount: 0,
       canUpdate: false,
+      space: null,
       offset: 0,
       limit: 0,
       themeToUpdate: null,
       deleteId: null,
-      errors: [],
     };
   },
   watch: {
@@ -109,16 +102,21 @@ export default {
         this.canUpdate = data.canUpdate;
         this.space = data.space;
         this.themesList = data.themeList;
-      }).catch((e) => this.errors.push(e));
+      }).catch((e) => console.error('Error when retrieving themes', e));
     },
     getThemeChildren() {
       return this.$themeService.getChildThemes(this.spaceName, this.parentTheme.id, this.keyword, this.offset, this.limit).then(data => {
         this.themesCount = data.count;
         this.canUpdate = data.canUpdate;
+        this.space = data.space;
         this.themesList = data.themeList;
-      }).catch((e) => this.errors.push(e));
+      }).catch((e) => console.error('Error when retrieving children themes', e));
     },
     addCreatedTheme(addedTheme) {
+      this.$root.$emit('show-alert', {
+        message: this.$t('addon.elearning.theme.message.created'),
+        type: 'success',
+      });
       this.themesList.unshift(addedTheme);
       this.$refs.themeManagementDrawer.close();
     },
@@ -127,6 +125,10 @@ export default {
       this.$refs.themeManagementDrawer.open();
     },
     closeDrawerAfterThemeUpdate(updatedTheme) {
+      this.$root.$emit('show-alert', {
+        message: this.$t('addon.elearning.theme.message.updated'),
+        type: 'success',
+      });
       const index = this.themesList.findIndex(theme => theme.id === updatedTheme.id);
       this.themesList.splice(index, 1, updatedTheme);
       this.themeToUpdate = null;
@@ -138,11 +140,15 @@ export default {
     },
     deleteTheme() {
       return this.$themeService.deleteTheme(this.deleteId).then(() => {
+        this.$root.$emit('show-alert', {
+          message: this.$t('addon.elearning.theme.message.deleted'),
+          type: 'success',
+        });
         this.confirmDialog = false;
         const index = this.themesList.findIndex(theme => theme.id === this.deleteId);
         this.themesList.splice(index, 1);
       }).catch((e) => {
-        console.error('Error deleting theme', e);
+        console.error('Error when deleting theme', e);
         this.confirmDialog = false;
       });
     }

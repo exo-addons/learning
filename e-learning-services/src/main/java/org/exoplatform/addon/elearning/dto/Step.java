@@ -25,5 +25,5 @@ public class Step implements Serializable {
 
   private Long tutorialId;
 
-  private List<Attachment> attachments;
+  private List<Long> attachmentsIds;
 }

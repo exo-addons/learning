@@ -5,6 +5,10 @@
   min-height: 86vh;
   padding: 20px;
 
+  .v-alert {
+    z-index: 99999 !important;
+  }
+
   //custom colors
   .no_border_color {
     background: #eeeeee;
@@ -128,247 +132,9 @@
   #themes_dashboard, #theme-tutorial-mix-dashboard {
     max-height: max-content;
 
-    #tuto_toolbar_prom.v-icon {
-      color: @btnPrimaryBackground !important;
-    }
-
-    #themes_card_list {
-      padding: 10px;
-      position: relative;
-
-      .container {
-        padding-left: 0px !important;
-        padding-right: 0px !important;
-      }
-
-      .theme_cards_row {
-        position: relative;
-        display: flex;
-        align-items: center;
-
-        .theme_cards {
-          position: relative;
-
-          .theme_card_menu {
-            right: 40px;
-            left: auto !important;
-            top: 45px !important;
-
-            .card_menu_list.v-list {
-              padding-top: 5px !important;
-              padding-bottom: 5px !important;
-
-              .v-list-item {
-                min-height: 5px;
-                padding-left: 10px !important;
-                padding-right: 10px !important;
-                padding-top: 3px !important;
-                padding-bottom: 3px !important;
-              }
-
-              .menu_list_items {
-                .theme_menu_icon.v-icon {
-                  color: @primaryColor;
-                  font-size: 20px;
-                }
-
-                .theme_menu_text {
-                  font-size: 0.769rem !important;
-                }
-              }
-
-              .noColorLabel {
-                border: 1px solid @borderColor;
-                cursor: pointer;
-              }
-
-              .themeColorPicker {
-                width: 144px;
-                max-width: 144px;
-
-                .themeColorCell {
-                  width: 20px;
-                  height: 20px;
-                  min-width: 20px;
-                  min-height: 20px;
-                  margin: 2px;
-                  cursor: pointer;
-                }
-
-                .isSelected {
-                  position: relative;
-                  text-align: center;
-
-                  &:before {
-                    content: '\e9c6';
-                    font-family: 'PLF-FONT-ICONS' !important;
-                    color: white;
-                    font-size: 14px;
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        #theme_card {
-          position: relative;
-
-          #theme_card_footer {
-            height: 5px;
-            position: relative;
-          }
-
-          .theme_items {
-            box-shadow: none !important;
-            border-left: .1px solid rgba(87, 141, 201, .3) !important;
-            border-top: .1px solid rgba(87, 141, 201, .3) !important;
-            border-right: .1px solid rgba(87, 141, 201, .3) !important;
-            position: relative;
-
-            .theme_card_toolbar {
-              margin-top: 10px;
-              position: relative;
-
-              #theme_card_title {
-                cursor: pointer;
-                width: 100% !important;
-                justify-content: center;
-              }
-
-              .theme_card_menu_icon {
-                color: rgba(87, 141, 201, .3) !important;
-                float: right;
-              }
-
-            }
-
-            .theme_card_content {
-              height: 40px !important;
-              display: flex;
-              margin-top: 15px !important;
-
-              .theme_card_space_avatar.v-avatar {
-                display: inline-flex;
-                align-items: center;
-              }
-
-              .theme_card_space_name {
-                display: inline-flex;
-                align-items: center;
-                margin-left: 10px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  #theme_tutorial_dashboard_toolbar {
-    #themeTutorialDashboardToolbar {
-
-      ul {
-        li {
-          color: @primaryColor;
-        }
-
-        li:last-child {
-          color: @textColor;
-          cursor: default;
-        }
-      }
-
-      .breadcrumb {
-        cursor: pointer;
-      }
-
-      .add_them_tutorial_wrapper {
-        position: relative;
-
-        #theme_tutorial_add_btn.v-icon {
-          color: @btnPrimaryBackground !important;
-        }
-      }
-
-      .tutorial_Dashboard_menu {
-        right: 280px;
-        left: auto !important;
-        top: 48px !important;
-
-        .toolbar_menu_list.v-list {
-          padding-top: 5px !important;
-          padding-bottom: 5px !important;
-
-          .v-list-item {
-            min-height: 5px;
-            padding-left: 10px !important;
-            padding-right: 10px !important;
-            padding-top: 3px !important;
-            padding-bottom: 3px !important;
-          }
-
-          .toolbar_menu_list_items {
-            .toolbar_menu_icon.v-icon {
-              color: @primaryColor;
-              font-size: 20px;
-            }
-
-            .toolbar_menu_text {
-              font-size: 0.769rem !important;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  #themes_management {
-    .theme_drawer_btn_add.v-btn {
-      color: @btnPrimaryColor !important;
-      background: @btnPrimaryBackground !important;
-      position: relative;
-      float: right;
-      margin-left: 10px;
-      box-shadow: none !important;
-    }
-
-    .theme_drawer_btn_add.v-btn:disabled {
-      color: @btnPrimaryColor !important;
-      background: @btnPrimaryDisableBackground !important;
-      position: relative;
-      float: right;
-      margin-left: 10px;
-      box-shadow: none !important;
-    }
-
-    .exo_cancel_btn {
-      position: relative;
-      float: right;
-      box-shadow: none !important;
-      border: .1px solid rgba(87, 141, 201, .3) !important;
-    }
-  }
-
-  .theme_title_label {
-    font-weight: 600;
-    margin-left: 20px;
-    margin-top: 20px;
-  }
-
-  .primary_theme_input {
-    width: 75%;
-    margin-left: 20px;
-  }
-
-
-  /********* Tutorials ***********/
-
-  #theme-tutorial-mix-dashboard {
-    max-height: max-content;
-
     #theme_tutorial_dashboard_toolbar {
       #themeTutorialDashboardToolbar {
+        z-index: 1;
 
         ul {
           li {
@@ -425,166 +191,169 @@
       }
     }
 
+    .v-card__subtitle {
+      min-height: 54px;
+    }
+
+    #tuto_toolbar_prom.v-icon {
+      color: @btnPrimaryBackground !important;
+    }
+
+    #themes_card_list.empty {
+      padding: 0;
+    }
+
+    #themes_card_list {
+      padding: 10px;
+
+      .theme_cards_row {
+        .theme_cards {
+          #theme_card {
+            #theme_card_title {
+              cursor: pointer;
+            }
+
+            .theme_card_menu {
+              left: 44% !important;
+              top: 20% !important;
+
+              .card_menu_list.v-list {
+                .v-list-item {
+                  min-height: 5px;
+                  padding-left: 10px !important;
+                  padding-right: 10px !important;
+                  padding-top: 3px !important;
+                  padding-bottom: 3px !important;
+                }
+
+                .menu_list_items {
+                  .theme_menu_icon.v-icon {
+                    color: @primaryColor;
+                    font-size: 20px;
+                  }
+
+                  .theme_menu_text {
+                    font-size: 0.769rem !important;
+                  }
+                }
+
+                .noColorLabel {
+                  border: 1px solid @borderColor;
+                  cursor: pointer;
+                }
+
+                .themeColorPicker {
+                  width: 144px;
+                  max-width: 144px;
+
+                  .themeColorCell {
+                    width: 20px;
+                    height: 20px;
+                    min-width: 20px;
+                    min-height: 20px;
+                    margin: 2px;
+                    cursor: pointer;
+                  }
+
+                  .isSelected {
+                    position: relative;
+                    text-align: center;
+
+                    &:before {
+                      content: '\e9c6';
+                      font-family: 'PLF-FONT-ICONS' !important;
+                      color: white;
+                      font-size: 14px;
+                    }
+                  }
+                }
+              }
+            }
+
+            .theme_card_content {
+              margin-top: 15px !important;
+
+              .theme_card_space_avatar.v-avatar {
+                display: inline-flex;
+                align-items: center;
+              }
+            }
+
+            .theme_card_footer {
+              height: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #themes_management {
+    .theme_drawer_btn_add.v-btn {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
+
+    .theme_drawer_btn_add.v-btn:disabled {
+      color: @btnPrimaryColor !important;
+      background: @btnPrimaryDisableBackground !important;
+      position: relative;
+      float: right;
+      margin-left: 10px;
+      box-shadow: none !important;
+    }
+
+    .exo_cancel_btn {
+      position: relative;
+      float: right;
+      box-shadow: none !important;
+      border: .1px solid rgba(87, 141, 201, .3) !important;
+    }
+  }
+
+  .theme_title_label {
+    font-weight: 600;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+
+  .primary_theme_input {
+    width: 75%;
+    margin-left: 20px;
+  }
+
+
+  /********* Tutorials ***********/
+
+  #theme-tutorial-mix-dashboard {
+    max-height: max-content;
+
     #tutos_card_list {
       padding: 10px;
-      position: relative;
       background: @baseBackgroundDefault !important;
 
-      .container {
-        padding-left: 0px !important;
-        padding-right: 0px !important;
-      }
-
       .tuto_cards_row {
-        position: relative;
-        display: flex;
-        align-items: center;
-
         #tutorial_card {
-          position: relative;
-
-          .tuto_items {
-            box-shadow: none !important;
-            border-left: .1px solid rgba(87, 141, 201, .3) !important;
-            border-top: .1px solid rgba(87, 141, 201, .3) !important;
-            border-right: .1px solid rgba(87, 141, 201, .3) !important;
-            position: relative;
-
-            .tuto_card_toolbar {
-              justify-content: space-between;
-              margin-top: 10px;
-              position: relative;
-
-              .tuto_card_menu_info_icon {
-                color: rgba(87, 141, 201, .3) !important;
-                float: left;
-              }
-
-              #tuto_card_title {
-                width: 100% !important;
-                justify-content: center;
-
-                #tuto_card_title_draft_icon {
-                  margin-right: 5px;
-                  color: @greyColor;
-                }
-              }
-
-              .tuto_card_menu_icon {
-                color: rgba(87, 141, 201, .3) !important;
-                float: right;
-              }
-            }
-
-            .tuto_card_content {
-              height: 40px !important;
-              display: flex;
-              margin-top: 15px !important;
-
-              .tuto_card_space_avatar.v-avatar {
-                display: inline-flex;
-                align-items: center;
-              }
-
-              .tuto_card_space_name {
-                display: inline-flex;
-                align-items: center;
-                margin-left: 10px;
-              }
-            }
-          }
-
-          .tuto_items_archived {
-            box-shadow: none !important;
-            border-left: .1px solid rgba(87, 141, 201, .3) !important;
-            border-top: .1px solid rgba(87, 141, 201, .3) !important;
-            border-right: .1px solid rgba(87, 141, 201, .3) !important;
-            background-color: lightgray;
-            position: relative;
-
-            .tuto_card_toolbar {
-              justify-content: space-between;
-              margin-top: 10px;
-              position: relative;
-
-              .tuto_card_menu_info_icon {
-                color: rgba(87, 141, 201, .3) !important;
-                float: left;
-              }
-
-              #tuto_card_title {
-                width: 100% !important;
-                justify-content: center;
-
-                #tuto_card_title_draft_icon {
-                  margin-right: 5px;
-                  color: @greyColor;
-                }
-              }
-
-              .tuto_card_menu_icon {
-                color: rgba(87, 141, 201, .3) !important;
-                float: right;
-              }
-            }
-
-            .tuto_card_content {
-              height: 40px !important;
-              display: flex;
-              margin-top: 15px !important;
-
-              .tuto_card_space_avatar.v-avatar {
-                display: inline-flex;
-                align-items: center;
-              }
-
-              .tuto_card_space_name {
-                display: inline-flex;
-                align-items: center;
-                margin-left: 10px;
-              }
-            }
-          }
-
           #tuto_card_footer {
-            background: @darkBlue;
             height: 5px;
-            position: relative;
-          }
-
-          #tuto_card_footer_draft {
-            background: @greyColor;
-            height: 5px;
-            position: relative;
           }
         }
 
         .tuto_cards {
-          position: relative;
-
-          .theme_card_menu {
-            right: 36px;
-            left: auto !important;
-            top: 24px !important;
+          .tutorial_card_menu {
+            left: 43% !important;
+            top: 19% !important;
 
             .card_menu_list.v-list {
-              padding-top: 5px !important;
-              padding-bottom: 5px !important;
-
               .v-list-item {
                 min-height: 5px;
-                padding-left: 10px !important;
-                padding-right: 10px !important;
-                padding-top: 3px !important;
-                padding-bottom: 3px !important;
               }
 
               .menu_list_items {
-                .tuto_menu_icon.v-icon {
-                  color: @primaryColor;
-                  font-size: 20px;
-                }
-
                 .tuto_menu_text {
                   font-size: 0.769rem !important;
                 }
@@ -832,6 +601,10 @@
         .eLearningFormRightActions {
           position: relative;
           display: inline-flex;
+
+          .draftSavingStatus {
+            align-self: center;
+          }
 
           .settings-archive-btns {
             place-self: center;

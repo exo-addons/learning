@@ -27,13 +27,13 @@ public class ThemeMapper {
     theme.setManagers(themeEntity.getManagers());
     theme.setParticipators(themeEntity.getParticipators());
     theme.setColor(themeEntity.getColor());
-    theme.setLastModifiedDate(themeEntity.getLastModifiedDate());
-    theme.setCreator(themeEntity.getCreator());
-    List<Long> tutorialIds = themeEntity.getTutorialEntities().stream().map(TutorialEntity::getId).collect(Collectors.toList());
-    theme.setTutorialIds(tutorialIds);
     if (themeEntity.getParent() != null) {
       theme.setParentId(themeEntity.getParent().getId());
     }
+    theme.setChildrenIds(themeEntity.getChildren().stream().map(ThemeEntity::getId).collect(Collectors.toList()));
+    theme.setLastModifiedDate(themeEntity.getLastModifiedDate());
+    theme.setTutorialIds(themeEntity.getTutorialEntities().stream().map(TutorialEntity::getId).collect(Collectors.toList()));
+    theme.setCreator(themeEntity.getCreator());
     return theme;
   }
 
@@ -70,6 +70,9 @@ public class ThemeMapper {
     themeEntity.setManagers(theme.getManagers());
     themeEntity.setParticipators(theme.getParticipators());
     themeEntity.setColor(theme.getColor());
+    if (theme.getParentId() != null) {
+      themeEntity.setParent(themeDao.find(theme.getParentId()));
+    }
     if (theme.getChildrenIds() != null && !theme.getChildrenIds().isEmpty()) {
       List<ThemeEntity> children = new ArrayList<>();
       for (Long childId : theme.getChildrenIds()) {
@@ -78,13 +81,10 @@ public class ThemeMapper {
       themeEntity.setChildren(children);
     }
     themeEntity.setLastModifiedDate(theme.getLastModifiedDate());
-    themeEntity.setCreator(theme.getCreator());
     for (Long tutorialId : theme.getTutorialIds()) {
       themeEntity.addTutorialEntity(tutorialDao.find(tutorialId));
     }
-    if (theme.getParentId() != null) {
-      themeEntity.setParent(themeDao.find(theme.getParentId()));
-    }
+    themeEntity.setCreator(theme.getCreator());
     return themeEntity;
   }
 

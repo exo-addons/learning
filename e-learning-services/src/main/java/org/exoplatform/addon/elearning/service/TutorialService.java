@@ -61,14 +61,11 @@ public class TutorialService implements ResourceContainer {
   }
 
   public Step addTutorialStep(Step step, Long tutorialId) {
-    Tutorial tutorial = tutorialStorage.getTutorialById(tutorialId);
-    updateTutorial(tutorial);
-    return stepStorage.addStep(step, tutorial);
+    step.setTutorialId(tutorialId);
+    return stepStorage.addStep(step);
   }
 
   public Step updateTutorialStep(Step step) {
-    Tutorial tutorial = tutorialStorage.getTutorialById(step.getTutorialId());
-    updateTutorial(tutorial);
     return stepStorage.updateStep(step);
   }
 
@@ -78,5 +75,9 @@ public class TutorialService implements ResourceContainer {
 
   public long countTutorialsByTheme(Long themeId) {
     return tutorialStorage.countTutorialsByTheme(themeId);
+  }
+
+  public Step getTutorialStepByOrder(Long tutorialId, int stepOrder) {
+    return stepStorage.findStepByOrder(tutorialId, stepOrder);
   }
 }

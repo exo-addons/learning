@@ -11,6 +11,7 @@
               <span class="eLearningFormTitle ps-2">{{ eLearningFormTitle }}</span>
             </div>
             <div class="eLearningFormRightActions pr-7">
+              <span class="draftSavingStatus mr-7">{{ draftSavingStatus }}</span>
               <div class="settings-archive-btns mr-4">
                 <v-btn
                   icon
@@ -26,7 +27,7 @@
               <button
                 id="eLearningUpdateAndPost"
                 class="btn btn-primary primary px-6 py-1"
-                @click="postTutorial()">
+                @click="publishTutorial()">
                 {{ $t('addon.elearning.editor.button.publish') }}
               </button>
             </div>
@@ -117,40 +118,82 @@
 export default {
   data() {
     return {
+      stepOrder: 1,
       step: {
-        order: 1
+        id: '',
+        title: '',
+        content: '',
+        mediaLink: '',
+        imageFileId: '',
+        tutorialId: '',
       },
-      actualStep: {},
+      actualStep: {
+        id: '',
+        title: '',
+        content: '',
+        mediaLink: '',
+        imageFileId: '',
+        tutorialId: '',
+      },
       spaceId: '',
-      tutorialId: '',
+      tutorial: {},
       srcImageStep: '/exo-elearning/images/tutorial.png',
-      eLearningFormTitle: 'Tutorial 1',
       initActualStepDone: false,
       initDone: false,
+      postingStep: false,
+      publishingTutorial: false,
+      saveDraft: '',
+      savingDraft: false,
+      draftSavingStatus: '',
+      autoSaveDelay: 1000,
     };
   },
   computed: {
     stepTitlePlaceHolder() {
-      return this.$t('addon.elearning.editor.label.step.title', {0: this.step.order});
+      return this.$t('addon.elearning.editor.label.step.title', {0: this.stepOrder});
     },
     stepContentPlaceHolder() {
-      return this.$t('addon.elearning.editor.label.step.content', {0: this.step.order});
-    }
+      return this.$t('addon.elearning.editor.label.step.content', {0: this.stepOrder});
+    },
+    eLearningFormTitle() {
+      return this.tutorial && this.tutorial.title;
+    },
+    initCompleted() {
+      return this.initDone && (this.initActualStepDone || !this.tutorial.stepsIds.length);
+    },
+  },
+  watch: {
+    'step.title'() {
+      if (this.step.title !== this.actualStep.title) {
+        this.autoSave();
+      }
+    },
+    'step.content'() {
+      if (this.step.content !== this.actualStep.content) {
+        this.autoSave();
+      }
+    },
   },
   created() {
-    console.log('E-Learning Editor Created !!!');
+    window.addEventListener('beforeunload', () => {
+      if (!this.postingStep && this.step.id) {
+        const currentDraft = localStorage.getItem(`draftStepId-${this.step.id}`);
+        if (currentDraft) {
+          this.removeLocalStorageCurrentDraft();
+          const draftToPersist = JSON.parse(currentDraft);
+          this.persistStep(draftToPersist);
+        }
+      }
+    });
     const queryPath = window.location.search;
-    console.log('### queryPath: ', queryPath);
     const urlParams = new URLSearchParams(queryPath);
-    console.log('### urlParams: ', urlParams);
     if (urlParams.has('spaceId')) {
       this.spaceId = urlParams.get('spaceId');
     }
     if (urlParams.has('tutorialId')) {
-      this.tutorialId = urlParams.get('tutorialId');
+      const tutorialId = urlParams.get('tutorialId');
+      this.getTutorial(tutorialId);
     }
-    console.log('*** this.spaceId: ', this.spaceId);
-    console.log('*** this.tutorialId: ', this.tutorialId);
   },
   mounted() {
     this.init();
@@ -163,8 +206,25 @@ export default {
       this.setToolBarEffect();
       this.initDone = true;
     },
+    getTutorial(id) {
+      this.$tutoService.getTutorialById(id).then(tutorial => {
+        this.tutorial = tutorial;
+        if (this.tutorial.stepsIds.length > 0) {
+          this.stepOrder = this.tutorial.stepsIds.length;
+          this.getStepByOrder(this.tutorial.id, this.stepOrder);
+        }
+      }).catch(e => {
+        console.error('Error when retrieving tutorial', e);
+      });
+    },
+    getStepByOrder(tutorialId, order) {
+      this.$tutoService.getTutorialStepByOrder(tutorialId, order).then(step => {
+        if (step) {
+          this.fillStep(step);
+        }
+      });
+    },
     fillStep(data) {
-      this.initActualStepDone = false;
       if (data) {
         this.step = data;
         CKEDITOR.instances['stepContent'].setData(data.content);
@@ -172,13 +232,141 @@ export default {
           id: this.step.id,
           title: this.step.title,
           content: this.step.content,
-          author: this.step.author,
-          owner: this.step.owner,
-          toBePublished: this.step.toBePublished,
+          mediaLink: this.step.mediaLink,
+          imageFileId: this.step.imageFileId,
+          order: this.step.order,
+          tutorialId: this.step.tutorialId,
         };
+        this.initActualStepDone = true;
       }
     },
-    initCKEditor: function() {
+    autoSave() {
+      // No draft saving if init not done or in edit mode for the moment
+      if (!this.initCompleted) {
+        return;
+      }
+      // if the Step is being posted, no need to autosave anymore
+      if (this.postingStep) {
+        return;
+      }
+      // if the tutorial is being published, no need to autosave anymore
+      if (this.publishingTutorial) {
+        return;
+      }
+      
+      clearTimeout(this.saveDraft);
+      this.saveDraft = setTimeout(() => {
+        this.savingDraft = true;
+        this.draftSavingStatus = this.$t('step.draft.savingDraftStatus');
+        this.$nextTick(() => {
+          this.saveStepDraft();
+        });
+      }, this.autoSaveDelay);
+    },
+    saveStepDraft() {
+      const draftStep = {
+        id: this.step.id ? this.step.id : '',
+        title: this.step.title,
+        content: this.step.content,
+        mediaLink: this.step.mediaLink,
+        imageFileId: this.step.imageFileId,
+        order: this.stepOrder,
+        tutorialId: this.step.tutorialId,
+      };
+
+      if (this.step.title || this.step.content) {
+        // if draft step not created persist it only the first time else update it in browser's localStorage
+        if (this.step.id) {
+          this.step.order = this.stepOrder;
+          localStorage.setItem(`draftStepId-${this.step.id}`, JSON.stringify(this.step));
+          this.actualStep = {
+            title: draftStep.title,
+            content: draftStep.content,
+          };
+          setTimeout(() => {
+            this.draftSavingStatus = this.$t('step.draft.savedDraftStatus');
+          }, this.autoSaveDelay/2);
+        } else {
+          this.persistStep(draftStep);
+        }
+      } else {
+        // delete draft
+        this.deleteStep();
+      }
+    },
+    persistStep(step) {
+      if (this.step.title || this.step.content) {
+        this.postingStep = true;
+        if (!this.step.id) {
+          this.$tutoService.saveStep(step, this.tutorial.id).then(savedStep => {
+            this.actualStep = {
+              id: savedStep.id,
+              title: savedStep.title,
+              content: savedStep.content,
+              mediaLink: savedStep.mediaLink,
+              imageFileId: savedStep.imageFileId,
+              order: savedStep.order,
+              tutorialId: savedStep.tutorialId,
+            };
+            // TODO consider attachments
+            this.step = savedStep;
+            localStorage.setItem(`draftStepId-${this.step.id}`, JSON.stringify(savedStep));
+          }).then(() => {
+            this.postingStep = false;
+            this.savingDraft = false;
+            setTimeout(() => {
+              this.draftSavingStatus = this.$t('step.draft.savedDraftStatus');
+            }, this.autoSaveDelay / 2);
+          }).catch(e => {
+            console.error('Error when saving step', e);
+            // this.$root.$emit('show-alert', {
+            //   type: 'error',
+            //   message: this.$t(`notes.message.${e.message}`)
+            // });
+          });
+        } else {
+          this.$tutoService.updateStep(step).catch(e => {
+            console.error('Error when saving step', e);
+          });
+        }
+      }
+    },
+    deleteStep() {
+      if (this.step.id) {
+        this.removeLocalStorageCurrentDraft();
+        this.$tutoService.deleteStep(this.step.id).then(() => {
+          this.draftSavingStatus = '';
+          //re-initialize data
+          this.step = {
+            id: '',
+            title: '',
+            content: '',
+            mediaLink: '',
+            imageFileId: '',
+            order: this.stepOrder,
+            tutorialId: this.tutorial.id,
+          };
+          this.actualStep = {
+            id: '',
+            title: '',
+            content: '',
+            mediaLink: '',
+            imageFileId: '',
+            order: this.stepOrder,
+            tutorialId: this.tutorial.id,
+          };
+        }).catch(e => {
+          console.error('Error when deleting draft step', e);
+        });
+      }
+    },
+    removeLocalStorageCurrentDraft() {
+      const currentDraft = localStorage.getItem(`draftStepId-${this.step.id}`);
+      if (currentDraft) {
+        localStorage.removeItem(`draftStepId-${this.step.id}`);
+      }
+    },
+    initCKEditor: function () {
       if (CKEDITOR.instances['stepContent'] && CKEDITOR.instances['stepContent'].destroy) {
         CKEDITOR.instances['stepContent'].destroy(true);
       }
@@ -209,14 +397,14 @@ export default {
         extraAllowedContent: 'table[!summary]; img[style,class,src,referrerpolicy,alt,width,height]; span(*)[*]{*}; span[data-atwho-at-query,data-atwho-at-value,contenteditable]; a[*];i[*];',
         removeButtons: '',
         toolbar: [
-          { name: 'format', items: ['Format'] },
-          { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'] },
-          { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote' ] },
-          { name: 'fontsize', items: ['FontSize'] },
-          { name: 'colors', items: [ 'TextColor' ] },
-          { name: 'align', items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-          { name: 'insert' },
-          { name: 'links', items: [ 'simpleLink','InsertOptions'] },
+          {name: 'format', items: ['Format']},
+          {name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat']},
+          {name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Blockquote']},
+          {name: 'fontsize', items: ['FontSize']},
+          {name: 'colors', items: ['TextColor']},
+          {name: 'align', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
+          {name: 'insert'},
+          {name: 'links', items: ['simpleLink', 'InsertOptions']},
         ],
         format_tags: 'p;h1;h2;h3',
         autoGrow_minHeight: self.stepFormContentHeight,
@@ -234,18 +422,18 @@ export default {
             CKEDITOR.instances['stepContent'].removeMenuItem('selectImageItem');
 
 
-            CKEDITOR.instances['stepContent'].contextMenu.addListener( function( element ) {
-              if ( element.getAscendant( 'table', true ) ) {
+            CKEDITOR.instances['stepContent'].contextMenu.addListener(function (element) {
+              if (element.getAscendant('table', true)) {
                 return {
                   tableProperties: CKEDITOR.TRISTATE_ON
                 };
               }
             });
             CKEDITOR.instances['stepContent'].addCommand('tableProperties', {
-              exec: function() {
-                if (CKEDITOR.instances['stepContent'].elementPath() && CKEDITOR.instances['stepContent'].elementPath().contains( 'table', 1 )){
-                  const tableSummary = CKEDITOR.instances['stepContent'].elementPath().contains( 'div', 1 ).$.firstChild.innerText;
-                  const table=CKEDITOR.instances['stepContent'].elementPath().contains( 'table', 1 ).getAttributes();
+              exec: function () {
+                if (CKEDITOR.instances['stepContent'].elementPath() && CKEDITOR.instances['stepContent'].elementPath().contains('table', 1)) {
+                  const tableSummary = CKEDITOR.instances['stepContent'].elementPath().contains('div', 1).$.firstChild.innerText;
+                  const table = CKEDITOR.instances['stepContent'].elementPath().contains('table', 1).getAttributes();
                   self.$refs.stepTablePlugins.open(table, tableSummary);
                 }
 
@@ -253,8 +441,8 @@ export default {
             });
             $(CKEDITOR.instances['stepContent'].document.$)
               .find('.atwho-inserted')
-              .each(function() {
-                $(this).on('click', '.remove', function() {
+              .each(function () {
+                $(this).on('click', '.remove', function () {
                   $(this).closest('[data-atwho-at-query]').remove();
                 });
               });
@@ -267,7 +455,7 @@ export default {
           },
         }
       });
-      this.instance =CKEDITOR.instances['stepContent'];
+      this.instance = CKEDITOR.instances['stepContent'];
     },
     setToolBarEffect() {
       const element = CKEDITOR.instances['stepContent'] ;
@@ -291,24 +479,24 @@ export default {
         elementNewTop.classList.add('greyComposerEffect');
       });
     },
-    postTutorial() {
-      console.log('Post Tutorial !!!');
-    },
-    archiveTutorial() {
-      console.log('archive Tutorial !');
-    },
-    openSettings() {
-      console.log('open Settings !');      
-    },
-    preview() {
-      console.log('PREVIEW !');
-    },
-    addOnlineVideo() {
-      console.log('Add Online Video !');
-    },
-    addPicture() {
-      console.log('Add Picture !');
-    }
+    // publishTutorial() {
+    //   TODO
+    // },
+    // archiveTutorial() {
+    //   TODO
+    // },
+    // openSettings() {
+    //   TODO      
+    // },
+    // preview() {
+    //   TODO
+    // },
+    // addOnlineVideo() {
+    //   TODO
+    // },
+    // addPicture() {
+    //   TODO
+    // },
   }
 };
 </script>

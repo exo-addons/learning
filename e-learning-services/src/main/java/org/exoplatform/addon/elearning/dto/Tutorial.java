@@ -26,10 +26,10 @@ public class Tutorial implements Serializable {
 
   private Long lastModifiedDate;
 
-  private List<Long> themeIds = new ArrayList<Long>();
+  private List<Long> themeIds = new ArrayList<>();
 
   private Status status;
 
-  private List<Long> stepsIds = new ArrayList<Long>();
+  private List<Long> stepsIds = new ArrayList<>();
 
 }

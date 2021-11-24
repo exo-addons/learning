@@ -1,25 +1,22 @@
 <template>
   <div id="tutos_card_list">
     <template>
-      <v-container> 
-        <v-row class="tuto_cards_row border-box-sizing"> 
-          <v-col
-            class="tuto_cards"
-            cols="12"
-            md="6"
-            lg="4"
-            xl="3"
-            v-for="tutorial in tutorialsList"
-            :key="tutorial.id"
-            :id="'tutorial-' + tutorial.id">
-            <tutorial-card
-              :parent-theme="parentTheme"
-              :tutorial="tutorial"
-              :space="space"
-              :can-update="canUpdate" />
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-row class="tuto_cards_row border-box-sizing" dense>
+        <v-col
+          v-for="tutorial in tutorialsList"
+          class="tuto_cards pa-4"
+          cols="12"
+          md="6"
+          lg="4"
+          xl="3"
+          :key="tutorial.id">
+          <tutorial-card
+            :parent-theme="parentTheme"
+            :tutorial="tutorial"
+            :space="space"
+            :can-update="canUpdate" />
+        </v-col>
+      </v-row>
       <tutorial-management-drawer
         ref="tutorialManagementDrawer"
         :tutorial="tutorialToUpdate"
@@ -35,17 +32,13 @@
 <script>
 export default {
   props: {
+    spaceName: {
+      type: String,
+      default: ''
+    },
     parentTheme: {
       type: Object,
       default: null
-    },
-    space: {
-      type: Object,
-      default: null
-    },
-    canUpdate: {
-      type: Boolean,
-      default: false
     },
     keyword: {
       type: String,
@@ -55,6 +48,9 @@ export default {
   data() {
     return {
       tutorialsList: [],
+      tutorialsCount: 0,
+      space: null,
+      canUpdate: false,
       tutorialToUpdate: {
         id: null,
         title: null,
@@ -81,7 +77,6 @@ export default {
         author: null
       },
       newTitle: null,
-      errors: [],
     };
   },
   watch: {
@@ -143,14 +138,20 @@ export default {
 
     },
     getTutorialsByTheme() {
-      return this.$tutoService.getTutorialsByTheme(this.parentTheme.id, this.offset, this.limit).then(data => {
+      return this.$tutoService.getTutorialsByTheme(this.parentTheme.id, this.spaceName, this.keyword, this.offset, this.limit).then(data => {
         this.tutorialsList = data.tutorialList;
-      }).catch((e) => this.errors.push(e));
+        this.tutorialsCount = data.count;
+        this.space = data.space;
+        this.canUpdate = data.canUpdate;
+      }).catch((e) => console.error('Error when retrieving tutorials by theme', e));
     },
     getTutorialsByName() {
       return this.$tutoService.getTutorialsByName(this.parentTheme.id, this.keyword).then((data) => {
         this.tutorialsList = data.tutorialList;
-      }).catch((e) => this.errors.push(e));
+        this.tutorialsCount = data.count;
+        this.space = data.space;
+        this.canUpdate = data.canUpdate;
+      }).catch((e) => console.error('Error when retrieving tutorials by name', e));
     },
     getTutoDup(id) {
       return this.$tutoService.getTutorialById(id).then((data) => {
@@ -162,13 +163,13 @@ export default {
         this.tutoD.themeIds = this.dupTuto.themeIds;
         this.tutoD.author = this.dupTuto.author;
         this.duplicateTuto();
-      }).catch((e) => this.errors.push(e));
+      }).catch((e) => console.error('Error when retrieving tutorial', e));
     },
     duplicateTuto() {
       return this.$tutoService.addTutorial(this.tutoD).then(() => {
         this.$root.$emit('tutoDuplicated');
         this.getTutorialsByTheme();
-      }).catch((e) => this.errors.push(e));
+      }).catch((e) => console.error('Error when duplicating tutorial', e));
     },
     getTutoArch(id) {
       return this.$tutoService.getTutorialById(id).then((data) => {
@@ -180,14 +181,14 @@ export default {
         this.tutoA.themeIds = this.archTurto.themeIds;
         this.tutoA.author = this.archTurto.author;
         this.archiveTuto();
-      }).catch((e) => this.errors.push(e));
+      }).catch((e) => console.error('Error when retrieving tutorial', e));
     },
     archiveTuto() {
       return this.$tutoService.updateTutorial(this.tutoA).then(() => {
         this.$root.$emit('tutoArchived');
       }).then(() => {
         this.getTutorialsByTheme();
-      }).catch((e) => this.errors.push(e));
+      }).catch((e) => console.error('Error when archiving tutorial', e));
     },
     getTutoUnarch(id) {
       return this.$tutoService.getTutorialById(id).then((data) => {
@@ -199,14 +200,14 @@ export default {
         this.tutoA.themeIds = this.archTurto.themeIds;
         this.tutoA.author = this.archTurto.author;
         this.unarchiveTuto();
-      }).catch((e) => this.errors.push(e));
+      }).catch((e) => console.error('Error when retrieving tutorial', e));
     },
     unarchiveTuto() {
       return this.$tutoService.updateTutorial(this.tutoA).then(() => {
         this.$root.$emit('tutoUnarchived');
       }).then(() => {
         this.getTutorialsByTheme();
-      }).catch((e) => this.errors.push(e));
+      }).catch((e) => console.error('Error when withdrawing tutorial', e));
     },
   }
 };

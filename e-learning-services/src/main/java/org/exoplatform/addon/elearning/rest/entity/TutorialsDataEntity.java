@@ -14,5 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TutorialsDataEntity implements Serializable {
   private long count;
+  private boolean canUpdate;
+  private SpaceDataEntity space;
   List<Tutorial> tutorialList = new ArrayList<>();
 }

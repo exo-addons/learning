@@ -4,14 +4,18 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.lang3.StringUtils;
 import org.exoplatform.addon.elearning.dto.Step;
 import org.exoplatform.addon.elearning.dto.Tutorial;
+import org.exoplatform.addon.elearning.rest.entity.SpaceDataEntity;
 import org.exoplatform.addon.elearning.rest.entity.TutorialsDataEntity;
 import org.exoplatform.addon.elearning.service.TutorialService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.security.ConversationState;
+import org.exoplatform.social.core.space.model.Space;
+import org.exoplatform.social.core.space.spi.SpaceService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -28,8 +32,11 @@ public class TutorialRestService implements ResourceContainer {
 
   private TutorialService tutorialService;
 
-  public TutorialRestService(TutorialService tutorialService) {
+  private SpaceService spaceService;
+
+  public TutorialRestService(TutorialService tutorialService, SpaceService spaceService) {
     this.tutorialService = tutorialService;
+    this.spaceService = spaceService;
   }
 
   @POST
@@ -90,7 +97,27 @@ public class TutorialRestService implements ResourceContainer {
       LOG.error("Could not update Tutorial", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
-    return Response.status(Response.Status.OK).entity("Tutorial with id " + tutorial.getId() + " Updated").build();
+    return Response.ok(tutorial, MediaType.APPLICATION_JSON).build();
+  }
+
+  @GET
+  @Path("/getTutorialById/{tutorialId}")
+  @Produces(MediaType.APPLICATION_JSON)
+  @RolesAllowed("users")
+  @ApiOperation(value = "Get Tutorial by id", httpMethod = "GET", response = Response.class, notes = "This returns Tutorial by id")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response getTutorialById(@ApiParam(value = "tutorialId", required = true) @PathParam("tutorialId") Long tutorialId) {
+    Tutorial tutorial;
+    try {
+      tutorial = tutorialService.getTutorialById(tutorialId);
+    } catch (Exception e) {
+      LOG.error("Could not get Tutorial by id {}", tutorialId, e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(tutorial, MediaType.APPLICATION_JSON).build();
+
   }
 
   @GET
@@ -102,17 +129,25 @@ public class TutorialRestService implements ResourceContainer {
           @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
           @ApiResponse(code = 404, message = "Resource not found")})
   public Response getTutorialsByTheme(@ApiParam(value = "themeId", required = true) @PathParam("themeId") Long themeId,
+                                      @ApiParam(value = "Space Name", defaultValue = "") @QueryParam("spaceName") String spaceName,
+                                      @ApiParam(value = "Search term", defaultValue = "") @QueryParam("q") String query,
                                       @ApiParam(value = "Offset", defaultValue = "0") @QueryParam("offset") int offset,
                                       @ApiParam(value = "Limit", defaultValue = "-1") @QueryParam("limit") int limit) {
     if (limit == 0) {
       limit = -1;
     }
     TutorialsDataEntity dataEntities;
+    SpaceDataEntity spaceDataEntity = new SpaceDataEntity();
     List<Tutorial> tutorials;
     try {
       tutorials = tutorialService.getTutorialsByTheme(themeId, offset, limit);
       long count = tutorialService.countTutorialsByTheme(themeId);
-      dataEntities = new TutorialsDataEntity(count, tutorials);
+      if (StringUtils.isNotEmpty(spaceName)) {
+        Space space = spaceService.getSpaceByPrettyName(spaceName);
+        spaceDataEntity = new SpaceDataEntity(space.getId(), space.getDisplayName(), space.getPrettyName(), space.getAvatarUrl(), space.getUrl(), space.getGroupId());
+      }
+      // TODO check permissions
+      dataEntities = new TutorialsDataEntity(count, true, spaceDataEntity, tutorials);
 
     } catch (Exception e) {
       LOG.error("Could not get all Tutorials by ThemeId {}", themeId, e);
@@ -145,6 +180,8 @@ public class TutorialRestService implements ResourceContainer {
 
   }
 
+  //Step rest services
+
   @POST
   @Path("/addTutorialStep/{id}")
   @RolesAllowed("users")
@@ -172,8 +209,13 @@ public class TutorialRestService implements ResourceContainer {
           @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
           @ApiResponse(code = 404, message = "Resource not found")})
   public Response updateTutorialStep(@ApiParam(value = "Step to save", required = true) Step step) {
-    step = tutorialService.updateTutorialStep(step);
-    return Response.status(Response.Status.OK).entity("Tutorial Step with id " + step.getId() + " Updated").build();
+    try {
+      step = tutorialService.updateTutorialStep(step);
+    } catch (Exception e) {
+      LOG.error("Could not update Step", e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(step, MediaType.APPLICATION_JSON).build();
   }
 
   @DELETE
@@ -186,6 +228,27 @@ public class TutorialRestService implements ResourceContainer {
   public Response deleteTutorialStep(@ApiParam(value = "Tutorial step id", required = true) @PathParam("id") Long stepId) {
     tutorialService.deleteTutorialStep(stepId);
     return Response.status(Response.Status.OK).entity("Tutorial with id " + stepId + " Deleted").build();
+  }
+
+  @GET
+  @Path("/getTutorialStepByOrder/{tutorialId}/{stepOrder}")
+  @Produces(MediaType.APPLICATION_JSON)
+  @RolesAllowed("users")
+  @ApiOperation(value = "Get Tutorial Step by order", httpMethod = "GET", response = Response.class, notes = "This returns Tutorial Step by order")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response getTutorialStepByOrder(@ApiParam(value = "tutorialId", required = true) @PathParam("tutorialId") Long tutorialId,
+                                         @ApiParam(value = "stepOrder", required = true) @PathParam("stepOrder") int stepOrder) {
+    Step step;
+    try {
+      step = tutorialService.getTutorialStepByOrder(tutorialId, stepOrder);
+    } catch (Exception e) {
+      LOG.error("Could not get Tutorial by id {}", tutorialId, e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(step, MediaType.APPLICATION_JSON).build();
+
   }
 
 }

@@ -2,8 +2,7 @@
   <v-app>
     <div id="ElearningPreview">
       <h1>Hello Elearning Preview !</h1>
-    </div>
-    
+    </div>    
   </v-app>
 </template>
 
