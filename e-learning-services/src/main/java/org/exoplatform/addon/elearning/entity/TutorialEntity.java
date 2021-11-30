@@ -49,7 +49,7 @@ public class TutorialEntity {
   @Enumerated(EnumType.ORDINAL)
   private Status status;
 
-  @OneToMany(mappedBy = "tutorialEntity", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "tutorial", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
   private List<StepEntity> stepEntities = new ArrayList<>();
 
   public TutorialEntity() {

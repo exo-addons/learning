@@ -28,7 +28,7 @@ export function init() {
     .then(i18n => {
     // init Vue app when locale ressources are ready
       new Vue({
-        template: '<elearning-management></elearning-management>',
+        template: '<elearning-management id="elearning_app"></elearning-management>',
         i18n,
         vuetify,
       }).$mount('#elearning_app');

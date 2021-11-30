@@ -1,5 +1,6 @@
 package org.exoplatform.addon.elearning.storage;
 
+import org.exoplatform.addon.elearning.dao.StepDAO;
 import org.exoplatform.addon.elearning.dao.ThemeDao;
 import org.exoplatform.addon.elearning.dao.TutorialDao;
 import org.exoplatform.addon.elearning.dto.Tutorial;
@@ -13,15 +14,17 @@ import java.util.List;
 public class TutorialStorage {
   private TutorialDao tutorialDao;
   private ThemeDao themeDao;
+  private StepDAO stepDAO;
 
-  public TutorialStorage(TutorialDao tutorialDao, ThemeDao themeDao) {
+  public TutorialStorage(TutorialDao tutorialDao, ThemeDao themeDao, StepDAO stepDAO) {
     this.tutorialDao = tutorialDao;
     this.themeDao = themeDao;
+    this.stepDAO = stepDAO;
   }
 
   @ExoTransactional
   public Tutorial createTutorial(Tutorial tutorial, List<Long> themeIds) {
-    TutorialEntity tutorialEntity = tutorialDao.create(TutorialMapper.convertTutorialToEntity(tutorial, themeDao));
+    TutorialEntity tutorialEntity = tutorialDao.create(TutorialMapper.convertTutorialToEntity(tutorial, themeDao, stepDAO));
 
     for (Long themeId : themeIds) {
       ThemeEntity themeEntity = themeDao.find(themeId);
@@ -45,7 +48,7 @@ public class TutorialStorage {
   }
 
   public Tutorial updateTutorial(Tutorial tutorial) {
-    TutorialEntity tutorialEntity = TutorialMapper.convertTutorialToEntity(tutorial, themeDao);
+    TutorialEntity tutorialEntity = TutorialMapper.convertTutorialToEntity(tutorial, themeDao, stepDAO);
     tutorialEntity = tutorialDao.update(tutorialEntity);
     List<ThemeEntity> themeEntities = tutorialEntity.getThemeEntities();
     for (ThemeEntity themeEntity : themeEntities) {

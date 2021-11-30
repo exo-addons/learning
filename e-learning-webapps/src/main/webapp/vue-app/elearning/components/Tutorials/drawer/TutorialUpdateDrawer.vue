@@ -5,26 +5,26 @@
       ref="tutorialUpdateDrawer"
       right>
       <template slot="title">
-        {{ $t('addon.elearning.tutorial.updateF') }}     
+        {{ $t('addon.elearning.tutorial.update.form.title') }}     
       </template>
       <template slot="content">
         <v-form ref="form">
           <div id="id_update_form">
             <label class="tuto_title_label" :for="tutoUp.title">
-              {{ $t('addon.elearning.theme.label.title') }}  
+              {{ `${$t('addon.elearning.theme.form.title.label')}*` }}  
             </label>
             <v-text-field
               class="primary_tutorial_input"
               clearable
-              :placeholder="$t('addon.elearning.tutorial.label.title')"
+              :placeholder="$t('addon.elearning.tutorial.form.title.placeholder')"
               name="title"
               v-model="tutoUp.title" />
             <label class="tuto_description_label" :for="tutoUp.description">
-              {{ $t('addon.elearning.tutorial.label.description') }}  
+              {{ $t('addon.elearning.tutorial.for.description.label') }}  
             </label>
             <extended-textarea
               class="primary_text_area_input"
-              :placeholder="$t('addon.elearning.tutorial.label.description')"
+              :placeholder="$t('addon.elearning.tutorial.for.description.placeholder')"
               :max-length="255"
               name="description"
               v-model="tutoUp.description" />
@@ -36,9 +36,9 @@
           class="tuto_drawer_btn_update"
           @click="updateTutorial"
           :disabled="!isFormComplete">
-          {{ $t('addon.elearning.tutorial.confirm') }}
+          {{ $t('addon.elearning.tutorial.form.confirm') }}
         </v-btn>
-        <v-btn class="exo_cancel_btn" @click="$refs.form.reset()">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
+        <v-btn class="exo_cancel_btn" @click="$refs.form.reset()">{{ $t('addon.elearning.tutorial.form.clear') }}</v-btn>
       </template>
     </exo-drawer>
   </div>
@@ -49,7 +49,6 @@ export default {
     return {
       tutorialId: null,
       tutoU: null,
-      errors: [],
       themes: [],
       tutoUp: {
         id: 0,
@@ -84,7 +83,7 @@ export default {
           this.tutoUp.id = 0;
           this.$refs.tutorialUpdateDrawer.close();
         })
-        .catch((e) => this.errors.push(e));
+        .catch((e) => console.error('Error when updating tutorial', e));
     },
 
     getTutoU(id) {
@@ -97,7 +96,7 @@ export default {
           this.tutoUp.themeIds = this.tutoU.themeIds;
           this.tutoUp.author = this.tutoU.author;
         })
-        .catch((e) => this.errors.push(e));
+        .catch((e) => console.error('Error when retrieving tutorial', e));
     },
   }
 };

@@ -9,6 +9,11 @@ import java.util.List;
 @Entity
 @ExoEntity
 @Table(name = "EXO_E_LEARNING_STEP")
+@NamedQueries({
+        @NamedQuery(
+                name = "StepEntity.findStepByOrder",
+                query = "SELECT s FROM StepEntity s where s.tutorial.id = :tutorialId AND s.order = :stepOrder "
+        ),})
 public class StepEntity {
 
   @Id
@@ -19,7 +24,7 @@ public class StepEntity {
   @Column(name = "TITLE")
   private String title;
 
-  @Column(name = "CONTENT", length = 2000)
+  @Column(name = "CONTENT")
   private String content;
 
   @Column(name = "IMAGE_FILE_ID")
@@ -28,12 +33,12 @@ public class StepEntity {
   @Column(name = "MEDIA_LINK", length = 2000)
   private String mediaLink;
 
-  @Column(name = "ORDER")
+  @Column(name = "STEP_ORDER")
   private int order;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "TUTORIAL_ID", nullable = false)
-  private TutorialEntity tutorialEntity;
+  private TutorialEntity tutorial;
 
   @OneToMany(mappedBy = "stepEntity", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
   private List<AttachmentEntity> attachmentEntities = new ArrayList<>();
@@ -41,14 +46,14 @@ public class StepEntity {
   public StepEntity() {
   }
 
-  public StepEntity(Long id, String title, String content, Long imageFileId, String mediaLink, int order, TutorialEntity tutorialEntity, List<AttachmentEntity> attachmentEntities) {
+  public StepEntity(Long id, String title, String content, Long imageFileId, String mediaLink, int order, TutorialEntity tutorial, List<AttachmentEntity> attachmentEntities) {
     this.id = id;
     this.title = title;
     this.content = content;
     this.imageFileId = imageFileId;
     this.mediaLink = mediaLink;
     this.order = order;
-    this.tutorialEntity = tutorialEntity;
+    this.tutorial = tutorial;
     this.attachmentEntities = attachmentEntities;
   }
 
@@ -100,12 +105,12 @@ public class StepEntity {
     this.order = order;
   }
 
-  public TutorialEntity getTutorialEntity() {
-    return tutorialEntity;
+  public TutorialEntity getTutorial() {
+    return tutorial;
   }
 
-  public void setTutorialEntity(TutorialEntity tutorialEntity) {
-    this.tutorialEntity = tutorialEntity;
+  public void setTutorial(TutorialEntity tutorial) {
+    this.tutorial = tutorial;
   }
 
   public List<AttachmentEntity> getAttachmentEntities() {

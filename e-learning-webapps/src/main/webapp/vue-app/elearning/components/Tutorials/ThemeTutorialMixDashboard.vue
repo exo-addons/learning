@@ -2,62 +2,45 @@
   <div id="theme-tutorial-mix-dashboard">
     <theme-tutorial-mix-dashboard-toolbar
       :parent-theme="parentTheme"
-      :space="space"
       :keyword="keyword"
       @keyword-changed="keyword = $event" />
     <theme-card-list
-      :space-name="space && space.prettyName"
-      :space="space"
+      :space-name="spaceName"
       :parent-theme="parentTheme"
       :keyword="keyword" />
     <v-divider v-show="displayDivider" />
     <tutorial-card-list
-      :keyword="keyword"
+      :space-name="spaceName"
       :parent-theme="parentTheme"
-      :space="space"
-      :can-update="canUpdate" />
+      :keyword="keyword" />
     <exo-confirm-dialog
       ref="confirmDialog"
       :message="$t('addon.elearning.tutorial.deleteConf')"
-      :title="$t('addon.elearning.tutorial.confirmD')"
-      :ok-label="$t('addon.elearning.tutorial.confirm')"
-      :cancel-label="$t('addon.elearning.tutorial.cancel')"
+      :title="$t('addon.elearning.tutorial.form.delete.title')"
+      :ok-label="$t('addon.elearning.tutorial.form.confirm')"
+      :cancel-label="$t('addon.elearning.tutorial.form.cancel')"
       @ok="deleteTutorial()" />
-    <v-alert
-      v-model="alert"
-      :type="type"
-      dismissible>
-      {{ message }}
-    </v-alert>
   </div>
 </template>
 
 <script>
 export default {
   props: {
+    spaceName: {
+      type: String,
+      default: ''
+    },
     parentTheme: {
       type: Object,
       default: null
     },
-    space: {
-      type: Object,
-      default: null
-    },
-    canUpdate: {
-      type: Boolean,
-      default: false
-    },
   },  
   data() {
     return {
-      alert: false,
-      type: '',
-      message: '',
       deleteId: null,
       themeId: null,
       themeName: null,
       displayDivider: false,
-      errors: [],
       keyword: '',
     };
   },
@@ -70,9 +53,6 @@ export default {
     },
   },
   created() {
-    this.$root.$on('show-alert', message => {
-      this.displayMessage(message);
-    });
     this.$root.$on('tutorialUpdated', () => {
       this.timeout = 3000;
       this.successBar = false;
@@ -143,20 +123,14 @@ export default {
           this.text = this.$t('addon.elearning.tutorial.deleted');
           this.$root.$emit('tutoDeleted');
         })
-        .catch((e) => this.errors.push(e));
+        .catch((e) => console.error('Error when deleting tutorial', e));
     },
     getThemeName() {
       return this.$themeService.getThemeById(this.themeId)
         .then((data) => {
           this.themeName = data.name;
         })
-        .catch((e) => this.errors.push(e));
-    },
-    displayMessage(message) {
-      this.message = message.message;
-      this.type = message.type;
-      this.alert = true;
-      window.setTimeout(() => this.alert = false, 5000);
+        .catch((e) => console.error('Error when retrieving theme name', e));
     },
   }
 };

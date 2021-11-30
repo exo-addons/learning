@@ -25,8 +25,8 @@ public class AttachmentEntity {
   @Column(name = "ATTACHMENT_FILE_ID")
   private Long attachmentFileID;
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name="STEP_ID")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "STEP_ID")
   private StepEntity stepEntity;
 
   public AttachmentEntity() {

@@ -5,7 +5,7 @@
       ref="tutorialMoveDrawer"
       right>
       <template slot="title">
-        {{ $t('addon.elearning.tutorial.moveF') }}     
+        {{ $t('addon.elearning.tutorial.move.form.title') }}     
       </template>
       <template slot="content">
         <template>
@@ -25,9 +25,9 @@
           class="tuto_drawer_btn_move"
           @click="updateTutorial"
           :disabled="!isThemeSelected">
-          {{ $t('addon.elearning.tutorial.confirm') }}
+          {{ $t('addon.elearning.tutorial.form.confirm') }}
         </v-btn>
-        <v-btn class="exo_cancel_btn" @click="clear">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
+        <v-btn class="exo_cancel_btn" @click="clear">{{ $t('addon.elearning.tutorial.form.clear') }}</v-btn>
       </template>
     </exo-drawer>
   </div>
@@ -38,7 +38,6 @@ export default {
     return {
       tutorialId: null,
       tutoU: null,
-      errors: [],
       themes: [],
       tutoUp: {
         id: 0,
@@ -70,7 +69,7 @@ export default {
         .then(() => {
           this.$refs.tutorialMoveDrawer.close();
         })
-        .catch((e) => this.errors.push(e));
+        .catch((e) => console.error('Error when updating tutorial', e));
     },
 
     getTutoU(id) {
@@ -84,7 +83,7 @@ export default {
           this.tutoUp.themeIds = this.tutoU.themeIds;
           this.tutoUp.author = this.tutoU.author;
         })
-        .catch((e) => this.errors.push(e));
+        .catch((e) => console.error('Error when retrieving tutorial', e));
     },
 
     getThemes() {
@@ -92,7 +91,7 @@ export default {
         .then((data) => {
           (this.themes = data);
         })
-        .catch((e) => this.errors.push(e));
+        .catch((e) => console.error('Error when retrieving themes', e));
     },
     clear() {
       this.tutoUp.themeIds = [];

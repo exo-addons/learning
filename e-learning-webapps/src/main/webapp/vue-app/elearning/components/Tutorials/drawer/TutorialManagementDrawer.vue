@@ -5,7 +5,7 @@
       ref="tutorialManagementDrawer"
       right>
       <template slot="title">
-        {{ $t('addon.elearning.tutorial.creating') }}     
+        {{ $t('addon.elearning.tutorial.create.form.title') }}     
       </template>
       <template slot="content">
         <template>
@@ -16,26 +16,26 @@
             <v-stepper-step
               :complete="add_steps > 1"
               step="1">
-              {{ $t('addon.elearning.tutorial.details') }}
+              {{ $t('addon.elearning.tutorial.form.details.label') }}
               <small v-show="add_steps === 2 && tutorial.title != null && tutorial.description != null" class="stepper_label">{{ tutorial.title }} : {{ tutorial.description }}</small>
             </v-stepper-step>
 
             <v-stepper-content step="1">
               <label class="tuto_title_label" :for="tutorial.title">
-                {{ $t('addon.elearning.theme.label.title') }}  
+                {{ `${$t('addon.elearning.theme.form.title.label')}*` }}
               </label>
               <v-text-field
                 class="primary_tutorial_input"
                 clearable
-                :placeholder="$t('addon.elearning.tutorial.label.title')"
+                :placeholder="$t('addon.elearning.tutorial.form.title.placeholder')"
                 name="title"
                 v-model="tutorial.title" />
               <label class="tuto_description_label" :for="tutorial.description">
-                {{ $t('addon.elearning.tutorial.label.description') }}  
+                {{ $t('addon.elearning.tutorial.for.description.label') }}
               </label>
               <extended-textarea
                 class="primary_text_area_input"
-                :placeholder="$t('addon.elearning.tutorial.label.description')"
+                :placeholder="$t('addon.elearning.tutorial.for.description.placeholder')"
                 :max-length="255"
                 name="description"
                 v-model="tutorial.description" />
@@ -43,7 +43,7 @@
                 class="tutorial_stepper_next_btn"
                 @click="add_steps = 2"
                 :disabled="!isFirstStepComplete">
-                {{ $t('addon.elearning.tutorial.stepper.continue') }}
+                {{ $t('addon.elearning.tutorial.form.stepper.continue') }}
                 <v-icon class="tutorial_stepper_next_btn_icon">mdi-arrow-right</v-icon>
               </v-btn>
             </v-stepper-content>
@@ -51,7 +51,7 @@
             <v-stepper-step
               :complete="add_steps > 2"
               step="2">
-              {{ $t('addon.elearning.tutorial.stepper.themes') }}
+              {{ $t('addon.elearning.tutorial.form.tutorial.stepper.theme.label') }}
             </v-stepper-step>
 
             <v-stepper-content step="2">
@@ -70,7 +70,7 @@
                 class="tutorial_stepper_back_btn"
                 @click="add_steps = 1">
                 <v-icon class="tutorial_stepper_back_btn_icon">mdi-arrow-left</v-icon>
-                {{ $t('addon.elearning.tutorial.stepper.back') }}
+                {{ $t('addon.elearning.tutorial.form.stepper.back') }}
               </v-btn>
             </v-stepper-content>
           </v-stepper>
@@ -81,9 +81,9 @@
           class="tuto_drawer_btn_add"
           @click="createOrUpdateTutorial"
           :disabled="!isStepsComplete">
-          {{ $t('addon.elearning.tutorial.confirm') }}
+          {{ $t('addon.elearning.tutorial.form.confirm') }}
         </v-btn>
-        <v-btn class="exo_cancel_btn" @click="clear">{{ $t('addon.elearning.tutorial.clear') }}</v-btn>
+        <v-btn class="exo_cancel_btn" @click="clear">{{ $t('addon.elearning.tutorial.form.clear') }}</v-btn>
       </template>
     </exo-drawer>
   </div>
@@ -111,7 +111,6 @@ export default {
   data() {
     return {
       add_steps: 1,
-      errors: [],
       status: ['DRAFT', 'PUBLISHED', 'ARCHIVED'],
       themes: [],
     };
@@ -138,12 +137,12 @@ export default {
           };
           Object.assign(this.parentTheme, updatedParent);
           this.$root.$emit('parent-theme-updated', this.parentTheme);
-        }).catch((e) => this.errors.push(e))
+        }).catch((e) => console.error('Error when saving tutorial', e))
           .finally(() => window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-editor?spaceId=${eXo.env.portal.spaceId}&themeId=${this.parentTheme.id}&tutorialId=${tutorialId}`, '_blank'));
       } else {
         return this.$tutoService.updateTutorial(this.tutorial).then(updatedTutorial => {
           this.$emit('tutorialUpdated', updatedTutorial);
-        }).catch((e) => this.errors.push(e));
+        }).catch((e) => console.error('Error when updating tutorial', e));
       }
     },
     getThemes() {
@@ -151,7 +150,7 @@ export default {
       return this.$themeService.getThemes(this.spaceName, isRoot, '', 0, 0).then((data) => {
         this.themes = data.themeList;
         this.tutorial.themeIds.push(this.parentTheme.id);
-      }).catch((e) => this.errors.push(e));
+      }).catch((e) => console.error('Error when retrieving themes', e));
     },
     open() {
       this.getThemes();

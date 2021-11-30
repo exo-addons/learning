@@ -1,7 +1,9 @@
 package org.exoplatform.addon.elearning.storage.mapper;
 
+import org.exoplatform.addon.elearning.dao.StepDAO;
 import org.exoplatform.addon.elearning.dao.ThemeDao;
 import org.exoplatform.addon.elearning.dto.Tutorial;
+import org.exoplatform.addon.elearning.entity.StepEntity;
 import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.entity.TutorialEntity;
 
@@ -22,15 +24,17 @@ public class TutorialMapper {
     }
 
     Tutorial tutorial = new Tutorial();
+    tutorial.setId(tutorialEntity.getId());
+    tutorial.setTitle(tutorialEntity.getTitle());
+    tutorial.setDescription(tutorialEntity.getDescription());
     tutorial.setAuthor(tutorialEntity.getAuthor());
     tutorial.setCreatedDate(new Date(tutorialEntity.getCreatedDate().getTime()));
     tutorial.setLastModifiedDate(tutorialEntity.getLastModifiedDate());
-    tutorial.setId(tutorialEntity.getId());
-    tutorial.setStatus(tutorialEntity.getStatus());
-    tutorial.setDescription(tutorialEntity.getDescription());
-    tutorial.setTitle(tutorialEntity.getTitle());
     List<Long> themeIds = tutorialEntity.getThemeEntities().stream().map(ThemeEntity::getId).collect(Collectors.toList());
     tutorial.setThemeIds(themeIds);
+    tutorial.setStatus(tutorialEntity.getStatus());
+    List<Long> stepsIds = tutorialEntity.getStepEntities().stream().map(StepEntity::getId).collect(Collectors.toList());
+    tutorial.setStepsIds(stepsIds);
     return tutorial;
   }
 
@@ -41,30 +45,35 @@ public class TutorialMapper {
     return tutorialEntities.stream().map(TutorialMapper::convertTutorialToDTO).collect(Collectors.toList());
   }
 
-  public static TutorialEntity convertTutorialToEntity(Tutorial tutorial, ThemeDao themeDao) {
+  public static TutorialEntity convertTutorialToEntity(Tutorial tutorial, ThemeDao themeDao, StepDAO stepDAO) {
     if (tutorial == null) {
       return null;
     }
 
     TutorialEntity tutorialEntity = new TutorialEntity();
+    tutorialEntity.setId(tutorial.getId() == null || tutorial.getId().equals(0L) ? null : tutorial.getId());
+    tutorialEntity.setTitle(tutorial.getTitle());
+    tutorialEntity.setDescription(tutorial.getDescription());
     tutorialEntity.setAuthor(tutorial.getAuthor());
     tutorialEntity.setCreatedDate(tutorial.getCreatedDate() != null ? new Timestamp(tutorial.getCreatedDate().getTime()) : new Timestamp(System.currentTimeMillis()));
     tutorialEntity.setLastModifiedDate(tutorial.getLastModifiedDate());
-    tutorialEntity.setId(tutorial.getId() == null || tutorial.getId().equals(0L) ? null : tutorial.getId());
-    tutorialEntity.setStatus(tutorial.getStatus());
-    tutorialEntity.setDescription(tutorial.getDescription());
-    tutorialEntity.setTitle(tutorial.getTitle());
     for (Long themeId : tutorial.getThemeIds()) {
       tutorialEntity.addThemeEntity(themeDao.find(themeId));
     }
+    tutorialEntity.setStatus(tutorial.getStatus());
+    List<StepEntity> stepEntities = new ArrayList<>();
+    for (Long stepId : tutorial.getStepsIds()) {
+      stepEntities.add(stepDAO.find(stepId));
+    }
+    tutorialEntity.setStepEntities(stepEntities);
     return tutorialEntity;
   }
 
-  public static List<TutorialEntity> convertTutorialsToEntities(List<Tutorial> tutorials, ThemeDao themeDao) {
+  public static List<TutorialEntity> convertTutorialsToEntities(List<Tutorial> tutorials, ThemeDao themeDao, StepDAO stepDAO) {
     if (tutorials == null) {
       return new ArrayList<>();
     }
-    return tutorials.stream().map(tutorial -> convertTutorialToEntity(tutorial, themeDao)).collect(Collectors.toList());
+    return tutorials.stream().map(tutorial -> convertTutorialToEntity(tutorial, themeDao, stepDAO)).collect(Collectors.toList());
   }
 
 }

@@ -16,19 +16,7 @@
         xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
 
   <component>
-    <type>org.exoplatform.addon.elearning.storage.ThemeStorage</type>
-  </component>
-
-  <component>
     <type>org.exoplatform.addon.elearning.dao.ThemeDao</type>
-  </component>
-
-  <component>
-    <type>org.exoplatform.addon.elearning.service.ThemeService</type>
-  </component>
-
-  <component>
-    <type>org.exoplatform.addon.elearning.rest.ThemeRestService</type>
   </component>
 
   <component>
@@ -36,7 +24,27 @@
   </component>
 
   <component>
+    <type>org.exoplatform.addon.elearning.dao.StepDAO</type>
+  </component>
+
+  <component>
+    <type>org.exoplatform.addon.elearning.dao.AttachmentDAO</type>
+  </component>
+
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.ThemeStorage</type>
+  </component>
+
+  <component>
     <type>org.exoplatform.addon.elearning.storage.TutorialStorage</type>
+  </component>
+
+  <component>
+    <type>org.exoplatform.addon.elearning.storage.StepStorage</type>
+  </component>
+
+  <component>
+    <type>org.exoplatform.addon.elearning.service.ThemeService</type>
   </component>
 
   <component>
@@ -44,15 +52,11 @@
   </component>
 
   <component>
+    <type>org.exoplatform.addon.elearning.rest.ThemeRestService</type>
+  </component>
+
+  <component>
     <type>org.exoplatform.addon.elearning.rest.TutorialRestService</type>
-  </component>
-
-  <component>
-    <type>org.exoplatform.addon.elearning.dao.StepDAO</type>
-  </component>
-
-  <component>
-    <type>org.exoplatform.addon.elearning.storage.StepStorage</type>
   </component>
 
   <external-component-plugins>

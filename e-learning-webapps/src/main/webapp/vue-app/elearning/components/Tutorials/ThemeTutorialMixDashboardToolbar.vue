@@ -33,13 +33,13 @@
               <v-list-item v-if="parentTheme" @click="addNewTutorial">
                 <v-list-item-title class="toolbar_menu_list_items">
                   <v-icon class="toolbar_menu_icon">mdi-school</v-icon>
-                  <span class="toolbar_menu_text">{{ $t('addon.elearning.tutorial.create') }}</span>
+                  <span class="toolbar_menu_text">{{ $t('addon.elearning.tutorial.create.label') }}</span>
                 </v-list-item-title>
               </v-list-item>
               <v-list-item @click="addNewSubTheme">
                 <v-list-item-title class="toolbar_menu_list_items">
                   <v-icon class="toolbar_menu_icon">mdi-folder</v-icon>
-                  <span class="toolbar_menu_text">{{ $t('addon.elearning.theme.create') }}</span>
+                  <span class="toolbar_menu_text">{{ $t('addon.elearning.theme.create.label') }}</span>
                 </v-list-item-title>
               </v-list-item>
             </v-list>
@@ -67,10 +67,6 @@ export default {
       type: Object,
       default: null
     },
-    space: {
-      type: Object,
-      default: null
-    },
     keyword: {
       type: String,
       default: '',
@@ -80,7 +76,6 @@ export default {
     return {
       items: [],
       displayActionMenu: false,
-      errors: [],
     };
   },
   watch: {
@@ -109,7 +104,7 @@ export default {
       if (themeId && this.parentTheme.id !== themeId) {
         this.$themeService.getThemeById(themeId).then(parentTheme => {
           this.$root.$emit('displayThemeContent', parentTheme);
-        }).catch((e) => this.errors.push(e));
+        }).catch((e) => console.error('Error when retrieving theme by id', e));
       } else if (!themeId) {
         this.$root.$emit('displayThemesBoard');
       }
