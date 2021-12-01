@@ -60,6 +60,18 @@ public class TutorialService implements ResourceContainer {
     return tutorialStorage.findTutorialsByName(tutorialTitle, id);
   }
 
+  public long countTutorialsByTheme(Long themeId) {
+    return tutorialStorage.countTutorialsByTheme(themeId);
+  }
+
+  public Step getTutorialStepByOrder(Long tutorialId, int stepOrder) {
+    return stepStorage.findStepByOrder(tutorialId, stepOrder);
+  }
+
+  public List<Step> getTutorialSteps(Long tutorialId) {
+    return stepStorage.getTutorialSteps(tutorialId);
+  }
+
   public Step addTutorialStep(Step step, Long tutorialId) {
     step.setTutorialId(tutorialId);
     return stepStorage.addStep(step);
@@ -70,14 +82,14 @@ public class TutorialService implements ResourceContainer {
   }
 
   public void deleteTutorialStep(Long id) {
-    stepStorage.deleteStepById(id);
+    Step deletedStep = stepStorage.deleteStepById(id);
+    int stepsCount = tutorialStorage.getTutorialById(deletedStep.getTutorialId()).getStepsIds().size();
+    if (deletedStep.getOrder() < stepsCount) {
+      updatePostStepsOder(deletedStep.getTutorialId(), deletedStep.getOrder());
+    }
   }
 
-  public long countTutorialsByTheme(Long themeId) {
-    return tutorialStorage.countTutorialsByTheme(themeId);
-  }
-
-  public Step getTutorialStepByOrder(Long tutorialId, int stepOrder) {
-    return stepStorage.findStepByOrder(tutorialId, stepOrder);
+  private void updatePostStepsOder(Long tutorialId, int order) {
+    stepStorage.updatePostStepsOder(tutorialId, order);
   }
 }

@@ -231,6 +231,26 @@ public class TutorialRestService implements ResourceContainer {
   }
 
   @GET
+  @Path("/getTutorialSteps/{tutorialId}")
+  @Produces(MediaType.APPLICATION_JSON)
+  @RolesAllowed("users")
+  @ApiOperation(value = "Get All Tutorial Steps in order", httpMethod = "GET", response = Response.class, notes = "This returns Tutorial Steps in order")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response getTutorialSteps(@ApiParam(value = "tutorialId", required = true) @PathParam("tutorialId") Long tutorialId) {
+    List<Step> steps;
+    try {
+      steps = tutorialService.getTutorialSteps(tutorialId);
+    } catch (Exception e) {
+      LOG.error("Could not get Steps of Tutorial with id {}", tutorialId, e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(steps, MediaType.APPLICATION_JSON).build();
+
+  }
+
+  @GET
   @Path("/getTutorialStepByOrder/{tutorialId}/{stepOrder}")
   @Produces(MediaType.APPLICATION_JSON)
   @RolesAllowed("users")

@@ -5,7 +5,11 @@
       outlined>
       <v-list-item>
         <v-list-item-avatar>
-          <v-icon @click="showTuto(tutorial.id)">mdi-play-box-outline</v-icon>          
+          <v-icon 
+            class="primary--text"
+            @click="showTutorial(tutorial.id)">
+            mdi-play-box-outline
+          </v-icon>          
         </v-list-item-avatar>
         <v-list-item-content>
           <span class="align-center font-weight-bold">{{ tutorial.title }}</span>
@@ -163,7 +167,7 @@ export default {
     updateTutorialContent(tutorialId) {
       window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-editor?spaceId=${eXo.env.portal.spaceId}&themeId=${this.parentTheme.id}&tutorialId=${tutorialId}`, '_blank');
     },
-    showTuto(id) {
+    showTutorial(id) {
       this.$root.$emit('makeShowTTuto', id);
     },
     moveTuto(id) {

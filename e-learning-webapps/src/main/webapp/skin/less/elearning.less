@@ -1,6 +1,13 @@
 @import "./variables.less";
 @import "./mixins.less";
 
+// scroll webkit
+@scrollSize: 5px;
+@scrollDefaultTrackColor: #ced2d5;
+@scrollDefaultThumbColor: @primaryColor;
+@scrollThumbRaduis: 3px;
+@scrollSecondaryThumbColor: #ced2d5;
+
 #elearning_app {
   min-height: 86vh;
   padding: 20px;
@@ -679,27 +686,39 @@
           height: calc(~"100vh - 250px");
 
           .group-steps {
+            overflow: auto;
+            max-height: calc(~"100vh - 274px");
             background-color: @baseBackgroundDark;
             border-radius: 4px;
 
-            .add-step-wrapper {
-              text-align: center;
-              color: @toolbarLightIconColor;
+            &::-webkit-scrollbar {
+              width: @scrollSize;
+            }
 
-              .add-step {
-                display: flex;
-                width: 16vw;
-                height: 16vh;
-                cursor: pointer;
-                border-radius: 4px;
-                background-color: @baseBackground;
+            &::-webkit-scrollbar-track {
+              background: @scrollDefaultTrackColor;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background: @scrollDefaultThumbColor;
+              border-radius: @scrollThumbRaduis;
+            }
+
+            .steps-list {
+              .step_card_menu {
+                left: 48% !important;
+                top: 30% !important;
+
+                .v-list-item {
+                  min-height: 5px;
+                }
               }
+            }
 
-              .add-step > div {
-                display: inline-grid;
-                width: 87%;
-                height: 77%;
-                margin: auto;
+            .add-step-button-wrapper {
+              cursor: pointer;
+
+              .add-step-button {
                 border: 1px dashed;
                 color: @toolbarLightIconColor;
 

@@ -23,7 +23,8 @@
       :parent-theme="parentTheme"
       :space-name="spaceName"
       @themeAdded="addCreatedTheme"
-      @themeUpdated="closeDrawerAfterThemeUpdate" />
+      @themeUpdated="closeDrawerAfterThemeUpdate"
+      @closed="resetData" />
     <exo-confirm-dialog
       ref="confirmDialog"
       :message="$t('addon.elearning.theme.form.delete.confirm')"
@@ -133,6 +134,9 @@ export default {
       this.themesList.splice(index, 1, updatedTheme);
       this.themeToUpdate = null;
       this.$refs.themeManagementDrawer.close();
+    },
+    resetData() {
+      this.themeToUpdate = null;
     },
     openDeleteModal(id) {
       this.deleteId = id;

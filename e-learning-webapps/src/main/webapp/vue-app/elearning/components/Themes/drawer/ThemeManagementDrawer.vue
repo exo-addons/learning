@@ -1,14 +1,14 @@
 <template>
   <div id="themes_management">
-    <exo-drawer ref="themeManagementDrawer" right>
-      <template v-if="!this.themeToUpdate" slot="title">
-        {{ $t('addon.elearning.theme.create.form.title') }}
-      </template>
-      <template v-else slot="title">
-        {{ $t('addon.elearning.theme.update.form.title') }}
+    <exo-drawer 
+      ref="themeManagementDrawer"
+      right
+      @closed="resetForm">
+      <template slot="title">
+        {{ drawerTitle }}
       </template>
       <template slot="content">
-        <v-form ref="form">
+        <v-form ref="themeForm">
           <label class="theme_title_label" :for="title">
             {{ `${$t('addon.elearning.theme.form.title.label')}*` }}
           </label>
@@ -37,7 +37,7 @@
           :disabled="!canCreateThemeOrUpdate">
           {{ $t('addon.elearning.theme.form.confirm') }}
         </v-btn>
-        <v-btn class="exo_cancel_btn" @click="$refs.form.reset()">{{ $t('addon.elearning.theme.form.clear') }}</v-btn>
+        <v-btn class="exo_cancel_btn" @click="$refs.themeForm.reset()">{{ $t('addon.elearning.theme.form.clear') }}</v-btn>
       </template>
     </exo-drawer>
   </div>
@@ -57,21 +57,21 @@ export default {
       type: String,
       default: ''
     },
-  },
-  
+  },  
   data() {
     return {
       title: null,
       titleToUpdate: null,
     };
-  },
-  
+  },  
   computed: {
+    drawerTitle() {
+      return !this.themeToUpdate ? this.$t('addon.elearning.theme.create.form.title') : this.$t('addon.elearning.theme.update.form.title');
+    },
     canCreateThemeOrUpdate() {
       return this.themeToUpdate && this.themeToUpdate.name !== this.titleToUpdate && this.titleToUpdate || this.title;
     }
-  },
-  
+  },  
   watch: {
     themeToUpdate() {
       if (this.themeToUpdate) {
@@ -79,24 +79,25 @@ export default {
       }
     }
   },
-
   methods: {
     createOrUpdateTheme() {
       if (!this.themeToUpdate) {
         const theme = {
           name: this.title,
           spaceName: this.spaceName,
-          parentId: this.parentTheme ? this.parentTheme.id: null,
+          parentId: this.parentTheme ? this.parentTheme.id : null,
         };
         return this.$themeService.createTheme(theme).then(addedTheme => {
           this.$emit('themeAdded', addedTheme);
-          const themeIds = this.parentTheme.childrenIds;
-          themeIds.push(theme.id);
-          const updatedParent = {
-            childrenIds: themeIds,
-          };
-          Object.assign(this.parentTheme, updatedParent);
-          this.$root.$emit('parent-theme-updated', this.parentTheme);
+          if (this.parentTheme) {
+            const themeIds = this.parentTheme.childrenIds;
+            themeIds.push(theme.id);
+            const updatedParent = {
+              childrenIds: themeIds,
+            };
+            Object.assign(this.parentTheme, updatedParent);
+            this.$root.$emit('parent-theme-updated', this.parentTheme);
+          }
         }).catch((e) => {
           this.$root.$emit('show-alert', {
             message: this.$t('addon.elearning.theme.message.error'),
@@ -104,7 +105,7 @@ export default {
           });
           console.error('Error when creating theme', e);
         });
-        
+
       } else {
         this.themeToUpdate.name = this.titleToUpdate;
         return this.$themeService.updateTheme(this.themeToUpdate).then(updatedTheme => {
@@ -116,11 +117,14 @@ export default {
           });
           console.error('Error when updating theme', e);
         });
-        
+
       }
     },
+    resetForm() {
+      this.$refs.themeForm.reset();
+      this.$emit('closed');
+    },
     close() {
-      this.$refs.form.reset();
       this.$refs.themeManagementDrawer.close();
     },
     open() {

@@ -17,7 +17,7 @@ public class ThemeDao extends GenericDAOJPAImpl<ThemeEntity, Long> {
     try {
       return q.getResultList();
     } catch (NoResultException e) {
-      return null;
+      return new ArrayList<>();
     }
   }
 

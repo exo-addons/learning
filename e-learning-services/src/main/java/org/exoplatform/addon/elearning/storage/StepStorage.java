@@ -10,6 +10,8 @@ import org.exoplatform.addon.elearning.entity.TutorialEntity;
 import org.exoplatform.addon.elearning.storage.mapper.StepMapper;
 import org.exoplatform.commons.api.persistence.ExoTransactional;
 
+import java.util.List;
+
 public class StepStorage {
   private StepDAO stepDAO;
   private ThemeDao themeDao;
@@ -48,13 +50,30 @@ public class StepStorage {
     return StepMapper.convertStepToDTO(stepEntity);
   }
 
-  public void deleteStepById(Long id) {
+  @ExoTransactional
+  public Step deleteStepById(Long id) {
     StepEntity stepEntity = stepDAO.find(id);
     stepDAO.delete(stepEntity);
+    return StepMapper.convertStepToDTO(stepEntity);
   }
 
   public Step findStepByOrder(Long tutorialId, int stepOrder) {
     StepEntity stepEntity = stepDAO.findStepByOrder(tutorialId, stepOrder);
     return StepMapper.convertStepToDTO(stepEntity);
+  }
+
+  public List<Step> getTutorialSteps(Long tutorialId) {
+    List<StepEntity> stepEntities = stepDAO.findAllTutorialSteps(tutorialId);
+    return StepMapper.convertStepsToDTOs(stepEntities);
+  }
+
+  @ExoTransactional
+  public void updatePostStepsOder(Long tutorialId, int order) {
+    List<StepEntity> postStepEntities = stepDAO.getPostStepsToCurrentOrder(tutorialId, order);
+    for (StepEntity postStepEntity : postStepEntities) {
+      int newOrder = postStepEntity.getOrder() - 1;
+      postStepEntity.setOrder(newOrder);
+      stepDAO.update(postStepEntity);
+    }
   }
 }
