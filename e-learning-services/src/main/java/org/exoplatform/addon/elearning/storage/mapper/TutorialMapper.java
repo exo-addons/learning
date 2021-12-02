@@ -3,6 +3,7 @@ package org.exoplatform.addon.elearning.storage.mapper;
 import org.exoplatform.addon.elearning.dao.StepDAO;
 import org.exoplatform.addon.elearning.dao.ThemeDao;
 import org.exoplatform.addon.elearning.dto.Tutorial;
+import org.exoplatform.addon.elearning.entity.Status;
 import org.exoplatform.addon.elearning.entity.StepEntity;
 import org.exoplatform.addon.elearning.entity.ThemeEntity;
 import org.exoplatform.addon.elearning.entity.TutorialEntity;
@@ -32,7 +33,7 @@ public class TutorialMapper {
     tutorial.setLastModifiedDate(tutorialEntity.getLastModifiedDate());
     List<Long> themeIds = tutorialEntity.getThemeEntities().stream().map(ThemeEntity::getId).collect(Collectors.toList());
     tutorial.setThemeIds(themeIds);
-    tutorial.setStatus(tutorialEntity.getStatus());
+    tutorial.setStatus(tutorialEntity.getStatus().name());
     List<Long> stepsIds = tutorialEntity.getStepEntities().stream().map(StepEntity::getId).collect(Collectors.toList());
     tutorial.setStepsIds(stepsIds);
     return tutorial;
@@ -60,7 +61,7 @@ public class TutorialMapper {
     for (Long themeId : tutorial.getThemeIds()) {
       tutorialEntity.addThemeEntity(themeDao.find(themeId));
     }
-    tutorialEntity.setStatus(tutorial.getStatus());
+    tutorialEntity.setStatus(Status.valueOf(tutorial.getStatus().toUpperCase()));
     List<StepEntity> stepEntities = new ArrayList<>();
     for (Long stepId : tutorial.getStepsIds()) {
       stepEntities.add(stepDAO.find(stepId));

@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.exoplatform.addon.elearning.dto.Step;
 import org.exoplatform.addon.elearning.dto.Tutorial;
+import org.exoplatform.addon.elearning.entity.Status;
 import org.exoplatform.addon.elearning.rest.entity.SpaceDataEntity;
 import org.exoplatform.addon.elearning.rest.entity.TutorialsDataEntity;
 import org.exoplatform.addon.elearning.service.TutorialService;
@@ -51,6 +52,7 @@ public class TutorialRestService implements ResourceContainer {
     try {
       String currentUser = ConversationState.getCurrent().getIdentity().getUserId();
       tutorial.setAuthor(currentUser);
+      tutorial.setStatus(Status.DRAFT.name());
       tutorial = tutorialService.createTutorial(tutorial);
 
     } catch (Exception e) {
@@ -92,9 +94,45 @@ public class TutorialRestService implements ResourceContainer {
 
     try {
       tutorial = tutorialService.updateTutorial(tutorial);
-
     } catch (Exception e) {
+      LOG.error("Could not update Tutorial", e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(tutorial, MediaType.APPLICATION_JSON).build();
+  }
 
+  @PUT
+  @Path("/postTutorial")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Publish tutorial", httpMethod = "PUT", response = Response.class, notes = "This Publishes Tutorial")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response postTutorial(Tutorial tutorial) {
+    try {
+      tutorial = tutorialService.getTutorialById(tutorial.getId());
+      tutorial.setStatus(Status.PUBLISHED.name());
+      tutorial = tutorialService.updateTutorial(tutorial);
+    } catch (Exception e) {
+      LOG.error("Could not update Tutorial", e);
+      return Response.serverError().entity(e.getMessage()).build();
+    }
+    return Response.ok(tutorial, MediaType.APPLICATION_JSON).build();
+  }
+
+  @PUT
+  @Path("/archiveTutorial")
+  @RolesAllowed("users")
+  @ApiOperation(value = "Archive tutorial", httpMethod = "PUT", response = Response.class, notes = "This archives Tutorial")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Request fulfilled"),
+          @ApiResponse(code = 400, message = "Invalid query input"), @ApiResponse(code = 403, message = "Unauthorized operation"),
+          @ApiResponse(code = 404, message = "Resource not found")})
+  public Response archiveTutorial(Tutorial tutorial) {
+    try {
+      tutorial = tutorialService.getTutorialById(tutorial.getId());
+      tutorial.setStatus(Status.ARCHIVED.name());
+      tutorial = tutorialService.updateTutorial(tutorial);
+    } catch (Exception e) {
       LOG.error("Could not update Tutorial", e);
       return Response.serverError().entity(e.getMessage()).build();
     }
