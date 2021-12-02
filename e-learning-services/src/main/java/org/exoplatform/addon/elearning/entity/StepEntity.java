@@ -13,6 +13,14 @@ import java.util.List;
         @NamedQuery(
                 name = "StepEntity.findStepByOrder",
                 query = "SELECT s FROM StepEntity s where s.tutorial.id = :tutorialId AND s.order = :stepOrder "
+        ),
+        @NamedQuery(
+                name = "StepEntity.findAllTutorialSteps",
+                query = "SELECT s FROM StepEntity s where s.tutorial.id = :tutorialId ORDER BY s.order "
+        ),
+        @NamedQuery(
+                name = "StepEntity.getPostStepsToCurrentOrder",
+                query = "SELECT s FROM StepEntity s where s.tutorial.id = :tutorialId AND s.order > :stepOder ORDER BY s.order "
         ),})
 public class StepEntity {
 

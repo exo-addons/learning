@@ -60,14 +60,28 @@
             </v-row>
             <v-row class="content-dashboard mx-0 pa-4">
               <v-col class="group-steps" cols="2">
-                <div class="add-step-wrapper">
-                  <div class="add-step">
-                    <div>
-                      <v-icon large>add</v-icon>
-                    </div>
-                  </div>
+                <step-card-list
+                  :tutorial="tutorial" />
+                <v-card 
+                  class="add-step-button-wrapper pa-2"
+                  :disabled="!canAddStep"
+                  flat
+                  @click="addStep">
+                  <v-card-text 
+                    class="add-step-button pa-6 text-center"
+                    :class="!canAddStep ? 'disabled--text' : 'primary--text'">
+                    <v-icon 
+                      size="36"
+                      :class="!canAddStep ? 'disabled--text' : 'primary--text'">
+                      mdi-plus
+                    </v-icon>
+                  </v-card-text>
+                </v-card>
+                <v-row class="text-sub-title">
+                  <v-spacer />
                   <span>{{ $t('addon.elearning.editor.label.addStep') }}</span>
-                </div>
+                  <v-spacer />
+                </v-row>
               </v-col>
               <v-col class="pt-0 pb-0">
                 <v-row class="step-media-selector mx-0">
@@ -99,7 +113,7 @@
                     <textarea
                       id="stepContent"
                       v-model="step.content"
-                      :placeholder="stepContentPlaceHolder"
+                      :placeholder="$t('addon.elearning.editor.label.step.content')"
                       class="stepFormInput"
                       name="stepContent">
                      </textarea>
@@ -118,7 +132,6 @@
 export default {
   data() {
     return {
-      stepOrder: 1,
       step: {
         id: '',
         title: '',
@@ -128,6 +141,14 @@ export default {
         tutorialId: '',
       },
       actualStep: {
+        id: '',
+        title: '',
+        content: '',
+        mediaLink: '',
+        imageFileId: '',
+        tutorialId: '',
+      },
+      actualPersistedStep: {
         id: '',
         title: '',
         content: '',
@@ -149,17 +170,21 @@ export default {
     };
   },
   computed: {
+    stepOrder() {
+      return this.step.id &&  this.step.order || this.tutorial && this.tutorial.stepsIds && this.tutorial.stepsIds.length + 1 || 1;
+    },
     stepTitlePlaceHolder() {
       return this.$t('addon.elearning.editor.label.step.title', {0: this.stepOrder});
-    },
-    stepContentPlaceHolder() {
-      return this.$t('addon.elearning.editor.label.step.content', {0: this.stepOrder});
     },
     eLearningFormTitle() {
       return this.tutorial && this.tutorial.title;
     },
     initCompleted() {
-      return this.initDone && (this.initActualStepDone || !this.tutorial.stepsIds.length);
+      return this.initDone && this.initActualStepDone;
+    },
+    canAddStep() {
+      return (this.step.title !== this.actualPersistedStep.title || this.step.content !== this.actualPersistedStep.content) || 
+        ((this.step.title || this.step.content) && this.step.title === this.actualPersistedStep.title && this.step.content === this.actualPersistedStep.content);
     },
   },
   watch: {
@@ -194,6 +219,22 @@ export default {
       const tutorialId = urlParams.get('tutorialId');
       this.getTutorial(tutorialId);
     }
+    
+    this.$root.$on('update-step', stepOrder => {
+      this.getTutorialStepByOrder(this.tutorial.id, stepOrder);
+    });
+
+    this.$root.$on('step-deleted', stepOrder => {
+      if (this.step.id && this.step.order === stepOrder) {
+        if (this.step.order === 1) {
+          this.resetData();
+        } else if (this.step.order > 1) {
+          this.getTutorialStepByOrder(this.tutorial.id, stepOrder - 1);
+        }
+      } else if (this.step.id && this.step.order > stepOrder) {
+        this.getTutorialStepByOrder(this.tutorial.id, this.step.order - 1);
+      }
+    });
   },
   mounted() {
     this.init();
@@ -210,17 +251,30 @@ export default {
       this.$tutoService.getTutorialById(id).then(tutorial => {
         this.tutorial = tutorial;
         if (this.tutorial.stepsIds.length > 0) {
-          this.stepOrder = this.tutorial.stepsIds.length;
-          this.getStepByOrder(this.tutorial.id, this.stepOrder);
+          this.getLatestStep(this.tutorial.id);
+        } else {
+          this.initActualStepDone = true;
         }
       }).catch(e => {
         console.error('Error when retrieving tutorial', e);
       });
     },
-    getStepByOrder(tutorialId, order) {
+    getLatestStep(tutorialId) {
+      this.$tutoService.getTutorialStepByOrder(tutorialId, this.tutorial.stepsIds.length).then(step => {
+        if (step) {
+          this.fillStep(step);
+        } else {
+          this.resetData();
+        }
+      });
+    },
+    getTutorialStepByOrder(tutorialId, order) {
+      this.resetData();
       this.$tutoService.getTutorialStepByOrder(tutorialId, order).then(step => {
         if (step) {
           this.fillStep(step);
+        } else {
+          this.resetData();
         }
       });
     },
@@ -228,6 +282,15 @@ export default {
       if (data) {
         this.step = data;
         CKEDITOR.instances['stepContent'].setData(data.content);
+        this.actualPersistedStep = {
+          id: this.step.id,
+          title: this.step.title,
+          content: this.step.content,
+          mediaLink: this.step.mediaLink,
+          imageFileId: this.step.imageFileId,
+          order: this.step.order,
+          tutorialId: this.step.tutorialId,
+        };
         this.actualStep = {
           id: this.step.id,
           title: this.step.title,
@@ -294,11 +357,21 @@ export default {
         this.deleteStep();
       }
     },
-    persistStep(step) {
+    persistStep(step, reset) {
       if (this.step.title || this.step.content) {
         this.postingStep = true;
         if (!this.step.id) {
           this.$tutoService.saveStep(step, this.tutorial.id).then(savedStep => {
+            this.addToTutorialStepIds(savedStep.id);
+            this.actualPersistedStep = {
+              id: savedStep.id,
+              title: savedStep.title,
+              content: savedStep.content,
+              mediaLink: savedStep.mediaLink,
+              imageFileId: savedStep.imageFileId,
+              order: savedStep.order,
+              tutorialId: savedStep.tutorialId,
+            };
             this.actualStep = {
               id: savedStep.id,
               title: savedStep.title,
@@ -317,6 +390,9 @@ export default {
             setTimeout(() => {
               this.draftSavingStatus = this.$t('step.draft.savedDraftStatus');
             }, this.autoSaveDelay / 2);
+            if (reset) {
+              this.resetData();
+            }
           }).catch(e => {
             console.error('Error when saving step', e);
             // this.$root.$emit('show-alert', {
@@ -325,7 +401,17 @@ export default {
             // });
           });
         } else {
-          this.$tutoService.updateStep(step).catch(e => {
+          this.$tutoService.updateStep(step).then(() => {
+            this.postingStep = false;
+            this.savingDraft = false;
+            setTimeout(() => {
+              this.draftSavingStatus = this.$t('step.draft.savedDraftStatus');
+            }, this.autoSaveDelay / 2);
+            if (reset) {
+              this.removeLocalStorageCurrentDraft();
+              this.resetData();
+            }
+          }).catch(e => {
             console.error('Error when saving step', e);
           });
         }
@@ -335,6 +421,7 @@ export default {
       if (this.step.id) {
         this.removeLocalStorageCurrentDraft();
         this.$tutoService.deleteStep(this.step.id).then(() => {
+          this.removeFromTutorialStepIds(this.step.id);
           this.draftSavingStatus = '';
           //re-initialize data
           this.step = {
@@ -343,7 +430,7 @@ export default {
             content: '',
             mediaLink: '',
             imageFileId: '',
-            order: this.stepOrder,
+            order: '',
             tutorialId: this.tutorial.id,
           };
           this.actualStep = {
@@ -352,7 +439,7 @@ export default {
             content: '',
             mediaLink: '',
             imageFileId: '',
-            order: this.stepOrder,
+            order: '',
             tutorialId: this.tutorial.id,
           };
         }).catch(e => {
@@ -479,24 +566,74 @@ export default {
         elementNewTop.classList.add('greyComposerEffect');
       });
     },
-    // publishTutorial() {
-    //   TODO
-    // },
-    // archiveTutorial() {
-    //   TODO
-    // },
-    // openSettings() {
-    //   TODO      
-    // },
-    // preview() {
-    //   TODO
-    // },
-    // addOnlineVideo() {
-    //   TODO
-    // },
-    // addPicture() {
-    //   TODO
-    // },
+    resetData() {
+      this.initActualStepDone = false;
+      //re-initialize data
+      this.actualPersistedStep = {
+        id: '',
+        title: '',
+        content: '',
+        mediaLink: '',
+        imageFileId: '',
+        order: '',
+        tutorialId: '',
+      };
+      this.step = {
+        id: '',
+        title: '',
+        content: '',
+        mediaLink: '',
+        imageFileId: '',
+        order: '',
+        tutorialId: this.tutorial.id,
+      };
+      this.actualStep = {
+        id: '',
+        title: '',
+        content: '',
+        mediaLink: '',
+        imageFileId: '',
+        order: '',
+        tutorialId: this.tutorial.id,
+      };
+      CKEDITOR.instances['stepContent'].setData('');
+      this.initActualStepDone = true;
+    },
+    publishTutorial() {
+      console.log('Post Tutorial !!!');
+    },
+    archiveTutorial() {
+      console.log('archive Tutorial !');
+    },
+    openSettings() {
+      console.log('open Settings !');      
+    },
+    preview() {
+      console.log('PREVIEW !');
+    },
+    addStep() {
+      this.$root.$emit('step-added', this.step);
+      this.persistStep(this.step, true);
+    },
+    addOnlineVideo() {
+      console.log('Add Online Video !');
+    },
+    addPicture() {
+      console.log('Add Picture !');
+    },
+    addToTutorialStepIds(stepId) {
+      const stepIds = [];
+      stepIds.push(...this.tutorial.stepsIds);
+      stepIds.push(stepId);
+      this.$set(this.tutorial, 'stepsIds', stepIds);  
+    },
+    removeFromTutorialStepIds(stepId) {
+      const stepIds = [];
+      stepIds.push(...this.tutorial.stepsIds);
+      const index = stepIds.findIndex(id => id === stepId);
+      stepIds.splice(index, 1);
+      this.$set(this.tutorial, 'stepsIds', stepIds);
+    },
   }
 };
 </script>

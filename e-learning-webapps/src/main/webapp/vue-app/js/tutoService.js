@@ -91,6 +91,20 @@ export function getTutorialsByName(id, tutorialTitle) {
 
 // Step services
 
+export function getTutorialSteps(tutorialId) {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/getTutorialSteps/${tutorialId}`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then((response) => {
+      if (!response || !response.ok) {
+        throw new Error('Response code indicates a server error', response);
+      } else {
+        return response.json();
+      }
+    });
+}
+
 export function getTutorialStepByOrder(tutorialId, stepOrder) {
   return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/getTutorialStepByOrder/${tutorialId}/${stepOrder}`, {
     method: 'GET',
