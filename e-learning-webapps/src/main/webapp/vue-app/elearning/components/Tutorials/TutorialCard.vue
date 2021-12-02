@@ -7,7 +7,7 @@
         <v-list-item-avatar>
           <v-icon 
             class="primary--text"
-            @click="showTutorial(tutorial.id)">
+            @click="showTutorial()">
             mdi-play-box-outline
           </v-icon>          
         </v-list-item-avatar>
@@ -29,13 +29,13 @@
             offset-y
             offset-x>
             <v-list class="card_menu_list" dense>
-              <v-list-item class="px-2 py-1" @click="updateTutorial(tutorial.id)">
+              <v-list-item class="px-2 py-1" @click="updateTutorial()">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="primary--text" size="20">mdi-pencil</v-icon>
                   <span class="tuto_menu_text">{{ tutorial.status === 'DRAFT' ? $t('addon.elearning.tutorial.update.draft.label') : $t('addon.elearning.tutorial.update.label') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="px-2 py-1" @click="updateTutorialContent(tutorial.id)">
+              <v-list-item class="px-2 py-1" @click="updateTutorialContent()">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="primary--text" size="20">mdi-pencil-box</v-icon>
                   <span class="tuto_menu_text">{{ tutorial.status === 'DRAFT' ? $t('addon.elearning.tutorial.update.draft.content.label') : $t('addon.elearning.tutorial.update.content.label') }}</span>
@@ -44,7 +44,7 @@
               <v-list-item 
                 v-if="tutorial.status != 'DRAFT'" 
                 class="px-2 py-1" 
-                @click="dupTuto(tutorial.id)">
+                @click="duplicateTutorial()">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="primary--text" size="20">mdi-content-copy</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.duplicate.label') }}</span>
@@ -53,7 +53,7 @@
               <v-list-item 
                 v-if="tutorial.status != 'DRAFT'"
                 class="px-2 py-1"
-                @click="moveTuto(tutorial.id)">
+                @click="moveTutorial()">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="primary--text" size="20">mdi-move-resize</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.move.label') }}</span>
@@ -62,7 +62,7 @@
               <v-list-item 
                 v-if="tutorial.status != 'DRAFT' && tutorial.status != 'ARCHIVED'"
                 class="px-2 py-1"
-                @click="archiveTuto(tutorial.id)">
+                @click="archiveTutorial()">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="primary--text" size="20">mdi-package-down</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.archive.label') }}</span>
@@ -71,13 +71,13 @@
               <v-list-item 
                 v-if="tutorial.status === 'ARCHIVED'"
                 class="px-2 py-1"
-                @click="unarchiveTuto(tutorial.id)">
+                @click="unarchiveTutorial()">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="primary--text" size="20">mdi-package-down</v-icon>
                   <span class="tuto_menu_text">{{ $t('addon.elearning.tutorial.unarchive.label') }}</span>
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="px-2 py-1" @click="deleteTutorial(tutorial.id)">
+              <v-list-item class="px-2 py-1" @click="deleteTutorial()">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="primary--text" size="20">mdi-delete</v-icon>
                   <span class="tuto_menu_text" v-if="tutorial.status === 'DRAFT'">{{ $t('addon.elearning.tutorial.delete.draft.label') }}</span>
@@ -158,29 +158,29 @@ export default {
   },
 
   methods: {
-    deleteTutorial(id) {
-      this.$root.$emit('deleteTutorial', id);
+    deleteTutorial() {
+      this.$root.$emit('deleteTutorial', this.tutorial.id);
     },
-    updateTutorial(id) {
-      this.$root.$emit('makeUpdateTutorial', id);
+    updateTutorial() {
+      this.$root.$emit('makeUpdateTutorial', this.tutorial.id);
     },
-    updateTutorialContent(tutorialId) {
-      window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-editor?spaceId=${eXo.env.portal.spaceId}&themeId=${this.parentTheme.id}&tutorialId=${tutorialId}`, '_blank');
+    updateTutorialContent() {
+      window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-editor?spaceId=${eXo.env.portal.spaceId}&themeId=${this.parentTheme.id}&tutorialId=${this.tutorial.id}`, '_blank');
     },
-    showTutorial(id) {
-      this.$root.$emit('makeShowTTuto', id);
+    showTutorial() {
+      window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-preview?spaceId=${eXo.env.portal.spaceId}&themeId=${this.parentTheme.id}&tutorialId=${this.tutorial.id}`, '_blank');
     },
-    moveTuto(id) {
-      this.$root.$emit('makeMoveTuto', id);
+    moveTutorial() {
+      this.$root.$emit('makeMoveTuto', this.tutorial.id);
     },
-    dupTuto(id) {
-      this.$root.$emit('makeDupTuto', id);
+    duplicateTutorial() {
+      this.$root.$emit('makeDupTuto', this.tutorial.id);
     },
-    archiveTuto(id) {
-      this.$root.$emit('makeArchTuto', id);
+    archiveTutorial() {
+      this.$root.$emit('makeArchTuto', this.tutorial.id);
     },
-    unarchiveTuto(id) {
-      this.$root.$emit('makeUnarchTuto', id);
+    unarchiveTutorial() {
+      this.$root.$emit('makeUnarchTuto', this.tutorial.id);
     },
   }
 };
