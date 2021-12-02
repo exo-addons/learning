@@ -10,6 +10,7 @@ import org.exoplatform.addon.elearning.dto.Tutorial;
 import org.exoplatform.addon.elearning.rest.entity.SpaceDataEntity;
 import org.exoplatform.addon.elearning.rest.entity.TutorialsDataEntity;
 import org.exoplatform.addon.elearning.service.TutorialService;
+import org.exoplatform.commons.utils.HTMLSanitizer;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -263,6 +264,7 @@ public class TutorialRestService implements ResourceContainer {
     Step step;
     try {
       step = tutorialService.getTutorialStepByOrder(tutorialId, stepOrder);
+      step.setContent(HTMLSanitizer.sanitize(step.getContent()));
     } catch (Exception e) {
       LOG.error("Could not get Tutorial by id {}", tutorialId, e);
       return Response.serverError().entity(e.getMessage()).build();
