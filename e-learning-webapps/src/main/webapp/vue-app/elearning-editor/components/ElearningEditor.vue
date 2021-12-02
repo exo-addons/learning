@@ -618,7 +618,7 @@ export default {
     },
     archiveTutorial() {
       this.$tutoService.archiveTutorial(this.tutorial).catch(e => {
-        console.error('Error when publishing tutorial', e);
+        console.error('Error when archiving tutorial', e);
       });
     },
     openSettings() {

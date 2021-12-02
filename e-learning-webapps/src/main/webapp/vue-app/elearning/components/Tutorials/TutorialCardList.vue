@@ -112,9 +112,9 @@ export default {
     // this.$root.$on('tutoMoved', () => {
     //   this.getTutorialsByTheme(this.themeId);
     // });
-    // this.$root.$on('tutoDeleted', () => {
-    //   this.getTutorialsByTheme(this.themeId);
-    // });
+    this.$root.$on('tutorial-deleted', () => {
+      this.getTutorialsByTheme(this.themeId);
+    });
     // this.$root.$on('makeDupTuto', (id) => {
     //   this.getTutoDup(id);
     // });
