@@ -5,11 +5,13 @@
       outlined>
       <v-list-item>
         <v-list-item-avatar>
-          <v-icon 
-            class="primary--text"
-            @click="showTutorial()">
-            mdi-play-box-outline
-          </v-icon>          
+          <v-btn :disabled="tutorial.stepsIds.length === 0" icon>
+            <v-icon
+              class="primary--text"
+              @click="showTutorial()">
+              mdi-play-box-outline
+            </v-icon>
+          </v-btn>          
         </v-list-item-avatar>
         <v-list-item-content>
           <span class="align-center font-weight-bold">{{ tutorial.title }}</span>
@@ -159,7 +161,7 @@ export default {
 
   methods: {
     deleteTutorial() {
-      this.$root.$emit('deleteTutorial', this.tutorial.id);
+      this.$root.$emit('delete-tutorial', this.tutorial.id);
     },
     updateTutorial() {
       this.$root.$emit('makeUpdateTutorial', this.tutorial.id);
@@ -177,10 +179,24 @@ export default {
       this.$root.$emit('makeDupTuto', this.tutorial.id);
     },
     archiveTutorial() {
-      this.$root.$emit('makeArchTuto', this.tutorial.id);
+      this.$tutoService.archiveTutorial(this.tutorial).then(() => {
+        this.$root.$emit('show-alert', {
+          message: this.$t('addon.elearning.tutorial.archived'),
+          type: 'success',
+        });
+      }).catch(e => {
+        console.error('Error when archiving tutorial', e);
+      });
     },
     unarchiveTutorial() {
-      this.$root.$emit('makeUnarchTuto', this.tutorial.id);
+      this.$tutoService.publishTutorial(this.tutorial).then(() => {
+        this.$root.$emit('show-alert', {
+          message: this.$t('addon.elearning.tutorial.unarchived'),
+          type: 'success',
+        });
+      }).catch(e => {
+        console.error('Error when publishing tutorial', e);
+      });
     },
   }
 };

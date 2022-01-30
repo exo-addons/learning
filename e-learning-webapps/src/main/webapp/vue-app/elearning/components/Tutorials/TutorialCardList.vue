@@ -105,25 +105,9 @@ export default {
         this.$refs.tutorialManagementDrawer.open();
       }
     });
-    
-    // this.$root.$on('tutorialUpdated', () => {
-    //   this.getTutorialsByTheme(this.themeId);
-    // });
-    // this.$root.$on('tutoMoved', () => {
-    //   this.getTutorialsByTheme(this.themeId);
-    // });
-    // this.$root.$on('tutoDeleted', () => {
-    //   this.getTutorialsByTheme(this.themeId);
-    // });
-    // this.$root.$on('makeDupTuto', (id) => {
-    //   this.getTutoDup(id);
-    // });
-    // this.$root.$on('makeArchTuto', (id) => {
-    //   this.getTutoArch(id);
-    // });
-    // this.$root.$on('makeUnarchTuto', (id) => {
-    //   this.getTutoUnarch(id);
-    // });
+    this.$root.$on('tutorial-deleted', () => {
+      this.getTutorialsByTheme(this.themeId);
+    });
   },
   methods: {
     addCreatedTutorial(addedTutorial) {

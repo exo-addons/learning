@@ -3,45 +3,75 @@
     class="transparent"
     role="main"
     flat>
-    <v-container id="eLearningPreview">
-      <v-row>
-        <v-col>
-          <div>
-            <h1 class="text-center text-color" :style="{color: theme && theme.color ? `${theme.color}!important` : ''}">{{ tutorial && tutorial.title }}</h1>
-          </div>
-        </v-col>       
-      </v-row>
-      <v-row>
-        <v-col class="pa-8">
-          <div>
-            <h2 class="text-color">{{ step && step.title }}</h2>
-          </div>
-        </v-col>       
-      </v-row>
-      <v-row>
-        <v-col>
-          <div class="pa-12 align-center">
-            MEDIA
-          </div>          
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col class="pa-8">
-          <div
-            class="notes-application-content text-color"
-            v-html="step && step.content">
-          </div>
-        </v-col>   
-      </v-row>
-      <template>
-        <div class="steps-paginator text-center">
-          <v-pagination
-            v-model="stepOrder"
-            :length="tutorial && tutorial.stepsIds.length"
-            @input="goToStep" />
+    <div id="eLearningPreview" class="py-10">
+      <div class="pa-1 white">
+        <v-row class="previewHeader ma-0">
+          <v-col class="backBtn pl-2" cols="6">
+            <div>
+              <v-btn
+                icon
+                @click="back">
+                <v-icon>mdi-arrow-left-circle</v-icon>
+              </v-btn>
+              <span class="text-h5 text-color">{{ tutorial && tutorial.title }}</span>
+            </div>
+          </v-col>
+          <v-spacer />
+          <v-col class="editBtn pr-2" cols="1">
+            <v-btn
+              icon
+              @click="edit">
+              <i class="uiIconEdit v-icon"></i>
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row class="stepImageContainer ma-0">
+          <v-col>
+            <div class="slideContainer py-5 px-14">
+              <v-carousel 
+                @change="goToStep"
+                hide-delimiters>
+                <v-carousel-item
+                  v-for="(item,i) in allSteps"
+                  :key="i"
+                  :src="item.src" />
+              </v-carousel>
+            </div>
+          </v-col>
+        </v-row>
+        <v-row class="mt-3 mb-1 mx-0">
+          <v-spacer />
+          <v-col cols="4">
+            <v-progress-linear 
+              v-model="stepLevel"
+              height="8"
+              rounded />
+            <div class="mt-1 text-center primary--text text-decoration-underline">
+              <span>{{ currentStepIndex + 1 + '/' + allSteps.length }}</span>
+            </div>
+          </v-col>
+          <v-spacer />
+        </v-row>
+        <div class="px-8">
+          <v-divider />
         </div>
-      </template>
-    </v-container>
+        <v-row class="ma-0">
+          <v-col class="px-8 pb-0">
+            <div>
+              <span class="text-h6 text-color">{{ currentStep && currentStep.title }}</span>
+            </div>
+          </v-col>
+        </v-row>
+        <v-row class="ma-0">
+          <v-col class="pt-0 pb-8 px-8">
+            <div
+              class="notes-application-content text-color"
+              v-html="currentStep && currentStep.content">
+            </div>
+          </v-col>   
+        </v-row>
+      </div>
+    </div>
   </v-app>
 </template>
 
@@ -49,12 +79,18 @@
 export default {
   data() {
     return {
-      stepOrder: 1,
       spaceId: '',
       theme: null,
       tutorial: null,
-      step: null,
+      currentStep: null,
+      allSteps: [],
+      currentStepIndex: 0,
     };
+  },
+  computed: {
+    stepLevel() {
+      return (this.currentStepIndex + 1) * 100 / this.allSteps.length;
+    },
   },
   created() {
     const queryPath = window.location.search;
@@ -80,20 +116,25 @@ export default {
     getTutorial(id) {
       this.$tutoService.getTutorialById(id).then(tutorial => {
         this.tutorial = tutorial;
-        this.getFirstStep(this.tutorial.id);
+        this.getAllStep();
       }).catch(e => {
         console.error('Error when retrieving tutorial', e);
       });
     },
-    getFirstStep(tutorialId) {
-      this.$tutoService.getTutorialStepByOrder(tutorialId, 1).then(step => {
-        this.step = step;
+    getAllStep() {
+      this.$tutoService.getTutorialSteps(this.tutorial.id).then(steps => {
+        this.allSteps = steps;
       });
     },
-    goToStep() {
-      this.$tutoService.getTutorialStepByOrder(this.tutorial.id, this.stepOrder).then(step => {
-        this.step = step;
-      });
+    goToStep(index) {
+      this.currentStep = this.allSteps[index];
+      this.currentStepIndex = index;
+    },
+    edit() {
+      window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-editor?spaceId=${eXo.env.portal.spaceId}&themeId=${this.theme.id}&tutorialId=${this.tutorial.id}`, '_blank');
+    },
+    back() {
+      console.log('Back !');
     },
   },
 };

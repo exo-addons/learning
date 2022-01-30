@@ -157,6 +157,7 @@ export default {
         tutorialId: '',
       },
       spaceId: '',
+      theme: null,
       tutorial: {},
       srcImageStep: '/exo-elearning/images/tutorial.png',
       initActualStepDone: false,
@@ -215,6 +216,10 @@ export default {
     if (urlParams.has('spaceId')) {
       this.spaceId = urlParams.get('spaceId');
     }
+    if (urlParams.has('themeId')) {
+      const themeId = urlParams.get('themeId');
+      this.getTheme(themeId);
+    }
     if (urlParams.has('tutorialId')) {
       const tutorialId = urlParams.get('tutorialId');
       this.getTutorial(tutorialId);
@@ -246,6 +251,11 @@ export default {
       elementNewTop.classList.add('darkComposerEffect');
       this.setToolBarEffect();
       this.initDone = true;
+    },
+    getTheme(id) {
+      this.$themeService.getThemeById(id).then(theme => {
+        this.theme = theme;
+      }).catch((e) => console.error('Error when retrieving theme', e));
     },
     getTutorial(id) {
       this.$tutoService.getTutorialById(id).then(tutorial => {
@@ -316,7 +326,7 @@ export default {
       if (this.publishingTutorial) {
         return;
       }
-      
+
       clearTimeout(this.saveDraft);
       this.saveDraft = setTimeout(() => {
         this.savingDraft = true;
@@ -348,7 +358,7 @@ export default {
           };
           setTimeout(() => {
             this.draftSavingStatus = this.$t('step.draft.savedDraftStatus');
-          }, this.autoSaveDelay/2);
+          }, this.autoSaveDelay / 2);
         } else {
           this.persistStep(draftStep);
         }
@@ -395,10 +405,6 @@ export default {
             }
           }).catch(e => {
             console.error('Error when saving step', e);
-            // this.$root.$emit('show-alert', {
-            //   type: 'error',
-            //   message: this.$t(`notes.message.${e.message}`)
-            // });
           });
         } else {
           this.$tutoService.updateStep(step).then(() => {
@@ -533,9 +539,6 @@ export default {
                   $(this).closest('[data-atwho-at-query]').remove();
                 });
               });
-
-            // self.$root.$applicationLoaded();
-            // window.setTimeout(() => self.setFocus(), 50);
           },
           change: function (evt) {
             self.step.content = evt.editor.getData();
@@ -545,15 +548,15 @@ export default {
       this.instance = CKEDITOR.instances['stepContent'];
     },
     setToolBarEffect() {
-      const element = CKEDITOR.instances['stepContent'] ;
+      const element = CKEDITOR.instances['stepContent'];
       const elementNewTop = document.getElementById('stepTop');
       element.on('contentDom', function () {
-        this.document.on('click', function(){
+        this.document.on('click', function () {
           elementNewTop.classList.add('darkComposerEffect');
         });
       });
       element.on('contentDom', function () {
-        this.document.on('keyup', function(){
+        this.document.on('keyup', function () {
           elementNewTop.classList.add('darkComposerEffect');
         });
       });
@@ -600,16 +603,22 @@ export default {
       this.initActualStepDone = true;
     },
     publishTutorial() {
-      console.log('Post Tutorial !!!');
+      this.$tutoService.publishTutorial(this.tutorial).then(() => {
+        window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-preview?spaceId=${eXo.env.portal.spaceId}&themeId=${this.theme.id}&tutorialId=${this.tutorial.id}`, '_blank');
+      }).catch(e => {
+        console.error('Error when publishing tutorial', e);
+      });
     },
     archiveTutorial() {
-      console.log('archive Tutorial !');
+      this.$tutoService.archiveTutorial(this.tutorial).catch(e => {
+        console.error('Error when archiving tutorial', e);
+      });
     },
     openSettings() {
-      console.log('open Settings !');      
+      console.log('open Settings !');
     },
     preview() {
-      console.log('PREVIEW !');
+      window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-preview?spaceId=${eXo.env.portal.spaceId}&themeId=${this.theme.id}&tutorialId=${this.tutorial.id}`, '_blank');
     },
     addStep() {
       this.$root.$emit('step-added', this.step);
@@ -625,7 +634,7 @@ export default {
       const stepIds = [];
       stepIds.push(...this.tutorial.stepsIds);
       stepIds.push(stepId);
-      this.$set(this.tutorial, 'stepsIds', stepIds);  
+      this.$set(this.tutorial, 'stepsIds', stepIds);
     },
     removeFromTutorialStepIds(stepId) {
       const stepIds = [];

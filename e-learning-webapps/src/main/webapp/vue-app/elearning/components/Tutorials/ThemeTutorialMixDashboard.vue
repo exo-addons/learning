@@ -92,7 +92,7 @@ export default {
       this.themeId = id;
       this.getThemeName();
     });
-    this.$root.$on('deleteTutorial', (id) => {
+    this.$root.$on('delete-tutorial', (id) => {
       this.prepareDelete(id);
     });
 
@@ -118,10 +118,11 @@ export default {
       return this.$tutoService.deleteTutorial(this.deleteId)
         .then(() => {
           this.confirmDialog = false;
-          this.timeout = 3000;
-          this.successBar = true;
-          this.text = this.$t('addon.elearning.tutorial.deleted');
-          this.$root.$emit('tutoDeleted');
+          this.$root.$emit('show-alert', {
+            message: this.$t('addon.elearning.tutorial.deleted'),
+            type: 'success',
+          });
+          this.$root.$emit('tutorial-deleted');
         })
         .catch((e) => console.error('Error when deleting tutorial', e));
     },

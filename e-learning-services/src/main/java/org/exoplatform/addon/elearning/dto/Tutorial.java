@@ -3,7 +3,6 @@ package org.exoplatform.addon.elearning.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.exoplatform.addon.elearning.entity.Status;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class Tutorial implements Serializable {
 
   private List<Long> themeIds = new ArrayList<>();
 
-  private Status status;
+  private String status;
 
   private List<Long> stepsIds = new ArrayList<>();
 

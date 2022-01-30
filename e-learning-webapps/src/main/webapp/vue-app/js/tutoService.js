@@ -61,6 +61,40 @@ export function updateTutorial(tutorial) {
   });
 }
 
+export function publishTutorial(tutorial) {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/postTutorial`, {
+    method: 'PUT',
+    body: JSON.stringify(tutorial),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  }).then(response => {
+    if (!response || !response.ok) {
+      throw new Error('Response code indicates a server error', response);
+    } else {
+      return response.json();
+    }
+  });
+}
+
+export function archiveTutorial(tutorial) {
+  return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/archiveTutorial`, {
+    method: 'PUT',
+    body: JSON.stringify(tutorial),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  }).then(response => {
+    if (!response || !response.ok) {
+      throw new Error('Response code indicates a server error', response);
+    } else {
+      return response.json();
+    }
+  });
+}
+
 export function getTutorialsByTheme(themeId, spaceName, query, offset, limit) {
   return fetch(`${eLearningConstans.PORTAL}/${eLearningConstans.PORTAL_REST}/tutorial/getTutorialsByTheme/${themeId}?spaceName=${spaceName}&q=${query}&offset=${offset}&limit=${limit}`, {
     method: 'GET',
