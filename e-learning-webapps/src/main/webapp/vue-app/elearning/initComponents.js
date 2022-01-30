@@ -3,9 +3,7 @@ import ThemeTutorialMixDashboard from './components/Tutorials/ThemeTutorialMixDa
 import TutorialCard from './components/Tutorials/TutorialCard.vue';
 import TutorialCardList from './components/Tutorials/TutorialCardList.vue';
 import ThemeTutorialMixDashboardToolbar from './components/Tutorials/ThemeTutorialMixDashboardToolbar.vue';
-import TutorialDisplayDrawer from './components/Tutorials/drawer/TutorialDisplayDrawer.vue';
 import TutorialManagementDrawer from './components/Tutorials/drawer/TutorialManagementDrawer.vue';
-import TutorialUpdateDrawer from './components/Tutorials/drawer/TutorialUpdateDrawer.vue';
 import TutorialMoveDrawer from './components/Tutorials/drawer/TutorialMoveDrawer.vue';
 import ThemeDashboard from './components/Themes/ThemeDashboard.vue';
 import ThemeCard from './components/Themes/ThemeCard.vue';
@@ -18,9 +16,7 @@ const components = {
   'tutorial-card': TutorialCard,
   'tutorial-card-list': TutorialCardList,
   'theme-tutorial-mix-dashboard-toolbar': ThemeTutorialMixDashboardToolbar,
-  'tutorial-display-drawer': TutorialDisplayDrawer,
   'tutorial-management-drawer': TutorialManagementDrawer,
-  'tutorial-update-drawer': TutorialUpdateDrawer,
   'tutorial-move-drawer': TutorialMoveDrawer,
   'theme-dashboard': ThemeDashboard,
   'theme-card': ThemeCard,
