@@ -19,12 +19,9 @@
       </v-row>
       <tutorial-management-drawer
         ref="tutorialManagementDrawer"
-        :tutorial="tutorialToUpdate"
         :parent-theme="parentTheme"
         :space-name="space && space.prettyName"
-        :space="space"
-        @tutorialAdded="addCreatedTutorial"
-        @tutorialUpdated="updateTutorial" />
+        @tutorialAdded="addCreatedTutorial" />
     </template> 
   </div>
 </template>
@@ -51,12 +48,6 @@ export default {
       tutorialsCount: 0,
       space: null,
       canUpdate: false,
-      tutorialToUpdate: {
-        id: null,
-        title: null,
-        description: null,
-        themeIds: [],        
-      },
       dupTuto: null,
       archTurto: null,
       offset: 0,
@@ -113,13 +104,6 @@ export default {
     addCreatedTutorial(addedTutorial) {
       this.tutorialsList.unshift(addedTutorial);
       this.$refs.tutorialManagementDrawer.close();
-    },
-    updateTutorial(updatedTutorial) {
-      const index = this.tutorialsList.findIndex(tutorial => tutorial.id === updatedTutorial.id);
-      this.tutorialsList.splice(index, 1, updatedTutorial);
-      this.tutorialToUpdate = null;
-      this.$refs.tutorialManagementDrawer.close();
-
     },
     getTutorialsByTheme() {
       return this.$tutoService.getTutorialsByTheme(this.parentTheme.id, this.spaceName, this.keyword, this.offset, this.limit).then(data => {

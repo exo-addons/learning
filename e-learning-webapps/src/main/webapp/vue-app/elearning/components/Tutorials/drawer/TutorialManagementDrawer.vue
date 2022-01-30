@@ -5,12 +5,13 @@
       ref="tutorialManagementDrawer"
       right>
       <template slot="title">
-        {{ $t('addon.elearning.tutorial.create.form.title') }}     
+        {{ !isUpdateMode ? $t('addon.elearning.tutorial.create.form.title') : $t('addon.elearning.tutorial.update.form.title') }}
       </template>
       <template slot="content">
         <template>
           <v-stepper
             v-model="add_steps"
+            v-if="!isUpdateMode"
             vertical
             class="tutorial_steps_wrapper">
             <v-stepper-step
@@ -74,6 +75,26 @@
               </v-btn>
             </v-stepper-content>
           </v-stepper>
+          <div v-else class="mt-4 pa-3">
+            <label class="tuto_title_label" :for="tutorial.title">
+              {{ `${$t('addon.elearning.theme.form.title.label')}*` }}
+            </label>
+            <v-text-field
+              class="primary_tutorial_input"
+              clearable
+              :placeholder="$t('addon.elearning.tutorial.form.title.placeholder')"
+              name="title"
+              v-model="tutorial.title" />
+            <label class="tuto_description_label" :for="tutorial.description">
+              {{ $t('addon.elearning.tutorial.for.description.label') }}
+            </label>
+            <extended-textarea
+              class="primary_text_area_input"
+              :placeholder="$t('addon.elearning.tutorial.for.description.placeholder')"
+              :max-length="255"
+              name="description"
+              v-model="tutorial.description" />
+          </div>
         </template>
       </template>
       <template slot="footer">
@@ -83,7 +104,7 @@
           :disabled="!isStepsComplete">
           {{ $t('addon.elearning.tutorial.form.confirm') }}
         </v-btn>
-        <v-btn class="exo_cancel_btn" @click="clear">{{ $t('addon.elearning.tutorial.form.clear') }}</v-btn>
+        <v-btn v-if="!isUpdateMode" class="exo_cancel_btn" @click="clear">{{ $t('addon.elearning.tutorial.form.clear') }}</v-btn>
       </template>
     </exo-drawer>
   </div>
@@ -93,7 +114,12 @@ export default {
   props: {
     tutorial: {
       type: Object,
-      default: null
+      default: () => ({
+        id: null,
+        title: null,
+        description: null,
+        themeIds: [], 
+      })
     },
     parentTheme: {
       type: Object,
@@ -103,13 +129,10 @@ export default {
       type: String,
       default: ''
     },
-    space: {
-      type: Object,
-      default: null
-    },
   },  
   data() {
     return {
+      isUpdateMode: false,
       add_steps: 1,
       status: ['DRAFT', 'PUBLISHED', 'ARCHIVED'],
       themes: [],
@@ -121,11 +144,11 @@ export default {
     },
     isFirstStepComplete() {
       return this.tutorial && this.tutorial.title;
-    }
+    },
   },
   methods: {
     createOrUpdateTutorial() {
-      if (!this.tutorial.id) {
+      if (!this.isUpdateMode) {
         let tutorialId;
         return this.$tutoService.addTutorial(this.tutorial).then(addedTutorial => {
           tutorialId = addedTutorial.id;
@@ -153,7 +176,10 @@ export default {
       }).catch((e) => console.error('Error when retrieving themes', e));
     },
     open() {
-      this.getThemes();
+      this.isUpdateMode = !!(this.tutorial && this.tutorial.id);
+      if (!this.isUpdateMode) {
+        this.getThemes();
+      }
       this.$refs.tutorialManagementDrawer.open();
     },
     close() {
