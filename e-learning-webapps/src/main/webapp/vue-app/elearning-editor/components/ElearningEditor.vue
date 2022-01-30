@@ -405,10 +405,6 @@ export default {
             }
           }).catch(e => {
             console.error('Error when saving step', e);
-            // this.$root.$emit('show-alert', {
-            //   type: 'error',
-            //   message: this.$t(`notes.message.${e.message}`)
-            // });
           });
         } else {
           this.$tutoService.updateStep(step).then(() => {
@@ -543,9 +539,6 @@ export default {
                   $(this).closest('[data-atwho-at-query]').remove();
                 });
               });
-
-            // self.$root.$applicationLoaded();
-            // window.setTimeout(() => self.setFocus(), 50);
           },
           change: function (evt) {
             self.step.content = evt.editor.getData();

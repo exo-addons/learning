@@ -803,13 +803,49 @@
 }
 
 #eLearningPreview {
-  position: fixed;
-  height: 100%;
-  top: 0;
-  z-index: 1031;
-  background: @lightWhite;
-  overflow-y: auto;
-  
+  padding-left: 18% !important;
+  padding-right: 18% !important;
+
+  .previewHeader {
+    .backBtn {
+      i {
+        font-size: 32px;
+      }
+    }
+
+    .editBtn {
+      text-align-last: end;
+      
+      i {
+        color: @toolbarLightIconColor;
+      }
+    }
+  }
+
+  .stepImageContainer {
+    .slideContainer {
+      background-color: @greyColorLighten1;
+
+      .v-carousel {
+        overflow: visible;
+        .v-window__container {
+          .v-window__prev {
+            left: -4vw;
+          }
+
+          .v-window__next {
+            right: -4vw;
+          }
+        }
+      }
+
+    }
+  }
+
+  span {
+    vertical-align: top;
+  }
+
   .steps-paginator {
     position: fixed;
     bottom: 2%;
