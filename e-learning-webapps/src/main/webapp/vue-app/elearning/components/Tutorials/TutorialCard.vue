@@ -31,16 +31,10 @@
             offset-y
             offset-x>
             <v-list class="card_menu_list" dense>
-              <v-list-item class="px-2 py-1" @click="updateTutorial()">
+              <v-list-item class="px-2 py-1" @click="updateTutorialContent()">
                 <v-list-item-title class="menu_list_items">
                   <v-icon class="primary--text" size="20">mdi-pencil</v-icon>
                   <span class="tuto_menu_text">{{ tutorial.status === 'DRAFT' ? $t('addon.elearning.tutorial.update.draft.label') : $t('addon.elearning.tutorial.update.label') }}</span>
-                </v-list-item-title>
-              </v-list-item>
-              <v-list-item class="px-2 py-1" @click="updateTutorialContent()">
-                <v-list-item-title class="menu_list_items">
-                  <v-icon class="primary--text" size="20">mdi-pencil-box</v-icon>
-                  <span class="tuto_menu_text">{{ tutorial.status === 'DRAFT' ? $t('addon.elearning.tutorial.update.draft.content.label') : $t('addon.elearning.tutorial.update.content.label') }}</span>
                 </v-list-item-title>
               </v-list-item>
               <v-list-item 
@@ -179,7 +173,8 @@ export default {
       this.$root.$emit('makeDupTuto', this.tutorial.id);
     },
     archiveTutorial() {
-      this.$tutoService.archiveTutorial(this.tutorial).then(() => {
+      this.$tutoService.archiveTutorial(this.tutorial).then(archivedTutorial => {
+        this.tutorial = archivedTutorial;
         this.$root.$emit('show-alert', {
           message: this.$t('addon.elearning.tutorial.archived'),
           type: 'success',
@@ -189,7 +184,8 @@ export default {
       });
     },
     unarchiveTutorial() {
-      this.$tutoService.publishTutorial(this.tutorial).then(() => {
+      this.$tutoService.publishTutorial(this.tutorial).then(postedTutorial => {
+        this.tutorial = postedTutorial;
         this.$root.$emit('show-alert', {
           message: this.$t('addon.elearning.tutorial.unarchived'),
           type: 'success',

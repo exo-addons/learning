@@ -15,7 +15,7 @@
               <div class="settings-archive-btns mr-4">
                 <v-btn
                   icon
-                  @click="openSettings">
+                  @click="updateTutorial">
                   <v-icon>settings</v-icon>
                 </v-btn>
                 <v-btn
@@ -51,7 +51,6 @@
               <v-col>
                 <input
                   id="stepTitle"
-                  ref="stepTitle"
                   v-model="step.title"
                   :placeholder="stepTitlePlaceHolder"
                   type="text"
@@ -123,6 +122,12 @@
             </v-row>
           </form>
         </div>
+        <tutorial-management-drawer
+          ref="tutorialManagementDrawer"
+          :tutorial="tutorial"
+          :parent-theme="theme"
+          :space-name="theme && theme.spaceName"
+          @tutorialUpdated="completeTutorialUpdate" />
       </div>
     </div>
   </v-app>
@@ -268,6 +273,13 @@ export default {
       }).catch(e => {
         console.error('Error when retrieving tutorial', e);
       });
+    },
+    updateTutorial() {
+      this.$refs.tutorialManagementDrawer.open();
+    },
+    completeTutorialUpdate(updatedTutorial) {
+      this.tutorial = updatedTutorial;
+      this.$refs.tutorialManagementDrawer.close();
     },
     getLatestStep(tutorialId) {
       this.$tutoService.getTutorialStepByOrder(tutorialId, this.tutorial.stepsIds.length).then(step => {
@@ -613,9 +625,6 @@ export default {
       this.$tutoService.archiveTutorial(this.tutorial).catch(e => {
         console.error('Error when archiving tutorial', e);
       });
-    },
-    openSettings() {
-      console.log('open Settings !');
     },
     preview() {
       window.open(`${eXo.env.portal.context}/${eXo.env.portal.portalName}/elearning-preview?spaceId=${eXo.env.portal.spaceId}&themeId=${this.theme.id}&tutorialId=${this.tutorial.id}`, '_blank');
